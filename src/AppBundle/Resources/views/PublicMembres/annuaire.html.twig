@@ -1,0 +1,61 @@
+<div class="row">
+	<div class="col-sm-12">
+		<div class="btn-toolbar" role="toolbar">
+			<div class="btn-group">
+				<a href="#" data-lettre="tous"
+				   class="btn btn-rw {% if 'tous' == affichage %} btn-primary {% else %}btn-info{% endif %}
+				chgtlettreannuaire">Tous</a>
+				{% for lettre in 'A'..'Z' %}
+					<a href="#" data-lettre="{{ lettre }}"
+					   class="btn btn-rw {% if lettre == affichage %} btn-primary {% else %}btn-info{% endif %}
+				chgtlettreannuaire">{{ lettre }}</a>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row" style="clear: both; margin-top: 20px;">
+	<div class="col-sm-12">
+		<table class="table table-striped">
+			<thead>
+			<tr>
+				<th>Nom</th>
+				<th>Prénom</th>
+				<th>Grade</th>
+				<th>Département</th>
+				<th>Site</th>
+				<th>Téléphone</th>
+				<th>Actions</th>
+			</tr>
+			</thead>
+			{% for membre in membres %}
+				<tr>
+					<td>{{ membre.nom|title }}</td>
+					<td>{{ membre.prenom|title }}</td>
+					<td>{{ membre.statutLong }}</td>
+					<td>{% if membre.departementMembre != null %}{{ membre.departementMembre.sigle }}{% else %} - {%
+						endif %}</td>
+					<td>{{ membre.localisation }}</td>
+					<td>{% if membre.tel != '' %}{{ membre.tel }}{% elseif membre.telPortable != '' %}{{ membre.telPortable }}{%
+						endif %}</td>
+					<th>
+						<a href="mailto:{{ membre.email }}" target="_blank"><span class="fa fa-envelope"></span></a>
+						<a href="{{ path('public_membres_profil', {slug: membre.slug}) }}" target="_blank"
+						   title="Profil de {{ membre.display }}"><i
+									class="fa fa-eye"></i></a>
+					</th>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+</div>
+<script>
+	$(document).ready(function () {
+		$('.chgtlettreannuaire').click(function () {
+			$("#zone_data_annuaire").empty().load("{{ path('public_membres_annuaire_lettre') }}", {lettre: $(this).data
+			('lettre')});
+		});
+	});
+
+</script>

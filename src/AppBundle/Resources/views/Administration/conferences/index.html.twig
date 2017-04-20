@@ -1,0 +1,47 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+	Conférences /
+{% endblock %}
+
+{% block content %}
+    <h1>Liste des conférences</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nomconference</th>
+                <th>Sigleconference</th>
+                <th>Ville</th>
+                <th>Datedebut</th>
+                <th>Datefin</th>
+                <th>Tauxselection</th>
+                <th>Url</th>
+                <th>Internationale</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for conference in conferences %}
+            <tr>
+                <td>{{ conference.nomConference }}</td>
+                <td>{{ conference.sigleConference }}</td>
+                <td>{{ conference.ville }}</td>
+                <td>{% if conference.dateDebut %}{{ conference.dateDebut|date('d/m/Y') }}{% endif %}</td>
+                <td>{% if conference.dateFin %}{{ conference.dateFin|date('d/m/Y') }}{% endif %}</td>
+                <td>{{ conference.tauxSelection }}</td>
+                <td>{{ conference.url }}</td>
+                <td>{% if conference.internationale %}Yes{% else %}No{% endif %}</td>
+                <td>
+	                <a href="{{ path('administration_conferences_show', { 'id': conference.id }) }}" class="btn btn-info"
+	                   title="Voir"><i class="fa fa-eye"></i> </a>
+	                <a href="{{ path('administration_conferences_edit', { 'id': conference.id }) }}" class="btn
+                            btn-warning" title="Modifier"><i class="fa fa-pencil"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+	<a href="{{ path('administration_conferences_new') }}" class="btn btn-primary">Créer une nouvelle conférence</a>
+
+{% endblock %}

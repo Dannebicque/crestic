@@ -1,0 +1,15 @@
+{% extends '::base-admin.html.twig' %}
+{% block breadcrumbs %}
+	<a href="{{ path('administration_cms_index') }}">Pages</a> / Création /
+{% endblock %}
+{% block content %}
+    <h2>Création d'une page</h2>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+
+	{{ include('@App/Administration/footer-new.html.twig', {var: 'cms'}) }}
+
+	{{ form_end(form) }}
+
+{% endblock %}

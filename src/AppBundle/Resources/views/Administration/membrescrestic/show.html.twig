@@ -1,0 +1,176 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+	<a href="{{ path('administration_membres_index') }}">Membres</a> / Détails /
+{% endblock %}
+
+{% block content %}
+    <h1>Détails d'un membre</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ membresCrestic.id }}</td>
+            </tr>
+            <tr>
+                <th>Disciplinehceres</th>
+                <td>{{ membresCrestic.disciplinehceres }}</td>
+            </tr>
+            <tr>
+                <th>Hdr</th>
+                <td>{% if membresCrestic.hdr %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Datenomination</th>
+                <td>{% if membresCrestic.datenomination %}{{ membresCrestic.datenomination|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Corpsgrade</th>
+                <td>{{ membresCrestic.corpsgrade }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ membresCrestic.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ membresCrestic.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Role</th>
+                <td>{{ membresCrestic.role }}</td>
+            </tr>
+            <tr>
+                <th>Cnu</th>
+                <td>{{ membresCrestic.cnu }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ membresCrestic.status }}</td>
+            </tr>
+            <tr>
+                <th>Site</th>
+                <td>{{ membresCrestic.site }}</td>
+            </tr>
+            <tr>
+                <th>Batiment</th>
+                <td>{{ membresCrestic.batiment }}</td>
+            </tr>
+            <tr>
+                <th>Etage</th>
+                <td>{{ membresCrestic.etage }}</td>
+            </tr>
+            <tr>
+                <th>Bureau</th>
+                <td>{{ membresCrestic.bureau }}</td>
+            </tr>
+            <tr>
+                <th>Emailperso</th>
+                <td>{{ membresCrestic.emailPerso }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ membresCrestic.adresse }}</td>
+            </tr>
+            <tr>
+                <th>Created</th>
+                <td>{% if membresCrestic.created %}{{ membresCrestic.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Updated</th>
+                <td>{% if membresCrestic.updated %}{{ membresCrestic.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ membresCrestic.slug }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ membresCrestic.image }}</td>
+            </tr>
+            <tr>
+                <th>Datenaissance</th>
+                <td>{% if membresCrestic.dateNaissance %}{{ membresCrestic.dateNaissance|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Adresseperso</th>
+                <td>{{ membresCrestic.adressePerso }}</td>
+            </tr>
+            <tr>
+                <th>Tel</th>
+                <td>{{ membresCrestic.tel }}</td>
+            </tr>
+            <tr>
+                <th>Telportable</th>
+                <td>{{ membresCrestic.telPortable }}</td>
+            </tr>
+            <tr>
+                <th>Url</th>
+                <td>{{ membresCrestic.url }}</td>
+            </tr>
+            <tr>
+                <th>Cv</th>
+                <td>{{ membresCrestic.cv }}</td>
+            </tr>
+            <tr>
+                <th>Themes</th>
+                <td>{{ membresCrestic.themes }}</td>
+            </tr>
+            <tr>
+                <th>Responsabilitesscientifiques</th>
+                <td>{{ membresCrestic.responsabilitesScientifiques }}</td>
+            </tr>
+            <tr>
+                <th>Responsabilitesadministratives</th>
+                <td>{{ membresCrestic.responsabilitesAdministratives }}</td>
+            </tr>
+            <tr>
+                <th>Valorisation</th>
+                <td>{{ membresCrestic.valorisation }}</td>
+            </tr>
+            <tr>
+                <th>Vulgarisation</th>
+                <td>{{ membresCrestic.vulgarisation }}</td>
+            </tr>
+            <tr>
+                <th>International</th>
+                <td>{{ membresCrestic.international }}</td>
+            </tr>
+            <tr>
+                <th>Membreassocie</th>
+                <td>{% if membresCrestic.membreAssocie %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Membreconseillabo</th>
+                <td>{% if membresCrestic.membreConseilLabo %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Enseignements</th>
+                <td>{{ membresCrestic.enseignements }}</td>
+            </tr>
+            <tr>
+                <th>Responsabilitefonction</th>
+                <td>{{ membresCrestic.responsabiliteFonction }}</td>
+            </tr>
+            <tr>
+                <th>Ancienmembrescrestic</th>
+                <td>{% if membresCrestic.ancienMembresCrestic %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('administration_membres_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('administration_membres_edit', { 'id': membresCrestic.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

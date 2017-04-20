@@ -1,0 +1,52 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+	<a href="{{ path('administration_sites_index') }}">Sites du CReSTIC</a> / Détails
+{% endblock %}
+
+{% block content %}
+    <h1>Détails d'un site</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ site.adresse }}</td>
+            </tr>
+            <tr>
+                <th>Cp</th>
+                <td>{{ site.cp }}</td>
+            </tr>
+            <tr>
+                <th>Mail</th>
+                <td>{{ site.mail }}</td>
+            </tr>
+            <tr>
+                <th>Ville</th>
+                <td>{{ site.ville }}</td>
+            </tr>
+            <tr>
+                <th>Tel</th>
+                <td>{{ site.tel }}</td>
+            </tr>
+            <tr>
+                <th>Fax</th>
+                <td>{{ site.fax }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ site.titre }}</td>
+            </tr>
+            <tr>
+                <th>Map</th>
+                <td>{{ site.map }}</td>
+            </tr>
+            <tr>
+                <th>Principale</th>
+                <td>{% if site.principale %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+	{{ include('@App/Administration/footer-show.html.twig', {var: 'sites', obj:site.id}) }}
+{% endblock %}

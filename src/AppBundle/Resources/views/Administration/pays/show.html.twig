@@ -1,0 +1,28 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+	<a href="{{ path('administration_pays_index') }}">Pays</a> / Détails
+{% endblock %}
+
+{% block content %}
+	<h1>Détails d'un pays</h1>
+
+	<table>
+		<tbody>
+		<tr>
+			<th>Code</th>
+			<td>{{ pay.code }}</td>
+		</tr>
+		<tr>
+			<th>Nom Anglais</th>
+			<td>{{ pay.nomEN }}</td>
+		</tr>
+		<tr>
+			<th>Nom Français</th>
+			<td>{{ pay.nomFR }}</td>
+		</tr>
+		</tbody>
+	</table>
+	{{ include('@App/Administration/footer-show.html.twig', {var: 'pays', obj:pay.id}) }}
+
+{% endblock %}

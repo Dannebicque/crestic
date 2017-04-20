@@ -1,0 +1,43 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+	Revues /
+{% endblock %}
+
+{% block content %}
+    <h1>Revues list</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Titrerevue</th>
+                <th>Siglerevue</th>
+                <th>Internationale</th>
+                <th>Impactfactor</th>
+                <th>Classification</th>
+                <th>Url</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for revue in revues %}
+            <tr>
+                <td>{{ revue.titreRevue }}</td>
+                <td>{{ revue.sigleRevue }}</td>
+                <td>{% if revue.internationale %}Yes{% else %}No{% endif %}</td>
+                <td>{{ revue.impactFactor }}</td>
+                <td>{{ revue.classification }}</td>
+                <td>{{ revue.url }}</td>
+
+                <td>
+	                <a href="{{ path('administration_revues_show', { 'id': revue.id }) }}" class="btn btn-info"
+	                   title="Voir"><i class="fa fa-eye"></i> </a>
+	                <a href="{{ path('administration_revues_edit', { 'id': revue.id }) }}" class="btn
+                            btn-warning" title="Modifier"><i class="fa fa-pencil"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+	<a href="{{ path('administration_revues_new') }}" class="btn btn-primary">Créer une nouvelle revue</a>
+{% endblock %}

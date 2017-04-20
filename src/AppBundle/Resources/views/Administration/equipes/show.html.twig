@@ -1,0 +1,68 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+	<a href="{{ path('administration_equipes_index') }}">Equipes</a> / Détails /
+{% endblock %}
+
+{% block content %}
+    <h1>Détails d'une équipe</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ equipe.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ equipe.nom }}</td>
+            </tr>
+            <tr>
+                <th>Nomlong</th>
+                <td>{{ equipe.nomlong }}</td>
+            </tr>
+            <tr>
+                <th>Active</th>
+                <td>{% if equipe.active %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Themerecherche</th>
+                <td>{{ equipe.themeRecherche }}</td>
+            </tr>
+            <tr>
+                <th>Created</th>
+                <td>{% if equipe.created %}{{ equipe.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Updated</th>
+                <td>{% if equipe.updated %}{{ equipe.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ equipe.slug }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ equipe.image }}</td>
+            </tr>
+            <tr>
+                <th>Video</th>
+                <td>{{ equipe.video }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('administration_equipes_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('administration_equipes_edit', { 'id': equipe.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

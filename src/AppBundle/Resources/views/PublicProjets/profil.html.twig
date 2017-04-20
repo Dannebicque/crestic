@@ -1,0 +1,174 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}AppBundle:PublicProjets:profil{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<p class="lead text-center fadeInLeft-animated mb40">
+			{{ 'visiteur.projet.title'|trans }}
+			<b>
+				{{ projet.titre }}
+			</b>
+		</p>
+Slider
+		{#{{ html.getSlidersCarousel(projet.sliders,'divCarouselSliders')|raw }}#}
+
+		<!-- Begin Content 1 -->
+		<div class="row mt40">
+
+			<!-- Begin Tabs -->
+			<div class="col-sm-6">
+				<div class="heading mt15-xs">
+					<h4>
+						{{ 'visiteur.projet.description'|trans }}
+					</h4>
+				</div>
+				{{ projet.description|raw }}
+			</div>
+
+			<!-- Quick Info -->
+			<div class="col-sm-6">
+				<div class="heading text-center mt30-xs">
+					<h4>
+						{{ 'visiteur.projet.informations'|trans }}
+					</h4>
+				</div>
+
+				<dl class="dl-horizontal">
+					<dt>
+						{{ 'visiteur.projet.responsable'|trans }}
+					</dt>
+					<dd>
+						{% if projet.responsable != null %}
+							<a href="{{ path('public_membres_profil', {slug: projet.responsable.slug}) }}"
+							   title="Profil de {{ projet.responsable.display }}"
+							   target="_blank">{{ projet.responsable.display }}</a>
+						{% else %}
+							-
+						{% endif %}
+					</dd>
+					<dt>
+						{{ 'visiteur.projet.periode'|trans }}
+					</dt>
+					<dd>
+						{{ projet.dateDebut|date('d/m/Y') }} - {{ projet.dateFin|date('d/m/Y') }}
+					</dd>
+					<dt>
+						{{ 'visiteur.projet.contact'|trans }}
+					</dt>
+					<dd>
+						{%  if projet.responsable != null %}
+							<a href="mailto:{{ projet.responsable.email }}" target="_blank">{{ projet.responsable
+								.email }}</a>
+						{%  endif %}
+					</dd>
+					<dt>
+						{{ 'visiteur.projet.url'|trans }}
+					</dt>
+					<dd>
+						<a href="{{ projet.url }}" target="_blank">{{ projet.url }}
+						</a>
+					</dd>
+				</dl>
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="heading text-center mt30-xs">
+							<h4>
+								{{ 'visiteur.projet.financeurs'|trans }}
+							</h4>
+						</div>
+						{%  for partenaire in projet.partenaires if partenaire.financeur == true %}
+							<a href="" target="_blank" title="">
+								<img src="" alt="Logo de " />
+							</a>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<br />
+
+		<div class="row mt30">
+			<div class="col-sm-12">
+				<div class="heading">
+					<h4>
+						{{ 'visiteur.projet.dernierespublications'|trans }}
+					</h4>
+				</div>
+				Publications
+				{#{{ biblio.getListPublications(projet.publications, false)|raw }}#}
+			</div>
+		</div>
+
+		<br />
+
+		<div class="row mt30">
+
+			<div class="col-sm-12">
+				<div class="heading mt15-xs">
+					<h4>
+						{{ 'visiteur.projet.membresprojet'|trans }}
+					</h4>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-12" id="divMembresMosaique">
+						{% for membre in membres %}
+							<div id="membreCresticMosaique" class="row col-sm-3 text-center" style="margin-bottom:15px">
+								<div class="row text-center">
+									<div class="membreCresticMosaiqueImage col-sm-12">
+										<img src="{{ asset('uploads/membresCrestic/'~membre.membreCrestic.image) }}"
+										     style="width:auto;height:100px">
+									</div>
+									<div class="membreCresticMosaiqueMosaiqueStatus col-sm-12">-{{ membre
+										.membreCrestic.statutLong|trans	}}-</div>
+									<div class="membreCresticMosaiqueMosaiqueNom col-sm-12">
+										<a href="{{ path('public_membres_profil', {slug: membre.membreCrestic.slug}) }}"
+										   title="Profil de {{ membre.membreCrestic.display }}"
+										   target="_blank">{{ membre.membreCrestic.display }}</a>
+									</div>
+									<div class="col-sm-12">
+										<a class="membreCresticMosaiqueMosaiqueMail" href="mailto:{{ membre.membreCrestic.email }}"
+										   target="_blank">
+											<span class="ion-android-mail team-ico mr5 ml5"></span>
+										</a>
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row mt30">
+			<!-- Help -->
+			<div class="col-sm-12">
+				<div class="heading mt15-xs">
+					<h4>
+						{{ 'visiteur.projet.partenaires'|trans }}
+					</h4>
+				</div>
+				Partenaires
+				{#{{ html.getProjetsHasPartenairesVisiteur (projet.partenaires , 'col-sm-3' , -1)|raw }}#}
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+	var div_carousel_sliders = $('#divCarouselSliders');
+	var div_carousel_height  = '300px';
+	div_carousel_sliders.carousel();
+	$('#divCarouselSliders .carousel-inner').css('background-color' , 'none');
+	$('#divCarouselSliders .carousel-caption').css('background-color','none');
+	$('#divCarouselSliders').css('max-height' , div_carousel_height);
+	$('#divCarouselSliders').css('overflow'   ,'hidden');
+	$('#divCarouselSliders .item img').css('width' ,'auto');
+	$('#divCarouselSliders .item img').css('height' ,div_carousel_height);
+	$('#divCarouselSliders .item img').css('margin' ,'auto');
+
+</script>
+{% endblock %}

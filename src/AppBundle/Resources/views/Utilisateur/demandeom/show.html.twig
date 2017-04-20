@@ -1,0 +1,60 @@
+{% extends 'base-utilisateur.html.twig' %}
+
+{% block content %}
+    <h1>Détail de votre demande</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td colspan="3">{{ demandeOM.id }}</td>
+            </tr>
+            <tr>
+                <th>Datedepart</th>
+                <td>{% if demandeOM.dateDepart %}{{ demandeOM.dateDepart|date('Y-m-d') }}{% endif %}</td>
+	            <th>Heuredepart</th>
+	            <td>{% if demandeOM.heureDepart %}{{ demandeOM.heureDepart|date('H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Dateretour</th>
+                <td>{% if demandeOM.dateRetour %}{{ demandeOM.dateRetour|date('Y-m-d') }}{% endif %}</td>
+                <th>Heureretour</th>
+                <td>{% if demandeOM.heureRetour %}{{ demandeOM.heureRetour|date('H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Objet</th>
+                <td >{{ demandeOM.objet }}</td>
+            </tr>
+            <tr>
+                <th>Ville</th>
+                <td>{{ demandeOM.ville }}</td>
+	            <th>Pays</th>
+	            <td>{{ demandeOM.pays.nomFR }}</td>
+            </tr>
+            <tr>
+                <th>Commentaire</th>
+                <td colspan="3">{{ demandeOM.commentaire }}</td>
+            </tr>
+            <tr>
+                <th>Etat</th>
+                <td>{{ demandeOM.etat }}</td>
+                <th>Omsansfrais</th>
+                <td>{% if demandeOM.omSansFrais %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Lignebudget</th>
+                <td>{{ demandeOM.ligneBudget }}</td>
+                <th>Date demande</th>
+                <td>{% if demandeOM.created %}{{ demandeOM.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Etatdemande</th>
+                <td>{{ demandeOM.etatDemande }}</td>
+                <th>Dateetatdemande</th>
+                <td>{% if demandeOM.dateEtatDemande %}{{ demandeOM.dateEtatDemande|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+	{{ include('@App/Utilisateur/footer-show.html.twig', {var: 'demande-om', obj: demandeOM.id}) }}
+{% endblock %}

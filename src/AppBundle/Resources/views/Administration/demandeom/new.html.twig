@@ -1,0 +1,12 @@
+{% extends '::base-admin.html.twig' %}
+{% block breadcrumbs %}
+	<a href="{{ path('administration_demande-om_index') }}">Demandes d'OM</a> / Création /
+{% endblock %}
+{% block content %}
+    <h1>Ajout d'une demande d'OM</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+	{{ include('@App/Administration/footer-new.html.twig', {var: 'demande-om'}) }}
+    {{ form_end(form) }}
+{% endblock %}

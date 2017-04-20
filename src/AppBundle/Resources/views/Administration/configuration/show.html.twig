@@ -1,0 +1,29 @@
+{% extends '::base-admin.html.twig' %}
+{% block breadcrumbs %}
+	<a href="{{ path('administration_configuration_index') }}">Configuration</a> / Détails /
+{% endblock %}
+{% block content %}
+    <h1>Détails de la configuration</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ config.id }}</td>
+            </tr>
+            <tr>
+                <th>Cle</th>
+                <td>{{ config.cle }}</td>
+            </tr>
+            <tr>
+                <th>Value</th>
+                <td>{{ config.value }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+	{{ include('@App/Administration/footer-show.html.twig', {var: 'configuration', obj:config.id}) }}
+
+
+
+{% endblock %}

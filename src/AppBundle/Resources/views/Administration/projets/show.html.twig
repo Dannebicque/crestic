@@ -1,0 +1,87 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+	<a href="{{ path('administration_projets_index') }}">Projets</a> / Détails
+{% endblock %}
+
+{% block content %}
+    <h1>Détails d'un projet</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ projet.id }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ projet.titre }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ projet.description }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ projet.slug }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ projet.image }}</td>
+            </tr>
+            <tr>
+                <th>Datedebut</th>
+                <td>{% if projet.dateDebut %}{{ projet.dateDebut|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Datefin</th>
+                <td>{% if projet.dateFin %}{{ projet.dateFin|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Financement</th>
+                <td>{{ projet.financement }}</td>
+            </tr>
+            <tr>
+                <th>Url</th>
+                <td>{{ projet.url }}</td>
+            </tr>
+            <tr>
+                <th>Budgetglobal</th>
+                <td>{{ projet.budgetGlobal }}</td>
+            </tr>
+            <tr>
+                <th>Actif</th>
+                <td>{% if projet.actif %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Created</th>
+                <td>{% if projet.created %}{{ projet.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Updated</th>
+                <td>{% if projet.updated %}{{ projet.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Video</th>
+                <td>{{ projet.video }}</td>
+            </tr>
+            <tr>
+                <th>Projetinternational</th>
+                <td>{% if projet.projetInternational %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Projetvalorisation</th>
+                <td>{% if projet.projetValorisation %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Projetthese</th>
+                <td>{% if projet.projetThese %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Projetri</th>
+                <td>{% if projet.projetRi %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+	{{ include('@App/Administration/footer-show.html.twig', {var: 'projets', obj:projet.id}) }}
+{% endblock %}

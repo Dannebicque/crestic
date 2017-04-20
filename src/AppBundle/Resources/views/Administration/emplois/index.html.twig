@@ -1,0 +1,45 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+	Offres d'emplois /
+{% endblock %}
+
+{% block content %}
+	<h1>Emplois list</h1>
+
+	<table class="table">
+		<thead>
+		<tr>
+			<th>Titre</th>
+			<th>Resume</th>
+			<th>Debut</th>
+			<th>Duree</th>
+			<th>Pourvue</th>
+			<th>Actions</th>
+		</tr>
+		</thead>
+		<tbody>
+		{% for emploi in emplois %}
+			<tr>
+				<td>{{ emploi.titre }}</td>
+				<td>{{ emploi.resume }}</td>
+				<td>{{ emploi.description }}</td>
+				<td>{% if emploi.debut %}{{ emploi.debut|date('Y-m-d') }}{% endif %}</td>
+				<td>{{ emploi.duree }}</td>
+				<td>{% if emploi.pourvue %}Yes{% else %}No{% endif %}</td>
+				<td>
+					<a href="{{ path('administration_emplois_show', { 'id': emploi.id }) }}" class="btn btn-info"
+					   title="Voir"><i class="fa fa-eye"></i> </a>
+					<a href="{{ path('administration_emplois_edit', { 'id': emploi.id }) }}" class="btn
+                            btn-warning" title="Modifier"><i class="fa fa-pencil"></i></a>
+				</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	<ul>
+		<li>
+			<a href="{{ path('administration_emplois_new') }}" class="btn btn-primary">Create a new emplois</a>
+		</li>
+	</ul>
+{% endblock %}

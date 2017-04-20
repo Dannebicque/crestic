@@ -1,0 +1,41 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+	Actualités /
+{% endblock %}
+
+{% block content %}
+    <h1>Liste des actualités</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+	            <th>Titre</th>
+	            <th>Image</th>
+                <th>Mots clés</th>
+                <th>Slug</th>
+	            <th>Posté le</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for actualite in actualites %}
+            <tr>
+                <td>{{ actualite.titre }}</td>
+	            <td></td>
+                <td>{{ actualite.keywords }}</td>
+                <td>{{ actualite.slug }}</td>
+	            <td>{% if actualite.updated %}{{ actualite.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+	            <td>
+		            <a href="{{ path('administration_actualites_show', { 'id': actualite.id }) }}" class="btn btn-info"
+		               title="Voir"><i class="fa fa-eye"></i> </a>
+		            <a href="{{ path('administration_actualites_edit', { 'id': actualite.id }) }}" class="btn
+                            btn-warning" title="Modifier"><i class="fa fa-pencil"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+	<a href="{{ path('administration_actualites_new') }}" class="btn btn-primary">Ajouter une nouvelle actualité</a>
+
+{% endblock %}

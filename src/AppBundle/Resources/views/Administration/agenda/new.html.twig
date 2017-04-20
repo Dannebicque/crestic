@@ -1,0 +1,15 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+	<a href="{{ path('administration_agenda_index') }}">Agenda</a> / Création /
+{% endblock %}
+
+{% block content %}
+    <h1>Ajout d'un événement</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+	{{ include('@App/Administration/footer-new.html.twig', {var: 'agenda'}) }}
+
+	{{ form_end(form) }}
+{% endblock %}

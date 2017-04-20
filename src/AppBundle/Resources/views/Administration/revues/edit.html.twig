@@ -1,0 +1,17 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+	<a href="{{ path('administration_revues_index') }}">Revues</a> / Modification
+{% endblock %}
+
+{% block content %}
+    <h1>Modification d'une revue</h1>
+
+    {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+
+    {{ include('@App/Administration/footer-edit.html.twig', {var: 'revues'}) }}
+
+	{{ form_end(edit_form) }}
+
+{% endblock %}

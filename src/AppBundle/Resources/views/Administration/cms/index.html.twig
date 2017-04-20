@@ -1,0 +1,37 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+	Pages /
+{% endblock %}
+
+{% block content %}
+	<h1>Gestion des pages de contenus</h1>
+
+	<table class="table">
+		<thead>
+		<tr>
+			<th>Titre</th>
+			<th>Mise à jour</th>
+			<th>Slug</th>
+			<th>Actions</th>
+		</tr>
+		</thead>
+		<tbody>
+		{% for cm in cms %}
+			<tr>
+				<td>{{ cm.titre }}</td>
+				<td>{% if cm.updated %}{{ cm.updated|date('d/m/Y H:i') }}{% endif %}</td>
+				<td>{{ cm.slug }}</td>
+				<td>
+					<a href="{{ path('administration_cms_show', { 'id': cm.id }) }}" class="btn btn-info"
+					   title="Voir"><i class="fa fa-eye"></i> </a>
+					<a href="{{ path('administration_cms_edit', { 'id': cm.id }) }}" class="btn
+                            btn-warning" title="Modifier"><i class="fa fa-pencil"></i></a>
+				</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+{# todo: supprimer le bouton de création #}
+	<a href="{{ path('administration_cms_new') }}" class="btn btn-primary">Créer une nouvelle page</a>
+{% endblock %}

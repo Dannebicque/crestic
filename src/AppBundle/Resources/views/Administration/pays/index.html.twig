@@ -1,0 +1,42 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+	Pays /
+{% endblock %}
+
+{% block content %}
+    <h1>Pays list</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Alpha2</th>
+                <th>Alpha3</th>
+                <th>Nomen</th>
+                <th>Nomfr</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for pay in pays %}
+            <tr>
+                <td>{{ pay.code }}</td>
+                <td>{{ pay.alpha2 }}</td>
+                <td>{{ pay.alpha3 }}</td>
+                <td>{{ pay.nomEN }}</td>
+                <td>{{ pay.nomFR }}</td>
+                <td>
+	                <a href="{{ path('administration_pays_show', { 'id': pay.id }) }}" class="btn btn-info"
+	                   title="Voir"><i class="fa fa-eye"></i> </a>
+	                <a href="{{ path('administration_pays_edit', { 'id': pay.id }) }}" class="btn
+                            btn-warning" title="Modifier"><i class="fa fa-pencil"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+	<a href="{{ path('administration_pays_new') }}" class="btn btn-primary">Créer un nouveau
+	                                                                           pays</a>
+
+{% endblock %}

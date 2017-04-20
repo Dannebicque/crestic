@@ -1,0 +1,59 @@
+{% extends '::base-admin.html.twig' %}
+{% block breadcrumbs %}
+	<a href="{{ path('administration_conferences_index') }}">Conférences</a> / Détails /
+{% endblock %}
+{% block content %}
+    <h1>Détails d'une conférence</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ conference.id }}</td>
+            </tr>
+            <tr>
+                <th>Nomconference</th>
+                <td>{{ conference.nomConference }}</td>
+            </tr>
+            <tr>
+                <th>Sigleconference</th>
+                <td>{{ conference.sigleConference }}</td>
+            </tr>
+            <tr>
+                <th>Ville</th>
+                <td>{{ conference.ville }}</td>
+            </tr>
+            <tr>
+                <th>Datedebut</th>
+                <td>{% if conference.dateDebut %}{{ conference.dateDebut|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Datefin</th>
+                <td>{% if conference.dateFin %}{{ conference.dateFin|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Tauxselection</th>
+                <td>{{ conference.tauxSelection }}</td>
+            </tr>
+            <tr>
+                <th>Url</th>
+                <td>{{ conference.url }}</td>
+            </tr>
+            <tr>
+                <th>Internationale</th>
+                <td>{% if conference.internationale %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Created</th>
+                <td>{% if conference.created %}{{ conference.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Updated</th>
+                <td>{% if conference.updated %}{{ conference.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+	{{ include('@App/Administration/footer-show.html.twig', {var: 'conference', obj:conference.id}) }}
+
+{% endblock %}

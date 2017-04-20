@@ -1,0 +1,151 @@
+{% extends('::base-utilisateur.html.twig') %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="heading mb20">
+				<h2>
+					{{ 'utilisateur.home'|trans }}
+				</h2>
+			</div>
+			<br>
+			<div class="row">
+				<div class="col-sm-3" style="text-align: center">
+					<a href="{{ path('utilisateur_membres_edit') }}">
+						<span class="ion-android-contact bordered-icon-lg"></span><br />
+						Modifier vos informations
+					</a>
+				</div>
+				<div class="col-sm-3" style="text-align: center">
+					<a href="{{ path('utilisateur_publications_index') }}">
+						<span class="ion-android-book bordered-icon-lg"></span><br />
+						Gérer vos publications
+					</a>
+				</div>
+				<div class="col-sm-3" style="text-align: center">
+					<a href="{{ path('utilisateur_demande-om_index') }}">
+						<span class="ion-map bordered-icon-lg"></span><br />
+						Gérer vos demandes d'OMs
+					</a>
+				</div>
+				<div class="col-sm-3" style="text-align: center">
+					<a href="{{ path('utilisateur_activites_index') }}">
+						<span class="ion-clipboard bordered-icon-lg"></span><br />
+						Activités/"blog"
+					</a>
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<div class="col-sm-8">
+				<div class="heading mb20">
+					<h4>
+						{{ 'utilisateur.activites.title'|trans }}
+					</h4>
+				</div>
+				Dernières activitées enregistrées
+				</div>
+				<div class="col-sm-4">
+					<div class="heading mb20">
+						<h4>
+							{{ 'utilisateur.demandesOM.title'|trans }}
+						</h4>
+					</div>
+					{#{{ html.getList (app.user.demandesOM)  | raw }}#}
+				</div>
+			</div>
+
+			<div class="row">
+
+				<div class="col-sm-12">
+					<div class="heading mb20">
+						<h4>
+							{{ 'utilisateur.publications.title'|trans }}
+						</h4>
+					</div>
+					{#{{ biblio.getListPublications(app.user.publicationsHasMembres) | raw }}#}
+				</div>
+			</div>
+
+
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="heading mb20">
+						<h4>
+							{{ 'utilisateur.departements.title'|trans }}
+						</h4>
+					</div>
+					{% if user.departementMembre != null %}
+						<a href="{{ path('public_departement', {slug:user.departementMembre.slug}) }}" title="Voir
+						le département" target="_blank">{{
+							user.departementMembre.nom }}</a>
+					{% endif %}
+				</div>
+				<div class="col-sm-6">
+					<div class="heading mb20">
+						<h4>
+							{{ 'utilisateur.equipes.title'|trans }}
+						</h4>
+					</div>
+					<ul>
+					{% for equipe in user.equipes %}
+						<li><a href="{{ path('public_equipes_profil', {slug:equipe.equipe.slug}) }}" title="Voir
+						l'équipe" target="_blank">{{
+								equipe.equipe.nom }}</a></li>
+						{% endfor %}
+					</ul>
+				</div>
+
+
+			</div>
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="heading mb20">
+						<h4>
+							{{ 'utilisateur.plateformes.title'|trans }}
+						</h4>
+					</div>
+					<ul>
+						{% for plateforme in user.plateformes %}
+							<li><a href="{{ path('public_equipes_profil', {slug:plateforme.plateforme.slug}) }}"
+							       title="Voir la plateforme" target="_blank">{{
+									plateforme.plateforme.nom }}</a></li>
+						{% endfor %}
+					</ul>
+				</div>
+
+				<div class="col-sm-4">
+					<div class="heading mb20">
+						<h4>
+							{{ 'utilisateur.projets.title'|trans }}
+						</h4>
+					</div>
+					<ul>
+						{% for projet in user.projets %}
+							<li><a href="{{ path('public_equipes_profil', {slug:projet.projet.slug}) }}"
+							       title="Voir le projet" target="_blank">{{
+									projet.projet.nom }}</a></li>
+						{% endfor %}
+					</ul>
+				</div>
+				{#<div class="col-sm-6">#}
+					{#<div class="heading mb20">#}
+						{#<h4>#}
+							{#{{ 'utilisateur.kernelIndex.reseaux.title'|trans }}#}
+						{#</h4>#}
+					{#</div>#}
+					{#{{ html.getEntity1HasEntity2 (app.user.reseaux , 'getReseau') | raw }}#}
+				{#</div>#}
+
+				<div class="col-sm-4">
+					<div class="heading mb20">
+						<h4>
+							{{ 'utilisateur.emplois.title'|trans }}
+						</h4>
+					</div>
+					{#{{ html.getList (app.user.emplois) | raw }}#}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

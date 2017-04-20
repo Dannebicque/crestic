@@ -1,0 +1,47 @@
+{% extends '::base-admin.html.twig' %}
+
+
+{% block breadcrumbs %}
+	<a href="{{ path('administration_emplois_index') }}">Offres d'emplois</a> / Détails /
+{% endblock %}
+
+{% block content %}
+	<h1>Détails d'une offre d'emploi</h1>
+
+	<table class="table">
+		<tbody>
+		<tr>
+			<th>Titre</th>
+			<td colspan="3">{{ emplois.titre }}</td>
+		</tr>
+		<tr>
+			<th>Resume</th>
+			<td colspan="3">{{ emplois.resume }}</td>
+		</tr>
+		<tr>
+			<th>Description</th>
+			<td colspan="3">{{ emplois.description }}</td>
+		</tr>
+		<tr>
+			<th>Debut souhaité</th>
+			<td>{% if emplois.debut %}{{ emplois.debut|date('Y-m-d') }}{% endif %}</td>
+			<th>Duree</th>
+			<td>{{ emplois.duree }}</td>
+		</tr>
+		<tr>
+			<th>Pdf</th>
+			<td>{{ emplois.pdf }}</td>
+			<th>Pourvue</th>
+			<td>{% if emplois.pourvue %}Yes{% else %}No{% endif %}</td>
+		</tr>
+		<tr>
+			<th>Created</th>
+			<td>{% if emplois.created %}{{ emplois.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+			<th>Updated</th>
+			<td>{% if emplois.updated %}{{ emplois.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+		</tr>
+		</tbody>
+	</table>
+
+	{{ include('@App/Administration/footer-show.html.twig', {var: 'emplois', obj:emplois.id}) }}
+{% endblock %}

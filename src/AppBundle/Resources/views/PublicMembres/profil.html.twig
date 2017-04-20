@@ -1,0 +1,335 @@
+{% extends '::base.html.twig' %}
+
+{% block content %}
+	<div class="heading mb20">
+		<h3>
+			A propos de {{ user.display|raw }} - {{ user.statutLong|trans }}
+		</h3>
+	</div>
+			<div class="row">
+				<div class="col-sm-4 text-center">
+					<div class="content-box-profile content-box-bordered no-margin">
+						<img src="{{ asset('uploads/membresCrestic/'~user.image) }}" height="200px" alt="Photo de {{
+						user.display }}" />
+						{% if user.membreAssocie == true %}
+							<p>{{ 'visiteur.membreAssocie'|trans }}</p>
+						{% endif %}
+
+						{#{% if user.membreConseilLabo == true %}#}
+							{#<p>{{ 'visiteur.membreConseilLabo'|trans }}</p>#}
+						{#{% endif %}#}
+
+						<h4 class="team-member-name-imgtop">
+							Infos
+						</h4>
+						{% if is_granted('ROLE_UTILISATEUR') %}
+							<dl >
+								<dt>
+									Corps/Grade
+								</dt>
+								<dd>
+									{{ user.corpsgrade }}
+								</dd>
+								{#<dt>#}
+									{#Discipline HCERES#}
+								{#</dt>#}
+								{#<dd>#}
+									{#{{ user.disciplinehceres }}#}
+								{#</dd>#}
+								<dt>
+									Date Nomination CReSTIC
+								</dt>
+								<dd>
+									{{ user.datenomination|date('d/m/Y') }}
+								</dd>
+								{#<dt>#}
+									{#HDR#}
+								{#</dt>#}
+								{#<dd>#}
+									{#{% if user.hdr == true %} HDR {% else %} - {% endif %}#}
+								{#</dd>#}
+							</dl>
+						{% endif %}
+
+						<h4 class="team-member-name-imgtop">
+							Contacts
+						</h4>
+						<dl>
+							<dt>
+								Email
+							</dt>
+							<dd>
+								<a href="mailto:{{ user.email }}" target="_blank">{{ user.email }}</a>
+							</dd>
+							<dt>
+								Téléphone
+							</dt>
+							<dd>
+								{{ user.tel }}
+							</dd>
+							<dt>
+								Téléphone portable
+							</dt>
+							<dd>
+								{{ user.telPortable }}
+							</dd>
+							{% if user.url != '' %}
+								<dt>
+									Site Web
+								</dt>
+								<dd>
+									<a href="{{ user.url }}" target="_blank">{{ user.url }}</a>
+								</dd>
+							{% endif %}
+						</dl>
+						<div class="team-description">
+							{#todo: réseaux sociaux#}
+							{#{{ html.getEntity1HasEntity2 (user.reseaux , 'getReseau') | raw }}#}
+							<!-- Social -->
+							<a href="#"><span class="ion-social-twitter team-ico mr15"></span></a>
+							<a href="#"><span class="ion-social-facebook team-ico mr15"></span></a>
+							<a href="#"><span class="ion-social-googleplus-outline team-ico"></span></a>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="col-sm-8">
+
+					<h4>{% if user.departementMembre != null %} {{ 'visiteur.MembresCrestic.departement'|trans
+						}} :	{{ user
+						.departementMembre }}{%	endif %} <br>
+						{% if user.cnu != '' and user.cnu != null %} CNU : {{ user.cnu }}{% endif %}</h4>
+					<br/>
+					<h4>Localisation</h4>
+
+					{{ user.adresse }} <br/>
+					{{ user.localisation }}
+					<br/>
+					<h4>CV</h4>
+					{{ user.cv|raw }}
+					<br>
+					<div class="row">
+						<div class="col-sm-6">
+							Responsable de Plateformes :
+						</div>
+						<div class="col-sm-6">
+
+							{#{{ html.getList (user.plateformes) | raw }}#}
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-6">
+							Appartient aux équipes :
+						</div>
+						<div class="col-sm-6">
+							{#{{ html.getEntity1HasEntity2 (user.equipesHasMembres , 'getEquipe') | raw }}#}
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-6">
+							Responsable d'equipe
+						</div>
+						<div class="col-sm-6">
+							{#{{ html.getList (user.equipes) | raw }}#}
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-6">
+							Responsable de departements :
+						</div>
+						<div class="col-sm-6">
+							{#{{ html.getList (user.departements , 'reseaux') | raw }}#}
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="heading mt30">
+				<h4>
+					{{ 'visiteur.MembresCrestic.activites'| trans }}
+				</h4>
+			</div>
+
+			<!-- Begin Tabs Justified -->
+			<ul id="membresTabActivites" class="nav nav-tabs nav-justified mt15" role="tablist">
+				{% if attribute (user,'themes') is not empty %}
+					<li>
+						<a href="#themes" role="tab" data-toggle="tab">
+							{{ 'visiteur.MembresCrestic.themes'| trans }}
+						</a>
+					</li>
+				{% endif %}
+
+				{% if attribute (user,'valorisation') is not empty %}
+					<li>
+						<a href="#valorisation" role="tab" data-toggle="tab">
+							{{ 'visiteur.MembresCrestic.valorisation'| trans }}
+						</a>
+					</li>
+				{% endif %}
+
+				{% if attribute (user,'vulgarisation') is not empty %}
+					<li>
+						<a href="#vulgarisation" role="tab" data-toggle="tab">
+							{{ 'visiteur.MembresCrestic.vulgarisation'| trans }}
+						</a>
+					</li>
+				{% endif %}
+
+				{% if attribute (user,'international') is not empty %}
+					<li>
+						<a href="#international" role="tab" data-toggle="tab">
+							{{ 'visiteur.MembresCrestic.international'| trans }}
+						</a>
+					</li>
+				{% endif %}
+
+				{% if attribute (user,'enseignements') is not empty %}
+					<li>
+						<a href="#enseignements" role="tab" data-toggle="tab">
+							{{ 'visiteur.MembresCrestic.enseignements'| trans }}
+						</a>
+					</li>
+				{% endif %}
+
+				{% if attribute (user,'responsabilitesScientifiques') is not empty %}
+					<li>
+						<a href="#responsabilitesScientifiques" role="tab" data-toggle="tab">
+							{{ 'visiteur.MembresCrestic.responsabilitesScientifiques'| trans }}
+						</a>
+					</li>
+				{% endif %}
+
+				{% if attribute (user,'responsabilitesAdministratives') is not empty %}
+					<li>
+						<a href="#responsabilitesAdministratives" role="tab" data-toggle="tab">
+							{{ 'visiteur.MembresCrestic.responsabilitesAdministratives'| trans }}
+						</a>
+					</li>
+				{% endif %}
+
+				{% if attribute (user,'evaluation') is not empty %}
+					<li>
+						<a href="#evaluation" role="tab" data-toggle="tab">
+							{{ 'visiteur.MembresCrestic.evaluation'| trans }}
+						</a>
+					</li>
+				{% endif %}
+
+				{% if attribute (user,'editorial') is not empty %}
+					<li>
+						<a href="#editorial" role="tab" data-toggle="tab">
+							{{ 'visiteur.MembresCrestic.editoriale'| trans }}
+						</a>
+					</li>
+				{% endif %}
+			</ul>
+
+			<div id="membresTabDivActivites" class="tab-content tab-default mb15">
+
+				{% if attribute (user,'responsabilitesAdministratives') is not empty %}
+					<div class="tab-pane" id="responsabilitesAdministratives">
+						{{ user.responsabilitesAdministratives|raw }}
+
+					</div>
+				{% endif %}
+
+				{% if attribute (user,'valorisation') is not empty %}
+					<div class="tab-pane" id="valorisation">
+						{{ user.valorisation|raw }}
+
+					</div>
+				{% endif %}
+
+				{% if attribute (user,'vulgarisation') is not empty %}
+					<div class="tab-pane" id="vulgarisation">
+						{{ user.vulgarisation|raw }}
+
+					</div>
+				{% endif %}
+
+				{% if attribute (user,'international') is not empty %}
+					<div class="tab-pane" id="international">
+						{{ user.international|raw }}
+
+					</div>
+				{% endif %}
+
+				{% if attribute (user,'enseignements') is not empty %}
+					<div class="tab-pane" id="enseignements">
+						{{ user.enseignements|raw }}
+
+					</div>
+				{% endif %}
+
+				{% if attribute (user,'responsabilitesScientifiques') is not empty %}
+					<div class="tab-pane" id="responsabilitesScientifiques">
+						{{ user.responsabilitesScientifiques|raw }}
+
+					</div>
+				{% endif %}
+
+				{% if attribute (user,'themes') is not empty %}
+					<div class="tab-pane" id="themes">
+						{{ user.themes|raw }}
+
+					</div>
+				{% endif %}
+
+				{% if attribute (user,'evaluation') is not empty %}
+					<div class="tab-pane" id="evaluation">
+						{{ user.evaluation|raw }}
+
+					</div>
+				{% endif %}
+
+				{% if attribute (user,'editorial') is not empty %}
+					<div class="tab-pane" id="editorial">
+						{{ user.editorial|raw }}
+
+					</div>
+				{% endif %}
+			</div>
+
+			<div class="row col-sm-12">
+
+				<div class="row">
+					<div class="col-sm-12">
+						<h4 class="team-member-name-imgtop">
+							{{ 'visiteur.MembresCrestic.publications'|trans }}
+						</h4>
+						{#{{ biblio.getListPublications (user.publicationsHasMembres) | raw }}#}
+					</div>
+				</div>
+
+
+			</div>
+		{#</div>#}
+	{#</div>#}
+{% endblock %}
+
+{% block javascripts %}
+	<script>
+		$(document).ready(function () {
+			var max_height = 0;
+			$('#membresTabActivites a:first').tab('show');
+
+
+			$('#membresTabActivites a').each(function () {
+				var id_tab = $(this).attr('href');
+				if (max_height < $(id_tab).height()) {
+					max_height = $(id_tab).height();
+				}
+			});
+
+			$("#membresTabDivActivites").height(max_height);
+
+			$('.link-share').attr('data-link', '/fiche/membre/{{ user.slug }}');
+
+		});
+	</script>
+{% endblock %}

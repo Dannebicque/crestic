@@ -1,0 +1,270 @@
+{% extends 'base-utilisateur.html.twig' %}
+
+{% block breadcrumbs %}
+	<a href="">Vos Publications</a> / Ajout d'une publication / étape 2
+{% endblock %}
+{% block content %}
+	<h2>Ajout d'une publication | Etape 2 / 2</h2>
+	<div class="heading pt15">
+		<h3>Ajout des auteurs</h3>
+	</div>
+
+	<div class="row">
+		<div class="form-group">
+			<label class="col-sm-3" for="auteur">Rechercher un auteur</label>
+			<div class="col-sm-9">
+				<input type="text" class="form-control" id="auteur" name="auteur">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-3">Selectionnez dans la liste</label>
+			<div class="col-sm-9" id="resultats">
+				Commencer à saisir les premières lettres du nom de l'auteur
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12" id="listeauteurs">
+			<strong>Liste des auteurs de la publication</strong>
+			<table class="table">
+				{% for auteur in auteurs %}
+					<tr id="lig_{{ auteur.id }}_{{ auteur.type }}">
+						<td>{{ auteur.position }}</td>
+						<td>
+							{{ auteur.prenom }} {{ auteur.nom }}
+						</td>
+						<td style="width:20%">
+
+							<button class="btn btn-primary" {% if loop.first %} disabled {% endif %}><span class="fa
+							fa-arrow-circle-o-up"></span></button>
+							<button class="btn btn-primary" {% if loop.last %} disabled {% endif %}><span class="fa
+							fa-arrow-circle-o-down"></span></button>
+							<button class="btn btn-info"><span class="fa fa-eye"></span></button>
+							<button class="btn btn-danger supprimer" data-id="{{ auteur.id }}" data-type="{{ auteur
+							.type }}">
+								<span class="fa fa-times"></span></button>
+						</td>
+					</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+	<div class="heading pt15">
+
+		<h3>Association de la publications</h3>
+	</div>
+	<div class="heading pt15">
+
+		<h4>Equipes</h4>
+	</div>
+
+	<div class="row">
+		{% for equipe in equipes %}
+			<div class="col-sm-4">
+				<label for="eq{{ equipe.id }}" {% if publiHasEquipes[equipe.id] is
+				defined %} class="success" {% endif %}><input type="checkbox" id="eq{{ equipe.id }}" class="add_equipe" value="{{ equipe.id }}" {% if publiHasEquipes[equipe.id] is
+					defined %} checked {% endif %}> {{ equipe.nom }}</label>
+			</div>
+		{% endfor %}
+	</div>
+	<div class="heading pt15">
+		<h4>Projets</h4>
+	</div>
+	<div class="row">
+		{% for projet in projets %}
+			<div class="col-sm-4">
+				<label for="pr{{ projet.id }}" {% if publiHasProjets[projet.id] is
+				defined %} class="success" {% endif %}><input type="checkbox" id="pr{{ projet.id }}" class="add_projet"
+				                                              value="{{ projet.id }}" {% if publiHasProjets[projet.id] is
+					defined %} checked {% endif %}> {{ projet.titre }}</label>
+			</div>
+		{% endfor %}
+	</div>
+	<div class="heading pt15">
+		<h4>Plateformes</h4>
+	</div>
+	<div class="row">
+		{% for plateforme in plateformes %}
+			<div class="col-sm-4">
+				<label for="pl{{ plateforme.id }}" {% if publiHasPlateformes[plateforme.id] is
+				defined %} class="success" {% endif %}><input type="checkbox" id="pl{{ plateforme.id }}"
+				                                              class="add_plateforme"
+				                                              value="{{ plateforme.id }}" {% if publiHasPlateformes[plateforme
+					.id] is
+					defined %} checked {% endif %}> {{ plateforme.nom }}</label>
+			</div>
+		{% endfor %}
+
+	</div>
+	<br /><br />
+	<div class="alert alert-info-rw"> Les éléments sont enregistrés en temps réels. Vous pouvez quitter et revenir
+	                                  plus tard associer des éléments
+	</div>
+
+	<div class="row">
+		<div class="col-sm-7">&nbsp;</div>
+		<div class="col-sm-5" style="text-align: right">
+			<input type="submit" class="btn btn-danger" value="Annuler et supprimer la publication" />
+			<a href="{{ path('utilisateur_publications_index') }}" class="btn btn-success">Terminer</a>&nbsp;&nbsp;
+		</div>
+	</div>
+{% endblock %}
+
+	{% block javascripts %}
+		<script>
+			$(document).ready(function (e) {
+				$('#auteur').keyup(function () {
+					$val = $(this).val();
+					$resultat = $('#resultats');
+					$liste = $('#listeauteurs');
+					if ($val.length > 2) {
+						$.ajax({
+							url: "{{ path('ajax_search_auteur') }}",
+							data: {'lettres': $val},
+							dataType: 'JSON',
+							method: 'POST',
+							success: function (data) {
+								$html = "";
+								$.each(data, function (index) {
+									auteur = data[index];
+									console.log(auteur.nom);
+									$html = $html + "<button data-id=\"" +
+										auteur.id + "\" class=\"btn btn-primary select-auteur\"><span class=\"fa " +
+										"fa-plus-circle\"></span>" + auteur.prenom
+										+ " " + auteur.nom + " (" + auteur.status + ")</button>&nbsp;"
+								});
+								$resultat.empty().append($html);
+								$('.select-auteur').click(function () {
+									$.ajax({
+										url: "{{ path('ajax_add_auteur') }}",
+										data: {'auteur': $(this).data('id'), 'publication': {{ publication.id }} },
+										dataType: 'JSON',
+										method: 'POST',
+										success: function (data) {
+											$html = '<table class="table">';
+
+											$.each(data, function (index) {
+												auteur = data[index];
+												disabledup = '';
+												disableddown = '';
+												if (auteur.position === 1) {
+													disabledup = 'disabled';
+												}
+
+												if (auteur.position === data.length) {
+													disableddown = 'disabled';
+												}
+												$html = $html + '<tr>';
+												$html = $html + '<td>' + auteur.position + '</td>';
+												$html = $html + '<td>';
+												$html = $html + auteur.prenom + " " + auteur.nom;
+												$html = $html + '</td>';
+												$html = $html + '<td style="width:20%">';
+												$html = $html + '<button class="btn btn-primary" ' +
+													disabledup + '><span class="fa ' +
+													'fa-arrow-circle-o-up"></span></button>';
+												$html = $html + '<button class="btn btn-primary" ' + disableddown +
+													'><span class="fa fa-arrow-circle-o-down"></span></button>';
+												$html = $html + '<button class="btn btn-info"><span class="fa ' +
+													'fa-eye"></span></button>';
+												$html = $html + '<button class="btn btn-danger"><span class="fa ' +
+													'fa-times"></span></button>';
+												$html = $html + '</td>';
+												$html = $html + '</tr>';
+
+											});
+											$html = $html + '</table>';
+											$liste.empty().append($html);
+											$('.supprimer').click(function (e) {
+												supprimer($(this));
+											});
+										}
+									});
+								});
+							},
+							error: function (e) {
+
+							}
+						});
+					} else {
+						$resultat.empty();
+					}
+				});
+
+				$('.add_equipe').change(function () {
+					if ($(this).is(':checked')) {
+						update('equipe', $(this).val(), 'add');
+
+						$(this).parent().addClass('success');
+					}
+					else {
+						update('equipe', $(this).val(), 'remove');
+						$(this).parent().removeClass('success');
+					}
+				});
+
+				$('.add_projet').change(function () {
+					if ($(this).is(':checked')) {
+						update('projet', $(this).val(), 'add');
+
+						$(this).parent().addClass('success');
+					}
+					else {
+						update('projet', $(this).val(), 'remove');
+						$(this).parent().removeClass('success');
+					}
+				});
+
+				$('.add_plateforme').change(function () {
+					if ($(this).is(':checked')) {
+						update('plateforme', $(this).val(), 'add');
+
+						$(this).parent().addClass('success');
+					}
+					else {
+						update('plateforme', $(this).val(), 'remove');
+						$(this).parent().removeClass('success');
+					}
+				});
+
+				function update($type, $id, $valeur) {
+					$.ajax({
+						url: "{{ path('ajax_add_options') }}",
+						method: 'post',
+						data: {
+							'type': $type,
+							'id': $id,
+							'valeur': $valeur,
+							'publication': {{ publication.id }}
+						}
+					});
+				}
+
+				$('.supprimer').click(function (e) {
+					supprimer($(this));
+				});
+
+				function supprimer($obj) {
+					$type = $obj.data('type');
+					$id = $obj.data('id');
+
+					$.ajax({
+						url: "{{ path('ajax_suppr_auteur') }}",
+						method: 'post',
+						data: {
+							'type': $type,
+							'id': $id,
+							'publication': {{ publication.id }}
+						},
+						success: function (e) {
+							//suppression de la ligne du tableau
+							$('#lig_' + $id + "_" + $type).remove();
+
+						}
+					});
+				}
+			});
+
+		</script>
+	{% endblock %}

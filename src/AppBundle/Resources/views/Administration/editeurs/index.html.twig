@@ -1,0 +1,37 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+	Editeurs /
+{% endblock %}
+
+{% block content %}
+    <h1>Editeurs list</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Lien</th>
+                <th>Ville</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for editeur in editeurs %}
+            <tr>
+                <td>{{ editeur.nom }}</td>
+                <td>{{ editeur.lien }}</td>
+                <td>{{ editeur.ville }}</td>
+                <td>
+	                <a href="{{ path('administration_editeur_show', { 'id': editeur.id }) }}" class="btn btn-info"
+	                   title="Voir"><i class="fa fa-eye"></i> </a>
+	                <a href="{{ path('administration_editeur_edit', { 'id': editeur.id }) }}" class="btn
+                            btn-warning" title="Modifier"><i class="fa fa-pencil"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+	<a href="{{ path('administration_editeur_new') }}" class="btn btn-primary">Créer un nouvel
+	                                                                                 éditeur</a>
+{% endblock %}

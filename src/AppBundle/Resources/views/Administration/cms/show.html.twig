@@ -1,0 +1,13 @@
+{% extends '::base-admin.html.twig' %}
+{% block breadcrumbs %}
+	<a href="{{ path('administration_cms_index') }}">Pages</a> / Détails /
+{% endblock %}
+{% block content %}
+    <h1>Aperçu de la page</h1>
+	{{ include('@App/Administration/footer-show.html.twig', {var: 'cms', obj:cm.id}) }}
+	<br>
+	{{ include('@App/Includes/inc.page.html.twig') }}
+	<br>
+	{{ include('@App/Administration/footer-show.html.twig', {var: 'cms', obj:cm.id}) }}
+
+{% endblock %}

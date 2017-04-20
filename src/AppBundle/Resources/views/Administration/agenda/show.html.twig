@@ -1,0 +1,41 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+	<a href="{{ path('administration_agenda_index') }}">Agenda</a> / Détails /
+{% endblock %}
+
+{% block content %}
+    <h1>Détails d'un événement</h1>
+
+    <table class="table">
+        <tbody>
+
+            <tr>
+                <th>Titre</th>
+                <td>{{ agenda.titre }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ agenda.description }}</td>
+            </tr>
+            <tr>
+                <th>Date début</th>
+                <td>{% if agenda.datedebut %}{{ agenda.datedebut|date('Y-m-d') }}{% endif %} {% if agenda.heuredebut %}{{ agenda.heuredebut|date('H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Date fin</th>
+                <td>{% if agenda.datefin %}{{ agenda.datefin|date('Y-m-d') }}{% endif %} {% if agenda.heurefin %}{{ agenda.heurefin|date('H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Lieu</th>
+                <td>{{ agenda.lieu }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ agenda.type }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+	{{ include('@App/Administration/footer-show.html.twig', {var: 'agenda', obj:agenda.id}) }}
+{% endblock %}

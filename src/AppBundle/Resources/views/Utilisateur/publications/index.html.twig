@@ -1,0 +1,59 @@
+{% extends 'base-utilisateur.html.twig' %}
+
+{% block breadcrumbs %}
+Vos Publications /
+{% endblock %}
+{% block content %}
+
+<ul class="nav nav-tabs nav-justified " role="tablist">
+	<li class="active"><a href="#revues" role="tab" data-toggle="tab">Revues</a></li>
+	<li><a href="#conferences" role="tab" data-toggle="tab">Conférences</a></li>
+	<li><a href="#ouvrages" role="tab" data-toggle="tab">Ouvrages</a></li>
+	<li><a href="#chapitres" role="tab" data-toggle="tab">Chapitres</a></li>
+	<li><a href="#rapports" role="tab" data-toggle="tab">Rapports</a></li>
+	<li><a href="#brevets" role="tab" data-toggle="tab">Brevets</a></li>
+	<li><a href="#theses" role="tab" data-toggle="tab">Thèses et Habilitations</a></li>
+</ul>
+<div class="tab-content tab-default">
+	<div class="tab-pane active" id="revues">
+		<div class="row">
+			<div class="col-sm-8">{{ pubRevues|length }} publication(s) dans des revues internationales et
+			                                             nationales</div>
+			<div class="col-sm-4"><a href="{{ path('utilisateur_publications_new') }}" class="btn btn-primary btn-block">Ajouter une publication dans
+			                                                                   une revue</a></div>
+		</div>
+		<br>
+		<table class="table">
+			<tr>
+				<th style="width:90%">Publication</th>
+				<th></th>
+			</tr>
+			{% for publication in pubRevues %}
+				<tr>
+					<td>{{ publication.titre }}</td>
+					<td>
+						<a href="{{ path('utilisateur_demande-om_show', { 'id': publication.id }) }}" class="btn
+						btn-info"
+						   title="Voir"><i class="fa fa-eye"></i> </a>
+						<a href="{{ path('utilisateur_demande-om_edit', { 'id': publication.id }) }}" class="btn
+                            btn-warning" title="Modifier"><i class="fa fa-pencil"></i></a>
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+	<div class="tab-pane " id="conferences">
+
+	</div>
+	<div class="tab-pane " id="ouvrages">
+	</div>
+	<div class="tab-pane " id="chapitres">
+	</div>
+	<div class="tab-pane " id="rapports">
+	</div>
+	<div class="tab-pane " id="brevets">
+	</div>
+	<div class="tab-pane " id="theses">
+	</div>
+</div>
+{% endblock %}

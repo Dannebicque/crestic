@@ -1,0 +1,159 @@
+top_bar:
+    address:
+        university: 'Université de Reims Champagne-Ardenne'
+        departement: 'Centre de Recherche en STIC'
+    login:
+        login: 'Connexion Intranet'
+        welcom: Bienvenue
+        prenom: Prénom
+        acces_intranet: 'Accés Intranet'
+        acces_utilisateur: 'Accès à mon espace'
+        acces_responsable: 'Accès espace responsable'
+        acces_administrateur: 'Accès espace administration'
+        logout: Déconnexion
+        window.connection: Connexion
+        window.close: Déconnexion
+        window.error: Erreur
+        window.username_email: 'Email (ou pseudo)'
+        window.password: 'Mot de passe'
+        window.remember_me: 'Se souvenir de moi'
+        changepassword: 'Modifier mot de passe'
+
+navigation:
+    mentions-legales.title: Mentions Légales
+    actualites.title: Actualites
+    agenda.title: Agenda
+    emplois.title: 'Offres d''emploi, thèses, post-doc'
+    presentation.title: Présentation
+    organigramme.title: Organigramme
+    membres.title: Membres du CReSTIC
+    publications.title: Publications du CReSTIC
+    contact.title: Contacts
+
+titre: Titre
+keywords: Mots Clés
+message : Message
+illustration : Illustration
+slug: Slug
+nomConference: Nom de la conférence
+sigleConference: Sigle de la conférence
+ville: Ville
+pays: Pays
+tauxSelection: Taux de sélection
+url: Site web
+internationale: Internationale
+editeur: Editeur
+contacts: Contacts
+actualites.crestic : Actualités du CReSTIC
+by: Par
+posted: Posté le
+membres.crestic: Membres du CReSTIC
+DOC: Doctorant
+MCF: Maître de conférences
+PR: Professeur
+
+visiteur:
+    equipe:
+        title: Equipe
+        themerecherche: Thèmatique de recherche
+        informations: Informations
+        projetsrecherches: Projets de recherche
+        publications: Dernières publications
+        membresequipe: Membres de l'équipe
+        responsable: Responsable
+        contact: Contact
+        departements: Département(s)
+    liste.title: Liste des membres
+    annuaire.title: Annuaire des membres
+    trombinoscope.title: Trombinoscope
+    emploisIndex:
+        title: 'Offres d''emploi, thèses, post-doc'
+    TApercuDepartements:
+        theme: Thématique
+        informations: Informations
+        responsable: Responsable
+        mail: Email
+        equipes: Equipes
+    contact:
+        information: Informations
+        tel:
+            court: Tel.
+        fax:
+            court: Fax.
+        email: Email
+        autresSites: Autres Sites du CReSTIC
+        envoi:
+            confirmation: Message envoyé avec succès
+            erreur: Erreur lors de l'envoi du message
+        ContactSite: Contact local
+        telephone: Téléphone
+    index:
+        actualites:
+            posteLe: Posté le
+            lirePlus : Lire la suite ...
+    MembresCrestic:
+        activites: Activités
+        publications: Publications
+        departement: Département
+        themes: Thématiques
+        vulgarisation: Vulgarisation
+        international: International
+        enseignements: Enseignement
+        responsabilitesScientifiques: Scientifique
+        responsabilitesAdministratives: Administratif
+        valorisation: Valorisation
+        evaluation: Evaluation
+        editoriale: Editoriale
+    membreConseilLabo: Membre du conseil de laboratoire
+    projet:
+        title: Projet
+        description: Description
+        informations: Informations
+        dernierespublications: Dernières publications
+        financeurs: Partenaires Financeurs
+        membresprojet: Membres impliqués
+        partenaires: Partenaires
+        responsable: Responsable
+        periode: Dates
+        contact: Contact
+        url: Site web
+    plateforme:
+        title: Plateforme
+        description: Description
+        informations: Informations
+        responsable: Responsable
+        localisation: Localisation
+        contact: Contact
+        url: Site Web
+        publications: Dernières publications
+        projetsrecherches: Projets de recherche
+    organigramme:
+        title: Organigramme du CReSTIC
+        direction: Direction du CReSTIC
+        directeur: Directeur
+        directeurAdjoint: Directeur Adjoint
+        conseil: Conseil de laboratoire
+        departement: Département
+        equipe: Equipe
+        administratif: Service administratif
+        responsable: Responsale
+        technicien: Service technique
+
+utilisateur:
+    demandesOM:
+        title: Vos demandes d'OMs
+    departements:
+        title: Départements
+    equipes:
+        title: Equipes
+    plateformes:
+        title: Plateformes
+    projets:
+        title: Projets
+    emplois:
+        title: Offres d'emplois
+    publications:
+        title: Vos publications
+    home: Votre espace CReSTIC
+    activites:
+        title: Carnet de bord

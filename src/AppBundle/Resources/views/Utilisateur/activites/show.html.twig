@@ -1,0 +1,20 @@
+{% extends 'base-utilisateur.html.twig' %}
+
+{% block content %}
+    <h1>Détail de l'activité</h1>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<h2>{{ activite.titre }}</h2>
+			<p>
+				{{ activite.texte|raw }}
+			</p>
+			<p>
+				Ajouté le {{ activite.created|date('d/m/Y H:i') }} | Mise à jour le {{ activite.updated|date('d/m/Y
+				H:i') }}
+			</p>
+		</div>
+	</div>
+
+	{{ include('@App/Utilisateur/footer-show.html.twig', {var: 'activites', obj: activite.id}) }}
+{% endblock %}

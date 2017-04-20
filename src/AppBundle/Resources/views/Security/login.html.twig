@@ -1,0 +1,59 @@
+{% extends "::base.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block content %}
+
+	<div class="content-40mg">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">&nbsp;</div>
+				<div class="col-sm-6">
+					{% if error %}
+						<div class="alert alert-danger-rw">{{ error.messageKey|trans(error.messageData, 'security')
+							}}</div>
+					{% endif %}
+					<div class="panel no-margin panel-default">
+						<div class="panel-heading">{{ 'login.to.account'|trans }}</div>
+						<div class="panel-body">
+							<form action="{{ path("fos_user_security_check") }}" method="post">
+								<input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-addon"><span class="ion-android-mail"
+										                                     style="font-size:9px;"></span></div>
+										<input class="form-control" id="username" name="_username" type="text"
+										       placeholder="{{ 'security.login.username'|trans }}" required="required"
+										       value="{{ last_username }}">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-addon"><span class="ion-ios7-locked"></span></div>
+										<input type="password" id="password" name="_password" required="required"
+										       class="form-control" placeholder="{{ 'security.login.password'|trans }}">
+									</div>
+								</div>
+								<div class="checkbox">
+									<label for="remember_me">
+										<input type="checkbox" id="remember_me" name="_remember_me"
+										       value="on"/> {{ 'security.login.remember_me'|trans }}
+									</label>
+								</div>
+								<hr class="mb20 mt15">
+								<button type="submit" class="btn btn-rw btn-primary" id="_submit"
+								        name="_submit">{{ 'security.login.submit'|trans }}</button>
+								&nbsp;&nbsp;&nbsp;
+								<small>
+									<a href="{{ path('fos_user_resetting_request') }}">{{ 'security.login.forgot.password'|trans }}</a>
+								</small>
+							</form><!-- /form -->
+						</div><!-- /panel body -->
+					</div><!-- /panel -->
+				</div><!-- /column-->
+				      <!-- End Login -->
+			</div>
+		</div>
+	</div>
+{% endblock content %}

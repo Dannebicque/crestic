@@ -1,0 +1,142 @@
+{% extends '::base.html.twig' %}
+
+{% block content %}
+	<!-- Begin Map -->
+	<div class="container-fluid">
+	<div class="row">
+		<div class="col-xs-8 no-padding" style="margin-bottom: -7px;">
+			<iframe src="https://www.google.com/maps/d/u/0/embed?mid=18t_E65jB84eZcKoQGLJlI4ISc9A"
+			        style="border: 0px none; border-color:#fff; width:100%;" height="350"></iframe>
+		</div>
+		<div class="col-sm-4 mt30-xs">
+			<div class="panel panel-primary no-margin">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+								<span class="ion-android-system-home">
+								</span>
+						{{ 'visiteur.contact.information'|trans }}
+					</h3>
+				</div>
+				<div class="panel-body">
+					<address class="no-margin">
+						<strong>
+							CReSTIC
+						</strong>
+						<br/>
+						<br/>
+						{{ configuration.adresse|raw }}
+						<br/>
+						{{ 'visiteur.contact.tel.court'|trans }}
+						{{ configuration.telephonePrincipal }}
+						<br/>
+						{{ 'visiteur.contact.fax.court'|trans }}
+						{{ configuration.faxPrincipal }}
+						<br/>
+						{{ 'visiteur.contact.email'|trans }}
+						<a href="mailto:{{ configuration.mail }}" target="_blank">
+							{{ configuration.mail }}</a>
+					</address>
+					<p>
+						Modal Comment venir
+						{#todo: gérer la modal#}
+						{#{{ html.getButton(venirReims, 'Apercu', 'button_rect', 'dialog', {'title' : 'contact.commentVenir', 'icone' : 'fa fa-road'})|raw }}#}
+					</p>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<!-- End Map -->
+
+	<!-- Begin Contact -->
+	<br/>
+	<!-- Form + Sidebar -->
+	<div class="row">
+		<div class="col-sm-12">
+			<h3>{{ 'visiteur.contact.autresSites'|trans }}</h3>
+
+			<ul class="nav nav-tabs nav-justified " role="tablist">
+				{% for site in sites %}
+					<li {% if loop.first %}class="active"{% endif %}><a href="#site_{{ site.id }}" role="tab"
+					                                                    data-toggle="tab">{{ site.titre }}</a></li>
+				{% endfor %}
+			</ul>
+			<div class="tab-content tab-default">
+				{% for site in sites %}
+					<div class="tab-pane {% if loop.first %}active{% endif %}" id="site_{{ site.id }}">
+						<div class="row">
+							<div class="col-sm-8">
+								{{ site.map|raw }}
+							</div>
+							<div class="col-sm-4">
+								<h4>{{ 'visiteur.contact.information'|trans }}</h4>
+								<dl class="dl-horizontal">
+									<dt>{{ 'visiteur.contact.ContactSite'|trans }}</dt>
+									<dd>
+										{% if site.membreCrestic != null %}
+											<a href="{{ path('public_membres_profil', {slug: site.membreCrestic.slug})
+											}}"
+											   title="Profil du membre {{ site.membreCrestic.display }}"
+											   target="_blank">{{ site.membreCrestic.display }}</a>
+										{% else %}
+											-
+										{% endif %}
+									<dt>{{ 'visiteur.contact.telephone'|trans }}</dt>
+									<dd>{{ site.tel }}</dd>
+									<dt>{{ 'visiteur.contact.fax.court'|trans }}</dt>
+									<dd>{{ site.fax }}</dd>
+									<dt>{{ 'visiteur.contact.email'|trans }}</dt>
+									<dd>
+										<a href="mailto:{{ site.mail }}" target="_blank">{{ site.mail }}</a>
+									</dd>
+								</dl>
+								<p>
+									{{ site.adresse }}<br/>
+									{{ site.cp }} {{ site.ville }}
+								</p>
+								{% if site.cms != null %}
+									<p>
+										{# todo: remettre modal#}
+										{#{{ html.getButton(site.cms, 'Apercu', 'button_rect', 'dialog', {'title' : #}
+											{#'contact.commentVenir', 'icone' : 'fa fa-road'})|raw }}#}
+									</p>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+
+	<script>
+		$(document).ready(function () {
+			var alert = $('#confirm-message');
+
+			$('#valid-form-contact').click(function (e) {
+				e.preventDefault();
+				$.ajax({
+					data: {
+						nom: $('#InputName').val(),
+						email: $('#InputEmail').val(),
+						message: $('#InputMessage').val(),
+						sujet: $('#InputSujet').val()
+					},
+					url: "{{ path('public_contact_SendMessage') }}", //todo: a remettre
+					method: 'POST',
+					success: function (data) {
+						alert.empty();
+						alert.removeClass('alert-danger-rw').addClass('alert-success-rw').append("{{ 'visiteur.contact
+						.envoi.confirmation'|trans }}")
+					},
+					error: function () {
+						alert.empty();
+						alert.removeClass('alert-success-rw').addClass('alert-danger-rw').append("{{ 'visiteur.contact
+						.envoi.erreur'|trans }}")
+					}
+				});
+			});
+		});
+	</script>
+{% endblock %}

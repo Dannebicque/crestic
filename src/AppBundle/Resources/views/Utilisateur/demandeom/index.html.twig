@@ -1,0 +1,40 @@
+{% extends 'base-utilisateur.html.twig' %}
+
+{% block content %}
+    <h1>Vos demandes d'OM</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Datedepart</th>
+                <th>Dateretour</th>
+                <th>Objet</th>
+                <th>Ville</th>
+                <th>Etat</th>
+                <th>Etatdemande</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for demandeOM in demandeOMs %}
+            <tr>
+                <td>{% if demandeOM.dateDepart %}{{ demandeOM.dateDepart|date('Y-m-d') }}{% endif %} {% if demandeOM.heureDepart %}{{ demandeOM.heureDepart|date('H:i:s') }}{% endif %}</td>
+                <td>{% if demandeOM.dateRetour %}{{ demandeOM.dateRetour|date('Y-m-d') }}{% endif %} {% if demandeOM.heureRetour %}{{ demandeOM.heureRetour|date('H:i:s') }}{% endif %}</td>
+                <td>{{ demandeOM.objet }}</td>
+                <td>{{ demandeOM.ville }}</td>
+                <td>{{ demandeOM.etat }}</td>
+                <td>{{ demandeOM.etatDemande }}</td>
+                <td>
+	                <a href="{{ path('utilisateur_demande-om_show', { 'id': demandeOM.id }) }}" class="btn btn-info"
+	                   title="Voir"><i class="fa fa-eye"></i> </a>
+	                <a href="{{ path('utilisateur_demande-om_edit', { 'id': demandeOM.id }) }}" class="btn
+                            btn-warning" title="Modifier"><i class="fa fa-pencil"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+	<a href="{{ path('utilisateur_demande-om_new') }}" class="btn btn-primary">Faire une nouvelle demande d'OM</a>
+
+{% endblock %}

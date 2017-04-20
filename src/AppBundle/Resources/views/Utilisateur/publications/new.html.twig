@@ -1,0 +1,58 @@
+{% extends 'base-utilisateur.html.twig' %}
+
+{% block content %}
+	<h2>Ajout d'une publication | Etape 1 / 2</h2>
+
+	{{ form_start(form) }}
+
+	{{ include('@App/Utilisateur/publications/form-publication.html.twig') }}
+	<div class="row">
+		<div class="col-sm-6">
+			{{ form_row(form.volume) }}
+		</div>
+		<div class="col-sm-6">
+			{{ form_row(form.numero) }}
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-6">
+			{{ form_row(form.issn) }}
+		</div>
+		<div class="col-sm-6">
+			{{ form_row(form.specialIssue) }}
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-6">
+			{{ form_row(form.revue) }}
+		</div>
+		<div class="col-sm-6">
+			{{ form_row(form.editeur) }}
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-6">
+			{{ form_row(form.redacteurChef) }}
+		</div>
+		<div class="col-sm-6">
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-4">{{ form_row(form.comiteLecture) }}</div>
+		<div class="col-sm-4">{{ form_row(form.vulgarisation) }}</div>
+		<div class="col-sm-4">{{ form_row(form.editorial) }}</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-7">&nbsp;</div>
+		<div class="col-sm-5" style="text-align: right">
+			<a href="{{ path('utilisateur_publications_index') }}">Annuler/retour</a>&nbsp;&nbsp;
+			<input type="submit" class="btn btn-primary" value="Enregistrer et ajouter les auteurs"/>
+		</div>
+	</div>
+	{{ form_end(form) }}
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+	Plateformes /
+{% endblock %}
+
+{% block content %}
+	<h1>Liste des plateformes</h1>
+
+	<table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+	            <th>Responsable</th>
+                <th>Localisation</th>
+                <th>Url</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for plateforme in plateformes %}
+            <tr>
+                <td>{{ plateforme.nom }}</td>
+                <td>{{ plateforme.localisation }}</td>
+	            <td>{% if plateforme.responsable != null %} <a href="{{ path('public_membres_profil', {slug: plateforme
+			            .responsable.slug})}}" target="_blank">{{ plateforme.responsable.display }}</a>{%
+		            endif %}</td>
+                <td><a href="{{ plateforme.url }}" target="_blank"> {{ plateforme.url }}</a></td>
+                <td>
+	                <a href="{{ path('administration_plateformes_show', { 'id': plateforme.id }) }}" class="btn btn-info"
+	                   title="Voir"><i class="fa fa-eye"></i> </a>
+	                <a href="{{ path('administration_plateformes_edit', { 'id': plateforme.id }) }}" class="btn
+                            btn-warning" title="Modifier"><i class="fa fa-pencil"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+            <a href="{{ path('administration_plateformes_new') }}" class="btn btn-primary">Create a new plateforme</a>
+
+{% endblock %}

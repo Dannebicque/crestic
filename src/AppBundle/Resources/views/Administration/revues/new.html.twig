@@ -1,0 +1,17 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+	<a href="{{ path('administration_revues_index') }}">Revues</a> / Création
+{% endblock %}
+
+{% block content %}
+	<h1>Ajout d'une revue</h1>
+
+	{{ form_start(form) }}
+	{{ form_widget(form) }}
+
+	{{ include('@App/Administration/footer-new.html.twig', {var: 'revues'}) }}
+
+	{{ form_end(form) }}
+
+{% endblock %}

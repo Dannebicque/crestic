@@ -1,0 +1,31 @@
+{% extends '::base-admin.html.twig' %}
+{% block breadcrumbs %}
+	<a href="{{ path('administration_editeur_index') }}">Editeurs</a> / Détails /
+{% endblock %}
+{% block content %}
+    <h1>Détails d'un éditeur</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ editeur.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ editeur.nom }}</td>
+            </tr>
+            <tr>
+                <th>Lien</th>
+                <td>{{ editeur.lien }}</td>
+            </tr>
+            <tr>
+                <th>Ville</th>
+                <td>{{ editeur.ville }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+	{{ include('@App/Administration/footer-show.html.twig', {var: 'editeur', obj:editeur.id}) }}
+
+{% endblock %}

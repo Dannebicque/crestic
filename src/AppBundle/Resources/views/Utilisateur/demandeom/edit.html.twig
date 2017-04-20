@@ -1,0 +1,9 @@
+{% extends 'base-utilisateur.html.twig' %}
+
+{% block content %}
+	<h1>Modification d'une demande d'OM</h1>
+
+	{{ form_start(edit_form) }}
+	{{ form_widget(edit_form) }}
+	{{ include('@App/Utilisateur/footer-edit.html.twig', {var: 'demande-om'}) }}
+{% endblock %}

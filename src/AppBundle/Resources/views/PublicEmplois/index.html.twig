@@ -1,0 +1,52 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}AppBundle:PublicActualites:index{% endblock %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="heading">
+				<h1>
+					{{ 'visiteur.emploisIndex.title'|trans }}
+				</h1>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<table class="table">
+						<thead>
+						<tr>
+							<th>Titre</th>
+							<th>Contact</th>
+							<th>Publié le</th>
+							<th>Durée</th>
+							<th>Détails</th>
+						</tr>
+						</thead>
+						<tbody>
+						{% for offre in offres %}
+							<tr>
+								<td>{{ offre.titre }}</td>
+								<td>
+									{% if offre.membreCrestic != null %}
+										<a href="{{ path('public_membres_profil', {slug: offre.membreCrestic.slug}) }}"
+										   title="Profil du membre {{ offre.membreCrestic.display }}"
+										   target="_blank">{{ offre.membreCrestic.display }}</a>
+									{% else %}
+										-
+									{% endif %}
+								</td>
+								<td>{{ offre.created|date('d/m/Y') }}</td>
+								<td>{{ offre.duree }}</td>
+								<td>
+									{#todo : modal vers l'offre#}
+									Modal
+								</td>
+							</tr>
+						{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+	<a href="{{ path('administration_demande-om_index') }}">Demandes d'OM</a> / Détails /
+{% endblock %}
+
+{% block content %}
+    <h1>Détails d'une demande d'OM</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+	            <th>Demande de </th>
+	            <td>{{ demandeOM.membreCrestic.display }}</td>
+	            <th>Du</th>
+	            <td>{% if demandeOM.created %}{{ demandeOM.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+	            <th>Etat</th>
+	            <td>{{ demandeOM.etat }}</td>
+	            <th>Etatdemande</th>
+	            <td>{{ demandeOM.etatDemande }}
+		            {% if demandeOM.dateEtatDemande %}{{ demandeOM.dateEtatDemande|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Date depart</th>
+                <td>{% if demandeOM.dateDepart %}{{ demandeOM.dateDepart|date('Y-m-d') }}{% endif %}
+	                {% if demandeOM.heureDepart %}{{ demandeOM.heureDepart|date('H:i:s') }}{% endif %}</td>
+                <th>Date retour</th>
+                <td>{% if demandeOM.dateRetour %}{{ demandeOM.dateRetour|date('Y-m-d') }}{% endif %}
+	                {% if demandeOM.heureRetour %}{{ demandeOM.heureRetour|date('H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Objet</th>
+                <td colspan="3">{{ demandeOM.objet }}</td>
+            </tr>
+            <tr>
+                <th>Ville</th>
+                <td>{{ demandeOM.ville }}</td>
+	            <th>Pays</th>
+	            <td>{{ demandeOM.pays.nomFR }}</td>
+            </tr>
+            <tr>
+                <th>Commentaire</th>
+                <td colspan="3">{{ demandeOM.commentaire }}</td>
+            </tr>
+
+            <tr>
+                <th>Omsansfrais</th>
+                <td>{% if demandeOM.omSansFrais %}Yes{% else %}No{% endif %}</td>
+                <th>Lignebudget</th>
+                <td>{{ demandeOM.ligneBudget }}</td>
+            </tr>
+        </tbody>
+    </table>
+	{{ include('@App/Administration/footer-show.html.twig', {var: 'demande-om', obj:demandeOM.id}) }}
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+	Demande d'OM /
+{% endblock %}
+
+{% block content %}
+<h1>Liste des demandes d'OM list</h1>
+
+<table class="table">
+ 	<thead>
+            <tr>
+	            <th>E.D.</th>
+	            <th>Etat</th>
+	            <th>Demande du</th>
+	            <th>De</th>
+                <th>Date depart</th>
+                <th>Date retour</th>
+                <th>Objet</th>
+                <th>Omsansfrais</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for demandeOM in demandeOMs %}
+            <tr>
+	            <td>{{ demandeOM.etatDemande }}</td>
+	            <td>{{ demandeOM.etat }}</td>
+	            <td>{% if demandeOM.created %}{{ demandeOM.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+	            <td>{{ demandeOM.membreCrestic.display }}</td>
+	            <td>{% if demandeOM.dateDepart %}{{ demandeOM.dateDepart|date('Y-m-d') }}{% endif %} {% if demandeOM.heureDepart %}{{ demandeOM.heureDepart|date('H:i:s') }}{% endif %}</td>
+                <td>{% if demandeOM.dateRetour %}{{ demandeOM.dateRetour|date('Y-m-d') }}{% endif %} {% if demandeOM.heureRetour %}{{ demandeOM.heureRetour|date('H:i:s') }}{% endif %}</td>
+                <td>{{ demandeOM.objet }}</td>
+                <td>{% if demandeOM.omSansFrais %}Yes{% else %}No{% endif %}</td>
+                <td>
+	                <a href="{{ path('administration_demande-om_show', { 'id': demandeOM.id }) }}" class="btn btn-info"
+	                     title="Voir"><i class="fa fa-eye"></i> </a>
+		            <a href="{{ path('administration_demande-om_edit', { 'id': demandeOM.id }) }}" class="btn
+	                            btn-warning" title="Modifier"><i class="fa fa-pencil"></i></a>
+	                valider
+	                refuser
+	                suppr
+	            </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+            <a href="{{ path('administration_demande-om_new') }}" class="btn btn-primary">Créer une demande d'OM</a>
+
+{% endblock %}

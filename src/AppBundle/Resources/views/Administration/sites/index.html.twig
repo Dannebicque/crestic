@@ -1,0 +1,41 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+	Sites du CReSTIC /
+{% endblock %}
+
+{% block content %}
+    <h1>Sites list</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+	            <th>Titre</th>
+                <th>Mail</th>
+                <th>Ville</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for site in sites %}
+            <tr>
+	            <td>{{ site.titre }}</td>
+	            <td>{{ site.mail }}</td>
+                <td>{{ site.ville }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('administration_sites_show', { 'id': site.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('administration_sites_edit', { 'id': site.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+	<a href="{{ path('administration_sites_new') }}" class="btn btn-primary">Créer une nouvelle revue</a>
+{% endblock %}

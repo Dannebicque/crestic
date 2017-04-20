@@ -1,0 +1,121 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}AppBundle:PublicPlateformes:profil{% endblock %}
+
+{% block content %}
+	<!-- Begin Content Section -->
+	<section class="content-40mg">
+		<div class="container">
+			<p class="lead text-center fadeInLeft-animated mb40">
+				{{ 'visiteur.plateforme.title'|trans }}
+				<b>
+					{{ plateforme.nom }}
+				</b>
+			</p>
+			Slider
+			{#{{ html.getSlidersCarousel(plateforme.sliders,'divCarouselSliders')|raw }}#}
+
+
+			<div class="row mt40">
+				<div class="col-sm-6">
+					<div class="heading mt15-xs">
+						<h4>
+							{{ 'visiteur.plateforme.description'|trans }}
+						</h4>
+					</div>
+					{{ plateforme.description|raw }}
+				</div>
+
+
+				<div class="col-sm-6">
+					<div class="heading text-center mt30-xs">
+						<h4>
+							{{ 'visiteur.plateforme.informations'|trans }}
+						</h4>
+					</div>
+					<dl class="dl-horizontal">
+						<dt>
+							{{ 'visiteur.plateforme.responsable'|trans }}
+						</dt>
+						<dd>
+							{% if plateforme.responsable != null %}
+								<a href="{{ path('public_membres_profil', {slug: plateforme.responsable.slug}) }}"
+								   title="Profil de {{ plateforme.responsable.display }}"
+								   target="_blank">{{ plateforme.responsable.display }}</a>
+							{% else %}
+								-
+							{% endif %}						</dd>
+						<dt>
+							{{ 'visiteur.plateforme.localisation'|trans }}
+						</dt>
+						<dd>
+							{{ plateforme.localisation }}
+						</dd>
+						<dt>
+							{{ 'visiteur.plateforme.contact'|trans }}
+						</dt>
+						<dd>
+							{%  if plateforme.responsable != null %}
+								<a href="mailto:{{ plateforme.responsable.email }}" target="_blank">
+									{{ plateforme.responsable.email }}
+								</a>
+							{%  endif %}
+						</dd>
+						<dt>
+							{{ 'visiteur.plateforme.url'|trans }}
+						</dt>
+						<dd>
+							<a href="{{ plateforme.url }}" target="_blank">{{ plateforme.url }}
+							</a>
+						</dd>
+					</dl>
+				</div>
+			</div>
+
+			<br/>
+
+			<div class="row mt30">
+				<!-- Goals -->
+				<div class="col-sm-12">
+					<div class="heading">
+						<h4>
+							{{ 'visiteur.plateforme.publications'|trans }}
+						</h4>
+					</div>
+					publications
+					{#{{ biblio.getListPublications(plateforme.publications, false)|raw }}#}
+				</div>
+
+				<div class="col-sm-12">
+					<div class="heading">
+						<h4>
+							{{ 'visiteur.plateforme.projetsrecherches'|trans }}
+						</h4>
+					</div>
+					projets
+					{#{{ html.getEntity1HasEntity2(plateforme.projets,'getProjet')|raw }}#}
+				</div>
+			</div>
+
+
+		</div>
+	</section>
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+	var div_carousel_sliders = $('#divCarouselSliders');
+	var div_carousel_height  = '300px';
+	div_carousel_sliders.carousel();
+	$('#divCarouselSliders .carousel-inner').css('background-color' , 'none');
+	$('#divCarouselSliders .carousel-caption').css('background-color','none');
+	$('#divCarouselSliders').css('max-height' , div_carousel_height);
+	$('#divCarouselSliders').css('overflow'   ,'hidden');
+	$('#divCarouselSliders .item img').css('width' ,'auto');
+	$('#divCarouselSliders .item img').css('height' ,div_carousel_height);
+	$('#divCarouselSliders .item img').css('margin' ,'auto');
+
+</script>
+
+{% endblock %}

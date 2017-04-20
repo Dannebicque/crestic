@@ -1,0 +1,59 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+	Equipes /
+{% endblock %}
+
+{% block content %}
+    <h1>Lsite des équipes</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Nomlong</th>
+                <th>Active</th>
+                <th>Themerecherche</th>
+                <th>Created</th>
+                <th>Updated</th>
+                <th>Slug</th>
+                <th>Image</th>
+                <th>Video</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for equipe in equipes %}
+            <tr>
+                <td><a href="{{ path('administration_equipes_show', { 'id': equipe.id }) }}">{{ equipe.id }}</a></td>
+                <td>{{ equipe.nom }}</td>
+                <td>{{ equipe.nomlong }}</td>
+                <td>{% if equipe.active %}Yes{% else %}No{% endif %}</td>
+                <td>{{ equipe.themeRecherche }}</td>
+                <td>{% if equipe.created %}{{ equipe.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if equipe.updated %}{{ equipe.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ equipe.slug }}</td>
+                <td>{{ equipe.image }}</td>
+                <td>{{ equipe.video }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('administration_equipes_show', { 'id': equipe.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('administration_equipes_edit', { 'id': equipe.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('administration_equipes_new') }}">Create a new equipe</a>
+        </li>
+    </ul>
+{% endblock %}
