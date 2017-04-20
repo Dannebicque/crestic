@@ -1,0 +1,113 @@
+.modal-title {
+    color: #fff;
+    text-transform: none;
+    font-weight: 700;
+}
+
+.modal-footer{
+    height: 50px;
+    min-height: 50px;
+    font-size: 10px;
+    font-style: italic;
+    padding: 2px;
+    padding-right: 10px;
+}
+
+#load-page-img
+{
+    position:absolute;
+    top: 40%;
+    left: 50%;
+
+}
+
+.TDataHelpText{
+    font-style: italic;
+    font-size:12px;
+    color: #0D3349;
+}
+
+.dl-apercu-horizontal dt
+{
+    width:100px;
+}
+
+.dl-apercu-horizontal dd
+{
+    margin-left:130px;
+}
+
+.formatIEEE
+{
+    border: 1px dotted lightgrey;
+    background-color: #99CDD8;
+    opacity: 0.8;
+    padding: 5px;
+    margin-top:10px;
+}
+
+#liste_departements ul
+{
+    float: right;
+}
+
+#liste_departements li
+{
+    list-style: none;
+    float: left;
+}
+
+.image-hover-1
+{
+    border-top: 1px dotted #d2d2d2;
+    border-left: 1px dotted #d2d2d2;
+    border-right: 1px dotted #d2d2d2;
+}
+
+.dataTables_processing
+{
+    color: #3c763d;
+    border: 1px solid #3c763d;
+    border-radius: 2px;
+    background: none;
+    background-color: #dff0d8;
+}
+
+.liste-sans-style{
+    list-style:none;
+    margin-left:0;
+    padding-left:0;
+}
+
+.membreCresticMosaiqueMosaiqueStatus
+{
+    font-size: 11px;
+    font-style: italic;
+}
+
+.da-footer-info-icons
+{
+    padding-left: 20px;
+    padding-right: 10px;
+    color: #8B8B8B;
+}
+
+.da-text-justify
+{
+    text-align: justify;
+}
+
+.da-liste-biblio
+{
+    list-style: none;
+}
+
+.da-biblio-titre
+{
+    font-weight: bold;
+}
+
+.success{
+    background-color: #dff0d8;
+    width: 100%;
+}
