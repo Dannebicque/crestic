@@ -138,6 +138,8 @@ visiteur:
         administratif: Service administratif
         responsable: Responsale
         technicien: Service technique
+    rechercher:
+        publications: Rechercher des publications
 
 utilisateur:
     demandesOM:
@@ -157,3 +159,45 @@ utilisateur:
     home: Votre espace CReSTIC
     activites:
         title: Carnet de bord
+
+publications:
+    ouvrages.title: Ouvrages/Chapitres
+    revues.title: Revues
+    conferences.title: Conférences
+    brevets.title: Brevets
+    rapports.title: Rapports
+    theses.title: Thèses
+    habilitations.title: HDR
+    informations: Informations Générales
+    templates:
+        TRecherchePublications:
+            titre: Recherche
+            equipe: Equipe
+            typePublication: 'Type de publication'
+            publications: 'Toutes les publications'
+            brevets: Brevet
+            conferences: Conférence
+            habilitations: Habilitations
+            ouvrages: Ouvrages
+            chapitres: Chapitres
+            rapports: Rapports
+            revues: Revues
+            theses: Theses/Habilitations
+            art: 'Article dans des revues'
+            comm: 'Communication dans un congrès'
+            couv: 'Chapitre d''ouvrage'
+            douv: 'Direction d''ouvrage, Proceedings'
+            hdr: HDR
+            ouv: 'Ouvrage (y compris édition critique et traduction)'
+            patent: Brevet
+            poster: Poster
+            presconf: 'Document associé à des manifestations scientifiques'
+            report: Rapport
+            these: Thèse
+            auteur: Auteur
+            keywords: 'Mots clé'
+            datePlage: 'date Plage'
+            valider: Valider
+            projet: Projet
+            departement: Département
+            default: Initialiser

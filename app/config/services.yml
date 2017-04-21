@@ -7,6 +7,13 @@ services:
     kernel.configuration:
         class: AppBundle\Services\ConfigurationManager
         arguments: ["@doctrine.orm.entity_manager"]
+    kernel.biblio:
+        class: AppBundle\Services\Biblio
+        arguments: ["@doctrine.orm.entity_manager", '@kernel.html']
+    kernel.html:
+        class: AppBundle\Services\Html
+        arguments: ['@router']
+
     app.twig_extension:
         class: AppBundle\Twig\AppExtension
         public: false

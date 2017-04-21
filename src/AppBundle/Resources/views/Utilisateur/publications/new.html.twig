@@ -1,58 +1,34 @@
 {% extends 'base-utilisateur.html.twig' %}
 
 {% block content %}
-	<h2>Ajout d'une publication | Etape 1 / 2</h2>
+<h2>Ajout d'une publication | Etape 1 / 2</h2>
 
-	{{ form_start(form) }}
+{{ form_start(form) }}
 
 	{{ include('@App/Utilisateur/publications/form-publication.html.twig') }}
-	<div class="row">
-		<div class="col-sm-6">
-			{{ form_row(form.volume) }}
-		</div>
-		<div class="col-sm-6">
-			{{ form_row(form.numero) }}
-		</div>
-	</div>
 
-	<div class="row">
-		<div class="col-sm-6">
-			{{ form_row(form.issn) }}
-		</div>
-		<div class="col-sm-6">
-			{{ form_row(form.specialIssue) }}
-		</div>
-	</div>
+	{% if type == 'revue' %}
+		{{ include('@App/Utilisateur/publications/form-revue.html.twig') }}
+	{% elseif type =='conference' %}
+		{{ include('@App/Utilisateur/publications/form-conference.html.twig') }}
+	{% elseif type =='rapport' %}
+		{{ include('@App/Utilisateur/publications/form-rapport.html.twig') }}
+	{% elseif type =='these' %}
+		{{ include('@App/Utilisateur/publications/form-these.html.twig') }}
+	{% elseif type =='brevet' %}
+		{{ include('@App/Utilisateur/publications/form-brevet.html.twig') }}
+	{% elseif type =='ouvrage' %}
+		{{ include('@App/Utilisateur/publications/form-ouvrage.html.twig') }}
+	{% elseif type =='chapitre' %}
+		{{ include('@App/Utilisateur/publications/form-chapitre.html.twig') }}
+	{% endif %}
 
-	<div class="row">
-		<div class="col-sm-6">
-			{{ form_row(form.revue) }}
-		</div>
-		<div class="col-sm-6">
-			{{ form_row(form.editeur) }}
-		</div>
+<div class="row">
+	<div class="col-sm-7">&nbsp;</div>
+	<div class="col-sm-5" style="text-align: right">
+		<a href="{{ path('utilisateur_publications_index') }}">Annuler/retour</a>&nbsp;&nbsp;
+		<input type="submit" class="btn btn-primary" value="Enregistrer et ajouter les auteurs" />
 	</div>
-
-	<div class="row">
-		<div class="col-sm-6">
-			{{ form_row(form.redacteurChef) }}
-		</div>
-		<div class="col-sm-6">
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-sm-4">{{ form_row(form.comiteLecture) }}</div>
-		<div class="col-sm-4">{{ form_row(form.vulgarisation) }}</div>
-		<div class="col-sm-4">{{ form_row(form.editorial) }}</div>
-	</div>
-
-	<div class="row">
-		<div class="col-sm-7">&nbsp;</div>
-		<div class="col-sm-5" style="text-align: right">
-			<a href="{{ path('utilisateur_publications_index') }}">Annuler/retour</a>&nbsp;&nbsp;
-			<input type="submit" class="btn btn-primary" value="Enregistrer et ajouter les auteurs"/>
-		</div>
-	</div>
-	{{ form_end(form) }}
+</div>
+{{ form_end(form) }}
 {% endblock %}

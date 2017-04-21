@@ -5,11 +5,18 @@ namespace AppBundle\Controller\Utilisateur;
 use AppBundle\Entity\DemandeOM;
 use AppBundle\Entity\MembresCrestic;
 use AppBundle\Entity\Publications;
+use AppBundle\Entity\PublicationsBrevets;
+use AppBundle\Entity\PublicationsChapitres;
+use AppBundle\Entity\PublicationsConferences;
+use AppBundle\Entity\PublicationsHabilitations;
 use AppBundle\Entity\PublicationsHasEquipes;
 use AppBundle\Entity\PublicationsHasMembres;
 use AppBundle\Entity\PublicationsHasPlateformes;
 use AppBundle\Entity\PublicationsHasProjets;
+use AppBundle\Entity\PublicationsOuvrages;
+use AppBundle\Entity\PublicationsRapports;
 use AppBundle\Entity\PublicationsRevues;
+use AppBundle\Entity\PublicationsTheses;
 use AppBundle\Entity\Reseaux;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -41,7 +48,6 @@ class PublicationsController extends Controller
         $pubConferences = $this->getDoctrine()->getRepository('AppBundle:PublicationsConferences')->findByAuteurCrestic($user->getId());
         $pubRapports = $this->getDoctrine()->getRepository('AppBundle:PublicationsRapports')->findByAuteurCrestic($user->getId());
         $pubTheses = $this->getDoctrine()->getRepository('AppBundle:PublicationsTheses')->findByAuteurCrestic($user->getId());
-        $pubHabilitations = $this->getDoctrine()->getRepository('AppBundle:PublicationsHabilitations')->findByAuteurCrestic($user->getId());
         $pubOuvrages = $this->getDoctrine()->getRepository('AppBundle:PublicationsOuvrages')->findByAuteurCrestic($user->getId());
 
 
@@ -52,7 +58,6 @@ class PublicationsController extends Controller
             'pubConferences'   => $pubConferences,
             'pubRapports'      => $pubRapports,
             'pubTheses'        => $pubTheses,
-            'pubHabilitations' => $pubHabilitations,
             'pubOuvrages'      => $pubOuvrages,
         ));
     }
@@ -60,13 +65,43 @@ class PublicationsController extends Controller
     /**
      * Creates a new demandeOM entity.
      *
-     * @Route("/new", name="utilisateur_publications_new")
+     * @Route("/new/{type}", name="utilisateur_publications_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, $type)
     {
-        $publication = new PublicationsRevues();
-        $form = $this->createForm('AppBundle\Form\PublicationsRevuesType', $publication);
+        switch ($type)
+        {
+            case 'revue':
+                $publication = new PublicationsRevues();
+                $form = $this->createForm('AppBundle\Form\PublicationsRevuesType', $publication);
+                break;
+            case 'conference':
+                $publication = new PublicationsConferences();
+                $form = $this->createForm('AppBundle\Form\PublicationsConferencesType', $publication);
+                break;
+            case 'rapport':
+                $publication = new PublicationsRapports();
+                $form = $this->createForm('AppBundle\Form\PublicationsRapportsType', $publication);
+                break;
+            case 'these':
+                $publication = new PublicationsTheses();
+                $form = $this->createForm('AppBundle\Form\PublicationsThesesType', $publication);
+                break;
+            case 'brevet':
+                $publication = new PublicationsBrevets();
+                $form = $this->createForm('AppBundle\Form\PublicationsBrevetsType', $publication);
+                break;
+            case 'ouvrage':
+                $publication = new PublicationsOuvrages();
+                $form = $this->createForm('AppBundle\Form\PublicationsOuvragesType', $publication);
+                break;
+            case 'chapitre':
+                $publication = new PublicationsChapitres();
+                $form = $this->createForm('AppBundle\Form\PublicationsChapitresType', $publication);
+                break;
+        }
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
@@ -87,6 +122,7 @@ class PublicationsController extends Controller
         return $this->render('@App/Utilisateur/publications/new.html.twig', array(
             'publication' => $publication,
             'form'        => $form->createView(),
+            'type'=> $type
         ));
     }
 
@@ -270,6 +306,7 @@ class PublicationsController extends Controller
     /**
      * @param Request $request
      * @Route("ajax/suppr/auteur", name="ajax_suppr_auteur")
+     * @return Response
      */
     public function ajxSupprAuteurAction(Request $request)
     {
@@ -293,7 +330,7 @@ class PublicationsController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($publication);
             $em->flush();
-            //gérer la numérotation
+            //todo: gérer la numérotation
             return new Response('ok', 200);
 
         } else

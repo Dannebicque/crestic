@@ -1,0 +1,110 @@
+<h3>Résultats de votre recherche de publications</h3>
+<div class="alert alert-info-rw">
+	{{ nbresult }} publications correspondent à vos critères : {{ criteres }}
+</div>
+<br />
+<ul>
+	{% for annee in  "now"|date('Y')..2004 if publications[annee]|length > 0 %}
+		<li>{{ annee }}
+			<ul class="da-liste-biblio">
+				{% for publication in publications[annee] %}
+					<li>
+						<div class="row">
+							<div class="col-sm-3">
+								<div class="btn-group">
+
+									<a href="{{ publication.doi }}" class="btn" target="_blank" title="DOI">
+										<span class="fa fa-external-link"></span>
+									</a>
+
+									{% if publication.url != '' or publication.url != null %}
+										<a href="{{ publication.url }}" class="btn" target="_blank"
+										   title="Site web">
+											<span class="fa fa-globe"></span>
+										</a>
+									{% else %}
+										<a href="#" class="btn" target="_blank"
+										   title="Site web" disabled="">
+											<span class="fa fa-globe"></span>
+										</a>
+									{% endif %}
+
+									{% if publication.hal != '' or publication.hal != null %}
+									<a href="{{ publication.hal }}" class="btn" target="_blank"
+									   title="Lien HAL">
+										<span class="fa fa-newspaper-o"></span>
+									</a>
+									{% else %}
+										<a href="{{ publication.hal }}" class="btn" target="_blank"
+										   title="Lien HAL" disabled="">
+											<span class="fa fa-newspaper-o"></span>
+										</a>
+									{% endif %}
+
+
+										{% if publication.pdfVisible == true or not is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
+											<a href="{{ publication.pdf }}" class="btn" target="_blank"
+											   title="PDF">
+												<span class="fa fa-file-pdf-o"></span>
+											</a>
+										{% else %}
+											<a href="{{ publication.pdf }}" class="btn" target="_blank"
+											   title="PDF" disabled="">
+												<span class="fa fa-file-pdf-o"></span>
+											</a>
+										{% endif %}
+
+									<a href="#" class="btn" target="_blank"
+									   title="Bibtex">
+										<span class="fa fa-share-alt"></span>
+									</a>
+								</div>
+							</div>
+
+							<div class="col-sm-9">
+								<span>{{ biblio.formatIEEE(publication) | raw }}</span>
+							</div>
+						</div>
+					</li>
+				{% endfor %}
+			</ul>
+		</li>
+	{% endfor %}
+	<li>Plus anciennes
+		<ul class="da-liste-biblio">
+			{% for publication in publications[0] %}
+				<li>
+					<div class="row">
+						<div class="col-sm-3">
+							<div class="btn-toolbar" role="toolbar">
+
+								<a href="" class="btn btn-primary" target="_blank" title="DOI">
+									<span class="fa fa-external-link"></span>
+								</a>
+
+								<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1"
+								        data-toggle="dropdown">
+									<span class="fa fa-download"></span>
+								</button>
+								<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+									<li role="presentation">
+										<a role="menuitem" tabindex="-1" href="#">PDF</a></li>{#
+									si loggé #}
+									<li role="presentation">
+										<a role="menuitem" tabindex="-1" href="#">BibTex</a></li>
+									<li role="presentation">
+										<a role="menuitem" tabindex="-1" href="#">Something else
+										                                          here</a></li>
+								</ul>
+							</div>
+						</div>
+
+						<div class="col-sm-9">
+							<span>{{ biblio.formatIEEE(publication) | raw }}</span>
+						</div>
+					</div>
+				</li>
+			{% endfor %}
+		</ul>
+	</li>
+</ul>

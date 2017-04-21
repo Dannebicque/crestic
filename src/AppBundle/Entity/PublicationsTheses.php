@@ -30,6 +30,12 @@ class PublicationsTheses extends Publications
      */
     private $dateSoutenance;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="phdorhdr", type="string", length= 3)
+     */
+    private $phdorhdr = 'phd';
 
     /**
      * @var string
@@ -248,5 +254,29 @@ class PublicationsTheses extends Publications
     public function getPays()
     {
         return $this->pays;
+    }
+
+    /**
+     * Set phdorhdr
+     *
+     * @param string $phdorhdr
+     *
+     * @return PublicationsTheses
+     */
+    public function setPhdorhdr($phdorhdr)
+    {
+        $this->phdorhdr = $phdorhdr;
+
+        return $this;
+    }
+
+    /**
+     * Get phdorhdr
+     *
+     * @return string
+     */
+    public function getPhdorhdr()
+    {
+        return $this->phdorhdr;
     }
 }

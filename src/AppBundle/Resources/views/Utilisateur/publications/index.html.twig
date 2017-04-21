@@ -19,41 +19,95 @@ Vos Publications /
 		<div class="row">
 			<div class="col-sm-8">{{ pubRevues|length }} publication(s) dans des revues internationales et
 			                                             nationales</div>
-			<div class="col-sm-4"><a href="{{ path('utilisateur_publications_new') }}" class="btn btn-primary btn-block">Ajouter une publication dans
-			                                                                   une revue</a></div>
+			<div class="col-sm-4">
+				<a href="{{ path('utilisateur_publications_new', {type: 'revue'}) }}" class="btn
+			btn-primary btn-block">
+					Ajouter une publication dans une revue
+				</a>
+			</div>
 		</div>
 		<br>
-		<table class="table">
-			<tr>
-				<th style="width:90%">Publication</th>
-				<th></th>
-			</tr>
-			{% for publication in pubRevues %}
-				<tr>
-					<td>{{ publication.titre }}</td>
-					<td>
-						<a href="{{ path('utilisateur_demande-om_show', { 'id': publication.id }) }}" class="btn
-						btn-info"
-						   title="Voir"><i class="fa fa-eye"></i> </a>
-						<a href="{{ path('utilisateur_demande-om_edit', { 'id': publication.id }) }}" class="btn
-                            btn-warning" title="Modifier"><i class="fa fa-pencil"></i></a>
-					</td>
-				</tr>
-			{% endfor %}
-		</table>
-	</div>
-	<div class="tab-pane " id="conferences">
+		{{ include('@App/Utilisateur/publications/table-publications.html.twig', {'publications' : pubRevues}) }}
 
 	</div>
+	<div class="tab-pane " id="conferences">
+		<div class="row">
+			<div class="col-sm-8">{{ pubConferences|length }} publication(s) dans des conférences internationales et
+			                                             nationales</div>
+			<div class="col-sm-4">
+				<a href="{{ path('utilisateur_publications_new', {type: 'conference'}) }}" class="btn
+			btn-primary btn-block">
+					Ajouter une publication dans une conférence
+				</a>
+			</div>
+		</div>
+		<br>
+		{{ include('@App/Utilisateur/publications/table-publications.html.twig', {'publications' : pubConferences}) }}
+	</div>
 	<div class="tab-pane " id="ouvrages">
+		<div class="row">
+			<div class="col-sm-8">{{ pubOuvrages|length }} publication(s) d'ouvrages</div>
+			<div class="col-sm-4"><a href="{{ path('utilisateur_publications_new', {type: 'ouvrage'}) }}" class="btn
+			btn-primary btn-block">Ajouter un ouvrage</a></div>
+		</div>
+		<br>
+		{{ include('@App/Utilisateur/publications/table-publications.html.twig', {'publications' : pubOuvrages}) }}
+
 	</div>
 	<div class="tab-pane " id="chapitres">
+		<div class="row">
+			<div class="col-sm-8">{{ pubChapitres|length }} publication(s) de chapitres dans des ouvrages</div>
+			<div class="col-sm-4">
+				<a href="{{ path('utilisateur_publications_new', {type: 'chapitre'}) }}" class="btn btn-primary
+				btn-block">
+					Ajouter une publication d'un chapitre dans un ouvrage
+				</a>
+			</div>
+		</div>
+		<br>
+		{{ include('@App/Utilisateur/publications/table-publications.html.twig', {'publications' : pubChapitres}) }}
+
 	</div>
 	<div class="tab-pane " id="rapports">
+		<div class="row">
+			<div class="col-sm-8">{{ pubRapports|length }} publication(s) de rapports</div>
+			<div class="col-sm-4">
+				<a href="{{ path('utilisateur_publications_new', {type: 'rapport'}) }}" class="btn btn-primary
+				btn-block">
+					Ajouter un rapport
+				</a>
+			</div>
+		</div>
+		<br>
+		{{ include('@App/Utilisateur/publications/table-publications.html.twig', {'publications' : pubRapports}) }}
+
 	</div>
 	<div class="tab-pane " id="brevets">
+		<div class="row">
+			<div class="col-sm-8">{{ pubBrevets|length }} publication(s) de brevets</div>
+			<div class="col-sm-4">
+				<a href="{{ path('utilisateur_publications_new', {type: 'brevet'}) }}" class="btn btn-primary
+				btn-block">
+					Ajouter un brevet
+				</a>
+			</div>
+		</div>
+		<br>
+		{{ include('@App/Utilisateur/publications/table-publications.html.twig', {'publications' : pubBrevets}) }}
+
 	</div>
 	<div class="tab-pane " id="theses">
+		<div class="row">
+			<div class="col-sm-8">{{ pubTheses|length }} publication(s) de thèses ou d'habilitations</div>
+			<div class="col-sm-4">
+				<a href="{{ path('utilisateur_publications_new', {type: 'these'}) }}" class="btn btn-primary btn-block">
+					Ajouter une thèse ou une habiliation
+				</a>
+			</div>
+		</div>
+		<br>
+		{{ include('@App/Utilisateur/publications/table-publications.html.twig', {'publications' : pubTheses}) }}
+
 	</div>
 </div>
 {% endblock %}

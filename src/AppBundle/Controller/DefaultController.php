@@ -4,7 +4,9 @@ namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
@@ -95,5 +97,42 @@ class DefaultController extends Controller
     public function contactSendMessageAction(Request $request)
     {
 
+    }
+
+    /**
+     * @Route("/tinyMce/upload", name="tinymce_upload")
+     */
+    public function uploadImageTinyMceAction(Request $request)
+    {
+        //gérer l'upload
+
+        if ($request->files != null)
+        {
+            foreach ($request->files as $file)
+            {
+               //var_dump($file);
+                // générer un nom aléatoire et essayer de deviner l'extension (plus sécurisé)
+                $extension = $file->guessExtension();
+                if (!$extension)
+                {
+                    // l'extension n'a pas été trouvée
+                    $extension = 'bin';
+                }
+                $nomfile = rand(1, 99999).'_'.date('YmdHis').'.'.$extension;
+                $dir = $this->get('kernel')->getRootDir().'/../web/uploads/images/';
+                $filetowrite = $request->getSchemeAndHttpHost().'/web/uploads/images/' . $nomfile;
+                $file->move($dir, $nomfile);
+                return new JsonResponse(array('location' => $filetowrite));
+            }
+            // Accept upload if there was no origin, or if it is an accepted origin
+
+            // Respond to the successful upload with JSON.
+            // Use a location key to specify the path to the saved image resource.
+            // { location : '/your/uploaded/image/file'}
+        } else {
+            // Notify editor that the upload failed
+            header("HTTP/1.0 500 Server Error");
+        }
+        return new Response('',200);
     }
 }

@@ -12,7 +12,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @Vich\Uploadable
  * @ORM\DiscriminatorColumn(name="publication_type", type="string")
- * @ORM\DiscriminatorMap({"conference" = "PublicationsConferences", "revue" = "PublicationsRevues", "rapport" = "PublicationsRapports", "brevet" = "PublicationsBrevets", "ouvrage" = "PublicationsOuvrages", "chapitre" = "PublicationsChapitres", "these" = "PublicationsTheses", "habilitation" = "PublicationsHabilitations"})
+ * @ORM\DiscriminatorMap({"conference" = "PublicationsConferences", "revue" = "PublicationsRevues", "rapport" = "PublicationsRapports", "brevet" = "PublicationsBrevets", "ouvrage" = "PublicationsOuvrages", "chapitre" = "PublicationsChapitres", "these" = "PublicationsTheses"})
  */
 abstract class Publications
 {
@@ -129,6 +129,13 @@ abstract class Publications
      * @ORM\Column(name="url", type="string", length=255, nullable=true)
      */
     private $url;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="hal", type="string", length=255, nullable=true)
+     */
+    private $hal;
 
     /**
      * @var string
@@ -824,5 +831,29 @@ abstract class Publications
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Set hal
+     *
+     * @param string $hal
+     *
+     * @return Publications
+     */
+    public function setHal($hal)
+    {
+        $this->hal = $hal;
+
+        return $this;
+    }
+
+    /**
+     * Get hal
+     *
+     * @return string
+     */
+    public function getHal()
+    {
+        return $this->hal;
     }
 }

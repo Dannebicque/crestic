@@ -37,11 +37,13 @@ framework:
 # Twig Configuration
 twig:
     form_themes:
-        - 'bootstrap_3_layout.html.twig'
+        - 'AppBundle::form.html.twig'
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     globals:
         configuration : "@kernel.configuration"
+        biblio: "@kernel.biblio"
+
 
 # Doctrine Configuration
 doctrine:

@@ -28,7 +28,6 @@
 	<link href="{{ asset('assets/lou-multi-select-a789e06/css/multi-select.css') }}" rel="stylesheet"/>
 	<link href="{{ asset('assets/css/nosstyles.css') }}" rel="stylesheet"/>
 	<link href="{{ asset('assets/fullcalendar/fullcalendar.css') }}" rel="stylesheet"/>
-	<link href="{{ asset('assets/css/dropzone.css') }}" rel="stylesheet"/>
 	<link href="{{ asset('assets/select2-master/dist/css/select2.min.css') }}" rel="stylesheet"/>
 	<link href="{{ asset('assets/css/crestic.css') }}" rel="stylesheet"/>
 
@@ -150,11 +149,7 @@
 <script src="{{ asset('assets/fullcalendar/fullcalendar.min.js') }}"></script>
 <script src="{{ asset('assets/fullcalendar/lang-all.js') }}"></script>
 <script src="{{ asset('assets/js/main.js') }}"></script>
-{#<script src="{{ asset('assets/js/templateDataEdition.js') }}"></script>#}
-<script src="{{ asset('assets/js/dropzone.js') }}"></script>
 <script src="{{ asset('assets/select2-master/dist/js/select2.full.min.js') }}"></script>
-<script src="{{ asset('assets/js/bootstrap-treeview.js') }}"></script>
-<script src="{{ asset('assets/js/splitter.js') }}"></script>
 <script src="{{ asset('assets/js/notify.min.js') }}"></script>
 
 <script language="JavaScript">
@@ -164,7 +159,6 @@
 		delay: 'onload'
 	};
 	window.sr = new scrollReveal(config);
-	{#setRouteTinyMCEDialogFile("{{ path('kernel_abstract_tinyMCEDialogFile') }}");#}
 
 	$.notify.defaults({globalPosition: 'top right'});
 

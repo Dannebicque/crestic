@@ -161,4 +161,12 @@ class PublicationsRepository extends \Doctrine\ORM\EntityRepository
         $result =  $this->findSearchPublicationsBuilder($type_publication,$data)->getQuery()->getResult();
         return $result;
     }
+
+    public function count()
+    {
+        return $this->createQueryBuilder('p')
+            ->select('count(p.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }
