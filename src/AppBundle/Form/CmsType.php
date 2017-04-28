@@ -19,19 +19,17 @@ class CmsType extends AbstractType
             'label'              => 'titre',
             'translation_domain' => 'messages',
             'required'           => true,
-            'attr'               => array('class' => 'form-control')
         ))
             ->add('texte', TextareaType::class, array(
                 'label'              => 'texte',
                 'translation_domain' => 'messages',
                 'required'           => false,
-                'attr'               => array('class' => 'form-control')
+                'attr'               => array('class' => 'tinyMCE')
             ))
             ->add('slug', TextType::class, array(
                 'label'              => 'slug',
                 'translation_domain' => 'messages',
                 'required'           => false,
-                'attr'               => array('class' => 'form-control'), //todo: rendre disabled le slug pour éviter les bugs
             ));
     }
 

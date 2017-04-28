@@ -1,0 +1,40 @@
+{% extends "::base.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block content %}
+	<div class="content-40mg">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">&nbsp;</div>
+				<div class="col-sm-6">
+					{% if error is defined %}
+						<div class="alert alert-danger-rw">{{ error.messageKey|trans(error.messageData, 'security')
+							}}</div>
+					{% endif %}
+					<div class="panel no-margin panel-default">
+						<div class="panel-heading">{{ 'request.password'|trans }}</div>
+						<div class="panel-body">
+							<form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-addon"><span class="ion-android-mail"
+										                                     style="font-size:9px;"></span></div>
+										<input class="form-control" id="username" name="username" type="text"
+										       placeholder="{{ 'resetting.request.username'|trans }}" required="required">
+									</div>
+								</div>
+
+								<hr class="mb20 mt15">
+								<button type="submit" class="btn btn-rw btn-primary" id="_submit"
+								        name="_submit">{{ 'security.request.submit'|trans }}</button>
+							</form><!-- /form -->
+						</div><!-- /panel body -->
+					</div><!-- /panel -->
+				</div><!-- /column-->
+				      <!-- End Login -->
+			</div>
+		</div>
+	</div>
+{% endblock content %}

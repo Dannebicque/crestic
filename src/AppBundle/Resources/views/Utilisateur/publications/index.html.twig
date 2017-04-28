@@ -27,7 +27,8 @@ Vos Publications /
 			</div>
 		</div>
 		<br>
-		{{ include('@App/Utilisateur/publications/table-publications.html.twig', {'publications' : pubRevues}) }}
+		{{ include('@App/Utilisateur/publications/table-publications.html.twig', {'publications' : pubRevues,
+			type:'revue'}) }}
 
 	</div>
 	<div class="tab-pane " id="conferences">
@@ -42,7 +43,8 @@ Vos Publications /
 			</div>
 		</div>
 		<br>
-		{{ include('@App/Utilisateur/publications/table-publications.html.twig', {'publications' : pubConferences}) }}
+		{{ include('@App/Utilisateur/publications/table-publications.html.twig', {'publications' : pubConferences,
+			type:'conference'}) }}
 	</div>
 	<div class="tab-pane " id="ouvrages">
 		<div class="row">
@@ -51,7 +53,8 @@ Vos Publications /
 			btn-primary btn-block">Ajouter un ouvrage</a></div>
 		</div>
 		<br>
-		{{ include('@App/Utilisateur/publications/table-publications.html.twig', {'publications' : pubOuvrages}) }}
+		{{ include('@App/Utilisateur/publications/table-publications.html.twig', {'publications' : pubOuvrages,
+			type:'ouvrage'}) }}
 
 	</div>
 	<div class="tab-pane " id="chapitres">
@@ -65,7 +68,8 @@ Vos Publications /
 			</div>
 		</div>
 		<br>
-		{{ include('@App/Utilisateur/publications/table-publications.html.twig', {'publications' : pubChapitres}) }}
+		{{ include('@App/Utilisateur/publications/table-publications.html.twig', {'publications' : pubChapitres,
+			type:'chapitre'}) }}
 
 	</div>
 	<div class="tab-pane " id="rapports">
@@ -79,7 +83,8 @@ Vos Publications /
 			</div>
 		</div>
 		<br>
-		{{ include('@App/Utilisateur/publications/table-publications.html.twig', {'publications' : pubRapports}) }}
+		{{ include('@App/Utilisateur/publications/table-publications.html.twig', {'publications' : pubRapports,
+			type:'rapport'}) }}
 
 	</div>
 	<div class="tab-pane " id="brevets">
@@ -93,7 +98,8 @@ Vos Publications /
 			</div>
 		</div>
 		<br>
-		{{ include('@App/Utilisateur/publications/table-publications.html.twig', {'publications' : pubBrevets}) }}
+		{{ include('@App/Utilisateur/publications/table-publications.html.twig', {'publications' : pubBrevets,
+			type:'brevet'}) }}
 
 	</div>
 	<div class="tab-pane " id="theses">
@@ -106,7 +112,8 @@ Vos Publications /
 			</div>
 		</div>
 		<br>
-		{{ include('@App/Utilisateur/publications/table-publications.html.twig', {'publications' : pubTheses}) }}
+		{{ include('@App/Utilisateur/publications/table-publications.html.twig', {'publications' : pubTheses,
+			type:'these'}) }}
 
 	</div>
 </div>

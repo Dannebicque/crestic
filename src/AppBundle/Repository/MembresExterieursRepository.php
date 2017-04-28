@@ -21,6 +21,17 @@ class MembresExterieursRepository extends \Doctrine\ORM\EntityRepository
 
     }
 
+    public function findByLettre($lettre)
+    {
+        return $this->createQueryBuilder('m')
+            ->where('m.nom LIKE :lettre')
+            ->orWhere('m.nom LIKE :lettre2')
+            ->setParameters(array('lettre'=> $lettre.'%', 'lettre2' => strtolower($lettre).'%'))
+            ->orderBy('m.nom', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     /**
      * @return array
      */

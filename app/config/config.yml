@@ -43,6 +43,7 @@ twig:
     globals:
         configuration : "@kernel.configuration"
         biblio: "@kernel.biblio"
+        html: "@kernel.html"
 
 
 # Doctrine Configuration

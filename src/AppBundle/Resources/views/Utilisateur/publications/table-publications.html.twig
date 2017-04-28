@@ -1,17 +1,21 @@
 <table class="table">
 	<tr>
-		<th style="width:90%">Publication</th>
+		<th style="width:85%">Publication</th>
 		<th></th>
 	</tr>
 	{% for publication in publications %}
 		<tr>
 			<td>{{ publication.titre }}</td>
 			<td>
-				<a href="{{ path('utilisateur_demande-om_show', { 'id': publication.id }) }}" class="btn
-						btn-info"
-				   title="Voir"><i class="fa fa-eye"></i> </a>
-				<a href="{{ path('utilisateur_demande-om_edit', { 'id': publication.id }) }}" class="btn
-                            btn-warning" title="Modifier"><i class="fa fa-pencil"></i></a>
+				<a href="{{ path('utilisateur_publication_show', { 'id': publication.id, type:type }) }}" class="btn
+						btn-info " data-toggle="tooltip" data-placement="bottom"
+				   title="Voir" target="_blank"><i class="fa fa-eye"></i> </a>
+				<a href="{{ path('utilisateur_publication_edit', { 'id': publication.id , type:type}) }}" class="btn
+                            btn-warning" data-toggle="tooltip" data-placement="bottom" title="Modifier
+                             les informations de la publication"><i class="fa
+                            fa-pencil"></i></a>
+				<a href="{{ path('utilisateur_publications_etape2', { 'id': publication.id }) }}" class="btn
+                            btn-warning" data-toggle="tooltip" data-placement="bottom" title="Modifier les auteurs, projets, équipes"><i class="fa fa-wrench"></i></a>
 			</td>
 		</tr>
 	{% endfor %}

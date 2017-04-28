@@ -127,43 +127,6 @@ class Biblio
                         $result .= '#erreur conf#';
                     }
                     break;
-//                case 'PublicationsHabilitations':
-//                    $result .= ' Ph.D. dissertation';
-//
-//                    if ($entity->getAbbrevDepartement() != '')
-//                    {
-//                        $result .= ', '.$entity->getAbbrevDepartement();
-//                    } elseif ($entity->getDepartement() != '')
-//                    {
-//                        $result .= ', '.$entity->getDepartement();
-//                    }
-//
-//                    if ($entity->getAbbrevUniversite() != '')
-//                    {
-//                        $result .= ', '.$entity->getAbbrevUniversite();
-//                    } elseif ($entity->getUniversite() != '')
-//                    {
-//                        $result .= ', '.$entity->getUniversite();
-//                    }
-//
-//                    if ($entity->getVille() != '')
-//                    {
-//                        $result .= ', '.$entity->getVille();
-//                    }
-//
-//                    if ($entity->getPays() != null)
-//                    {
-//                        $result .= ', '.$entity->getPays()->getNomEn();
-//                    }
-//
-//                    if ($entity->getAnneePublication() != '' && $entity->getAnneePublication() != 0)
-//                    {
-//                        $result .= ', '.$entity->getAnneePublication();
-//                    } else if ($entity->getDateSoutenance() != null && $entity->getDateSoutenance() != '' &&  $entity->getDateSoutenance() != '0000-00-00')
-//                    {
-//                        $result .= ', '.$entity->getDateSoutenance()->format('Y');
-//                    }
-//                    break;
                 case 'PublicationsOuvrages':
                     $result .= ' in <i>'.$entity->getTitreOuvrage().'</i>, x th ed.';
                     if ($entity->getEditeur() !== null)
@@ -347,7 +310,7 @@ class Biblio
      * @param $entity
      * @return null|string
      */
-    public function getTypeOfEntity ($entity)
+    private function getTypeOfEntity ($entity)
     {
 
         $result = null;
@@ -411,5 +374,13 @@ class Biblio
         return $result;
     }
 
+    public function formatBibtex($publication)
+    {
+        return 'bibtex';
+    }
 
+    public function getAllAuteurs()
+    {
+
+    }
 }

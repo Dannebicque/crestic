@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Repository;
+
 use AppBundle\Entity\PublicationsHasMembres;
 
 /**
@@ -11,26 +12,12 @@ use AppBundle\Entity\PublicationsHasMembres;
  */
 class PublicationsHasMembresRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findAllMembresFromPublicationBuilder($id_publication)
-    {
-        return $this->createQueryBuilder('a','a.id')
-            ->select ('a')
-            ->where('a.publication = ?1')
-            ->orderBy('a.position', 'ASC')
-            ->setParameter(1,$id_publication);
-    }
-
-    public function findAllMembresFromPublication ($id_publication)
-    {
-        return $this->findAllMembresFromPublicationBuilder($id_publication)->getQuery()->getResult();
-    }
-
-    public function getArrayOfChoiceSelectPublicationHasMembre ($id_publication)
+    public function getArrayOfChoiceSelectPublicationHasMembre($id_publication)
     {
         $result = array();
-        $array  =  $this->findAllMembresFromPublication($id_publication);
+        $array = $this->findAllMembresFromPublication($id_publication);
 
-        foreach ($array as $key=>$value)
+        foreach ($array as $key => $value)
         {
             if ($value->getMembreCrestic() != null)
             {
@@ -44,20 +31,22 @@ class PublicationsHasMembresRepository extends \Doctrine\ORM\EntityRepository
             }
 
         }
+
         return $result;
     }
 
-    /**
-     * @return array
-     */
-
-    public function findAuteurMembreCresticBuilder($auteur)
+    public function findAllMembresFromPublication($id_publication)
     {
-        return $this->createQueryBuilder('a','a.id')
-            ->select ('a')
-            ->innerJoin('a.membreCrestic','b')
-            ->where('CONCAT(b.prenom,b.nom) LIKE :auteur OR CONCAT(b.nom,b.prenom) LIKE :auteur')
-            ->setParameter('auteur',"%".$auteur."%");
+        return $this->findAllMembresFromPublicationBuilder($id_publication)->getQuery()->getResult();
+    }
+
+    public function findAllMembresFromPublicationBuilder($id_publication)
+    {
+        return $this->createQueryBuilder('a', 'a.id')
+            ->select('a')
+            ->where('a.publication = ?1')
+            ->orderBy('a.position', 'ASC')
+            ->setParameter(1, $id_publication);
     }
 
     /**
@@ -73,13 +62,13 @@ class PublicationsHasMembresRepository extends \Doctrine\ORM\EntityRepository
      * @return array
      */
 
-    public function findAuteurMembreExterieurBuilder($auteur)
+    public function findAuteurMembreCresticBuilder($auteur)
     {
-        return $this->createQueryBuilder('a','a.id')
-            ->select ('a')
-            ->innerJoin('a.membreExterieur','b')
+        return $this->createQueryBuilder('a', 'a.id')
+            ->select('a')
+            ->innerJoin('a.membreCrestic', 'b')
             ->where('CONCAT(b.prenom,b.nom) LIKE :auteur OR CONCAT(b.nom,b.prenom) LIKE :auteur')
-            ->setParameter('auteur',"%".$auteur."%");
+            ->setParameter('auteur', "%".$auteur."%");
     }
 
     /**
@@ -89,6 +78,19 @@ class PublicationsHasMembresRepository extends \Doctrine\ORM\EntityRepository
     public function findAuteurMembreExterieur($auteur)
     {
         return $this->findAuteurMembreExterieurBuilder($auteur)->getQuery()->getResult();
+    }
+
+    /**
+     * @return array
+     */
+
+    public function findAuteurMembreExterieurBuilder($auteur)
+    {
+        return $this->createQueryBuilder('a', 'a.id')
+            ->select('a')
+            ->innerJoin('a.membreExterieur', 'b')
+            ->where('CONCAT(b.prenom,b.nom) LIKE :auteur OR CONCAT(b.nom,b.prenom) LIKE :auteur')
+            ->setParameter('auteur', "%".$auteur."%");
     }
 
     public function findArrayAuteurs($publication)
@@ -105,14 +107,14 @@ class PublicationsHasMembresRepository extends \Doctrine\ORM\EntityRepository
                 $t['prenom'] = $auteur->getMembreCrestic()->getPrenom();
                 $t['type'] = 'crestic';
                 $t['slug'] = $auteur->getMembreCrestic()->getSlug();
-                } elseif ($auteur->getMembreExterieur() !== null)
+            } elseif ($auteur->getMembreExterieur() !== null)
             {
                 $t['id'] = $auteur->getMembreExterieur()->getId();
                 $t['nom'] = $auteur->getMembreExterieur()->getNom();
                 $t['prenom'] = $auteur->getMembreExterieur()->getPrenom();
                 $t['type'] = 'ext';
                 $t['slug'] = $auteur->getMembreExterieur()->getId();
-                } else
+            } else
             {
                 $t['nom'] = 'err';
                 $t['prenom'] = 'err';

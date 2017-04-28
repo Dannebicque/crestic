@@ -42,5 +42,8 @@ class Html
         return $html;
     }
 
+    public function getUrl()
+    {
 
+    }
 }

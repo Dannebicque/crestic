@@ -129,7 +129,8 @@
 								$.each(data, function (index) {
 									auteur = data[index];
 									console.log(auteur.nom);
-									$html = $html + "<button data-id=\"" +
+									$html = $html + "<button data-type=\"" +
+										auteur.type + "\" data-id=\"" +
 										auteur.id + "\" class=\"btn btn-primary select-auteur\"><span class=\"fa " +
 										"fa-plus-circle\"></span>" + auteur.prenom
 										+ " " + auteur.nom + " (" + auteur.status + ")</button>&nbsp;"
@@ -138,7 +139,8 @@
 								$('.select-auteur').click(function () {
 									$.ajax({
 										url: "{{ path('ajax_add_auteur') }}",
-										data: {'auteur': $(this).data('id'), 'publication': {{ publication.id }} },
+										data: {'auteur': $(this).data('id'), 'publication': {{ publication.id }},
+											'type':type },
 										dataType: 'JSON',
 										method: 'POST',
 										success: function (data) {

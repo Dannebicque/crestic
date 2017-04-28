@@ -127,12 +127,11 @@ class PublicationsController extends Controller
     }
 
     /**
-     * @param Request      $request
      * @param Publications $id
      * @route("/options/{id}", name="utilisateur_publications_etape2")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function optionsPublicationsAction(Request $request, Publications $id)
+    public function optionsPublicationsAction(Publications $id)
     {
         $projets = $this->getDoctrine()->getRepository('AppBundle:Projets')->findAll();
         $plateformes = $this->getDoctrine()->getRepository('AppBundle:Plateformes')->findAll();
@@ -165,7 +164,7 @@ class PublicationsController extends Controller
     {
         $lettres = $request->request->get('lettres');
         $auteurs = $this->getDoctrine()->getRepository('AppBundle:MembresCrestic')->findByLettre($lettres);
-        //$auteursExt = $this->getDoctrine()->getRepository('AppBundle:MembresExterieurs')->search($lettre);
+        $auteursExt = $this->getDoctrine()->getRepository('AppBundle:MembresExterieurs')->findByLettre($lettres);
 
         $tjson = array();
         /** @var MembresCrestic $auteur */
@@ -175,6 +174,17 @@ class PublicationsController extends Controller
             $t['nom'] = $auteur->getNom();
             $t['prenom'] = $auteur->getPrenom();
             $t['status'] = $auteur->getStatus();
+            $t['type'] = 'crestic';
+            $tjson[] = $t;
+        }
+
+        foreach ($auteursExt as $auteur)
+        {
+            $t['id'] = $auteur->getId();
+            $t['nom'] = $auteur->getNom();
+            $t['prenom'] = $auteur->getPrenom();
+            $t['status'] = 'extérieur';
+            $t['type'] = 'ext';
             $tjson[] = $t;
         }
 
@@ -189,10 +199,21 @@ class PublicationsController extends Controller
     public function ajaxAddAuteurAction(Request $request)
     {
         $idauteur = $request->request->get('auteur');
+        $type = $request->request->get('type');
         $idpublication = $request->request->get('publication');
 
-        $auteur = $this->getDoctrine()->getRepository('AppBundle:MembresCrestic')->find($idauteur);
-        //$auteursExt = $this->getDoctrine()->getRepository('AppBundle:MembresExterieurs')->search($lettre);
+        if ($type == 'crestic')
+        {
+            $auteur = $this->getDoctrine()->getRepository('AppBundle:MembresCrestic')->find($idauteur);
+        }
+        elseif($type == 'ext')
+        {
+            $auteur = $this->getDoctrine()->getRepository('AppBundle:MembresExterieurs')->find($idauteur);
+        } else
+        {
+            $auteur = false;
+        }
+
         $publication = $this->getDoctrine()->getRepository('AppBundle:Publications')->find($idpublication);
 
         if ($auteur && $publication)
@@ -201,7 +222,16 @@ class PublicationsController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $pm = new PublicationsHasMembres();
-            $pm->setMembreCrestic($auteur);
+
+            if ($type == 'crestic')
+            {
+                $pm->setMembreCrestic($auteur);
+            }
+            else
+            {
+                $pm->setMembreExterieur($auteur);
+            }
+
             $pm->setPublication($publication);
             $pm->setPosition(count($maxAuteur)+1);
             $em->persist($pm);
@@ -338,5 +368,76 @@ class PublicationsController extends Controller
             //erreur
             return new Response('erreur', 500);
         }
+    }
+
+    /**
+     * @param Request $request
+     * @param         $id
+     * @param         $type
+     *
+     * @Route("/edit/{type}/{id}/", name="utilisateur_publication_edit")
+     * @Method({"GET", "POST"})
+     */
+    public function editAction(Request $request, $id, $type)
+    {
+
+    }
+
+
+    /**
+     * @param $id
+     * @param $type
+     * @Route("/show/{type}/{id}", name="utilisateur_publication_show")
+     * @Method({"GET"})
+     */
+    public function showAction($id, $type)
+    {
+        $publication = $this->getPublicationFromType($id, $type);
+        $publiHasEquipes = $this->getDoctrine()->getRepository('AppBundle:PublicationsHasEquipes')->findAllPublicationsFromEquipe($publication->getId());
+        $publiHasProjets = $this->getDoctrine()->getRepository('AppBundle:PublicationsHasProjets')->findAllPublicationsFromProjet($publication->getId());
+        $publiHasPlateformes = $this->getDoctrine()->getRepository('AppBundle:PublicationsHasPlateformes')->findAllPlateformesFromPublication($publication->getId());
+
+        return $this->render('@App/Utilisateur/publications/show.html.twig', array(
+           'publication' => $publication,
+           'equipes' => $publiHasEquipes,
+           'projets'    => $publiHasProjets,
+           'plateformes'=> $publiHasPlateformes,
+        ));
+    }
+
+    private function getPublicationFromType($id, $type)
+    {
+        switch ($type)
+        {
+            case 'revue':
+                $publication = $this->getDoctrine()->getRepository('AppBundle:PublicationsRevues')->find($id);
+                break;
+            case 'conference':
+                $publication = $this->getDoctrine()->getRepository('AppBundle:PublicationsConferences')->find($id);
+
+                break;
+            case 'rapport':
+                $publication = $this->getDoctrine()->getRepository('AppBundle:PublicationsRapports')->find($id);
+
+                break;
+            case 'these':
+                $publication = $this->getDoctrine()->getRepository('AppBundle:PublicationsTheses')->find($id);
+
+                break;
+            case 'brevet':
+                $publication = $this->getDoctrine()->getRepository('AppBundle:PublicationsBrevets')->find($id);
+
+                break;
+            case 'ouvrage':
+                $publication = $this->getDoctrine()->getRepository('AppBundle:PublicationsOuvrages')->find($id);
+
+                break;
+            case 'chapitre':
+                $publication = $this->getDoctrine()->getRepository('AppBundle:PublicationsChapitres')->find($id);
+
+                break;
+        }
+
+        return $publication;
     }
 }
