@@ -43,8 +43,8 @@ env:
 
 # Update composer
 before-install:
-  #- mysql -e 'CREATE DATABASE IF NOT EXISTS symfony;'
   - composer self-update
+  - mysql -e 'CREATE DATABASE symfony;'
 
 # Install composer dependencies,
 # Create database, schema and fixtures
