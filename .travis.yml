@@ -49,12 +49,18 @@ before-install:
 
 # Install composer dependencies,
 # Create database, schema and fixtures
-install:
-  - composer install #--no-scripts
-  - cp app/config/parameters.yml.dist app/config/parameters.yml
-  - php bin/console doctrine:database:create --env=test
-  - php bin/console doctrine:schema:create --env=test
+#install:
+#  - composer install #--no-scripts
+#  - cp app/config/parameters.yml.dist app/config/parameters.yml
+#  - php bin/console doctrine:database:create --env=test
+#  - php bin/console doctrine:schema:create --env=test
 #  - php bin/console doctrine:fixtures:load -n --env=test
+
+install:
+  - composer install --no-scripts --no-plugins
+  - cp app/config/parameters.yml.dist app/config/parameters.yml
+  - php bin/console doctrine:database:create --env=test 2> /dev/null || php bin/console doctrine:database:create --env=test
+  - php bin/console doctrine:schema:create --env=test
 
 # Run script
 script:
