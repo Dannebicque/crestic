@@ -32,7 +32,7 @@ class Agenda
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text",nullable=true)
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
 
@@ -91,17 +91,6 @@ class Agenda
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set id
-     *
-     * @return integer
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
     }
 
     /**
@@ -294,5 +283,11 @@ class Agenda
     public function getHeurefin()
     {
         return $this->heurefin;
+    }
+
+    public function __construct()
+    {
+        $this->datedebut = new \DateTime('now');
+        $this->datefin = new \DateTime('now');
     }
 }

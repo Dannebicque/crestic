@@ -5,24 +5,23 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Agendas list</h1>
+    <h1>Evénements à venir</h1>
 
 	<table class="table">
         <thead>
             <tr>
                 <th>Titre</th>
-                <th>Datedebut</th>
-                <th>Datefin</th>
+                <th>Date début</th>
+                <th>Date fin</th>
                 <th>Lieu</th>
                 <th>Type</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for agenda in agendas %}
+        {% for agenda in agendas if agenda.datefin|date('dmY') >= 'now'|date('dmY') %}
             <tr>
                 <td>{{ agenda.titre }}</td>
-                <td>{{ agenda.description }}</td>
                 <td>{% if agenda.datedebut %}{{ agenda.datedebut|date('Y-m-d') }}{% endif %} {% if agenda.heuredebut %}{{ agenda.heuredebut|date('H:i:s') }}{% endif %}</td>
                 <td>{% if agenda.datefin %}{{ agenda.datefin|date('Y-m-d') }}{% endif %} {% if agenda.heurefin %}{{ agenda.heurefin|date('H:i:s') }}{% endif %}</td>
                 <td>{{ agenda.lieu }}</td>
@@ -30,7 +29,7 @@
                 <td>
 	                <a href="{{ path('administration_agenda_show', { 'id': agenda.id }) }}" class="btn btn-info"
 	                   title="Voir"><i class="fa fa-eye"></i> </a>
-	                <a href="{{ path('administration_agenda_edit', { 'id': actualite.id }) }}" class="btn
+	                <a href="{{ path('administration_agenda_edit', { 'id': agenda.id }) }}" class="btn
                             btn-warning" title="Modifier"><i class="fa fa-pencil"></i></a>
                 </td>
             </tr>
@@ -38,9 +37,38 @@
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('administration_agenda_new') }}" class="btn btn-primary">Create a new agenda</a>
-        </li>
-    </ul>
+
+            <a href="{{ path('administration_agenda_new') }}" class="btn btn-primary">Ajouter une entrée</a>
+
+	<br/><br/>
+	<h2>Evénements passés</h2>
+
+	<table class="table">
+		<thead>
+		<tr>
+			<th>Titre</th>
+			<th>Date début</th>
+			<th>Date fin</th>
+			<th>Lieu</th>
+			<th>Type</th>
+			<th>Actions</th>
+		</tr>
+		</thead>
+		<tbody>
+		{% for agenda in agendas if agenda.datefin|date('dmY') < 'now'|date('dmY') %}
+			<tr>
+				<td>{{ agenda.titre }}</td>
+				<td>{% if agenda.datedebut %}{{ agenda.datedebut|date('Y-m-d') }}{% endif %} {% if agenda.heuredebut %}{{ agenda.heuredebut|date('H:i:s') }}{% endif %}</td>
+				<td>{% if agenda.datefin %}{{ agenda.datefin|date('Y-m-d') }}{% endif %} {% if agenda.heurefin %}{{ agenda.heurefin|date('H:i:s') }}{% endif %}</td>
+				<td>{{ agenda.lieu }}</td>
+				<td>{{ agenda.type }}</td>
+				<td>
+					<a href="{{ path('administration_agenda_show', { 'id': agenda.id }) }}" class="btn btn-info"
+					   title="Voir"><i class="fa fa-eye"></i> </a>
+				</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+
 {% endblock %}

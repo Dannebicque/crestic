@@ -1,5 +1,9 @@
 {% extends '::base-admin.html.twig' %}
 
+{% block title %}
+	Plateformes
+{% endblock %}
+
 {% block breadcrumbs %}
 	Plateformes /
 {% endblock %}
@@ -27,7 +31,7 @@
 		            endif %}</td>
                 <td><a href="{{ plateforme.url }}" target="_blank"> {{ plateforme.url }}</a></td>
                 <td>
-	                <a href="{{ path('administration_plateformes_show', { 'id': plateforme.id }) }}" class="btn btn-info"
+	                <a href="{{ path('public_plateformes_profil', { 'slug': plateforme.slug }) }}" class="btn btn-info"
 	                   title="Voir"><i class="fa fa-eye"></i> </a>
 	                <a href="{{ path('administration_plateformes_edit', { 'id': plateforme.id }) }}" class="btn
                             btn-warning" title="Modifier"><i class="fa fa-pencil"></i></a>
@@ -37,6 +41,7 @@
         </tbody>
     </table>
 
-            <a href="{{ path('administration_plateformes_new') }}" class="btn btn-primary">Create a new plateforme</a>
+            <a href="{{ path('administration_plateformes_new') }}" class="btn btn-primary">Ajouter une nouvelle
+                                                                                           plateforme</a>
 
 {% endblock %}

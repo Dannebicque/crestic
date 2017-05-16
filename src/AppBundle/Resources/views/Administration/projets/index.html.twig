@@ -32,7 +32,7 @@
                 <td>{{ projet.financement }}</td>
 	            <td><a href="{{ projet.url }}" target="_blank"> {{ projet.url }}</a></td>
                 <td>
-	                <a href="{{ path('administration_projets_show', { 'id': projet.id }) }}" class="btn btn-info"
+	                <a href="{{ path('public_projet_profil', { 'slug': projet.slug }) }}" target="_blank" class="btn btn-info"
 	                   title="Voir"><i class="fa fa-eye"></i> </a>
 	                <a href="{{ path('administration_projets_edit', { 'id': projet.id }) }}" class="btn
                             btn-warning" title="Modifier"><i class="fa fa-pencil"></i></a>
@@ -42,5 +42,5 @@
         </tbody>
     </table>
 
-            <a href="{{ path('administration_projets_new') }}" class="btn btn-primary">Ajouter u nouveau projet</a>
+            <a href="{{ path('administration_projets_new') }}" class="btn btn-primary">Ajouter un nouveau projet</a>
 {% endblock %}

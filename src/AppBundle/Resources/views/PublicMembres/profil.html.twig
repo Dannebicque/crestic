@@ -1,10 +1,11 @@
 {% extends '::base.html.twig' %}
 
+{% block title %}{{ user.display }}{% endblock %}
 {% block content %}
 	<div class="heading mb20">
-		<h3>
-			A propos de {{ user.display|raw }} - {{ user.statutLong|trans }}
-		</h3>
+		<h1>
+			{{ user.display }} <span style="font-size:16px">- {{ user.statutLong|trans }} </span></h1>
+
 	</div>
 			<div class="row">
 				<div class="col-sm-4 text-center">
@@ -19,9 +20,9 @@
 							{#<p>{{ 'visiteur.membreConseilLabo'|trans }}</p>#}
 						{#{% endif %}#}
 
-						<h4 class="team-member-name-imgtop">
-							Infos
-						</h4>
+						{#<h4 class="team-member-name-imgtop">#}
+							{#Infos#}
+						{#</h4>#}
 						{% if is_granted('ROLE_UTILISATEUR') %}
 							<dl >
 								<dt>
@@ -105,46 +106,46 @@
 
 					{{ user.adresse }} <br/>
 					{{ user.localisation }}
-					<br/>
+					<br/><br/>
 					<h4>CV</h4>
 					{{ user.cv|raw }}
 					<br>
-					<div class="row">
-						<div class="col-sm-6">
-							Responsable de Plateformes :
-						</div>
-						<div class="col-sm-6">
+					{#<div class="row">#}
+						{#<div class="col-sm-6">#}
+							{#Responsable de Plateformes :#}
+						{#</div>#}
+						{#<div class="col-sm-6">#}
 
 							{#{{ html.getList (user.plateformes) | raw }}#}
-						</div>
-					</div>
+						{#</div>#}
+					{#</div>#}
 
-					<div class="row">
-						<div class="col-sm-6">
-							Appartient aux équipes :
-						</div>
-						<div class="col-sm-6">
+					{#<div class="row">#}
+						{#<div class="col-sm-6">#}
+							{#Appartient aux équipes :#}
+						{#</div>#}
+						{#<div class="col-sm-6">#}
 							{#{{ html.getEntity1HasEntity2 (user.equipesHasMembres , 'getEquipe') | raw }}#}
-						</div>
-					</div>
+						{#</div>#}
+					{#</div>#}
 
-					<div class="row">
-						<div class="col-sm-6">
-							Responsable d'equipe
-						</div>
-						<div class="col-sm-6">
+					{#<div class="row">#}
+						{#<div class="col-sm-6">#}
+							{#Responsable d'equipe#}
+						{#</div>#}
+						{#<div class="col-sm-6">#}
 							{#{{ html.getList (user.equipes) | raw }}#}
-						</div>
-					</div>
+						{#</div>#}
+					{#</div>#}
 
-					<div class="row">
-						<div class="col-sm-6">
-							Responsable de departements :
-						</div>
-						<div class="col-sm-6">
+					{#<div class="row">#}
+						{#<div class="col-sm-6">#}
+							{#Responsable de departements :#}
+						{#</div>#}
+						{#<div class="col-sm-6">#}
 							{#{{ html.getList (user.departements , 'reseaux') | raw }}#}
-						</div>
-					</div>
+						{#</div>#}
+					{#</div>#}
 				</div>
 			</div>
 
@@ -156,42 +157,18 @@
 
 			<!-- Begin Tabs Justified -->
 			<ul id="membresTabActivites" class="nav nav-tabs nav-justified mt15" role="tablist">
+				{% if attribute (user,'responsabilitesAdministratives') is not empty %}
+					<li>
+						<a href="#responsabilitesAdministratives" role="tab" data-toggle="tab">
+							{{ 'visiteur.MembresCrestic.responsabilitesAdministratives'| trans }}
+						</a>
+					</li>
+				{% endif %}
+
 				{% if attribute (user,'themes') is not empty %}
 					<li>
 						<a href="#themes" role="tab" data-toggle="tab">
 							{{ 'visiteur.MembresCrestic.themes'| trans }}
-						</a>
-					</li>
-				{% endif %}
-
-				{% if attribute (user,'valorisation') is not empty %}
-					<li>
-						<a href="#valorisation" role="tab" data-toggle="tab">
-							{{ 'visiteur.MembresCrestic.valorisation'| trans }}
-						</a>
-					</li>
-				{% endif %}
-
-				{% if attribute (user,'vulgarisation') is not empty %}
-					<li>
-						<a href="#vulgarisation" role="tab" data-toggle="tab">
-							{{ 'visiteur.MembresCrestic.vulgarisation'| trans }}
-						</a>
-					</li>
-				{% endif %}
-
-				{% if attribute (user,'international') is not empty %}
-					<li>
-						<a href="#international" role="tab" data-toggle="tab">
-							{{ 'visiteur.MembresCrestic.international'| trans }}
-						</a>
-					</li>
-				{% endif %}
-
-				{% if attribute (user,'enseignements') is not empty %}
-					<li>
-						<a href="#enseignements" role="tab" data-toggle="tab">
-							{{ 'visiteur.MembresCrestic.enseignements'| trans }}
 						</a>
 					</li>
 				{% endif %}
@@ -204,10 +181,26 @@
 					</li>
 				{% endif %}
 
-				{% if attribute (user,'responsabilitesAdministratives') is not empty %}
+				{% if attribute (user,'international') is not empty %}
 					<li>
-						<a href="#responsabilitesAdministratives" role="tab" data-toggle="tab">
-							{{ 'visiteur.MembresCrestic.responsabilitesAdministratives'| trans }}
+						<a href="#international" role="tab" data-toggle="tab">
+							{{ 'visiteur.MembresCrestic.international'| trans }}
+						</a>
+					</li>
+				{% endif %}
+
+				{% if attribute (user,'editorial') is not empty %}
+					<li>
+						<a href="#editorial" role="tab" data-toggle="tab">
+							{{ 'visiteur.MembresCrestic.editoriale'| trans }}
+						</a>
+					</li>
+				{% endif %}
+
+				{% if attribute (user,'valorisation') is not empty %}
+					<li>
+						<a href="#valorisation" role="tab" data-toggle="tab">
+							{{ 'visiteur.MembresCrestic.valorisation'| trans }}
 						</a>
 					</li>
 				{% endif %}
@@ -220,10 +213,18 @@
 					</li>
 				{% endif %}
 
-				{% if attribute (user,'editorial') is not empty %}
+				{% if attribute (user,'vulgarisation') is not empty %}
 					<li>
-						<a href="#editorial" role="tab" data-toggle="tab">
-							{{ 'visiteur.MembresCrestic.editoriale'| trans }}
+						<a href="#vulgarisation" role="tab" data-toggle="tab">
+							{{ 'visiteur.MembresCrestic.vulgarisation'| trans }}
+						</a>
+					</li>
+				{% endif %}
+
+				{% if attribute (user,'enseignements') is not empty %}
+					<li>
+						<a href="#enseignements" role="tab" data-toggle="tab">
+							{{ 'visiteur.MembresCrestic.enseignements'| trans }}
 						</a>
 					</li>
 				{% endif %}

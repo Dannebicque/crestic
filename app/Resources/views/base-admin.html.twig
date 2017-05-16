@@ -9,7 +9,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<link href="{{ asset('favicon.ico') }}" rel="shortcut icon" type="image/x-icon"/>
 
-	<title>{% block title %}Bienvenue{% endblock %} | CRESTIC | URCA | Site du laboratoire de recherche CRESTIC de
+	<title>Administration | {% block title %}Bienvenue{% endblock %} | CRESTIC | URCA | Site du laboratoire de
+	       recherche CRESTIC de
 	                                                l'Université de Reims Champagne Ardenne</title>
 
 	<link href="{{ asset('assets/css/royal_preloader.css') }}" rel="stylesheet"/>
@@ -232,6 +233,11 @@
 			' numlist outdent indent | link image table',
 			content_css: '//www.tinymce.com/css/codepen.min.css',
 			automatic_uploads: true,
+			default_link_target: "_blank",
+			extended_valid_elements : "pre",
+			setup: function(editor) {
+				editor.getElement().removeAttribute('required');
+			},
 			images_upload_url: '{{ path('tinymce_upload') }}',
 			file_browser_callback: function(field_name, url, type, win) {
 				win.document.getElementById(field_name).value = 'my browser value';

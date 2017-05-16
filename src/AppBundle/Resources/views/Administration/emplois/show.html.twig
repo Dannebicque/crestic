@@ -15,30 +15,30 @@
 			<td colspan="3">{{ emplois.titre }}</td>
 		</tr>
 		<tr>
-			<th>Resume</th>
+			<th>Resumé</th>
 			<td colspan="3">{{ emplois.resume }}</td>
 		</tr>
 		<tr>
 			<th>Description</th>
-			<td colspan="3">{{ emplois.description }}</td>
+			<td colspan="3">{{ emplois.description|raw }}</td>
 		</tr>
 		<tr>
-			<th>Debut souhaité</th>
-			<td>{% if emplois.debut %}{{ emplois.debut|date('Y-m-d') }}{% endif %}</td>
-			<th>Duree</th>
+			<th>Début souhaité</th>
+			<td>{% if emplois.debut %}{{ emplois.debut|date('d/m/Y') }}{% endif %}</td>
+			<th>Durée</th>
 			<td>{{ emplois.duree }}</td>
 		</tr>
 		<tr>
 			<th>Pdf</th>
-			<td>{{ emplois.pdf }}</td>
+			<td><a href="{{ asset('uploads/emplois/'~emplois.pdf) }}" target="_blank">Voir le fichier joint</a></td>
 			<th>Pourvue</th>
-			<td>{% if emplois.pourvue %}Yes{% else %}No{% endif %}</td>
+			<td>{% if emplois.pourvue %}Oui{% else %}Non{% endif %}</td>
 		</tr>
 		<tr>
-			<th>Created</th>
-			<td>{% if emplois.created %}{{ emplois.created|date('Y-m-d H:i:s') }}{% endif %}</td>
-			<th>Updated</th>
-			<td>{% if emplois.updated %}{{ emplois.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+			<th>Créé</th>
+			<td>{% if emplois.created %}Le {{ emplois.created|date('d/m/Y à H:i') }}{% endif %}</td>
+			<th>Mise à jour</th>
+			<td>{% if emplois.updated %}Le {{ emplois.updated|date('d/m/Y à H:i') }}{% endif %}</td>
 		</tr>
 		</tbody>
 	</table>

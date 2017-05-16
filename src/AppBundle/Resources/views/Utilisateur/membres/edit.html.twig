@@ -15,7 +15,7 @@
 	<div class="row" style="text-align: right">
 		<div class="col-sm-6">&nbsp;</div>
 		<div class="col-sm-3"><a href="{{ path('homepage_utilisateur') }}">Retour / Annuler</a></div>
-		<div class="col-sm-3"><button type="submit" class="btn btn-block btn-primary">Enrgistrer</button> </div>
+		<div class="col-sm-3"><button type="submit" class="btn btn-block btn-primary">Enregistrer</button> </div>
 	</div>
 	<div class="row">
 		<div class="col-sm-4 text-center">
@@ -24,9 +24,9 @@
 				{#{{ html.getImage(membresCrestic.image, 'membresCrestic', false, '200px')|raw }}#}
 				{{ form_widget(edit_form.imageFile) }}
 
-				<h4 class="team-member-name-imgtop">
-					Infos
-				</h4>
+				{#<h4 class="team-member-name-imgtop">#}
+					{#Infos#}
+				{#</h4>#}
 				<dl>
 					<dt>
 						Corps/Grade
@@ -147,28 +147,14 @@
 	<!-- Begin Tabs Justified -->
 	<ul id="membresTabActivites" class="nav nav-tabs nav-justified mt15" role="tablist">
 		<li>
+			<a href="#responsabilitesAdministratives" role="tab" data-toggle="tab">
+				{{ 'visiteur.MembresCrestic.responsabilitesAdministratives'| trans }}
+			</a>
+		</li>
+
+		<li>
 			<a href="#themes" role="tab" data-toggle="tab">
 				{{ 'visiteur.MembresCrestic.themes'| trans }}
-			</a>
-		</li>
-		<li>
-			<a href="#valorisation" role="tab" data-toggle="tab">
-				{{ 'visiteur.MembresCrestic.valorisation'| trans }}
-			</a>
-		</li>
-		<li>
-			<a href="#vulgarisation" role="tab" data-toggle="tab">
-				{{ 'visiteur.MembresCrestic.vulgarisation'| trans }}
-			</a>
-		</li>
-		<li>
-			<a href="#international" role="tab" data-toggle="tab">
-				{{ 'visiteur.MembresCrestic.international'| trans }}
-			</a>
-		</li>
-		<li>
-			<a href="#enseignements" role="tab" data-toggle="tab">
-				{{ 'visiteur.MembresCrestic.enseignements'| trans }}
 			</a>
 		</li>
 		<li>
@@ -177,8 +163,18 @@
 			</a>
 		</li>
 		<li>
-			<a href="#responsabilitesAdministratives" role="tab" data-toggle="tab">
-				{{ 'visiteur.MembresCrestic.responsabilitesAdministratives'| trans }}
+			<a href="#international" role="tab" data-toggle="tab">
+				{{ 'visiteur.MembresCrestic.international'| trans }}
+			</a>
+		</li>
+		<li>
+			<a href="#editorial" role="tab" data-toggle="tab">
+				{{ 'visiteur.MembresCrestic.editoriale'| trans }}
+			</a>
+		</li>
+		<li>
+			<a href="#valorisation" role="tab" data-toggle="tab">
+				{{ 'visiteur.MembresCrestic.valorisation'| trans }}
 			</a>
 		</li>
 		<li>
@@ -187,10 +183,20 @@
 			</a>
 		</li>
 		<li>
-			<a href="#editorial" role="tab" data-toggle="tab">
-				{{ 'visiteur.MembresCrestic.editoriale'| trans }}
+			<a href="#vulgarisation" role="tab" data-toggle="tab">
+				{{ 'visiteur.MembresCrestic.vulgarisation'| trans }}
 			</a>
 		</li>
+
+		<li>
+			<a href="#enseignements" role="tab" data-toggle="tab">
+				{{ 'visiteur.MembresCrestic.enseignements'| trans }}
+			</a>
+		</li>
+
+
+
+
 	</ul>
 
 	<div id="membresTabDivActivites" class="tab-content tab-default mb15">
@@ -226,7 +232,7 @@
 	<div class="row" style="text-align: right">
 		<div class="col-sm-6">&nbsp;</div>
 		<div class="col-sm-3"><a href="{{ path('homepage_utilisateur') }}">Retour / Annuler</a></div>
-		<div class="col-sm-3"><button type="submit" class="btn btn-block btn-primary">Enrgistrer</button> </div>
+		<div class="col-sm-3"><button type="submit" class="btn btn-block btn-primary">Enregistrer</button> </div>
 	</div>
 	{{ form_rest(edit_form) }}
 	{{ form_end(edit_form) }}

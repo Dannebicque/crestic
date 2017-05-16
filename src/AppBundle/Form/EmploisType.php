@@ -24,7 +24,7 @@ class EmploisType extends AbstractType
             ->add('debut', DateType::class, array('label' => 'Début souhaité'))
             ->add('duree', TextType::class, array('label' => 'Durée du contrat'))
             ->add('pdfFile', FileType::class)
-            ->add('contact', EntityType::class, array('class' =>'AppBundle\Entity\MembresCrestic', 'choice_label' => 'display', 'attr' => array('class'=> 'select2' )))
+            ->add('contact', EntityType::class, array('class' =>'AppBundle\Entity\MembresCrestic', 'empty_data'=> 'Choisir un responsable', 'choice_label' => 'display', 'attr' => array('class'=> 'select2' )))
             ->add('projet', EntityType::class, array('class' => 'AppBundle\Entity\Projets', 'choice_label' => 'titre', 'attr' => array('class' => 'select2')));
     }
     

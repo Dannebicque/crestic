@@ -16,15 +16,18 @@
             </tr>
             <tr>
                 <th>Description</th>
-                <td>{{ agenda.description }}</td>
+                <td>{{ agenda.description|raw }}</td>
             </tr>
             <tr>
                 <th>Date début</th>
-                <td>{% if agenda.datedebut %}{{ agenda.datedebut|date('Y-m-d') }}{% endif %} {% if agenda.heuredebut %}{{ agenda.heuredebut|date('H:i:s') }}{% endif %}</td>
+                <td>{% if agenda.datedebut %}Le {{ agenda.datedebut|date('d/m/Y') }}{% endif %} {% if agenda.heuredebut
+	                %} à {{ agenda.heuredebut|date('H:i') }}{% endif %}</td>
             </tr>
             <tr>
                 <th>Date fin</th>
-                <td>{% if agenda.datefin %}{{ agenda.datefin|date('Y-m-d') }}{% endif %} {% if agenda.heurefin %}{{ agenda.heurefin|date('H:i:s') }}{% endif %}</td>
+                <td>{% if agenda.datefin %}Le {{ agenda.datefin|date('d/m/Y') }}{% endif %} {% if agenda.heurefin %}
+		                à {{
+	                agenda.heurefin|date('H:i') }}{% endif %}</td>
             </tr>
             <tr>
                 <th>Lieu</th>
