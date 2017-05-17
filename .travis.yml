@@ -65,7 +65,7 @@ install:
 # Run script
 script:
   #- phpunit tests/AppBundle/Controller
-  - phpunit -c app/ tests/AppBundle/Controller/DefaultControllerTest.php
+  - phpunit cresticGIT/
 
 # After a build, send email notification with the build results
 notifications:
