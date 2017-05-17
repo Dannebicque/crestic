@@ -59,7 +59,7 @@ before-install:
 install:
   - composer install --no-scripts --no-plugins
   - cp app/config/parameters.yml.dist app/config/parameters.yml
-  - cp phpunit.xml.dist phpunit.xm
+  - cp phpunit.xml.dist phpunit.xml
   - php bin/console doctrine:database:create --env=test 2> /dev/null || php bin/console doctrine:database:create --env=test
   - php bin/console doctrine:schema:create --env=test
 
