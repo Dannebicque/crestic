@@ -64,9 +64,8 @@ install:
 
 # Run script
 script:
-  #- phpunit tests/AppBundle/Controller
-  - phpunit --coverage-text
-  - phpunit -c app
+  - phpunit -c app/
+  - phpunit
 
 # After a build, send email notification with the build results
 notifications:
