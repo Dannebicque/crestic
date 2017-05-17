@@ -65,7 +65,8 @@ install:
 # Run script
 script:
   #- phpunit tests/AppBundle/Controller
-  - phpunit cresticGIT/
+  - phpunit --coverage-text
+  - phpunit -c app
 
 # After a build, send email notification with the build results
 notifications:
