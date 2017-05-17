@@ -64,8 +64,8 @@ install:
 
 # Run script
 script:
-  - phpunit tests/
-  - phpunit tests/AppBundle/Controller
+  #- phpunit tests/AppBundle/Controller
+  - phpunit -c app/ tests/AppBundle/Controller/DefaultControllerTest.php
 
 # After a build, send email notification with the build results
 notifications:
