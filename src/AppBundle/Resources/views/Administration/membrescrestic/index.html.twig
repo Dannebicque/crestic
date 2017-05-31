@@ -7,7 +7,7 @@
 {% block content %}
     <h1>Membres du CReSTIC</h1>
 
-    <table class="table">
+    <table class="table" id="data-membres">
         <thead>
             <tr>
                 <th>Nom</th>
@@ -38,4 +38,12 @@
     </table>
 
             <a href="{{ path('administration_membres_new') }}"  class="btn btn-primary">Ajouter un nouveau membre du CReSTIC</a>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+	$(document).ready(function (e) {
+		$('#data-membres').dataTable({});
+	});
+</script>
 {% endblock %}

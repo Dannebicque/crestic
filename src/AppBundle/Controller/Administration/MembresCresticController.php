@@ -45,10 +45,26 @@ class MembresCresticController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($membresCrestic);
+
+            $userManager = $this->get('fos_user.user_manager');
+            $fuser = $userManager->createUser();
+            $tokenGenerator = $this->get('fos_user.util.token_generator');
+            $password = substr($tokenGenerator->generateToken(), 0, 8); // 8 chars
+            $fuser->setPlainPassword($password);
+            $fuser->setEmail($membresCrestic->getEmail());
+            $fuser->setNom($membresCrestic->getNom());
+            $fuser->setUsername($membresCrestic->getUsername());
+            $fuser->setPrenom($membresCrestic->getPrenom());
+            $fuser->setEnabled(true);//rendre actif le compte. Par défaut inactif
+            $fuser->setRoles(array($membresCrestic->getRole())); //permet de définir le rôle par défaut
+
+            $userManager->updateUser($fuser);
+
             $em->flush();
 
-            return $this->redirectToRoute('administration_membres_show', array('id' => $membresCrestic->getId()));
+            $this->get('my.mailer')->sendMailFirstConnexion($fuser, $password);
+
+            return $this->redirectToRoute('administration_membres_show_light', array('id' => $fuser->getId()));
         }
 
         return $this->render('@App/Administration/membrescrestic/new.html.twig', array(
@@ -68,6 +84,22 @@ class MembresCresticController extends Controller
         $deleteForm = $this->createDeleteForm($membresCrestic);
 
         return $this->render('@App/Administration/membrescrestic/show.html.twig', array(
+            'membresCrestic' => $membresCrestic,
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Finds and displays a membresCrestic entity.
+     *
+     * @Route("/new/{id}", name="administration_membres_show_light")
+     * @Method("GET")
+     */
+    public function showLightAction(MembresCrestic $membresCrestic)
+    {
+        $deleteForm = $this->createDeleteForm($membresCrestic);
+
+        return $this->render('@App/Administration/membrescrestic/show_light.html.twig', array(
             'membresCrestic' => $membresCrestic,
             'delete_form' => $deleteForm->createView(),
         ));

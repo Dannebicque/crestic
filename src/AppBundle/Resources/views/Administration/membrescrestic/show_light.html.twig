@@ -1,0 +1,37 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+	<a href="{{ path('administration_membres_index') }}">Membres</a> / Détails /
+{% endblock %}
+
+{% block content %}
+    <h1>Détails du membre que vous venez d'ajouter</h1>
+
+	<dl class="dl-horizontal">
+		<dt>Nom</dt>
+		<dd>{{ membresCrestic.nom }}</dd>
+		<dt>Prénom</dt>
+		<dd>{{ membresCrestic.prenom }}</dd>
+		<dt>CNU</dt>
+		<dd>{{ membresCrestic.cnu }}</dd>
+		<dt>Status</dt>
+		<dd>{{ membresCrestic.statutLong }}</dd>
+		<dt>Site d'affectation</dt>
+		<dd>{{ membresCrestic.site }}</dd>
+		<dt>Adresse</dt>
+		<dd>{{ membresCrestic.adresse }}</dd>
+		<dt>Date de nomination</dt>
+		<dd>{{ membresCrestic.datenomination|date('d/m/Y') }}</dd>
+		<dt>Email</dt>
+		<dd>{{ membresCrestic.email }}</dd>
+		<dt>Login</dt>
+		<dd>{{ membresCrestic.username }}</dd>
+		<dt>Niveau d'accès</dt>
+		<dd>{% for role in membresCrestic.roles %}{{ role }}{% endfor %}</dd>
+	</dl>
+	<div class="alert alert-info">
+		Les informations de connexion ont été envoyées au membre.
+	</div>
+	{{ include('@App/Administration/footer-show.html.twig', {var: 'membres', obj:membresCrestic.id}) }}
+
+{% endblock %}

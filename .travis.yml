@@ -65,7 +65,8 @@ install:
 
 # Run script
 script:
-  - phpunit -c phpunit
+    - phpunit -c phpunit
+    - vendor/bin/phpunit --coverage-text --coverage-clover build/coverage-clover.xml
 #  - phpunit
 
 # After a build, send email notification with the build results
