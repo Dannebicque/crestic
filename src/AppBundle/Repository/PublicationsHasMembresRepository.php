@@ -3,6 +3,8 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\PublicationsHasMembres;
+use Symfony\Component\Routing\Route;
+use Symfony\Component\Routing\Router;
 
 /**
  * PublicationsHasMembresRepository
@@ -93,7 +95,7 @@ class PublicationsHasMembresRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('auteur', "%".$auteur."%");
     }
 
-    public function findArrayAuteurs($publication)
+    public function findArrayAuteurs($publication, Router $router)
     {
         $auteurs = $this->findAllMembresFromPublication($publication);
         $tjson = array();
@@ -107,6 +109,8 @@ class PublicationsHasMembresRepository extends \Doctrine\ORM\EntityRepository
                 $t['prenom'] = $auteur->getMembreCrestic()->getPrenom();
                 $t['type'] = 'crestic';
                 $t['slug'] = $auteur->getMembreCrestic()->getSlug();
+                $t['link'] = $router->generate('public_membres_profil', array('slug' => $auteur->getMembreCrestic()->getSlug()));
+
             } elseif ($auteur->getMembreExterieur() !== null)
             {
                 $t['id'] = $auteur->getMembreExterieur()->getId();
@@ -114,6 +118,7 @@ class PublicationsHasMembresRepository extends \Doctrine\ORM\EntityRepository
                 $t['prenom'] = $auteur->getMembreExterieur()->getPrenom();
                 $t['type'] = 'ext';
                 $t['slug'] = $auteur->getMembreExterieur()->getId();
+                $t['link'] = $router->generate('public_membres_profil', array('slug' => $auteur->getMembreExterieur()->getId()));
             } else
             {
                 $t['nom'] = 'err';

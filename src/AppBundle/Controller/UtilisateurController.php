@@ -19,8 +19,10 @@ class UtilisateurController extends Controller
     {
         /** @var MembresCrestic $user */
         $user = $this->getUser();
+        $activites = $this->getDoctrine()->getRepository('AppBundle:Activites')->findLastActiviteMembre($user->getId());
         return $this->render('AppBundle:Utilisateur:index.html.twig', [
-            'user' => $user
+            'user' => $user,
+            'activites' => $activites
         ]);
     }
 }

@@ -27,6 +27,8 @@
 	            <td>{% if equipe.responsable != null %}{{ equipe.responsable.display }}{% else %} ?? {% endif %}</td>
                 <td>{{ equipe.themeRecherche|raw }}</td>
                 <td>
+					<a href="{{ path('administration_equipes_membres', { 'id': equipe.id }) }}" class="btn
+                            btn-success" data-toggle="tooltip" data-placement="bottom" title="Modifier les membres"><i class="fa fa-wrench"></i></a>
 	                <a href="{{ path('public_equipes_profil', { 'slug': equipe.slug }) }}" target="_blank" class="btn
 	                btn-info" title="Voir"><i class="fa fa-eye"></i> </a>
 	                <a href="{{ path('administration_equipes_edit', { 'id': equipe.id }) }}" class="btn

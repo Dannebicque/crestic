@@ -14,4 +14,15 @@ class ActivitesRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this->findBy(array('membreCrestic' => $user), array('created' => 'DESC'));
     }
+
+    public function findLastActiviteMembre($user, $nb = 3)
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.membreCrestic = :user')
+            ->setParameter('user', $user)
+            ->orderBy('a.created', 'DESC')
+            ->setMaxResults($nb)
+            ->getQuery()
+            ->getResult();
+    }
 }

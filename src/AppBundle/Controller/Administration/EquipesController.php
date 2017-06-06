@@ -3,9 +3,13 @@
 namespace AppBundle\Controller\Administration;
 
 use AppBundle\Entity\Equipes;
+use AppBundle\Entity\EquipesHasMembres;
+use AppBundle\Entity\MembresCrestic;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Equipe controller.
@@ -128,7 +132,78 @@ class EquipesController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('administration_equipes_delete', array('id' => $equipe->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
+    }
+
+    /**
+     * @param Equipes $id
+     * @Route("/{id}/membres", name="administration_equipes_membres")
+     * @return Response
+     */
+    public function equipeMembresAction(Equipes $id)
+    {
+        $t = array();
+
+        /** @var EquipesHasMembres $membre */
+        foreach ($id->getMembres() as $membre) {
+            $t[$membre->getMembreCrestic()->getId()] = $membre;
+        }
+
+        return $this->render('@App/Administration/equipes/membres.html.twig', array(
+            'equipe' => $id,
+            't' => $t,
+            'membres' => $this->getDoctrine()->getRepository('AppBundle:MembresCrestic')->findAllMembresCrestic(),
+        ));
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     * @internal param Equipes $id
+     * @Route("/ajax/membre", name="administration_equipes_ajax_membre", methods={"POST"})
+     */
+    public function equipeMembreAjaxAction(Request $request)
+    {
+        $idequipe = $request->request->get('equipe');
+        $idmembre = $request->request->get('membre');
+
+        $equipe = $this->getDoctrine()->getRepository('AppBundle:Equipes')->find($idequipe);
+        $membre = $this->getDoctrine()->getRepository('AppBundle:MembresCrestic')->find($idmembre);
+        $equipemembre = $this->getDoctrine()->getRepository('AppBundle:EquipesHasMembres')->findBy(array('membreCrestic' => $idmembre, 'equipe' => $idequipe));
+
+        if ($equipe && $membre && count($equipemembre) == 0) {
+            $e_m = new EquipesHasMembres();
+            $e_m->setEquipe($equipe);
+            $e_m->setMembreCrestic($membre);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($e_m);
+            $em->flush();
+            return new Response('ok', 200);
+        } else {
+            return new Response('nok', 500);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     * @internal param Equipes $id
+     * @Route("/ajax/membrer", name="administration_equipes_ajax_membre_remove", methods={"POST"})
+     */
+    public function equipeMembreAjaxRemoveAction(Request $request)
+    {
+        $idequipe = $request->request->get('equipe');
+        $idmembre = $request->request->get('membre');
+
+        $equipemembre = $this->getDoctrine()->getRepository('AppBundle:EquipesHasMembres')->findBy(array('membreCrestic' => $idmembre, 'equipe' => $idequipe));
+
+
+        $em = $this->getDoctrine()->getManager();
+        foreach ($equipemembre as $e)
+        {
+            $em->remove($e);
+        }
+        $em->flush();
+        return new Response('ok', 200);
     }
 }

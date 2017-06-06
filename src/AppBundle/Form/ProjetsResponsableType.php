@@ -2,7 +2,6 @@
 
 namespace AppBundle\Form;
 
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -12,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProjetsType extends AbstractType
+class ProjetsResponsableType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -22,10 +21,6 @@ class ProjetsType extends AbstractType
         $builder
             ->add('titre', TextType::class, array('label' => 'Titre du projet'))
             ->add('description', TextareaType::class, array('label' => 'Description du projet', 'attr' => array('class' => 'tinyMCE')))
-            ->add('responsable', EntityType::class, array('label' => 'Responsable de la plateforme',
-                'class' =>'AppBundle\Entity\MembresCrestic',
-                'empty_data'=> 'Choisir un responsable',
-                'choice_label' => 'display', 'attr' => array('class'=> 'select2' )))
             ->add('imageFile', FileType::class, array('label' => 'Illustration du projet'))
             ->add('dateDebut', DateType::class, array('label' => 'Date de début du projet'))
             ->add('dateFin', DateType::class, array('label' => 'Date de fin prévue du projet'))
@@ -37,7 +32,7 @@ class ProjetsType extends AbstractType
             ->add('projetValorisation', CheckboxType::class, array('label' => 'Projet de valorisation'))
             ->add('projetThese', CheckboxType::class, array('label' => 'Projet support d\une thèse'))
             ->add('projetRi', CheckboxType::class, array('label' => 'Projet Relations Internationales'))
-        ;
+            ;
     }
     
     /**

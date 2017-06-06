@@ -36,12 +36,14 @@
 						</td>
 						<td style="width:20%">
 
-							<button class="btn btn-primary" {% if loop.first %} disabled {% endif %}><span class="fa
+							<button class="btn btn-primary auteur-up" data-auteur="{{ auteur.id }}" data-type="{{ auteur
+                            .type }}" {% if loop.first %} disabled {% endif %}><span class="fa
 							fa-arrow-circle-o-up"></span></button>
-							<button class="btn btn-primary" {% if loop.last %} disabled {% endif %}><span class="fa
+							<button class="btn btn-primary auteur-down" data-auteur="{{ auteur.id }}" data-type="{{ auteur
+                            .type }}" {% if loop.last %} disabled {% endif %}><span class="fa
 							fa-arrow-circle-o-down"></span></button>
 							<button class="btn btn-info"><span class="fa fa-eye"></span></button>
-							<button class="btn btn-danger supprimer" data-id="{{ auteur.id }}" data-type="{{ auteur
+							<button class="btn btn-danger supprimer" data-auteur="{{ auteur.id }}" data-type="{{ auteur
 							.type }}">
 								<span class="fa fa-times"></span></button>
 						</td>
@@ -128,7 +130,6 @@
 								$html = "";
 								$.each(data, function (index) {
 									auteur = data[index];
-									console.log(auteur.nom);
 									$html = $html + "<button data-type=\"" +
 										auteur.type + "\" data-id=\"" +
 										auteur.id + "\" class=\"btn btn-primary select-auteur\"><span class=\"fa " +
@@ -140,7 +141,7 @@
 									$.ajax({
 										url: "{{ path('ajax_add_auteur') }}",
 										data: {'auteur': $(this).data('id'), 'publication': {{ publication.id }},
-											'type':type },
+											'type':$(this).data('type') },
 										dataType: 'JSON',
 										method: 'POST',
 										success: function (data) {
@@ -163,14 +164,14 @@
 												$html = $html + auteur.prenom + " " + auteur.nom;
 												$html = $html + '</td>';
 												$html = $html + '<td style="width:20%">';
-												$html = $html + '<button class="btn btn-primary" ' +
-													disabledup + '><span class="fa ' +
+												$html = $html + '<button class="btn btn-primary auteur-up" ' +
+													disabledup + ' data-auteur="'+auteur.id+'" data-type="'+auteur.type+'"><span class="fa ' +
 													'fa-arrow-circle-o-up"></span></button>';
-												$html = $html + '<button class="btn btn-primary" ' + disableddown +
-													'><span class="fa fa-arrow-circle-o-down"></span></button>';
-												$html = $html + '<button class="btn btn-info"><span class="fa ' +
-													'fa-eye"></span></button>';
-												$html = $html + '<button class="btn btn-danger"><span class="fa ' +
+												$html = $html + '<button class="btn btn-primary auteur-down" ' + disableddown +
+													' data-auteur="'+auteur.id+'" data-type="'+auteur.type+'"><span class="fa fa-arrow-circle-o-down"></span></button>';
+												$html = $html + '<a href="'+auteur.link+'" target="_blank" class="btn btn-info"><span class="fa ' +
+													'fa-eye"></span></a>';
+												$html = $html + '<button class="btn btn-danger supprimer" data-auteur="'+auteur.id+'" data-type="'+auteur.type+'"><span class="fa ' +
 													'fa-times"></span></button>';
 												$html = $html + '</td>';
 												$html = $html + '</tr>';
@@ -181,6 +182,12 @@
 											$('.supprimer').click(function (e) {
 												supprimer($(this));
 											});
+											$('.auteur-up').click(function(){
+                                                auteurUpDown($(this), 'up');
+											});
+                                            $('.auteur-down').click(function(){
+                                                auteurUpDown($(this), 'down');
+                                            });
 										}
 									});
 								});
@@ -230,6 +237,15 @@
 					}
 				});
 
+				$('.auteur-down').click(function(){
+                    auteurUpDown($(this), 'down');
+
+				});
+
+                $('.auteur-up').click(function(){
+                    auteurUpDown($(this), 'up');
+                });
+
 				function update($type, $id, $valeur) {
 					$.ajax({
 						url: "{{ path('ajax_add_options') }}",
@@ -249,7 +265,7 @@
 
 				function supprimer($obj) {
 					$type = $obj.data('type');
-					$id = $obj.data('id');
+					$id = $obj.data('auteur');
 
 					$.ajax({
 						url: "{{ path('ajax_suppr_auteur') }}",
@@ -266,6 +282,25 @@
 						}
 					});
 				}
+
+				function auteurUpDown($obj, $sens)
+				{
+                    $.ajax({
+                        url: "{{ path('ajax_publication_up_down') }}",
+                        method: 'post',
+                        data: {
+                            'auteur': $obj.data('auteur'),
+                            'sens': $sens,
+                            'publication': {{ publication.id }}
+                        },
+                        success: function (e) {
+                            //réaranger le tableau...
+
+                        }
+                    });
+				}
+
+
 			});
 
 		</script>

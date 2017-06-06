@@ -52,17 +52,5 @@
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('administration_equipes_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('administration_equipes_edit', { 'id': equipe.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+    {{ include('@App/Administration/footer-show.html.twig', {var: 'equipes', obj:equipe.id}) }}
 {% endblock %}

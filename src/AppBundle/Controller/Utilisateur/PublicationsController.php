@@ -136,7 +136,7 @@ class PublicationsController extends Controller
         $projets = $this->getDoctrine()->getRepository('AppBundle:Projets')->findAll();
         $plateformes = $this->getDoctrine()->getRepository('AppBundle:Plateformes')->findAll();
         $equipes = $this->getDoctrine()->getRepository('AppBundle:Equipes')->findAllEquipesActives();
-        $auteurs = $this->getDoctrine()->getRepository('AppBundle:PublicationsHasMembres')->findArrayAuteurs($id->getId());
+        $auteurs = $this->getDoctrine()->getRepository('AppBundle:PublicationsHasMembres')->findArrayAuteurs($id->getId(), $this->get('router'));
         $publiHasEquipes = $this->getDoctrine()->getRepository('AppBundle:PublicationsHasEquipes')->findAllIdEquipes($id->getId());
         $publiHasProjets = $this->getDoctrine()->getRepository('AppBundle:PublicationsHasProjets')->findAllIdProjets($id->getId());
         $publiHasPlateformes = $this->getDoctrine()->getRepository('AppBundle:PublicationsHasPlateformes')->findAllIdPlateformes($id->getId());
@@ -237,9 +237,9 @@ class PublicationsController extends Controller
             $em->persist($pm);
             $em->flush();
 
-            $auteurs = $this->getDoctrine()->getRepository('AppBundle:PublicationsHasMembres')->findArrayAuteurs($idpublication);
+            $auteurs = $this->getDoctrine()->getRepository('AppBundle:PublicationsHasMembres')->findArrayAuteurs($idpublication, $this->get('router'));
 
-            return new JsonResponse($$auteurs, 200);
+            return new JsonResponse($auteurs, 200);
         } else
         {
 
@@ -440,4 +440,19 @@ class PublicationsController extends Controller
 
         return $publication;
     }
+
+    /**
+     * @param $auteur
+     * @param $publication
+     * @Route("ajax/up-down/auteur/", name="ajax_publication_up_down")
+     */
+    public function upDownAuteur(Request $request)
+    {
+        $auteur = $request->request->get('auteur');
+        $publication = $request->request->get('publication');
+        $sens = $request->request->get('sens');
+
+    }
+
+
 }

@@ -65,7 +65,7 @@ install:
 
 # Run script
 script:
-    - phpunit -c phpunit
+    - phpunit --configuration phpunit.xml
     - vendor/bin/phpunit --coverage-text --coverage-clover build/coverage-clover.xml
 #  - phpunit
 

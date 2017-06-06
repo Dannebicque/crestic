@@ -92,7 +92,7 @@
 					</div>
 					<ul>
 					{% for projet in equipe.projets %}
-						<li><a href="">{{ projet.nom }}</a></li> {#todo: mettre lien #}
+						<li><a href="{{ path('public_projet_profil', {slug:projet.projet.slug}) }}" target="_blank">{{ projet.projet.titre }}</a></li>
 					{% endfor %}
 					</ul>
 				</div>
@@ -129,8 +129,8 @@
 											.membreCrestic.statutLong|trans
 											}}-</div>
 										<div class="membreCresticMosaiqueMosaiqueNom col-sm-12">
-											<a href="{{ path('public_membres_profil', {slug:membre.slug}) }}"
-											   target="_blank" title="Profil de {{ membre.display }}">{{ membre.display
+											<a href="{{ path('public_membres_profil', {slug:membre.membreCrestic.slug}) }}"
+											   target="_blank" title="Profil de {{ membre.membreCrestic.display }}">{{ membre.membreCrestic.display
 												}}</a>
 										</div>
 										<div class="col-sm-12">

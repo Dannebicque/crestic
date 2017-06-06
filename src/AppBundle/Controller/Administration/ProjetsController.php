@@ -2,10 +2,13 @@
 
 namespace AppBundle\Controller\Administration;
 
+use AppBundle\Entity\Plateformes;
 use AppBundle\Entity\Projets;
+use AppBundle\Entity\ProjetsHasMembres;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Projet controller.
@@ -130,5 +133,75 @@ class ProjetsController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+    /**
+     * @param Projets $id
+     * @Route("/{id}/projets", name="administration_projets_membres")
+     * @return Response
+     */
+    public function projetMembresAction(Projets $id)
+    {
+        $t = array();
+
+        /** @var ProjetsHasMembres $membre */
+        foreach ($id->getMembres() as $membre) {
+            $t[$membre->getMembreCrestic()->getId()] = $membre;
+        }
+
+        return $this->render('@App/Administration/projets/membres.html.twig', array(
+            'projet' => $id,
+            't' => $t,
+            'membres' => $this->getDoctrine()->getRepository('AppBundle:MembresCrestic')->findAllMembresCrestic(),
+        ));
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     * @Route("/ajax/membre", name="administration_projets_ajax_membre", methods={"POST"})
+     */
+    public function projetMembreAjaxAction(Request $request)
+    {
+        $idprojet = $request->request->get('projet');
+        $idmembre = $request->request->get('membre');
+
+        $projet = $this->getDoctrine()->getRepository('AppBundle:Projets')->find($idprojet);
+        $membre = $this->getDoctrine()->getRepository('AppBundle:MembresCrestic')->find($idmembre);
+        $projetmembre = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasMembres')->findBy(array('membreCrestic' => $idmembre, 'projet' => $idprojet));
+
+        if ($projet && $membre && count($projetmembre) == 0) {
+            $e_m = new ProjetsHasMembres();
+            $e_m->setProjet($projet);
+            $e_m->setMembreCrestic($membre);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($e_m);
+            $em->flush();
+            return new Response('ok', 200);
+        } else {
+            return new Response('nok', 500);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     * @Route("/ajax/membrer", name="administration_projets_ajax_membre_remove", methods={"POST"})
+     */
+    public function projetMembreAjaxRemoveAction(Request $request)
+    {
+        $idprojet = $request->request->get('projet');
+        $idmembre = $request->request->get('membre');
+
+        $projetmembre = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasMembres')->findBy(array('membreCrestic' => $idmembre, 'projet' => $idprojet));
+
+
+        $em = $this->getDoctrine()->getManager();
+        foreach ($projetmembre as $e)
+        {
+            $em->remove($e);
+        }
+        $em->flush();
+        return new Response('ok', 200);
     }
 }
