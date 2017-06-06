@@ -53,7 +53,7 @@ class DefaultController extends Controller
             'equipe'                    => $this->getDoctrine()->getRepository('AppBundle:Equipes')->findAllEquipes(),
             'secretaire'                => $this->getDoctrine()->getRepository('AppBundle:Organigramme')->findAllOrganigramme('Secrétaire'),
             'assistante'                => $this->getDoctrine()->getRepository('AppBundle:Organigramme')->findAllOrganigramme('assistante'),
-            'technicien'                => $this->getDoctrine()->getRepository('AppBundle:Organigramme')->findAllOrganigramme('Technicien'),
+            'technicien'                => $this->getDoctrine()->getRepository('AppBundle:Organigramme')->findAllOrganigramme('Technicien')
         );
 
         return $this->render('@App/Default/organigramme.html.twig', [
