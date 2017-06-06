@@ -13,10 +13,11 @@
     </php>
 
     <testsuites>
-        <testsuite name="Project Test Suite">
-            <directory>./Tests</directory>
-            <directory>./tests</directory>
-
+        <testsuite name="My Test Suite">
+            <directory>./tests/AppBundle/Controller/</directory>
+        </testsuite>
+        <testsuite name="My Test Suite 2">
+            <directory>./src/AppBundle/Tests/AppBundle/Controller/</directory>
         </testsuite>
     </testsuites>
 
