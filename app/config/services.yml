@@ -22,5 +22,5 @@ services:
             - { name: twig.extension }
 
     my.mailer:
-            class: AppBundle\Services\MyMailer
-            arguments: ['@mailer', '@templating']
+        class: AppBundle\Services\MyMailer
+        arguments: ['@mailer', '@templating']

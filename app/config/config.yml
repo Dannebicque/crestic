@@ -41,7 +41,7 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     globals:
-        configuration : "@kernel.configuration"
+        configuration: "@kernel.configuration"
         biblio: "@kernel.biblio"
         html: "@kernel.html"
 
