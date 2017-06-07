@@ -92,7 +92,7 @@ visiteur:
     index:
         actualites:
             posteLe: Posté le
-            lirePlus : Lire la suite ...
+            lirePlus: Lire la suite ...
     MembresCrestic:
         activites: Activités
         publications: Publications

@@ -40,6 +40,7 @@ before_script:
 # Define an environment variable
 env:
   - SYMFONY_VERSION="3.2.*" DB=mysql
+  - SYMFONY_DEPRECATIONS_HELPER=disabled #suppression des messages de deprecation
 
 # Update composer
 before-install:
