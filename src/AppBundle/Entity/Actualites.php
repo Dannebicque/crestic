@@ -55,22 +55,24 @@ class Actualites
     private $id;
     /**
      * @var string
-     *
+     * @Gedmo\Translatable
      * @ORM\Column(name="titre", type="string", length=255)
      */
     private $titre;
     /**
      * @var string
-     *
-     * @ORM\Column(name="keywords", type="string", length=255)
+     * @Gedmo\Translatable
+     * @ORM\Column(name="keywords", type="string", length=255, nullable=true)
      */
     private $keywords;
+
     /**
      * @var string
-     *
+     * @Gedmo\Translatable
      * @ORM\Column(name="message", type="text")
      */
     private $message;
+
     /**
      * @var string
      * @Gedmo\Slug(fields={"titre"})
