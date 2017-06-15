@@ -1,0 +1,41 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+    Slides/Images du CReSTIC /
+{% endblock %}
+
+{% block content %}
+    <h1>Slides/Images du CReSTIC</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Url</th>
+                <th>Titre</th>
+                <th>Texte</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for slider in sliders %}
+            <tr>
+                <td>{{ slider.image }}</td>
+                <td>{{ slider.url }}</td>
+                <td>{{ slider.titre }}</td>
+                <td>{{ slider.texte }}</td>
+                <td>
+                    <a href="{{ path('administration_slider_show', { 'id': slider.id }) }}" class="btn btn-info"
+                       title="Voir"><i class="fa fa-eye"></i> </a>
+                    <a href="{{ path('administration_slider_edit', { 'id': slider.id }) }}" class="btn
+                            btn-warning" title="Modifier"><i class="fa fa-pencil"></i></a>
+
+
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('administration_slider_new') }}" class="btn btn-primary">Créer un nouveau slide</a>
+{% endblock %}

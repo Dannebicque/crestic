@@ -16,7 +16,6 @@
             <tr>
                 <th>Nom</th>
 	            <th>Responsable</th>
-                <th>Themerecherche</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -24,10 +23,9 @@
         {% for equipe in equipes if equipe.active == true %}
             <tr>
                 <td>{{ equipe.nom }}</td>
-	            <td>{% if equipe.responsable != null %}{{ equipe.responsable.display }}{% else %} ?? {% endif %}</td>
-                <td>{{ equipe.themeRecherche|raw }}</td>
+	            <td>{% if equipe.responsable != null %}{{ equipe.responsable|linkMembre|raw }}{% else %} - {% endif %}</td>
                 <td>
-					<a href="{{ path('administration_equipes_membres', { 'id': equipe.id }) }}" class="btn
+					<a href="{{ path('administration_equipes_options', { 'id': equipe.id }) }}" class="btn
                             btn-success" data-toggle="tooltip" data-placement="bottom" title="Modifier les membres"><i class="fa fa-wrench"></i></a>
 	                <a href="{{ path('public_equipes_profil', { 'slug': equipe.slug }) }}" target="_blank" class="btn
 	                btn-info" title="Voir"><i class="fa fa-eye"></i> </a>

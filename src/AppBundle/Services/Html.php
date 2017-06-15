@@ -27,7 +27,7 @@ class Html
     {
         $html = '<a href="';
         $html .= $this->router->generate('public_membres_profil', array('slug' => $auteur->getSlug()));
-        $html .= 'title="Profil de '.$auteur->getDisplay().'"';
+        $html .= '" title="Profil de '.$auteur->getDisplay().'"';
 		$html .= 'target="_blank">';
 
 		if ($texte == '')

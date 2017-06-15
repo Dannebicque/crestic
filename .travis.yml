@@ -41,6 +41,8 @@ env:
   global:
     - SYMFONY_VERSION="3.2.*" DB=mysql
     - SYMFONY_DEPRECATIONS_HELPER=disabled #suppression des messages de deprecation
+    - "FTP_USER=user"
+    - "FTP_PASSWORD=password"
 
 # Update composer
 before-install:
@@ -73,3 +75,6 @@ script:
 # After a build, send email notification with the build results
 notifications:
   email: david.annebicque@gmail.com
+
+#after_success:
+#    "curl --ftp-create-dirs -T uploadfilename -u $FTP_USER:$FTP_PASSWORD ftp://sitename.com/directory/myfile"

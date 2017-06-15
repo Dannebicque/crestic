@@ -32,8 +32,8 @@
                 <td>{{ projet.financement }}</td>
 	            <td><a href="{{ projet.url }}" target="_blank"> {{ projet.url }}</a></td>
                 <td>
-                    <a href="{{ path('administration_projets_membres', { 'id': projet.id }) }}" class="btn
-                            btn-success" data-toggle="tooltip" data-placement="bottom" title="Modifier les membres"><i class="fa fa-wrench"></i></a>
+                    <a href="{{ path('administration_projets_options', { 'id': projet.id }) }}" class="btn
+                            btn-success" data-toggle="tooltip" data-placement="bottom" title="Modifier les options"><i class="fa fa-wrench"></i></a>
 	                <a href="{{ path('public_projet_profil', { 'slug': projet.slug }) }}" target="_blank" class="btn btn-info"
 	                   title="Voir"><i class="fa fa-eye"></i> </a>
 	                <a href="{{ path('administration_projets_edit', { 'id': projet.id }) }}" class="btn

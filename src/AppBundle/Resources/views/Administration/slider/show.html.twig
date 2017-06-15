@@ -1,0 +1,17 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block content %}
+    <h1>Slider</h1>
+
+    <img src="{{ asset('uploads/slider/'~slider.image) }}"></td>
+
+                <a href="{{ slider.url }}" target="_blank">{{ slider.url }}</a>
+
+                <th>Titre</th>
+                <td>{{ slider.titre }}</td>
+
+                <th>Texte</th>
+                <td>{{ slider.texte }}</td>
+
+    {{ include('@App/Administration/footer-show.html.twig', {var: 'slider', obj:slider.id}) }}
+{% endblock %}

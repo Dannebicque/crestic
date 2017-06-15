@@ -16,30 +16,22 @@ class EditeursType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('nom', TextType::class, array(
-            'label'              => 'nom',
-            'translation_domain' => 'messages',
+            'label'              => 'Nom',
             'required'           => true,
-            'attr'               => array('class' => 'form-control'),
         ))
             ->add('lien', TextType::class, array(
-                'label'              => 'lien',
-                'translation_domain' => 'messages',
-                'required'           => true,
-                'attr'               => array('class' => 'form-control'),
+                'label'              => 'Site Web',
+                'required'           => false,
             ))
             ->add('ville', TextType::class, array(
-                'label'              => 'cille',
-                'translation_domain' => 'messages',
-                'required'           => true,
-                'attr'               => array('class' => 'form-control'),
+                'label'              => 'Ville',
+                'required'           => false,
             ))
             ->add('pays', EntityType::class, array(
                 'class'              => 'AppBundle\Entity\Pays',
                 'choice_label'       => 'nomFr',
-                'label'              => 'pays',
-                'translation_domain' => 'messages',
+                'label'              => 'Pays',
                 'required'           => true,
-                'attr'               => array('class' => 'form-control'),
             ));
     }
 

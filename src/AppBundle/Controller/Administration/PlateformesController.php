@@ -3,11 +3,13 @@
 namespace AppBundle\Controller\Administration;
 
 use AppBundle\Entity\Plateformes;
+use AppBundle\Entity\PlateformesHasSliders;
+use AppBundle\Entity\ProjetsHasPlateformes;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Plateforme controller.
@@ -88,6 +90,7 @@ class PlateformesController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+            $this->get('session')->getFlashBag()->add('alert-success', 'Modifications enregistrées');
 
             return $this->redirectToRoute('administration_plateformes_edit', array('id' => $plateforme->getId()));
         }
@@ -132,5 +135,125 @@ class PlateformesController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+    /**
+     * @param Plateformes $id
+     * @Route("/{id}/plateformes", name="administration_plateformes_options")
+     * @return Response
+     */
+    public function plateformeOptionsAction(Plateformes $id)
+    {
+        $t = array();
+
+        /** @var ProjetsHasPlateformes $membre */
+        foreach ($id->getProjets() as $projet)
+        {
+            $t['projets'][$projet->getProjet()->getId()] = $projet;
+        }
+
+        /** @var PlateformesHasSliders $slider */
+        foreach ($id->getSliders() as $slider)
+        {
+            $t['sliders'][$slider->getSlider()->getId()] = $slider;
+        }
+
+
+        return $this->render('@App/Administration/plateformes/options.html.twig', array(
+            'plateforme'      => $id,
+            't'           => $t,
+            'projets' => $this->getDoctrine()->getRepository('AppBundle:Projets')->findAllProjets(),
+            'sliders'     => $this->getDoctrine()->getRepository('AppBundle:Slider')->findAllSlider(),
+        ));
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     * @Route("/ajax/membre", name="administration_plateformes_ajax_option_add", methods={"POST"})
+     */
+    public function projetOptionAjaxAction(Request $request)
+    {
+        $idprojet = $request->request->get('projet');
+        $idoption = $request->request->get('idoption');
+        $type     = $request->request->get('type');
+
+
+        $projet = $this->getDoctrine()->getRepository('AppBundle:Projets')->find($idprojet);
+
+        switch ($type)
+        {
+            case 'membre':
+                $option       = $this->getDoctrine()->getRepository('AppBundle:MembresCrestic')->find($idoption);
+                $projetoption = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasMembres')->findBy(array('membreCrestic' => $idoption, 'projet' => $idprojet));
+                $e_m          = new ProjetsHasMembres();
+                $set          = 'setMembreCrestic';
+                $texte        = '';
+                break;
+            case 'equipe':
+                $option       = $this->getDoctrine()->getRepository('AppBundle:Equipes')->find($idoption);
+                $projetoption = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasEquipes')->findBy(array('equipe' => $idoption, 'projet' => $idprojet));
+                $e_m          = new ProjetsHasEquipes();
+                $set          = 'setEquipe';
+                $texte        = '';
+                break;
+            case 'partenaire':
+                $option       = $this->getDoctrine()->getRepository('AppBundle:Partenaires')->find($idoption);
+                $projetoption = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasPartenaires')->findBy(array('partenaire' => $idoption, 'projet' => $idprojet));
+                $e_m          = new ProjetsHasPartenaires();
+                $set          = 'setPartenaire';
+                $texte        = '';
+                break;
+            case 'slider':
+                $option       = $this->getDoctrine()->getRepository('AppBundle:Slider')->find($idoption);
+                $projetoption = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasSliders')->findBy(array('slider' => $idoption, 'projet' => $idprojet));
+                $e_m          = new ProjetsHasSliders();
+                $set          = 'setSlider';
+                $texte        = '';
+                break;
+            case 'plateforme':
+                $option       = $this->getDoctrine()->getRepository('AppBundle:Plateformes')->find($idoption);
+                $projetoption = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasPlateformes')->findBy(array('plateforme' => $idoption, 'projet' => $idprojet));
+                $e_m          = new ProjetsHasPlateformes();
+                $set          = 'setPlateforme';
+                $texte        = '';
+                break;
+        }
+
+
+        if ($projet && $option && count($projetoption) == 0)
+        {
+            $e_m->setProjet($projet);
+            $e_m->$set($option);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($e_m);
+            $em->flush();
+            return new Response($texte, 200);
+        } else
+        {
+            return new Response('nok', 500);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     * @Route("/ajax/membrer", name="administration_plateforme_ajax_option_remove", methods={"POST"})
+     */
+    public function plateformeMembreAjaxRemoveAction(Request $request)
+    {
+        $idprojet = $request->request->get('projet');
+        $idmembre = $request->request->get('membre');
+
+        $projetmembre = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasMembres')->findBy(array('membreCrestic' => $idmembre, 'projet' => $idprojet));
+
+
+        $em = $this->getDoctrine()->getManager();
+        foreach ($projetmembre as $e)
+        {
+            $em->remove($e);
+        }
+        $em->flush();
+        return new Response('ok', 200);
     }
 }

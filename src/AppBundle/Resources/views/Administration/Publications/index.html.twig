@@ -1,0 +1,69 @@
+{% extends "::base.html.twig" %}
+
+
+{% block breadcrumbs %}
+    Publications /
+{% endblock %}
+
+{% block content %}
+    <h1>Rechercher des publications</h1>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="auteur" class="form-label col-sm-3">Auteur</label>
+                    <div class="col-sm-9">
+                        <select name="auteurv " id="auteur" class="form-control select2">
+                            <option value="">Choisir</option>
+                            {% for membre in membresCrestic %}
+                            <option value="{{ membre.id }}">{{ membre.display }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="type" class="form-label col-sm-3">Type de publication</label>
+                    <div class="col-sm-9">
+                        <select name="type" id="type" class="form-control select2">
+                            <option value="all">Tous les types</option>
+                            <option value="revues">Revues</option>
+                            <option value="conferences">Conférences</option>
+                            <option value="ouvrages">Ouvrages</option>
+                            <option value="chapitres">Chapitres</option>
+                            <option value="brevets">Brevets</option>
+                            <option value="rapports">Rapports</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <div class="col-sm-8">&nbsp;</div>
+                    <div class="col-sm-4">
+                        <button class="btn btn-primary btn-block" id="afficherResultat">Afficher les résultats</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-12" id="resultat">
+            <div class="alert alert-info">
+                Veuillez choisir au moins un critère
+            </div>
+        </div>
+    </div>
+    <br />
+    <a href="{{ path('administration_publications_new') }}" class="btn btn-primary">Ajouter une publication</a>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    $(document).ready(function(){
+       $('#afficherResultat').click(function(e){
+           e.preventDefault();
+         $('#resultat').empty().load("{{ path('administration_publications_resultats') }}", {'auteur':$('#auteur').val(), 'type':$('#type').val()})
+       });
+    });
+</script>
+{% endblock %}

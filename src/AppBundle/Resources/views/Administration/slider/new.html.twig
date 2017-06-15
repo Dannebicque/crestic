@@ -1,0 +1,17 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+    <a href="{{ path('administration_slider_index') }}">Slides/Images</a> / Création
+{% endblock %}
+
+{% block content %}
+    <h1>Ajout d'un slide</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    {{ include('@App/Administration/footer-new.html.twig', {var: 'slider'}) }}
+
+    {{ form_end(form) }}
+
+{% endblock %}

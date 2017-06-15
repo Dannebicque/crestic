@@ -19,7 +19,7 @@ class PublicationsOuvragesRepository extends \Doctrine\ORM\EntityRepository
     public function findPagination($page, $taille)
     {
         $q = $this->createQueryBuilder('p')
-                    //->innerJoin('CRESTICPublicationsBundle:PublicationsHasMembres', 'pm', 'WITH', 'p.id = pm.publication')
+                    //->innerJoin('AppBundle:PublicationsHasMembres', 'pm', 'WITH', 'p.id = pm.publication')
                     ->orderBy('p.created', 'DESC')
                     ;
 

@@ -16,21 +16,18 @@ class CmsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('titre', TextType::class, array(
-            'label'              => 'titre',
-            'translation_domain' => 'messages',
+            'label'              => 'Titre',
             'required'           => true,
         ))
             ->add('texte', TextareaType::class, array(
-                'label'              => 'texte',
-                'translation_domain' => 'messages',
+                'label'              => 'Texte',
                 'required'           => false,
                 'attr'               => array('class' => 'tinyMCE')
-            ))
-            ->add('slug', TextType::class, array(
-                'label'              => 'slug',
-                'translation_domain' => 'messages',
-                'required'           => false,
             ));
+//            ->add('slug', TextType::class, array(
+//                'label'              => 'Slug (ne pas modifier)',
+//                'required'           => false,
+//            ));
     }
 
     /**

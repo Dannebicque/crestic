@@ -6,11 +6,11 @@
 {% block content %}
 	<div class="heading">
 		<h4>
-			{{ publication.titre }}
+			{{ publication.titre }} {% if publication.publicationInternationale == true %} <span class="fa fa-globe" title="{{ 'publications.apercu.internationale.oui'|trans }}"></span>{% endif %}
 		</h4>
 	</div>
 	<div class="row">
-		<div class="col-sm-9">
+		<div class="col-sm-8">
 			<div class="row">
 				<div class="col-sm-12">{{ biblio.getAllAuteurs(publication)|raw }}
 				</div>
@@ -29,31 +29,29 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-sm-3 text-center">
+		<div class="col-sm-4 text-center">
 			<div class="content-box-profile content-box-bordered no-margin">
 				<div class="team-description">
 					<dl class="dl-horizontal dl-apercu-horizontal">
 						{% if publication.pageDebut != 0 and publication.pageDebut != null and publication.pageFin != 0 and publication
 						.pageFin != null %}
-							<dt>{{ 'publication.apercu.pagination'|trans }}</dt>
+							<dt>{{ 'publications.apercu.pagination'|trans }}</dt>
 							<dd>pp. {{ publication.pageDebut }} - {{ publication.pageFin }}</dd>
 						{% endif %}
-						<dt>{{ 'publication.apercu.datepubli'|trans }}</dt>
+						<dt>{{ 'publications.apercu.datepubli'|trans }}</dt>
 						<dd>{{ publication.moisPublication }} / {{ publication.anneePublication }}</dd>
 						{% if publication.pdf != '' and publication.pdf != null %}
 							{%  if publication.pdfVisible == true or is_granted('ROLE_USER') %}
 								{{ html.getButton(publication, 'Apercu', 'pdf')|raw }}
 							{% endif %}
 						{% endif %}
-						<dt>{{ 'publication.apercu.internationale.title'|trans }}</dt>
-						<dd>{% if publication.publicationInternationale == true %} {{ 'publication.apercu.internationale
-						.oui'|trans }}{% else %}{{ 'publication.apercu.internationale.non'|trans }}{% endif %}</dd>
+
 						{% if publication.doi != null and publication.doi != '' %}
-							<dt>{{ 'publication.apercu.doi'|trans }}</dt>
+							<dt>{{ 'publications.apercu.doi'|trans }}</dt>
 							<dd>{{ html.getUrl(publication.doi)|raw }}</dd>
 						{% endif %}
 						{% if publication.url != null and publication.url != '' %}
-							<dt>{{ 'publication.apercu.url'|trans }}</dt>
+							<dt>{{ 'publications.apercu.url'|trans }}</dt>
 							<dd>{{ html.getUrl(publication.url)|raw }}</dd>
 						{% endif %}
 					</dl>
@@ -69,7 +67,9 @@
 			</div>
 		</div>
 		<div class="col-sm-12">
-			{{ biblio.formatBibtex(publication)|raw }}
+			<pre>
+				{{ biblio.formatBibtex(publication)|raw }}
+			</pre>
 		</div>
 	</div>
 	projets, equipes, plateformes

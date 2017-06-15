@@ -24,7 +24,6 @@ class ConfigurationType extends AbstractType
                 'label'              => 'value',
                 'translation_domain' => 'messages',
                 'required'           => true,
-                'attr'               => array('class' => 'form-control'),
             ));
     }
 

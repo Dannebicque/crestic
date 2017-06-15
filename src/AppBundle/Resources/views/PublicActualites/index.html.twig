@@ -2,48 +2,54 @@
 
 {% block title %}AppBundle:PublicActualites:index{% endblock %}
 
+{% block stylesheets %}
+    <style>
+        .blog-post .blog-post-holder {
+            border: 0px;
+            padding-top: 3px;
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
-	<div class="row">
-		<div class="col-sm-12">
-			<div class="heading mb20">
-				<h2>
-					{{ 'actualites.crestic'|trans }}
-				</h2>
-				{% for actualite in actualites %}
-					<div class="row">
-						<div class="blog-post mb40">
-							<div class="col-sm-6">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="heading mb20">
+                <h2>
+                    {{ 'actualites.crestic'|trans }}
+                </h2>
+                {% for actualite in actualites %}
+                    <div class="row">
+                        <div class="blog-post mb40">
+                            <div class="col-sm-6">
+                                <div class="view image-hover-1 no-margin">
+                                    <!-- Project Thumb -->
+                                    <img class="img-responsive" src="{{ asset('uploads/actualites/'~actualite.image) }}"
+                                         alt="{{ actualite.titre }}">
 
-								<div class="view image-hover-1 no-margin">
-									<!-- Project Thumb -->
-									<img class="img-responsive" src="{{ asset('uploads/actualites/'~actualite.image) }}"
-									     alt="{{ actualite.titre }}">
-									<div class="mask">
-										<div class="image-hover-content">
-											Message en Hover
-										</div><!-- /image hover content -->
-									</div><!-- /mask-->
-								</div><!-- /image hover -->
-							</div>
-							<div class="col-sm-6">
-								<div class="blog-post-holder">
+                                </div><!-- /image hover -->
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="blog-post-holder">
 
-									<ul class="list-inline posted-info">
-										{#<li>{{ 'visiteur.index.actualites.Par'|trans }} {{ html.getButton (actualite.membreCrestic,'Apercu')|raw }}</li>#}
-										<li>{{ 'visiteur.index.actualites.posteLe'|trans }} {{ actualite.created|date
-											('d M Y') }}</li>
-									</ul>
-									<hr align="left" class="mt15 mb10" style="width:50px;">
-									<h2><a href="#">{{ actualite.titre }}</a></h2>
-									<p>{{ actualite.message|slice(0, 120)|raw }}...</p>
-									<a href="{{ path('public_actualites_show', {slug: actualite.slug}) }}">{{
-										'visiteur.index.actualites.lirePlus'|trans }}</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				{% endfor %}
-			</div>
-		</div>
-	</div>
+                                    <ul class="list-inline posted-info">
+                                        {% if actualite.membreCrestic != null %}
+                                        <li>{{ 'visiteur.index.actualites.par'|trans }} {{ html.linkAuteur(actualite.membreCrestic)|raw }}</li>
+                                        {% endif %}
+                                        <li>{{ 'visiteur.index.actualites.posteLe'|trans }} {{ actualite.created|date
+                                            ('d M Y') }}</li>
+                                    </ul>
+                                    <hr align="left" class="mt15 mb10" style="width:50px;">
+                                    <h2><a href="#">{{ actualite.titre }}</a></h2>
+                                    <p>{{ actualite.message|slice(0, 120)|raw }}...</p>
+                                    <a href="{{ path('public_actualites_show', {slug: actualite.slug}) }}">{{ 'visiteur.index.actualites.lirePlus'|trans }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -19,7 +19,7 @@
         {% for configuration in configurations %}
             <tr>
                 <td>{{ configuration.cle }}</td>
-                <td>{{ configuration.value }}</td>
+                <td>{{ configuration.value|raw }}</td>
                 <td>
 	                <a href="{{ path('administration_configuration_show', { 'id': configuration.id }) }}" class="btn btn-info"
 	                   title="Voir"><i class="fa fa-eye"></i> </a>

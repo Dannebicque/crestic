@@ -1,0 +1,35 @@
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Titre</th>
+        <th>Auteurs</th>
+        {% if type == 'all' %}
+        <th>Type</th>
+        {% endif %}
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for pub in publications %}
+    <tr>
+        <td>{{ pub.titre }}</td>
+        <td>{{ pub.auteurs }}</td>
+        {% if type == 'all' %}
+        <td>{{ pub.type }}</td>
+        {% endif %}
+        <td>
+            <a href="{{ path('administration_publications_options', { 'id': pub.id }) }}" class="btn
+                            btn-success" data-toggle="tooltip" data-placement="bottom" title="Modifier les options"><i class="fa fa-wrench"></i></a>
+            <a href="{{ path('public_publication_show', { 'id': pub.id }) }}" target="_blank" class="btn btn-info"
+               title="Voir"><i class="fa fa-eye"></i> </a>
+            <a href="{{ path('administration_publications_edit', { 'id': pub.id }) }}" class="btn
+                            btn-warning" title="Modifier"><i class="fa fa-pencil"></i></a>
+        </td>
+    </tr>
+    {% else %}
+    <tr>
+        <td colspan="{% if type == 'all' %}4{% else %}3{% endif %}">Aucun résultat</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>

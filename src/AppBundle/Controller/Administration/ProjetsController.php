@@ -4,10 +4,15 @@ namespace AppBundle\Controller\Administration;
 
 use AppBundle\Entity\Plateformes;
 use AppBundle\Entity\Projets;
+use AppBundle\Entity\ProjetsHasEquipes;
 use AppBundle\Entity\ProjetsHasMembres;
+use AppBundle\Entity\ProjetsHasPartenaires;
+use AppBundle\Entity\ProjetsHasPlateformes;
+use AppBundle\Entity\ProjetsHasSliders;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -43,10 +48,11 @@ class ProjetsController extends Controller
     public function newAction(Request $request)
     {
         $projet = new Projets();
-        $form = $this->createForm('AppBundle\Form\ProjetsType', $projet);
+        $form   = $this->createForm('AppBundle\Form\ProjetsType', $projet);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->persist($projet);
             $em->flush();
@@ -56,7 +62,7 @@ class ProjetsController extends Controller
 
         return $this->render('@App/Administration/projets/new.html.twig', array(
             'projet' => $projet,
-            'form' => $form->createView(),
+            'form'   => $form->createView(),
         ));
     }
 
@@ -71,7 +77,7 @@ class ProjetsController extends Controller
         $deleteForm = $this->createDeleteForm($projet);
 
         return $this->render('@App/Administration/projets/show.html.twig', array(
-            'projet' => $projet,
+            'projet'      => $projet,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -87,14 +93,16 @@ class ProjetsController extends Controller
         $editForm = $this->createForm('AppBundle\Form\ProjetsType', $projet);
         $editForm->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid())
+        {
             $this->getDoctrine()->getManager()->flush();
+            $this->get('session')->getFlashBag()->add('alert-success', 'Modifications enregistrées');
 
             return $this->redirectToRoute('administration_projets_edit', array('id' => $projet->getId()));
         }
 
         return $this->render('@App/Administration/projets/edit.html.twig', array(
-            'projet' => $projet,
+            'projet'    => $projet,
             'edit_form' => $editForm->createView(),
         ));
     }
@@ -110,7 +118,8 @@ class ProjetsController extends Controller
         $form = $this->createDeleteForm($projet);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->remove($projet);
             $em->flush();
@@ -131,54 +140,125 @@ class ProjetsController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('administration_projets_delete', array('id' => $projet->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 
     /**
      * @param Projets $id
-     * @Route("/{id}/projets", name="administration_projets_membres")
+     * @Route("/{id}/projets", name="administration_projets_options")
      * @return Response
      */
-    public function projetMembresAction(Projets $id)
+    public function projetOptionsAction(Projets $id)
     {
         $t = array();
 
         /** @var ProjetsHasMembres $membre */
-        foreach ($id->getMembres() as $membre) {
-            $t[$membre->getMembreCrestic()->getId()] = $membre;
+        foreach ($id->getMembres() as $membre)
+        {
+            $t['membres'][$membre->getMembreCrestic()->getId()] = $membre;
         }
 
-        return $this->render('@App/Administration/projets/membres.html.twig', array(
-            'projet' => $id,
-            't' => $t,
-            'membres' => $this->getDoctrine()->getRepository('AppBundle:MembresCrestic')->findAllMembresCrestic(),
+        /** @var ProjetsHasSliders $slider */
+        foreach ($id->getSliders() as $slider)
+        {
+            $t['sliders'][$slider->getSlider()->getId()] = $slider;
+        }
+
+        /** @var ProjetsHasEquipes $equipe */
+        foreach ($id->getEquipes() as $equipe)
+        {
+            $t['equipes'][$equipe->getEquipe()->getId()] = $equipe;
+        }
+
+        /** @var ProjetsHasPlateformes $plateforme */
+        foreach ($id->getPlateformes() as $plateforme)
+        {
+            $t['plateformes'][$plateforme->getPlateforme()->getId()] = $plateforme;
+        }
+
+        /** @var ProjetsHasPartenaires $partenaire */
+        foreach ($id->getPartenaires() as $partenaire)
+        {
+            $t['partenaires'][$partenaire->getPartenaire()->getId()] = $partenaire;
+        }
+
+        return $this->render('@App/Administration/projets/options.html.twig', array(
+            'projet'      => $id,
+            't'           => $t,
+            'membres'     => $this->getDoctrine()->getRepository('AppBundle:MembresCrestic')->findAllMembresCrestic(),
+            'equipes'     => $this->getDoctrine()->getRepository('AppBundle:Equipes')->findAllEquipes(),
+            'plateformes' => $this->getDoctrine()->getRepository('AppBundle:Plateformes')->findAllPlateformes(),
+            'sliders'     => $this->getDoctrine()->getRepository('AppBundle:Slider')->findAllSlider(),
+            'partenaires' => $this->getDoctrine()->getRepository('AppBundle:Partenaires')->findAllPartenaires(),
+
+
         ));
     }
 
     /**
      * @param Request $request
      * @return Response
-     * @Route("/ajax/membre", name="administration_projets_ajax_membre", methods={"POST"})
+     * @Route("/ajax/membre", name="administration_projets_ajax_option_add", methods={"POST"})
      */
-    public function projetMembreAjaxAction(Request $request)
+    public function projetOptionAjaxAction(Request $request)
     {
         $idprojet = $request->request->get('projet');
-        $idmembre = $request->request->get('membre');
+        $idoption = $request->request->get('idoption');
+        $type     = $request->request->get('type');
+
 
         $projet = $this->getDoctrine()->getRepository('AppBundle:Projets')->find($idprojet);
-        $membre = $this->getDoctrine()->getRepository('AppBundle:MembresCrestic')->find($idmembre);
-        $projetmembre = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasMembres')->findBy(array('membreCrestic' => $idmembre, 'projet' => $idprojet));
 
-        if ($projet && $membre && count($projetmembre) == 0) {
-            $e_m = new ProjetsHasMembres();
+        switch ($type)
+        {
+            case 'membre':
+                $option       = $this->getDoctrine()->getRepository('AppBundle:MembresCrestic')->find($idoption);
+                $projetoption = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasMembres')->findBy(array('membreCrestic' => $idoption, 'projet' => $idprojet));
+                $e_m          = new ProjetsHasMembres();
+                $set          = 'setMembreCrestic';
+                $texte        = '';
+                break;
+            case 'equipe':
+                $option       = $this->getDoctrine()->getRepository('AppBundle:Equipes')->find($idoption);
+                $projetoption = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasEquipes')->findBy(array('equipe' => $idoption, 'projet' => $idprojet));
+                $e_m          = new ProjetsHasEquipes();
+                $set          = 'setEquipe';
+                $texte        = '';
+                break;
+            case 'partenaire':
+                $option       = $this->getDoctrine()->getRepository('AppBundle:Partenaires')->find($idoption);
+                $projetoption = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasPartenaires')->findBy(array('partenaire' => $idoption, 'projet' => $idprojet));
+                $e_m          = new ProjetsHasPartenaires();
+                $set          = 'setPartenaire';
+                $texte        = '';
+                break;
+            case 'slider':
+                $option       = $this->getDoctrine()->getRepository('AppBundle:Slider')->find($idoption);
+                $projetoption = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasSliders')->findBy(array('slider' => $idoption, 'projet' => $idprojet));
+                $e_m          = new ProjetsHasSliders();
+                $set          = 'setSlider';
+                $texte        = '';
+                break;
+            case 'plateforme':
+                $option       = $this->getDoctrine()->getRepository('AppBundle:Plateformes')->find($idoption);
+                $projetoption = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasPlateformes')->findBy(array('plateforme' => $idoption, 'projet' => $idprojet));
+                $e_m          = new ProjetsHasPlateformes();
+                $set          = 'setPlateforme';
+                $texte        = '';
+                break;
+        }
+
+
+        if ($projet && $option && count($projetoption) == 0)
+        {
             $e_m->setProjet($projet);
-            $e_m->setMembreCrestic($membre);
+            $e_m->$set($option);
             $em = $this->getDoctrine()->getManager();
             $em->persist($e_m);
             $em->flush();
-            return new Response('ok', 200);
-        } else {
+            return new Response($texte, 200);
+        } else
+        {
             return new Response('nok', 500);
         }
     }
@@ -186,7 +266,7 @@ class ProjetsController extends Controller
     /**
      * @param Request $request
      * @return Response
-     * @Route("/ajax/membrer", name="administration_projets_ajax_membre_remove", methods={"POST"})
+     * @Route("/ajax/membrer", name="administration_projets_ajax_option_remove", methods={"POST"})
      */
     public function projetMembreAjaxRemoveAction(Request $request)
     {

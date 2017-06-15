@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,11 +20,11 @@ class DemandeOMUtilisateurType extends AbstractType
             ->add('heureDepart')
             ->add('dateRetour')
             ->add('heureRetour')
-            ->add('objet')
-            ->add('ville')
+            ->add('objet', TextType::class, array('label' => 'Objet de la mission'))
+            ->add('ville', TextType::class, array('label' => 'Ville'))
             ->add('commentaire', TextType::class, array('required' => false))
-            ->add('omSansFrais')
-            ->add('ligneBudget', TextType::class, array('required'=> false))
+            ->add('omSansFrais', ChoiceType::class, array('label' => 'OM Sans Frais', 'choices' => array('Oui' => true, 'Non' => false), 'expanded' => true))
+            ->add('ligneBudget', TextType::class, array('required'=> true, 'label' => 'Numéro de convention'))
             ->add('pays', EntityType::class, array('class' => 'AppBundle\Entity\Pays', 'choice_label' => 'nomFr'));
     }
     

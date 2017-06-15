@@ -10,28 +10,26 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Nomconference</th>
-                <th>Sigleconference</th>
+                <th>Conférence</th>
+                <th>Sigle</th>
                 <th>Ville</th>
-                <th>Datedebut</th>
-                <th>Datefin</th>
-                <th>Tauxselection</th>
-                <th>Url</th>
-                <th>Internationale</th>
+                <th>Date début</th>
+                <th>Date fin</th>
+                <th>Tx sel.</th>
+                <th>Site</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for conference in conferences %}
             <tr>
-                <td>{{ conference.nomConference }}</td>
+                <td>{% if conference.internationale %}<span class="fa fa-globe"></span>{% endif %} {{ conference.nomConference }}</td>
                 <td>{{ conference.sigleConference }}</td>
                 <td>{{ conference.ville }}</td>
                 <td>{% if conference.dateDebut %}{{ conference.dateDebut|date('d/m/Y') }}{% endif %}</td>
                 <td>{% if conference.dateFin %}{{ conference.dateFin|date('d/m/Y') }}{% endif %}</td>
                 <td>{{ conference.tauxSelection }}</td>
-                <td>{{ conference.url }}</td>
-                <td>{% if conference.internationale %}Yes{% else %}No{% endif %}</td>
+                <td>{% if conference.url != "" or conference.url != null %}<a href="{{ conference.url }}" target="_blank">Site de la conférence</a>{% endif %}</td>
                 <td>
 	                <a href="{{ path('administration_conferences_show', { 'id': conference.id }) }}" class="btn btn-info"
 	                   title="Voir"><i class="fa fa-eye"></i> </a>

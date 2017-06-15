@@ -4,6 +4,7 @@ namespace AppBundle\Controller\Visiteur;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -18,18 +19,28 @@ class PublicPublicationsController extends Controller
      */
     public function indexAction()
     {
-        $equipes = $this->getDoctrine()->getManager()->getRepository('AppBundle:Equipes')->findAll();
-        $projets = $this->getDoctrine()->getManager()->getRepository('AppBundle:Projets')->findAll();
-        $departements = $this->getDoctrine()->getManager()->getRepository('AppBundle:Departements')->findAll();
+        $equipes           = $this->getDoctrine()->getManager()->getRepository('AppBundle:Equipes')->findAll();
+        $projets           = $this->getDoctrine()->getManager()->getRepository('AppBundle:Projets')->findAll();
+        $departements      = $this->getDoctrine()->getManager()->getRepository('AppBundle:Departements')->findAll();
         $countpublications = $this->getDoctrine()->getRepository('AppBundle:Publications')->count();
 
 
         return $this->render('AppBundle:PublicPublications:index.html.twig', array(
-            'equipes'      => $equipes,
-            'projets'      => $projets,
+            'equipes' => $equipes,
+            'projets' => $projets,
             'departements' => $departements,
-            'nbpublis'     => $countpublications,
+            'nbpublis' => $countpublications,
         ));
+    }
+
+    /**
+     * @Route("/show/{id}", name="public_publication_show")
+     */
+    public function showAction($id)
+    {
+
+
+        return $this->render('AppBundle:PublicPublications:show.html.twig', array());
     }
 
     /**
@@ -38,22 +49,22 @@ class PublicPublicationsController extends Controller
      */
     public function searchAction(Request $request)
     {
-        $equipe = $request->request->get('equipe');
-        $projet = $request->request->get('projet');
-        $departement = $request->request->get('departement');
+        $equipe          = $request->request->get('equipe');
+        $projet          = $request->request->get('projet');
+        $departement     = $request->request->get('departement');
         $typePublication = $request->request->get('typePublication');
-        $auteur = $request->request->get('auteur');
-        $keywords = $request->request->get('keywords');
-        $dateDebut = $request->request->get('dateDebut');
-        $dateFin = $request->request->get('dateFin');
+        $auteur          = $request->request->get('auteur');
+        $keywords        = $request->request->get('keywords');
+        $dateDebut       = $request->request->get('dateDebut');
+        $dateFin         = $request->request->get('dateFin');
 
         $critere = ''; //todo: liste des critères
 
         // jsute le type.
-        $publications = $this->getDoctrine()->getRepository('AppBundle:'.$typePublication)->findAll();
+        $publications = $this->getDoctrine()->getRepository('AppBundle:' . $typePublication)->findAll();
 
         $nb = count($publications);
-        $t = array();
+        $t  = array();
         for ($i = 2004; $i <= date('Y'); $i++)
         {
             $t[$i] = array();
@@ -72,4 +83,26 @@ class PublicPublicationsController extends Controller
         ));
     }
 
+    /**
+     * @param Request $request
+     * @Route("ajax/bibtex", name="public_publication_ajax_bibtex")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function bibTexAction(Request $request)
+    {
+        $idPublication = $request->request->get('publication');
+        $publication   = $this->getDoctrine()->getRepository('AppBundle:Publications')->find($idPublication);
+
+        if ($publication)
+        {
+            return $this->render('@App/PublicPublications/bibtex.html.twig', array(
+                'publication' => $publication
+            ));
+        } else
+        {
+               return $this->render('@App/PublicPublications/bibtex.html.twig', array(
+                   'publication' => null
+               ));
+        }
+    }
 }

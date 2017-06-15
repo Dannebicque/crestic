@@ -120,7 +120,7 @@ class DefaultController extends Controller
                 }
                 $nomfile = rand(1, 99999).'_'.date('YmdHis').'.'.$extension;
                 $dir = $this->get('kernel')->getRootDir().'/../web/uploads/images/';
-                $filetowrite = $request->getSchemeAndHttpHost().'/web/uploads/images/' . $nomfile;
+                $filetowrite = $request->getSchemeAndHttpHost().'/uploads/images/' . $nomfile;
                 $file->move($dir, $nomfile);
                 return new JsonResponse(array('location' => $filetowrite));
             }

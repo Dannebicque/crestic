@@ -18,31 +18,26 @@ class PaysType extends AbstractType
             'label'              => 'titre',
             'translation_domain' => 'messages',
             'required'           => true,
-            'attr'               => array('class' => 'form-control'),
         ))
             ->add('alpha2', TextType::class, array(
                 'label'              => 'titre',
                 'translation_domain' => 'messages',
                 'required'           => true,
-                'attr'               => array('class' => 'form-control'),
             ))
             ->add('alpha3', TextType::class, array(
                 'label'              => 'titre',
                 'translation_domain' => 'messages',
                 'required'           => true,
-                'attr'               => array('class' => 'form-control'),
             ))
             ->add('nomEN', TextType::class, array(
                 'label'              => 'titre',
                 'translation_domain' => 'messages',
                 'required'           => true,
-                'attr'               => array('class' => 'form-control'),
             ))
             ->add('nomFR', TextType::class, array(
                 'label'              => 'titre',
                 'translation_domain' => 'messages',
                 'required'           => true,
-                'attr'               => array('class' => 'form-control'),
             ));
     }
     

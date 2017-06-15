@@ -100,6 +100,8 @@
 .da-liste-biblio
 {
     list-style: none;
+    margin-left:-50px;
+    padding:0px;
 }
 
 .da-biblio-titre
@@ -119,3 +121,4 @@
 .required{
     font-weight: bold;
 }
+

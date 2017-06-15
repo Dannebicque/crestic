@@ -73,33 +73,7 @@
 	{#</div>#}
 {% endif %}
 
-{% if app.session.flashBag is defined %}
-	<script>
-		{% if app.session.flashBag.has('alert-success') %}
-		{% for msg in app.session.flashBag.get('alert-success') %}
-		$.notify("{{ msg|trans }}", "success");
-		{% endfor %}
-		{% endif %}
 
-		{% if app.session.flashBag.has('alert-info') %}
-		{% for msg in app.session.flashBag.get('alert-info') %}
-		$.notify("{{ msg|trans }}", "info");
-		{% endfor %}
-		{% endif %}
-
-		{% if app.session.flashBag.has('alert-warning') %}
-		{% for msg in app.session.flashBag.get('alert-warning') %}
-		$.notify("{{ msg|trans }}", "warn");
-		{% endfor %}
-		{% endif %}
-
-		{% if app.session.flashBag.has('alert-danger') %}
-		{% for msg in app.session.flashBag.get('alert-danger') %}
-		$.notify("{{ msg|trans }}", "error");
-		{% endfor %}
-		{% endif %}
-	</script>
-{% endif %}
 
 {% block mainContent %}
 	<section class="mt40 mb40">
@@ -108,12 +82,17 @@
 
 				<!-- Sidebar -->
 				<div class="col-sm-2">
+					<div class="blog-heading"><h3>Gestion</h3></div>
+					<ul class="nav nav-pills nav-stacked mb30">
+						<li><a href="{{ path('administration_demande-om_index') }}">OM</a></li>
+					</ul>
+
 					<div class="blog-heading"><h3>Vie du site</h3></div>
 					<ul class="nav nav-pills nav-stacked mb30">
 						<li><a href="{{ path('administration_actualites_index') }}">Actualités</a></li>
 						<li><a href="{{ path('administration_agenda_index') }}">Agenda</a></li>
+						<li><a href="{{ path('administration_slider_index') }}">Slider/Images</a></li>
 						<li><a href="{{ path('administration_emplois_index') }}">Offre d'emplois</a></li>
-						<li><a href="{{ path('administration_demande-om_index') }}">OM</a></li>
 					</ul>
 
 					<div class="blog-heading"><h3>Structure</h3></div>
@@ -122,11 +101,13 @@
 						<li><a href="{{ path('administration_equipes_index') }}">Equipes</a></li>
 						<li><a href="{{ path('administration_projets_index') }}">Projets</a></li>
 						<li><a href="{{ path('administration_plateformes_index') }}">Plateformes</a></li>
+						<li><a href="{{ path('administration_departements_index') }}">Départements</a></li>
+
 					</ul>
 
 					<div class="blog-heading"><h3>Publications</h3></div>
 					<ul class="nav nav-pills nav-stacked mb30">
-						<li><a href="{{ path('administration_editeur_index') }}">Publications</a></li>
+						<li><a href="{{ path('administration_publications_index') }}">Publications</a></li>
 						<li><a href="{{ path('administration_editeur_index') }}">Editeurs</a></li>
 						<li><a href="{{ path('administration_revues_index') }}">Revues</a></li>
 						<li><a href="{{ path('administration_conferences_index') }}">Conférences</a></li>
@@ -167,7 +148,8 @@
 				<p>
 					<small class="address">
 						<span class="ion-home da-footer-info-icons"></span>
-						Crestic - UFR Moulin de la Housse...
+						CReSTIC - UFR Sciences Exactes et Naturelles - Moulin de la Housse - BP 1039 - 51687 Reims CEDEX 2<br />
+
 						<span class="ion-email da-footer-info-icons"></span>
 						<a href="mailto:{{ configuration.mail }}" target="_blank">{{ configuration.mail }}</a>
 						<span class="ion-ios7-telephone da-footer-info-icons"></span>
@@ -276,6 +258,34 @@
 		});
 	});
 </script>
+
+{% if app.session.flashBag is defined %}
+	<script>
+        {% if app.session.flashBag.has('alert-success') %}
+        {% for msg in app.session.flashBag.get('alert-success') %}
+        $.notify("{{ msg|trans }}", "success");
+        {% endfor %}
+        {% endif %}
+
+        {% if app.session.flashBag.has('alert-info') %}
+        {% for msg in app.session.flashBag.get('alert-info') %}
+        $.notify("{{ msg|trans }}", "info");
+        {% endfor %}
+        {% endif %}
+
+        {% if app.session.flashBag.has('alert-warning') %}
+        {% for msg in app.session.flashBag.get('alert-warning') %}
+        $.notify("{{ msg|trans }}", "warn");
+        {% endfor %}
+        {% endif %}
+
+        {% if app.session.flashBag.has('alert-danger') %}
+        {% for msg in app.session.flashBag.get('alert-danger') %}
+        $.notify("{{ msg|trans }}", "error");
+        {% endfor %}
+        {% endif %}
+	</script>
+{% endif %}
 
 {% block javascripts %}
 	{#block pour contenir les JS spécifiques aux pages#}

@@ -7,42 +7,28 @@
 {% block content %}
     <h1>Détails d'une revue</h1>
 
-    <table>
+    <table class="table">
         <tbody>
             <tr>
-                <th>Titrerevue</th>
-                <td>{{ revue.titreRevue }}</td>
+                <th>Titre</th>
+                <td colspan="3">{% if revue.internationale %}<span class="fa fa-globe"></span>{% endif %}  {{ revue.titreRevue }}</td>
             </tr>
             <tr>
-                <th>Siglerevue</th>
+                <th>Sigle</th>
                 <td>{{ revue.sigleRevue }}</td>
-            </tr>
-            <tr>
-                <th>Internationale</th>
-                <td>{% if revue.internationale %}Yes{% else %}No{% endif %}</td>
             </tr>
             <tr>
                 <th>Impactfactor</th>
                 <td>{{ revue.impactFactor }}</td>
-            </tr>
-            <tr>
                 <th>Classification</th>
                 <td>{{ revue.classification }}</td>
             </tr>
             <tr>
                 <th>Url</th>
-                <td>{{ revue.url }}</td>
-            </tr>
-            <tr>
-                <th>Created</th>
-                <td>{% if revue.created %}{{ revue.created|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Updated</th>
-                <td>{% if revue.updated %}{{ revue.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td colspan="3">{{ revue.url }}</td>
             </tr>
         </tbody>
     </table>
 
-	{{ include('@App/Administration/footer-show.html.twig', {var: 'revue', obj:revue.id}) }}
+	{{ include('@App/Administration/footer-show.html.twig', {var: 'revues', obj:revue.id}) }}
 {% endblock %}

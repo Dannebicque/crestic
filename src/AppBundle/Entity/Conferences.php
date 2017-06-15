@@ -476,4 +476,14 @@ class Conferences
     {
         return $this->editeur;
     }
+
+    /**
+     * @return string
+     */
+    public function getBibtex()
+    {
+        //12th International Workshop on Discrete Event Systems, {WODES} 2014,
+        //Cachan, France, May 14-16, 2014.
+        return 'conférence';
+    }
 }

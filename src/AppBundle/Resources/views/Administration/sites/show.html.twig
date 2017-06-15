@@ -5,45 +5,33 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Détails d'un site</h1>
+    <h1>Détails d'un site géorgraphique du CReSTIC</h1>
 
     <table class="table">
         <tbody>
+        <tr>
+            <th>Titre</th>
+            <td colspan="3">{{ site.titre }}</td>
+        </tr>
             <tr>
                 <th>Adresse</th>
-                <td>{{ site.adresse }}</td>
-            </tr>
-            <tr>
-                <th>Cp</th>
-                <td>{{ site.cp }}</td>
-            </tr>
-            <tr>
-                <th>Mail</th>
-                <td>{{ site.mail }}</td>
-            </tr>
-            <tr>
-                <th>Ville</th>
-                <td>{{ site.ville }}</td>
+                <td colspan="3">{{ site.adresse }} {{ site.cp }} {{ site.ville }}</td>
             </tr>
             <tr>
                 <th>Tel</th>
                 <td>{{ site.tel }}</td>
-            </tr>
-            <tr>
                 <th>Fax</th>
                 <td>{{ site.fax }}</td>
             </tr>
-            <tr>
-                <th>Titre</th>
-                <td>{{ site.titre }}</td>
-            </tr>
+
+
             <tr>
                 <th>Map</th>
-                <td>{{ site.map }}</td>
+                <td colspan="3">{{ site.map|raw }}</td>
             </tr>
             <tr>
-                <th>Principale</th>
-                <td>{% if site.principale %}Yes{% else %}No{% endif %}</td>
+                <th>Site Principal</th>
+                <td>{% if site.principale %}Oui{% else %}Non{% endif %}</td>
             </tr>
         </tbody>
     </table>

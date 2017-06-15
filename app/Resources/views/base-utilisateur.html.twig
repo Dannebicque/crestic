@@ -90,7 +90,7 @@
 				<p>
 					<small class="address">
 						<span class="ion-home da-footer-info-icons"></span>
-						Crestic - UFR Moulin de la Housse...
+						CReSTIC - UFR Sciences Exactes et Naturelles - Moulin de la Housse - BP 1039 - 51687 Reims CEDEX 2<br />
 						<span class="ion-email da-footer-info-icons"></span>
 						<a href="mailto:{{ configuration.mail }}" target="_blank">{{ configuration.mail }}</a>
 						<span class="ion-ios7-telephone da-footer-info-icons"></span>
@@ -203,26 +203,26 @@
 
 {% if app.session.flashBag is defined %}
 	<script>
-		{% if app.session.flashBag.has('success') %}
-		{% for msg in app.session.flashBag.get('success') %}
+		{% if app.session.flashBag.has('alert-success') %}
+		{% for msg in app.session.flashBag.get('alert-success') %}
 		$.notify("{{ msg|trans }}", "success");
 		{% endfor %}
 		{% endif %}
 
-		{% if app.session.flashBag.has('info') %}
-		{% for msg in app.session.flashBag.get('info') %}
+		{% if app.session.flashBag.has('alert-info') %}
+		{% for msg in app.session.flashBag.get('alert-info') %}
 		$.notify("{{ msg|trans }}", "info");
 		{% endfor %}
 		{% endif %}
 
-		{% if app.session.flashBag.has('warning') %}
-		{% for msg in app.session.flashBag.get('warning') %}
+		{% if app.session.flashBag.has('alert-warning') %}
+		{% for msg in app.session.flashBag.get('alert-warning') %}
 		$.notify("{{ msg|trans }}", "warn");
 		{% endfor %}
 		{% endif %}
 
-		{% if app.session.flashBag.has('danger') %}
-		{% for msg in app.session.flashBag.get('danger') %}
+		{% if app.session.flashBag.has('alert-danger') %}
+		{% for msg in app.session.flashBag.get('alert-danger') %}
 		$.notify("{{ msg|trans }}", "error");
 		{% endfor %}
 		{% endif %}

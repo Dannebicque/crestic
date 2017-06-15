@@ -19,11 +19,11 @@
             </tr>
         </thead>
         <tbody>
-        {% for agenda in agendas if agenda.datefin|date('dmY') >= 'now'|date('dmY') %}
+        {% for agenda in agendas if date(agenda.datefin) >= date() %}
             <tr>
                 <td>{{ agenda.titre }}</td>
-                <td>{% if agenda.datedebut %}{{ agenda.datedebut|date('Y-m-d') }}{% endif %} {% if agenda.heuredebut %}{{ agenda.heuredebut|date('H:i:s') }}{% endif %}</td>
-                <td>{% if agenda.datefin %}{{ agenda.datefin|date('Y-m-d') }}{% endif %} {% if agenda.heurefin %}{{ agenda.heurefin|date('H:i:s') }}{% endif %}</td>
+                <td>{% if agenda.datedebut %}{{ agenda.datedebut|date('d/m/Y') }}{% endif %} {% if agenda.heuredebut %}{{ agenda.heuredebut|date('H:i') }}{% endif %}</td>
+                <td>{% if agenda.datefin %}{{ agenda.datefin|date('d/m/Y') }}{% endif %} {% if agenda.heurefin %}{{ agenda.heurefin|date('H:i') }}{% endif %}</td>
                 <td>{{ agenda.lieu }}</td>
                 <td>{{ agenda.type }}</td>
                 <td>
@@ -55,11 +55,11 @@
 		</tr>
 		</thead>
 		<tbody>
-		{% for agenda in agendas if agenda.datefin|date('dmY') < 'now'|date('dmY') %}
+		{% for agenda in agendas if date(agenda.datefin) < date() %}
 			<tr>
 				<td>{{ agenda.titre }}</td>
-				<td>{% if agenda.datedebut %}{{ agenda.datedebut|date('Y-m-d') }}{% endif %} {% if agenda.heuredebut %}{{ agenda.heuredebut|date('H:i:s') }}{% endif %}</td>
-				<td>{% if agenda.datefin %}{{ agenda.datefin|date('Y-m-d') }}{% endif %} {% if agenda.heurefin %}{{ agenda.heurefin|date('H:i:s') }}{% endif %}</td>
+				<td>{% if agenda.datedebut %}{{ agenda.datedebut|date('d/m/Y') }}{% endif %} {% if agenda.heuredebut %}{{ agenda.heuredebut|date('H:i') }}{% endif %}</td>
+				<td>{% if agenda.datefin %}{{ agenda.datefin|date('d/m/Y') }}{% endif %} {% if agenda.heurefin %}{{ agenda.heurefin|date('H:i') }}{% endif %}</td>
 				<td>{{ agenda.lieu }}</td>
 				<td>{{ agenda.type }}</td>
 				<td>

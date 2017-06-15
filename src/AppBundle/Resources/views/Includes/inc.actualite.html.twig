@@ -11,7 +11,7 @@
 					<li>
 						{{ 'by'|trans }}
 						{% if actualite.membreCrestic != null %}
-						<a href="" target="_blank" title="Accéder au profil de ">{{ actualite.membreCrestic.display }}</a>
+						<a href="" target="_blank" title="{{ 'acces.profil'|trans }} ">{{ actualite.membreCrestic.display }}</a>
 						{% else %}
 						-
 						{% endif %}

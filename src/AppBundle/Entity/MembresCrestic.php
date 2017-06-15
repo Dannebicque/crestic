@@ -375,17 +375,6 @@ class MembresCrestic extends BaseUser
     }
 
     /**
-     * Set id
-     *
-     * @return integer
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
-    }
-
-    /**
      * Get image
      *
      * @return string
@@ -1448,7 +1437,7 @@ class MembresCrestic extends BaseUser
 
     public function getDisplay()
     {
-        return ucfirst($this->prenom)." ".strtoupper($this->nom);
+        return ucfirst($this->prenom)." ".mb_strtoupper($this->nom);
     }
 
     function generate_slug($str) {

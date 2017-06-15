@@ -5,15 +5,14 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Revues list</h1>
+    <h1>Liste des Revues</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Titrerevue</th>
-                <th>Siglerevue</th>
-                <th>Internationale</th>
-                <th>Impactfactor</th>
+                <th>Titre</th>
+                <th>Sigle</th>
+                <th>Impact factor</th>
                 <th>Classification</th>
                 <th>Url</th>
                 <th>Actions</th>
@@ -22,12 +21,11 @@
         <tbody>
         {% for revue in revues %}
             <tr>
-                <td>{{ revue.titreRevue }}</td>
+                <td>{% if revue.internationale %}<span class="fa fa-globe"></span>{% endif %} {{ revue.titreRevue }}</td>
                 <td>{{ revue.sigleRevue }}</td>
-                <td>{% if revue.internationale %}Yes{% else %}No{% endif %}</td>
                 <td>{{ revue.impactFactor }}</td>
                 <td>{{ revue.classification }}</td>
-                <td>{{ revue.url }}</td>
+                <td>{% if revue.url != "" or revue.url != null %}<a href="{{ revue.url }}" target="_blank">Site de la revue</a>{% endif %}</td>
 
                 <td>
 	                <a href="{{ path('administration_revues_show', { 'id': revue.id }) }}" class="btn btn-info"

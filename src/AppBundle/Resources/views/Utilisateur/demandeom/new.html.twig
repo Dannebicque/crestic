@@ -1,5 +1,9 @@
 {% extends 'base-utilisateur.html.twig' %}
 
+{% block breadcrumbs %}
+    <a href="{{ path('utilisateur_demande-om_index') }}">Demandes d'OM</a> / Nouvelle demande d'OM
+{% endblock %}
+
 {% block content %}
     <h1>Nouvelle demande d'OM</h1>
 

@@ -7,6 +7,8 @@
 		<tr>
 			<td>{{ publication.titre }}</td>
 			<td>
+				<a href="{{ path('utilisateur_publications_etape2', { 'id': publication.id }) }}" class="btn
+                            btn-success" data-toggle="tooltip" data-placement="bottom" title="Modifier les auteurs, projets, équipes"><i class="fa fa-wrench"></i></a>
 				<a href="{{ path('utilisateur_publication_show', { 'id': publication.id, type:type }) }}" class="btn
 						btn-info " data-toggle="tooltip" data-placement="bottom"
 				   title="Voir" target="_blank"><i class="fa fa-eye"></i> </a>
@@ -14,8 +16,7 @@
                             btn-warning" data-toggle="tooltip" data-placement="bottom" title="Modifier
                              les informations de la publication"><i class="fa
                             fa-pencil"></i></a>
-				<a href="{{ path('utilisateur_publications_etape2', { 'id': publication.id }) }}" class="btn
-                            btn-warning" data-toggle="tooltip" data-placement="bottom" title="Modifier les auteurs, projets, équipes"><i class="fa fa-wrench"></i></a>
+
 			</td>
 		</tr>
 	{% endfor %}

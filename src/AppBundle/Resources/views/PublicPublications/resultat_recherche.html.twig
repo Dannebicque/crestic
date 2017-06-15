@@ -54,15 +54,18 @@
 											</a>
 										{% endif %}
 
-									<a href="#" class="btn" target="_blank"
-									   title="Bibtex">
+									<a href="#" class="btn bibtex" target="_blank"
+									   title="Bibtex" data-toggle="modal" data-target="#modalBibTex" data-publication="{{ publication.id }}">
 										<span class="fa fa-share-alt"></span>
 									</a>
 								</div>
 							</div>
 
-							<div class="col-sm-9">
+							<div class="col-sm-7">
 								<span>{{ biblio.formatIEEE(publication) | raw }}</span>
+							</div>
+							<div class="col-sm-2">
+                                {% if publication.publicationInternationale == true %} <span class="fa fa-globe" title="{{ 'publications.apercu.internationale.oui'|trans }}"></span>{% endif %}
 							</div>
 						</div>
 					</li>
@@ -107,3 +110,53 @@
 		</ul>
 	</li>
 </ul>
+
+
+<!-- Default Modal -->
+<div class="modal fade" id="modalBibTex" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title" id="defaultModalLabel">Export BibTex</h4>
+			</div>
+			<div class="modal-body" >
+				<p id="body-bibtex">Content goes here.</p>
+				<a id="copy-text">copy Text</a>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-rw btn-success" data-dismiss="modal">Fermer</button>
+			</div>
+		</div><!-- /modal content -->
+	</div><!-- /modal dialog -->
+</div><!-- /modal holder -->
+<!-- End Default Modal -->
+
+<script>
+    $(document).ready(function () {
+		$('.bibtex').on('click', function(){
+		    $('#body-bibtex').empty().load("{{ path('public_publication_ajax_bibtex') }}", {'publication': $(this).data('publication')});
+		});
+
+		$('#copy-text').on('click', function(){
+            CopyToClipboard('bibtex');
+		});
+	});
+
+    function CopyToClipboard(containerid) {
+        if (document.selection) {
+            var range = document.body.createTextRange();
+            range.moveToElementText(document.getElementById(containerid));
+            range.select().createTextRange();
+            document.execCommand("Copy");
+
+        } else if (window.getSelection) {
+            var range = document.createRange();
+            range.selectNode(document.getElementById(containerid));
+            window.getSelection().addRange(range);
+            document.execCommand("Copy");
+            console.log(range);
+            alert("text copied")
+        }}
+
+</script>

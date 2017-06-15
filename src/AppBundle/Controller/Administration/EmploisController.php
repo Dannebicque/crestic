@@ -86,6 +86,7 @@ class EmploisController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+            $this->get('session')->getFlashBag()->add('alert-success', 'Modifications enregistrées');
 
             return $this->redirectToRoute('administration_emplois_edit', array('id' => $emplois->getId()));
         }

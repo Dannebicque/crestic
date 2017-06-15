@@ -338,7 +338,7 @@ class PublicationsController extends Controller
      * @Route("ajax/suppr/auteur", name="ajax_suppr_auteur")
      * @return Response
      */
-    public function ajxSupprAuteurAction(Request $request)
+    public function ajaxSupprAuteurAction(Request $request)
     {
         $type = $request->request->get('type');
         $id = $request->request->get('id');
@@ -380,15 +380,62 @@ class PublicationsController extends Controller
      */
     public function editAction(Request $request, $id, $type)
     {
+        switch ($type)
+        {
+            case 'revue':
+                $publication = $this->getDoctrine()->getRepository('AppBundle:PublicationsRevues')->find($id);
+                $form = $this->createForm('AppBundle\Form\PublicationsRevuesType', $publication);
+                break;
+            case 'conference':
+                $publication = $this->getDoctrine()->getRepository('AppBundle:PublicationsConferences')->find($id);
+                $form = $this->createForm('AppBundle\Form\PublicationsConferencesType', $publication);
+                break;
+            case 'rapport':
+                $publication =  $this->getDoctrine()->getRepository('AppBundle:PublicationsRapports')->find($id);
+                $form = $this->createForm('AppBundle\Form\PublicationsRapportsType', $publication);
+                break;
+            case 'these':
+                $publication = $this->getDoctrine()->getRepository('AppBundle:PublicationsTheses')->find($id);
+                $form = $this->createForm('AppBundle\Form\PublicationsThesesType', $publication);
+                break;
+            case 'brevet':
+                $publication = $this->getDoctrine()->getRepository('AppBundle:PublicationsBrevets')->find($id);
+                $form = $this->createForm('AppBundle\Form\PublicationsBrevetsType', $publication);
+                break;
+            case 'ouvrage':
+                $publication = $this->getDoctrine()->getRepository('AppBundle:PublicationsOuvrages')->find($id);
+                $form = $this->createForm('AppBundle\Form\PublicationsOuvragesType', $publication);
+                break;
+            case 'chapitre':
+                $publication = $this->getDoctrine()->getRepository('AppBundle:PublicationsChapitres')->find($id);
+                $form = $this->createForm('AppBundle\Form\PublicationsChapitresType', $publication);
+                break;
+        }
 
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($publication);
+            $em->flush();
+
+            return $this->redirectToRoute('utilisateur_publications_etape2', array('id' => $publication->getId()));
+        }
+
+        return $this->render('@App/Utilisateur/publications/edit.html.twig', array(
+            'publication' => $publication,
+            'form'        => $form->createView(),
+            'type'=> $type
+        ));
     }
-
 
     /**
      * @param $id
      * @param $type
      * @Route("/show/{type}/{id}", name="utilisateur_publication_show")
      * @Method({"GET"})
+     * @return Response
      */
     public function showAction($id, $type)
     {
@@ -448,9 +495,49 @@ class PublicationsController extends Controller
      */
     public function upDownAuteur(Request $request)
     {
-        $auteur = $request->request->get('auteur');
+        $idauteur = $request->request->get('auteur');
         $publication = $request->request->get('publication');
         $sens = $request->request->get('sens');
+
+        $auteurs = $this->getDoctrine()->getRepository('AppBundle:PublicationsHasMembres')->findAllMembresFromPublication($publication);
+        $em = $this->getDoctrine()->getManager();
+
+        $t = array();
+
+        /** @var PublicationsHasMembres $a */
+        foreach ($auteurs as $a)
+        {
+            $t[$a->getPosition()] = $a;
+            if (($a->getMembreExterieur() != null && $a->getMembreExterieur()->getId() == $idauteur) || ($a->getMembreCrestic() != null && $a->getMembreCrestic()->getId() == $idauteur))
+            {
+                $auteur = $a;
+            }
+        }
+
+        if ($sens == 'down')
+        {
+            $temp = $t[$auteur->getPosition()];
+            $t[$auteur->getPosition()] = $t[$auteur->getPosition()+1];
+            $t[$auteur->getPosition()+1] = $temp;
+        } elseif ($sens == 'up')
+        {
+            $temp = $t[$auteur->getPosition()];
+            $t[$auteur->getPosition()] = $t[$auteur->getPosition()-1];
+            $t[$auteur->getPosition()-1] = $temp;
+        }
+
+        foreach ($t as $key => $value)
+        {
+            $value->setPosition($key);
+            $em->persist($value);
+        }
+
+
+        $em->flush();
+
+        $auteurs = $this->getDoctrine()->getRepository('AppBundle:PublicationsHasMembres')->findArrayAuteurs($publication, $this->get('router'));
+
+        return new JsonResponse($auteurs, 200);
 
     }
 

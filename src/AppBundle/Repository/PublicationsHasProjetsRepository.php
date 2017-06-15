@@ -42,7 +42,7 @@ class PublicationsHasProjetsRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this->createQueryBuilder('a','a.id')
             ->select ('a')
-            ->innerJoin('CRESTICPublicationsBundle:Publications', 'p', 'WITH', 'a.publication = p.id')
+            ->innerJoin('AppBundle:Publications', 'p', 'WITH', 'a.publication = p.id')
             ->where('a.projet = ?1')
             ->setParameter(1, $id_projet)
             ->orderBy('p.anneePublication', 'DESC')

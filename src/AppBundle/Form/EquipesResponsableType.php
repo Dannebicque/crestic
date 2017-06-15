@@ -18,7 +18,7 @@ class EquipesResponsableType extends AbstractType
     {
         $builder->add('themeRecherche', TextareaType::class, array('label' => 'Thématiques de recherche',
             'attr' => array('class' => 'tinyMCE')))
-            ->add('imageFile', FileType::class, array('label' => 'Illustration de l\'équipe'))
+            ->add('imageFile', FileType::class, array('label' => 'Illustration de l\'équipe', 'required' => false))
             ->add('video');
     }
     

@@ -25,7 +25,7 @@ class PublicationsBrevetsRepository extends \Doctrine\ORM\EntityRepository
             ->addSelect('publication.dateDelivrance')
             ->addSelect('publication.numeroDelivrance')
             ->addSelect('publication.pays')
-            ->from    ('CRESTICPublicationsBundle:PublicationsBrevets','publication');
+            ->from    ('AppBundle:PublicationsBrevets','publication');
 
         $query   = $queryBuilder->getQuery();
         $results =$query->getResult();

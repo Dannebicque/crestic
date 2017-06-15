@@ -21,7 +21,7 @@ class ProjetsResponsableType extends AbstractType
         $builder
             ->add('titre', TextType::class, array('label' => 'Titre du projet'))
             ->add('description', TextareaType::class, array('label' => 'Description du projet', 'attr' => array('class' => 'tinyMCE')))
-            ->add('imageFile', FileType::class, array('label' => 'Illustration du projet'))
+            ->add('imageFile', FileType::class, array('label' => 'Illustration du projet', 'required' => false))
             ->add('dateDebut', DateType::class, array('label' => 'Date de début du projet'))
             ->add('dateFin', DateType::class, array('label' => 'Date de fin prévue du projet'))
             ->add('financement', TextType::class, array('label' => 'Modes de financement du projet'))

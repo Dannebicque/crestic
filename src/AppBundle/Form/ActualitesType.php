@@ -18,27 +18,39 @@ class ActualitesType extends AbstractType
     {
         $builder
             ->add('titre', TextType::class, array(
-                'label'              => 'titre',
-                'translation_domain' => 'messages',
+                'label'              => 'Titre',
                 'required'           => true,
+            ))
+            ->add('titreen', TextType::class, array(
+                'label'              => 'Title',
+                'required'           => false,
+                'mapped'             => false,
             ))
 
-            ->add('keywords', TextType::class, array(
-                'label'              => 'keywords',
-                'translation_domain' => 'messages',
-                'required'           => true,
-            ))
+//            ->add('keywords', TextType::class, array(
+//                'label'              => 'Mots clés',
+//                'required'           => true,
+//            ))
+//            ->add('keywordsen', TextType::class, array(
+//                'label'              => 'Keywords',
+//                'required'           => false,
+//                'mapped'             => false,
+//            ))
 
             ->add('message', TextareaType::class, array(
-                'label'              => 'texte',
-                'translation_domain' => 'messages',
+                'label'              => 'Texte',
                 'required'           => true,
                 'attr'               => array('class' => 'tinyMCE')
             ))
+            ->add('messageen', TextareaType::class, array(
+                'label'              => 'Text',
+                'required'           => false,
+                'attr'               => array('class' => 'tinyMCE'),
+                'mapped'             => false,
+            ))
 
             ->add('imageFile', FileType::class, array(
-                'label'              => 'illustration',
-                'translation_domain' => 'messages',
+                'label'              => 'Illustration',
                 'required'           => false,
             ))
 

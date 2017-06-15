@@ -36,7 +36,7 @@ class PublicationsRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this->createQueryBuilder('a','a.id')
             ->select ('a')
-            ->innerJoin('CRESTICPublicationsBundle:PublicationsHasMembres', 'p', 'WITH', 'a.id = p.publication')
+            ->innerJoin('AppBundle:PublicationsHasMembres', 'p', 'WITH', 'a.id = p.publication')
             ->where('p.membreCrestic = ?1')
             ->orderBy('a.anneePublication', 'DESC')
             ->setParameter(1,$id_membre)
@@ -64,11 +64,11 @@ class PublicationsRepository extends \Doctrine\ORM\EntityRepository
                 if ($equipe_id == "-1")
                 {
 
-                    $qb->innerJoin('CRESTICPublicationsBundle:PublicationsHasEquipes', 'eq'  , 'WITH' , 'a.id = eq.publication');
+                    $qb->innerJoin('AppBundle:PublicationsHasEquipes', 'eq'  , 'WITH' , 'a.id = eq.publication');
                 }
                 else
                 {
-                    $qb->innerJoin('CRESTICPublicationsBundle:PublicationsHasEquipes', 'eq'  , 'WITH' , 'a.id = eq.publication AND eq.equipe = :equipe_id');
+                    $qb->innerJoin('AppBundle:PublicationsHasEquipes', 'eq'  , 'WITH' , 'a.id = eq.publication AND eq.equipe = :equipe_id');
                     $qb->setParameter('equipe_id' ,$equipe_id);
                 }
             }
@@ -85,11 +85,11 @@ class PublicationsRepository extends \Doctrine\ORM\EntityRepository
             {
                 if ($projet_id == "-1")
                 {
-                    $qb->innerJoin('CRESTICPublicationsBundle:PublicationsHasProjets', 'pr'  , 'WITH' , 'a.id = pr.publication');
+                    $qb->innerJoin('AppBundle:PublicationsHasProjets', 'pr'  , 'WITH' , 'a.id = pr.publication');
                 }
                 else
                 {
-                    $qb->innerJoin('CRESTICPublicationsBundle:PublicationsHasProjets', 'pr'  , 'WITH' , 'a.id = pr.publication AND pr.projet = :projet_id');
+                    $qb->innerJoin('AppBundle:PublicationsHasProjets', 'pr'  , 'WITH' , 'a.id = pr.publication AND pr.projet = :projet_id');
                     $qb->setParameter('projet_id' ,$projet_id);
 
                 }
@@ -105,8 +105,8 @@ class PublicationsRepository extends \Doctrine\ORM\EntityRepository
             }
             else
             {
-                $qb->innerJoin('CRESTICPublicationsBundle:PublicationsHasEquipes', 'pueq', 'WITH' , 'a.id        = pueq.publication');
-                $qb->innerJoin('CRESTICEquipesBundle:EquipesHasDepartements'     , 'de'  , 'WITH' , 'pueq.equipe = de.equipe AND de.departement = :departement_id');
+                $qb->innerJoin('AppBundle:PublicationsHasEquipes', 'pueq', 'WITH' , 'a.id        = pueq.publication');
+                $qb->innerJoin('AppBundle:EquipesHasDepartements'     , 'de'  , 'WITH' , 'pueq.equipe = de.equipe AND de.departement = :departement_id');
                 $qb->setParameter('departement_id' ,$departement_id);
             }
 
@@ -115,9 +115,9 @@ class PublicationsRepository extends \Doctrine\ORM\EntityRepository
         $auteur = $data['auteur'];
         if ($auteur != '')
         {
-            $qb->innerJoin('CRESTICPublicationsBundle:PublicationsHasMembres' , 'pume' , 'WITH' , 'a.id                    = pume.publication');
-            $qb->leftJoin('CRESTICMembresBundle:MembresCrestic'               , 'mc'   , 'WITH' , 'pume.membreCrestic      = mc.id');
-            $qb->leftJoin('CRESTICMembresBundle:MembresExterieurs'            , 'me'   , 'WITH' , 'pume.membreExterieur    = me.id');
+            $qb->innerJoin('AppBundle:PublicationsHasMembres' , 'pume' , 'WITH' , 'a.id                    = pume.publication');
+            $qb->leftJoin('AppBundle:MembresCrestic'               , 'mc'   , 'WITH' , 'pume.membreCrestic      = mc.id');
+            $qb->leftJoin('AppBundle:MembresExterieurs'            , 'me'   , 'WITH' , 'pume.membreExterieur    = me.id');
             $qb->where(' CONCAT(mc.prenom,mc.nom) LIKE :auteur OR CONCAT(mc.nom,mc.prenom) LIKE :auteur OR CONCAT(me.prenom,me.nom) LIKE :auteur OR CONCAT(me.nom,me.prenom) LIKE :auteur');
             $qb->setParameter('auteur' ,'%'.$auteur.'%');
         }

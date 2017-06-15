@@ -1,5 +1,5 @@
 {% extends '::base.html.twig' %}
 
 {% block content %}
-	{{ include('@App/Includes/inc.page.html.twig') }}
+	{{ include('@App/Includes/inc.page.html.twig', {cm:page}) }}
 {% endblock %}

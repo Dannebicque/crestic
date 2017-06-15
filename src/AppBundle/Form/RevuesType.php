@@ -20,7 +20,6 @@ class RevuesType extends AbstractType
             'label'              => 'titreRevue',
             'translation_domain' => 'messages',
             'required'           => true,
-            'attr'               => array('class' => 'form-control'),
         ))
             ->add('sigleRevue', TextType::class, array(
                 'label'              => 'sigleRevue',
@@ -54,7 +53,7 @@ class RevuesType extends AbstractType
                 'choice_label'       => 'nom',
                 'label'              => 'editeur',
                 'translation_domain' => 'messages',
-                'required'           => true,
+                'required'           => false,
             ));
     }
 

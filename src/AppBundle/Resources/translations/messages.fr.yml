@@ -1,5 +1,7 @@
 
-
+acces.profl: Accéder au profil de
+agenda:
+    crestic: Agenda du CReSTIC
 top_bar:
     address:
         university: 'Université de Reims Champagne-Ardenne'
@@ -93,6 +95,7 @@ visiteur:
         actualites:
             posteLe: Posté le
             lirePlus: Lire la suite ...
+            par: Auteur
     MembresCrestic:
         activites: Activités
         publications: Publications
@@ -142,6 +145,8 @@ visiteur:
         technicien: Service technique
     rechercher:
         publications: Rechercher des publications
+    departement:
+        acces: Détails de l'équipe
 
 utilisateur:
     demandesOM:
@@ -171,6 +176,15 @@ publications:
     theses.title: Thèses
     habilitations.title: HDR
     informations: Informations Générales
+    apercu:
+        pagination: Pages
+        datepubli: Date
+        internationale:
+            title: Internationale
+            oui: Oui
+            non: Non
+        doi: DOI
+        url: Site Web
     templates:
         TRecherchePublications:
             titre: Recherche

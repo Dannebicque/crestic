@@ -183,9 +183,11 @@ $(document).ready(function(){
 
 	// spinner
 	$(document).ajaxStart(function () {
+	    console.log('loader on');
 		$('#load-page').show();
 	}).ajaxStop(function () {
-		$('#load-page').hide();
+        console.log('loader off');
+        $('#load-page').hide();
 	});
 	
     var percent = 0, bar = $('.transition-timer-carousel-progress-bar'), crsl = $('#carouselHome');

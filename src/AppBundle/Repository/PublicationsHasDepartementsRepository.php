@@ -58,7 +58,7 @@ class PublicationsHasDepartementsRepository extends \Doctrine\ORM\EntityReposito
     {
         return $this->createQueryBuilder('a','a.id')
             ->select ('a')
-            ->innerJoin('CRESTICPublicationsBundle:Publications', 'p', 'WITH', 'a.publication = p.id')
+            ->innerJoin('AppBundle:Publications', 'p', 'WITH', 'a.publication = p.id')
             ->where('a.equipe = ?1')
             ->setParameter(1, $id_equipe)
             ->orderBy('p.anneePublication, p.moisPublication', 'DESC')

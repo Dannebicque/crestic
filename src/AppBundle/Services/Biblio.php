@@ -365,7 +365,7 @@ class Biblio
 
             default:
             {
-                echo 'kernel.types : getTypeOfEntity '.$type.' incconu !!!';
+                echo 'kernel.types : getTypeOfEntity '.$type.' inconnu !!!';
                 break;
             }
 
@@ -374,9 +374,104 @@ class Biblio
         return $result;
     }
 
-    public function formatBibtex($publication)
+    public function getAuteursBibtex($entity)
     {
-        return 'bibtex';
+        $result = '';
+
+        $auteurs = $this->entityManager->getRepository('AppBundle:PublicationsHasMembres')->findBy(array('publication' => $entity->getId()), array('position' => 'ASC'));
+
+        foreach ($auteurs as $auteur)
+        {
+            if ($auteur->getMembreCrestic() !== null)
+            {
+                $result .= $auteur->getMembreCrestic()->getPrenom() . ' ' . $auteur->getMembreCrestic()->getNom() . ' and ';
+            } elseif ($auteur->getMembreExterieur() !== null)
+            {
+                $result .= $auteur->getMembreExterieur()->getPrenom() . ' ' . $auteur->getMembreExterieur()->getNom() . ' and ';
+            }
+        }
+        return substr($result, 0, strlen($result)-5);
+    }
+
+    /**
+     * @param $entity
+     * @return string
+     */
+    public function formatBibtex($entity)
+    {
+        if ($entity !== null)
+        {
+
+            $auteurs = $this->getAuteursBibtex($entity);
+
+            switch ($this->getTypeOfEntity($entity))
+            {
+                case 'PublicationsBrevets':
+
+                    break;
+                case 'PublicationsTheses':
+
+                    break;
+                case 'PublicationsChapitres':
+
+                    break;
+                case 'PublicationsConferences':
+                    // Champs requis : author, title, booktitle, year
+                    // Champs optionnels : editor, pages, organization, publisher, address, month, note, key
+                   /* @inproceedings{DBLP:conf/wodes/RieraCPGA14,
+  author    = {Bernard Riera and
+                    Rapha{\"{e}}l Coupat and
+               Alexandre Philippot and
+               Fran{\c{c}}ois Gellot and
+               David Annebicque},
+  title     = {Control Design Pattern Based on Safety Logical Constraints for Manufacturing
+               Systems: Application to a Palletizer},
+  booktitle = {12th International Workshop on Discrete Event Systems, {WODES} 2014,
+               Cachan, France, May 14-16, 2014.},
+  pages     = {388--393},
+  year      = {2014},
+  crossref  = {DBLP:conf/wodes/2014},
+  url       = {https://doi.org/10.3182/20140514-3-FR-4046.00054},
+  doi       = {10.3182/20140514-3-FR-4046.00054},
+  timestamp = {Sun, 21 May 2017 00:18:24 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/wodes/RieraCPGA14},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}*/
+                    $result = '@inproceedings{Conf'.$entity->getId().','."\r\n";
+                    $result .= 'author = {'.$auteurs.'}, '."\r\n";
+                    $result .= 'title = {'.$entity->getTitre().'},'."\r\n";
+
+                    if ($entity->getConference() !== null)
+                    {
+
+                        $result .= 'booktitle = {'.$entity->getConference()->getBibtex().'}'."\r\n";
+
+                    } else
+                    {
+                        $result .= '#erreur conf#';
+                    }
+
+                    $result .= 'year = {'.$entity->getAnneePublication().'},'."\r\n";
+                    $result .= 'month = {'.$entity->getMoisPublication().'},'."\r\n";
+                    $result .= 'year = {'.$entity->getPaginationBibtex().'}'."\r\n";
+                    $result .= '}';
+                    break;
+                case 'PublicationsOuvrages':
+
+                    break;
+                case 'PublicationsRapports':
+
+                    break;
+                case 'PublicationsRevues':
+
+                    break;
+            }
+
+            return $result;
+        } else
+        {
+            return '#-#';
+        }
     }
 
     public function getAllAuteurs()

@@ -42,7 +42,7 @@ class PublicationsHasPlateformesRepository extends \Doctrine\ORM\EntityRepositor
     {
         return $this->createQueryBuilder('a','a.id')
             ->select ('a')
-            ->innerJoin('CRESTICPublicationsBundle:Publications', 'p', 'WITH', 'a.publication = p.id')
+            ->innerJoin('AppBundle:Publications', 'p', 'WITH', 'a.publication = p.id')
             ->where('a.plateforme = ?1')
             ->setParameter(1, $id_plateforme)
             ->orderBy('p.anneePublication', 'DESC')

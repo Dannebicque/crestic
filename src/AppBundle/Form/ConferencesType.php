@@ -21,19 +21,16 @@ class ConferencesType extends AbstractType
             'label'              => 'nomConference',
             'translation_domain' => 'messages',
             'required'           => true,
-            'attr'               => array('class' => 'form-control'),
         ))
             ->add('sigleConference', TextType::class, array(
                 'label'              => 'sigleConference',
                 'translation_domain' => 'messages',
                 'required'           => true,
-                'attr'               => array('class' => 'form-control'),
             ))
             ->add('ville', TextType::class, array(
                 'label'              => 'ville',
                 'translation_domain' => 'messages',
                 'required'           => true,
-                'attr'               => array('class' => 'form-control'),
             ))
 //            ->add('dateDebut', DateType::class)
 //            ->add('dateFin', DateType::class)
@@ -41,36 +38,32 @@ class ConferencesType extends AbstractType
                 'label'              => 'tauxSelection',
                 'translation_domain' => 'messages',
                 'required'           => true,
-                'attr'               => array('class' => 'form-control'),
             ))
             ->add('url', TextType::class, array(
                 'label'              => 'url',
                 'translation_domain' => 'messages',
                 'required'           => true,
-                'attr'               => array('class' => 'form-control'),
             ))
             ->add('internationale', ChoiceType::class, array(
                 'choices'            => array('Oui' => true, 'Non' => false),
                 'label'              => 'internationale',
                 'translation_domain' => 'messages',
+                'expanded'          => true,
                 'required'           => true,
-                'attr'               => array('class' => 'form-control'),
             ))
             ->add('pays', EntityType::class, array(
                 'class'              => 'AppBundle\Entity\Pays',
                 'choice_label'       => 'nomFr',
                 'label'              => 'pays',
                 'translation_domain' => 'messages',
-                'required'           => true,
-                'attr'               => array('class' => 'form-control'),
+                'required'           => false,
             ))
             ->add('editeur', EntityType::class, array(
                 'class'              => 'AppBundle\Entity\Editeurs',
                 'choice_label'       => 'nom',
                 'label'              => 'editeur',
                 'translation_domain' => 'messages',
-                'required'           => true,
-                'attr'               => array('class' => 'form-control'),
+                'required'           => false,
             ));
     }
 

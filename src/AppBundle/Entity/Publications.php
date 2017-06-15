@@ -770,6 +770,17 @@ abstract class Publications
         }
     }
 
+    public function getPaginationBibtex()
+    {
+        if ($this->pageDebut == 0 || $this->pageDebut == '')
+        {
+            return '';
+        } else
+        {
+            return $this->pageDebut.'-'.$this->pageFin;
+        }
+    }
+
     /**
      * Set publicationInternationale
      *

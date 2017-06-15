@@ -18,14 +18,14 @@ class EmploisType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('titre')
-            ->add('resume', TextType::class)
-            ->add('description', TextareaType::class, array('attr' => array('class' => 'tinyMCE')))
+        $builder->add('titre', TextType::class, array('label' => 'Titre de l\'offre'))
+            ->add('resume', TextType::class, array('label' => 'Résumé de l\'offre'))
+            ->add('description', TextareaType::class, array('label'=> 'Description de l\'offre','attr' => array('class' => 'tinyMCE')))
             ->add('debut', DateType::class, array('label' => 'Début souhaité'))
             ->add('duree', TextType::class, array('label' => 'Durée du contrat'))
             ->add('pdfFile', FileType::class, array('label' => 'Fichier PDF'))
             ->add('contact', EntityType::class, array('class' =>'AppBundle\Entity\MembresCrestic', 'empty_data'=> 'Choisir un responsable', 'choice_label' => 'display', 'attr' => array('class'=> 'select2' )))
-            ->add('projet', EntityType::class, array('class' => 'AppBundle\Entity\Projets', 'choice_label' => 'titre', 'attr' => array('class' => 'select2')));
+            ->add('projet', EntityType::class, array('required' => false, 'label' => 'Projet associé','class' => 'AppBundle\Entity\Projets', 'choice_label' => 'titre', 'attr' => array('class' => 'select2')));
     }
     
     /**

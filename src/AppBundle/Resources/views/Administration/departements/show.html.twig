@@ -1,0 +1,65 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+    <a href="{{ path('administration_departements_index') }}">Départements</a> / Détails /
+{% endblock %}
+
+{% block content %}
+    <section>
+        <div class="container">
+            <div class="heading text-center mb20">
+                <h2>
+                    {{ departement.nom }}
+                </h2>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="heading mb20">
+                        <h4>
+                            {{ 'visiteur.TApercuDepartements.theme'|trans }}
+                        </h4>
+                    </div>
+                    <div>
+                        {{ departement.theme|raw }}
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="heading mb20">
+                        <h4>
+                            {{ 'visiteur.TApercuDepartements.informations'|trans }}
+                        </h4>
+                    </div>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            {{ 'visiteur.TApercuDepartements.responsable'|trans }}
+                        </dt>
+                        <dd>
+                            {% if departement.membreCrestic != null %}
+                                <a href="{{ path('public_membres_profil', {slug: departement.membreCrestic.slug}) }}"
+                                   title="Profil du membre {{ departement.membreCrestic.display }}"
+                                   target="_blank">{{ departement.membreCrestic.display }}</a>
+                            {% else %}
+                                -
+                            {% endif %}
+                        </dd>
+                        <dt>
+                            {{ 'visiteur.TApercuDepartements.mail'|trans }}
+                        </dt>
+                        <dd>
+                            {% if departement.membreCrestic != null %}
+                                <a href="mailto:{{ departement.membreCrestic.email }}"
+                                   target="_blank">{{ departement.membreCrestic.email }}</a>
+                            {% else %}
+                                -
+                            {% endif %}
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    {{ include('@App/Administration/footer-show.html.twig', {var: 'departements', obj:departement.id}) }}
+{% endblock %}

@@ -31,6 +31,8 @@
 		            endif %}</td>
                 <td><a href="{{ plateforme.url }}" target="_blank"> {{ plateforme.url }}</a></td>
                 <td>
+                    <a href="{{ path('administration_plateformes_options', { 'id': plateforme.id }) }}" class="btn
+                            btn-success" data-toggle="tooltip" data-placement="bottom" title="Modifier les options"><i class="fa fa-wrench"></i></a>
 	                <a href="{{ path('public_plateformes_profil', { 'slug': plateforme.slug }) }}" class="btn btn-info"
 	                   title="Voir"><i class="fa fa-eye"></i> </a>
 	                <a href="{{ path('administration_plateformes_edit', { 'id': plateforme.id }) }}" class="btn

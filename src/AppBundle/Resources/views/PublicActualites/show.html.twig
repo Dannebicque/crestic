@@ -1,5 +1,7 @@
 {% extends '::base.html.twig' %}
 
+{% block title %}CReSTIC | Actualité | {{ actualite.titre }} {% endblock %}
+
 {% block content %}
 
 	{{ include('@App/Includes/inc.actualite.html.twig', {actualite:actualite}) }}

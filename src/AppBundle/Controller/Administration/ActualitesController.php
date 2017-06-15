@@ -45,6 +45,14 @@ class ActualitesController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $actualite->setMembreCrestic($this->getUser());
+
+            $repository = $em->getRepository('Gedmo\\Translatable\\Entity\\Translation');
+
+            $repository->translate($actualite, 'titre', 'en', $form->get('titreen')->getData())
+                ->translate($actualite, 'message', 'en', $form->get('messageen')->getData())
+                ->translate($actualite, 'keywords', 'en', $form->get('keywordsen')->getData());
+
             $em->persist($actualite);
             $em->flush();
 
@@ -86,6 +94,7 @@ class ActualitesController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+            $this->get('session')->getFlashBag()->add('alert-success', 'Modifications enregistrées');
 
             return $this->redirectToRoute('administration_actualites_show', array('id' => $actualite->getId()));
         }

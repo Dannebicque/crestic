@@ -1,0 +1,45 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+    Départements /
+{% endblock %}
+
+{% block content %}
+    <h1>Liste des départements</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Sigle</th>
+                <th>Responsable</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for departement in departements %}
+            <tr>
+                <td>{{ departement.nom }}</td>
+                <td>{{ departement.sigle }}</td>
+                <td>
+                    {% if departement.membreCrestic != null %}
+                    {{ departement.membreCrestic|linkMembre|raw }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('administration_departements_show', { 'id': departement.id }) }}" class="btn btn-info"
+                       title="Voir"><i class="fa fa-eye"></i> </a>
+                    <a href="{{ path('administration_departements_edit', { 'id': departement.id }) }}" class="btn
+                            btn-warning" title="Modifier"><i class="fa fa-pencil"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+            <a href="{{ path('administration_departements_new') }}" class="btn btn-primary">Créer un nouveau département</a>
+
+{% endblock %}

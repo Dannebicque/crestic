@@ -36,18 +36,41 @@
 			</div>
 		</div>
 	</div>
+
 {% endblock %}
+
 
 {% block javascripts %}
 	<script>
 		$(document).ready(function () {
+
+
+
 			$("#zone_data").empty().load("{{ path('public_membres_trombi_lettre') }}", {lettre: 'A'});
 			$("#zone_data_annuaire").empty().load("{{ path('public_membres_annuaire_lettre') }}", {lettre:
 				'A'});
 			$("#zone_data_liste").empty().load("{{ path('public_membres_liste') }}");
 
 			$('.chgtlettre').click(function(){
-				$("#zone_data").empty().load("{{ path('public_membres_trombi_lettre') }}", {lettre: $(this).data('lettre')});
+				/*$("#zone_data").empty().load("{{ path('public_membres_trombi_lettre') }}", {lettre: $(this).data('lettre')});*/
+
+                $.ajax({
+                    url: "{{ path('public_membres_trombi_lettre') }}",
+                    type: "POST",
+                    data: {lettre: $(this).data('lettre')},
+                    dataType: "Html",
+					beforeSend: function(){
+                        $('#load-page').show();
+                    },
+                    success: function (data) {
+                        // hide loading
+                        $("#zone_data").empty().html(data);
+                    },
+                    complete: function(){
+                        $('#load-page').hide();
+                    }
+                });
+
 			});
 
 			$('.chgtlettreannuaire').click(function(){
