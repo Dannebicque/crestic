@@ -12,23 +12,23 @@ use AppBundle\Entity\PublicationsHasProjets;
  */
 class PublicationsHasProjetsRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findAllPublicationsFromProjetBuilder($id_publication)
+    public function findAllPublicationsFromProjetBuilder($id_projet)
     {
         return $this->createQueryBuilder('a','a.id')
             ->select ('a')
-            ->where('a.publication = ?1')
-            ->setParameter(1,$id_publication);
+            ->where('a.projet = ?1')
+            ->setParameter(1,$id_projet);
     }
 
-    public function findAllPublicationsFromProjet ($id_publication)
+    public function findAllPublicationsFromProjet ($id_projet)
     {
-        return $this->findAllPublicationsFromProjetBuilder($id_publication)->getQuery()->getResult();
+        return $this->findAllPublicationsFromProjetBuilder($id_projet)->getQuery()->getResult();
     }
 
-    public function getArrayIdFromPublicationProjets ($id_publication)
+    public function getArrayIdFromPublicationProjets ($id_projet)
     {
         $result = array();
-        $array  =  $this->findAllPublicationsFromProjet($id_publication);
+        $array  =  $this->findAllPublicationsFromProjet($id_projet);
 
         foreach ($array as $key=>$value)
         {

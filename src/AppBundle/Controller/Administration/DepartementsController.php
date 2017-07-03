@@ -41,10 +41,11 @@ class DepartementsController extends Controller
     public function newAction(Request $request)
     {
         $departement = new Departements();
-        $form = $this->createForm('AppBundle\Form\DepartementsType', $departement);
+        $form        = $this->createForm('AppBundle\Form\DepartementsType', $departement);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->persist($departement);
             $em->flush();
@@ -54,7 +55,7 @@ class DepartementsController extends Controller
 
         return $this->render('@App/Administration/departements/new.html.twig', array(
             'departement' => $departement,
-            'form' => $form->createView(),
+            'form'        => $form->createView(),
         ));
     }
 
@@ -83,10 +84,11 @@ class DepartementsController extends Controller
     public function editAction(Request $request, Departements $departement)
     {
         $deleteForm = $this->createDeleteForm($departement);
-        $editForm = $this->createForm('AppBundle\Form\DepartementsType', $departement);
+        $editForm   = $this->createForm('AppBundle\Form\DepartementsType', $departement);
         $editForm->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid())
+        {
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('administration_departements_edit', array('id' => $departement->getId()));
@@ -94,7 +96,7 @@ class DepartementsController extends Controller
 
         return $this->render('@App/Administration/departements/edit.html.twig', array(
             'departement' => $departement,
-            'edit_form' => $editForm->createView(),
+            'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -110,7 +112,8 @@ class DepartementsController extends Controller
         $form = $this->createDeleteForm($departement);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->remove($departement);
             $em->flush();
@@ -131,7 +134,6 @@ class DepartementsController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('administration_departements_delete', array('id' => $departement->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

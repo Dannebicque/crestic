@@ -159,7 +159,7 @@
 												if (auteur.position === data.length) {
 													disableddown = 'disabled';
 												}
-												$html = $html + '<tr>';
+												$html = $html + '<tr id="lig_'+auteur.id+'_'+auteur.type+'">';
 												$html = $html + '<td>' + auteur.position + '</td>';
 												$html = $html + '<td>';
 												$html = $html + auteur.prenom + " " + auteur.nom;
@@ -267,7 +267,7 @@
                             if (auteur.position === data.length) {
                                 disableddown = 'disabled';
                             }
-                            $html = $html + '<tr>';
+                            $html = $html + '<tr id="lig_'+auteur.id+'_'+auteur.type+'">';
                             $html = $html + '<td>' + auteur.position + '</td>';
                             $html = $html + '<td>';
                             $html = $html + auteur.prenom + " " + auteur.nom;

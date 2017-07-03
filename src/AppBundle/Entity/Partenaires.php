@@ -45,7 +45,14 @@ class Partenaires
      *
      * @ORM\Column(name="internationale", type="boolean",nullable=true)
      */
-    private $internationale = False; 
+    private $internationale = False;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="financeur", type="boolean")
+     */
+    private $financeur = False;
 
     /**
      * @var string
@@ -320,5 +327,29 @@ class Partenaires
     public function getProjets()
     {
         return $this->projets;
+    }
+
+    /**
+     * Set financeur
+     *
+     * @param boolean $financeur
+     *
+     * @return Partenaires
+     */
+    public function setFinanceur($financeur)
+    {
+        $this->financeur = $financeur;
+
+        return $this;
+    }
+
+    /**
+     * Get financeur
+     *
+     * @return boolean
+     */
+    public function getFinanceur()
+    {
+        return $this->financeur;
     }
 }

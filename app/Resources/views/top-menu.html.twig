@@ -185,13 +185,11 @@
 							</div><!-- /navbar header -->
 
 							<!-- Main Navigation - Explained in Documentation -->
-							{% if is_granted('ROLE_VISITEUR') or is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
 								<nav class="navbar-collapse collapse navHeaderCollapse" role="navigation">
 									<ul class="nav navbar-nav navbar-right">
 										{{ render(controller('AppBundle:Default:menuAlternatif')) }}
 									</ul>
 								</nav>
-							{% endif %}
 						</div>
 					</div>
 				</div>

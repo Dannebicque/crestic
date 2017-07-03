@@ -1,0 +1,35 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+    <a href="{{ path('administration_partenaires_index') }}">Partenaires</a> / Détails /
+{% endblock %}
+
+{% block content %}
+    <h1>Partenaire</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Nom</th>
+                <td colspan="3">{{ partenaire.nom }}</td>
+            </tr>
+            <tr>
+                <th>Url</th>
+                <td colspan="3">{{ partenaire.url }}</td>
+            </tr>
+            <tr>
+                <th>Internationale</th>
+                <td>{% if partenaire.internationale %}Oui{% else %}Non{% endif %}</td>
+                <th>Financeur</th>
+                <td>{% if partenaire.financeur %}Oui{% else %}Non{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td colspan="3"><img src="{{ asset('uploads/partenaires/'~partenaire.image) }}" alt="logo du partenaire" /></td>
+            </tr>
+        </tbody>
+    </table>
+
+    {{ include('@App/Administration/footer-show.html.twig', {var: 'partenaires', obj:partenaire.id}) }}
+
+{% endblock %}

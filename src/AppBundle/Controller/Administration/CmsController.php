@@ -5,7 +5,8 @@ namespace AppBundle\Controller\Administration;
 use AppBundle\Entity\Cms;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Cm controller.
@@ -39,11 +40,12 @@ class CmsController extends Controller
      */
     public function newAction(Request $request)
     {
-        $cm = new Cms();
+        $cm   = new Cms();
         $form = $this->createForm('AppBundle\Form\CmsType', $cm);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->persist($cm);
             $em->flush();
@@ -52,7 +54,7 @@ class CmsController extends Controller
         }
 
         return $this->render('AppBundle:Administration/cms:new.html.twig', array(
-            'cm' => $cm,
+            'cm'   => $cm,
             'form' => $form->createView(),
         ));
     }
@@ -68,7 +70,7 @@ class CmsController extends Controller
         $deleteForm = $this->createDeleteForm($cm);
 
         return $this->render('@App/Administration/cms/show.html.twig', array(
-            'cm' => $cm,
+            'cm'          => $cm,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -84,7 +86,8 @@ class CmsController extends Controller
         $editForm = $this->createForm('AppBundle\Form\CmsType', $cm);
         $editForm->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid())
+        {
             $this->getDoctrine()->getManager()->flush();
             $this->get('session')->getFlashBag()->add('alert-success', 'Modifications enregistrées');
 
@@ -92,7 +95,7 @@ class CmsController extends Controller
         }
 
         return $this->render('AppBundle:Administration/cms:edit.html.twig', array(
-            'cm' => $cm,
+            'cm'        => $cm,
             'edit_form' => $editForm->createView(),
         ));
     }
@@ -108,7 +111,8 @@ class CmsController extends Controller
         $form = $this->createDeleteForm($cm);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->remove($cm);
             $em->flush();
@@ -129,7 +133,6 @@ class CmsController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('administration_cms_delete', array('id' => $cm->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

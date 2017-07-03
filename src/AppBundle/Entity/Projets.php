@@ -93,6 +93,13 @@ class Projets
     /**
      * @var string
      *
+     * @ORM\Column(name="identification", type="string", length=255,nullable=true)
+     */
+    private $identification;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="url", type="string", length=255,nullable=true)
      */
     private $url;
@@ -341,12 +348,12 @@ class Projets
     }
 
     /**
-     * Set financement
-     *
-     * @param string $financement
-     *
-     * @return Projets
-     */
+ * Set financement
+ *
+ * @param string $financement
+ *
+ * @return Projets
+ */
     public function setFinancement($financement)
     {
         $this->financement = $financement;
@@ -362,6 +369,30 @@ class Projets
     public function getFinancement()
     {
         return $this->financement;
+    }
+
+    /**
+     * Set identification
+     *
+     * @param string $identification
+     *
+     * @return Projets
+     */
+    public function setIdentification($identification)
+    {
+        $this->identification = $identification;
+
+        return $this;
+    }
+
+    /**
+     * Get identification
+     *
+     * @return string
+     */
+    public function getIdentification()
+    {
+        return $this->identification;
     }
 
     /**

@@ -13,9 +13,8 @@
 				</b><br />
 				{{ equipe.nomlong }}
 			</p>
-			Slider
-			{# todo: sliders#}
-			{#{{ html.getSlidersCarousel(equipe.sliders,'divCarouselSliders')|raw }}#}
+            {{ include('@App/Includes/inc.slider.html.twig', {image: equipe.image, titre:equipe.nomlong, sliders: sliders, type: 'equipes'}) }}
+
 
 			<!-- Begin Content 1 -->
 			<div class="row mt40">
@@ -90,13 +89,21 @@
 							{{ 'visiteur.equipe.projetsrecherches'|trans }}
 						</h4>
 					</div>
-					<ul>
+					<div class="row">
 					{% for projet in equipe.projets %}
-						<li><a href="{{ path('public_projet_profil', {slug:projet.projet.slug}) }}" target="_blank">{{ projet.projet.titre }}</a></li>
+						<div class="col-sm-12 col-lg-4">
+							<div class="bloc-info">
+								<h4>{{ projet.projet.titre }}</h4>
+								<a href="{{ path('public_projet_profil', {slug:projet.projet.slug}) }}"
+								   title="Détails du projet {{ projet.projet.titre }}"
+								   class="btn btn-primary btn-rw"><span
+											class="fa fa-plus-circle"></span> {{ 'visiteur.equipe.acces'|trans }}
+								</a>
+							</div>
+						</div>
 					{% endfor %}
-					</ul>
+					</div>
 				</div>
-
 				<div class="col-sm-12">
 					<div class="heading">
 						<h4>

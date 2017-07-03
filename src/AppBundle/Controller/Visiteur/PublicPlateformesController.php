@@ -22,9 +22,13 @@ class PublicPlateformesController extends Controller
 
         if ($plateforme)
         {
+            $sliders = $this->getDoctrine()->getRepository('AppBundle:PlateformesHasSliders')->findAllSliderFromPlateforme($plateforme->getId());
+            $projets = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasPlateformes')->findAllProjetsFromPlateforme($plateforme->getId());
 
             return $this->render('AppBundle:PublicPlateformes:profil.html.twig', array(
-                'plateforme'  => $plateforme,
+                'plateforme' => $plateforme,
+                'sliders'    => $sliders,
+                'projets'    => $projets
             ));
         } else
         {

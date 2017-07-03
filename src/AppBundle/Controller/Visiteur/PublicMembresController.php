@@ -18,8 +18,7 @@ class PublicMembresController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('AppBundle:PublicMembres:index.html.twig', array(
-            // ...
+        return $this->render('AppBundle:PublicMembres:index.html.twig', array(// ...
         ));
     }
 

@@ -5,7 +5,8 @@ namespace AppBundle\Controller\Administration;
 use AppBundle\Entity\MembresCrestic;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Membrescrestic controller.
@@ -40,16 +41,17 @@ class MembresCresticController extends Controller
     public function newAction(Request $request)
     {
         $membresCrestic = new Membrescrestic();
-        $form = $this->createForm('AppBundle\Form\MembresCresticType', $membresCrestic);
+        $form           = $this->createForm('AppBundle\Form\MembresCresticType', $membresCrestic);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
 
-            $userManager = $this->get('fos_user.user_manager');
-            $fuser = $userManager->createUser();
+            $userManager    = $this->get('fos_user.user_manager');
+            $fuser          = $userManager->createUser();
             $tokenGenerator = $this->get('fos_user.util.token_generator');
-            $password = substr($tokenGenerator->generateToken(), 0, 8); // 8 chars
+            $password       = substr($tokenGenerator->generateToken(), 0, 8); // 8 chars
             $fuser->setPlainPassword($password);
             $fuser->setEmail($membresCrestic->getEmail());
             $fuser->setNom($membresCrestic->getNom());
@@ -64,12 +66,12 @@ class MembresCresticController extends Controller
 
             $this->get('my.mailer')->sendMailFirstConnexion($fuser, $password);
 
-            return $this->redirectToRoute('administration_membres_show_light', array('id' => $fuser->getId()));
+            //return $this->redirectToRoute('administration_membres_show_light', array('id' => $fuser->getId()));
         }
 
         return $this->render('@App/Administration/membrescrestic/new.html.twig', array(
             'membresCrestic' => $membresCrestic,
-            'form' => $form->createView(),
+            'form'           => $form->createView(),
         ));
     }
 
@@ -85,7 +87,7 @@ class MembresCresticController extends Controller
 
         return $this->render('@App/Administration/membrescrestic/show.html.twig', array(
             'membresCrestic' => $membresCrestic,
-            'delete_form' => $deleteForm->createView(),
+            'delete_form'    => $deleteForm->createView(),
         ));
     }
 
@@ -101,7 +103,7 @@ class MembresCresticController extends Controller
 
         return $this->render('@App/Administration/membrescrestic/show_light.html.twig', array(
             'membresCrestic' => $membresCrestic,
-            'delete_form' => $deleteForm->createView(),
+            'delete_form'    => $deleteForm->createView(),
         ));
     }
 
@@ -114,10 +116,11 @@ class MembresCresticController extends Controller
     public function editAction(Request $request, MembresCrestic $membresCrestic)
     {
         $deleteForm = $this->createDeleteForm($membresCrestic);
-        $editForm = $this->createForm('AppBundle\Form\MembresCresticType', $membresCrestic);
+        $editForm   = $this->createForm('AppBundle\Form\MembresCresticType', $membresCrestic);
         $editForm->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid())
+        {
             $this->getDoctrine()->getManager()->flush();
             $this->get('session')->getFlashBag()->add('alert-success', 'Modifications enregistrées');
 
@@ -126,8 +129,8 @@ class MembresCresticController extends Controller
 
         return $this->render('@App/Administration/membrescrestic/edit.html.twig', array(
             'membresCrestic' => $membresCrestic,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form'      => $editForm->createView(),
+            'delete_form'    => $deleteForm->createView(),
         ));
     }
 
@@ -142,7 +145,8 @@ class MembresCresticController extends Controller
         $form = $this->createDeleteForm($membresCrestic);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->remove($membresCrestic);
             $em->flush();
@@ -163,7 +167,27 @@ class MembresCresticController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('administration_membres_delete', array('id' => $membresCrestic->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
+    }
+
+    /**
+     * @param MembresCrestic $id
+     * @internal param MembresCrestic $mebre
+     * @Route("/init/{id}", name="administration_membres_init")
+     */
+    public function initCompteAction(MembresCrestic $id)
+    {
+        $userManager    = $this->get('fos_user.user_manager');
+        $tokenGenerator = $this->get('fos_user.util.token_generator');
+        $password       = substr($tokenGenerator->generateToken(), 0, 8); // 8 chars
+        $id->setPlainPassword($password);
+        $id->setRoles(array('ROLE_UTILISATEUR')); //permet de définir le rôle par défaut
+        $userManager->updateUser($id);
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
+        $this->get('my.mailer')->sendMailFirstConnexion($id, $password);
+
+        return $this->redirectToRoute('administration_membres_index');
     }
 }

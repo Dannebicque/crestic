@@ -5,7 +5,8 @@ namespace AppBundle\Controller\Administration;
 use AppBundle\Entity\Editeurs;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Editeur controller.
@@ -40,10 +41,11 @@ class EditeursController extends Controller
     public function newAction(Request $request)
     {
         $editeur = new Editeurs();
-        $form = $this->createForm('AppBundle\Form\EditeursType', $editeur);
+        $form    = $this->createForm('AppBundle\Form\EditeursType', $editeur);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->persist($editeur);
             $em->flush();
@@ -53,7 +55,7 @@ class EditeursController extends Controller
 
         return $this->render('@App/Administration/editeurs/new.html.twig', array(
             'editeur' => $editeur,
-            'form' => $form->createView(),
+            'form'    => $form->createView(),
         ));
     }
 
@@ -68,7 +70,7 @@ class EditeursController extends Controller
         $deleteForm = $this->createDeleteForm($editeur);
 
         return $this->render('@App/Administration/editeurs/show.html.twig', array(
-            'editeur' => $editeur,
+            'editeur'     => $editeur,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -84,7 +86,8 @@ class EditeursController extends Controller
         $editForm = $this->createForm('AppBundle\Form\EditeursType', $editeur);
         $editForm->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid())
+        {
             $this->getDoctrine()->getManager()->flush();
             $this->get('session')->getFlashBag()->add('alert-success', 'Modifications enregistrées');
 
@@ -92,7 +95,7 @@ class EditeursController extends Controller
         }
 
         return $this->render('@App/Administration/editeurs/edit.html.twig', array(
-            'editeur' => $editeur,
+            'editeur'   => $editeur,
             'edit_form' => $editForm->createView(),
         ));
     }
@@ -108,7 +111,8 @@ class EditeursController extends Controller
         $form = $this->createDeleteForm($editeur);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->remove($editeur);
             $em->flush();
@@ -129,7 +133,6 @@ class EditeursController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('administration_editeur_delete', array('id' => $editeur->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

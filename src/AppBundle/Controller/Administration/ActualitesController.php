@@ -5,7 +5,8 @@ namespace AppBundle\Controller\Administration;
 use AppBundle\Entity\Actualites;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Actualite controller.
@@ -40,10 +41,11 @@ class ActualitesController extends Controller
     public function newAction(Request $request)
     {
         $actualite = new Actualites();
-        $form = $this->createForm('AppBundle\Form\ActualitesType', $actualite);
+        $form      = $this->createForm('AppBundle\Form\ActualitesType', $actualite);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $actualite->setMembreCrestic($this->getUser());
 
@@ -61,7 +63,7 @@ class ActualitesController extends Controller
 
         return $this->render('@App/Administration/actualites/new.html.twig', array(
             'actualite' => $actualite,
-            'form' => $form->createView(),
+            'form'      => $form->createView(),
         ));
     }
 
@@ -76,7 +78,7 @@ class ActualitesController extends Controller
         $deleteForm = $this->createDeleteForm($actualite);
 
         return $this->render('@App/Administration/actualites/show.html.twig', array(
-            'actualite' => $actualite,
+            'actualite'   => $actualite,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -92,7 +94,8 @@ class ActualitesController extends Controller
         $editForm = $this->createForm('AppBundle\Form\ActualitesType', $actualite);
         $editForm->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid())
+        {
             $this->getDoctrine()->getManager()->flush();
             $this->get('session')->getFlashBag()->add('alert-success', 'Modifications enregistrées');
 
@@ -116,7 +119,8 @@ class ActualitesController extends Controller
         $form = $this->createDeleteForm($actualite);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->remove($actualite);
             $em->flush();
@@ -137,7 +141,6 @@ class ActualitesController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('administration_actualites_delete', array('id' => $actualite->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

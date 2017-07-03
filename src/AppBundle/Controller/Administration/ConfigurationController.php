@@ -5,7 +5,8 @@ namespace AppBundle\Controller\Administration;
 use AppBundle\Entity\Configuration;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Configuration controller.
@@ -40,10 +41,11 @@ class ConfigurationController extends Controller
     public function newAction(Request $request)
     {
         $config = new Configuration();
-        $form = $this->createForm('AppBundle\Form\ConfigurationType', $config);
+        $form   = $this->createForm('AppBundle\Form\ConfigurationType', $config);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->persist($config);
             $em->flush();
@@ -53,7 +55,7 @@ class ConfigurationController extends Controller
 
         return $this->render('@App/Administration/configuration/new.html.twig', array(
             'config' => $config,
-            'form' => $form->createView(),
+            'form'   => $form->createView(),
         ));
     }
 
@@ -68,7 +70,7 @@ class ConfigurationController extends Controller
         $deleteForm = $this->createDeleteForm($config);
 
         return $this->render('@App/Administration/configuration/show.html.twig', array(
-            'config' => $config,
+            'config'      => $config,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -84,7 +86,8 @@ class ConfigurationController extends Controller
         $editForm = $this->createForm('AppBundle\Form\ConfigurationType', $config);
         $editForm->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid())
+        {
             $this->getDoctrine()->getManager()->flush();
             $this->get('session')->getFlashBag()->add('alert-success', 'Modifications enregistrées');
 
@@ -92,7 +95,7 @@ class ConfigurationController extends Controller
         }
 
         return $this->render('@App/Administration/configuration/edit.html.twig', array(
-            'config' => $config,
+            'config'    => $config,
             'edit_form' => $editForm->createView(),
         ));
     }
@@ -108,7 +111,8 @@ class ConfigurationController extends Controller
         $form = $this->createDeleteForm($configuration);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->remove($configuration);
             $em->flush();
@@ -129,7 +133,6 @@ class ConfigurationController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('administration_configuration_delete', array('id' => $configuration->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

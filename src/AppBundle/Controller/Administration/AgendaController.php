@@ -5,7 +5,8 @@ namespace AppBundle\Controller\Administration;
 use AppBundle\Entity\Agenda;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Agenda controller.
@@ -40,10 +41,11 @@ class AgendaController extends Controller
     public function newAction(Request $request)
     {
         $agenda = new Agenda();
-        $form = $this->createForm('AppBundle\Form\AgendaType', $agenda);
+        $form   = $this->createForm('AppBundle\Form\AgendaType', $agenda);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->persist($agenda);
             $em->flush();
@@ -53,7 +55,7 @@ class AgendaController extends Controller
 
         return $this->render('@App/Administration/agenda/new.html.twig', array(
             'agenda' => $agenda,
-            'form' => $form->createView(),
+            'form'   => $form->createView(),
         ));
     }
 
@@ -68,7 +70,7 @@ class AgendaController extends Controller
         $deleteForm = $this->createDeleteForm($agenda);
 
         return $this->render('@App/Administration/agenda/show.html.twig', array(
-            'agenda' => $agenda,
+            'agenda'      => $agenda,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -84,7 +86,8 @@ class AgendaController extends Controller
         $editForm = $this->createForm('AppBundle\Form\AgendaType', $agenda);
         $editForm->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid())
+        {
             $this->getDoctrine()->getManager()->flush();
             $this->get('session')->getFlashBag()->add('alert-success', 'Modifications enregistrées');
 
@@ -92,7 +95,7 @@ class AgendaController extends Controller
         }
 
         return $this->render('@App/Administration/agenda/edit.html.twig', array(
-            'agenda' => $agenda,
+            'agenda'    => $agenda,
             'edit_form' => $editForm->createView(),
         ));
     }
@@ -108,7 +111,8 @@ class AgendaController extends Controller
         $form = $this->createDeleteForm($agenda);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->remove($agenda);
             $em->flush();
@@ -129,7 +133,6 @@ class AgendaController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('administration_agenda_delete', array('id' => $agenda->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

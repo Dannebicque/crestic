@@ -5,7 +5,8 @@ namespace AppBundle\Controller\Utilisateur;
 use AppBundle\Entity\DemandeOM;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Demandeom controller.
@@ -39,14 +40,15 @@ class DemandeOMController extends Controller
      */
     public function newAction(Request $request)
     {
-        $pays = $this->getDoctrine()->getRepository('AppBundle:Pays')->findOneBy(array('nomFR' => 'France'));
+        $pays      = $this->getDoctrine()->getRepository('AppBundle:Pays')->findOneBy(array('nomFR' => 'France'));
         $demandeOM = new DemandeOM();
         $demandeOM->setMembreCrestic($this->getUser());
         $demandeOM->setPays($pays);
         $form = $this->createForm('AppBundle\Form\DemandeOMUtilisateurType', $demandeOM);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->persist($demandeOM);
             $em->flush();
@@ -56,7 +58,7 @@ class DemandeOMController extends Controller
 
         return $this->render('@App/Utilisateur/demandeom/new.html.twig', array(
             'demandeOM' => $demandeOM,
-            'form' => $form->createView(),
+            'form'      => $form->createView(),
         ));
     }
 
@@ -71,7 +73,7 @@ class DemandeOMController extends Controller
         $deleteForm = $this->createDeleteForm($demandeOM);
 
         return $this->render('@App/Utilisateur/demandeom/show.html.twig', array(
-            'demandeOM' => $demandeOM,
+            'demandeOM'   => $demandeOM,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -87,7 +89,8 @@ class DemandeOMController extends Controller
         $editForm = $this->createForm('AppBundle\Form\DemandeOMUtilisateurType', $demandeOM);
         $editForm->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid())
+        {
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('utilisateur_demande-om_index', array('id' => $demandeOM->getId()));
@@ -110,7 +113,8 @@ class DemandeOMController extends Controller
         $form = $this->createDeleteForm($demandeOM);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->remove($demandeOM);
             $em->flush();
@@ -131,7 +135,6 @@ class DemandeOMController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('utilisateur_demande-om_delete', array('id' => $demandeOM->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

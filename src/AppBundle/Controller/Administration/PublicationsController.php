@@ -89,8 +89,8 @@ class PublicationsController extends Controller
         }
 
         return $this->render('@App/Administration/Publications/resultats.html.twig', array(
-            'auteur' => $auteur,
-            'type' => $type,
+            'auteur'       => $auteur,
+            'type'         => $type,
             'publications' => $publications
         ));
     }

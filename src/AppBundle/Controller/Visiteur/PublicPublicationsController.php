@@ -26,10 +26,10 @@ class PublicPublicationsController extends Controller
 
 
         return $this->render('AppBundle:PublicPublications:index.html.twig', array(
-            'equipes' => $equipes,
-            'projets' => $projets,
+            'equipes'      => $equipes,
+            'projets'      => $projets,
             'departements' => $departements,
-            'nbpublis' => $countpublications,
+            'nbpublis'     => $countpublications,
         ));
     }
 
@@ -78,8 +78,8 @@ class PublicPublicationsController extends Controller
 
         return $this->render('@App/PublicPublications/resultat_recherche.html.twig', array(
             'publications' => $t,
-            'criteres' => $critere,
-            'nbresult' => $nb
+            'criteres'     => $critere,
+            'nbresult'     => $nb
         ));
     }
 
@@ -100,9 +100,9 @@ class PublicPublicationsController extends Controller
             ));
         } else
         {
-               return $this->render('@App/PublicPublications/bibtex.html.twig', array(
-                   'publication' => null
-               ));
+            return $this->render('@App/PublicPublications/bibtex.html.twig', array(
+                'publication' => null
+            ));
         }
     }
 }

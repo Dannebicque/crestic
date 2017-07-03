@@ -5,7 +5,8 @@ namespace AppBundle\Controller\Utilisateur;
 use AppBundle\Entity\MembresCrestic;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Membrescrestic controller.
@@ -23,10 +24,11 @@ class MembresCresticController extends Controller
     public function editAction(Request $request)
     {
         $membresCrestic = $this->getUser();
-        $editForm = $this->createForm('AppBundle\Form\MembresCresticUtilisateurType', $membresCrestic);
+        $editForm       = $this->createForm('AppBundle\Form\MembresCresticUtilisateurType', $membresCrestic);
         $editForm->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid())
+        {
             $this->getDoctrine()->getManager()->flush();
             $this->get('session')->getFlashBag()->add('success', 'Modifications enregistrées');
             return $this->redirectToRoute('utilisateur_membres_edit');
@@ -34,7 +36,7 @@ class MembresCresticController extends Controller
 
         return $this->render('@App/Utilisateur/membres/edit.html.twig', array(
             'membresCrestic' => $membresCrestic,
-            'edit_form' => $editForm->createView(),
+            'edit_form'      => $editForm->createView(),
         ));
     }
 

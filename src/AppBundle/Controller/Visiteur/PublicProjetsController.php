@@ -24,11 +24,17 @@ class PublicProjetsController extends Controller
 
         if ($projet)
         {
-            $membres = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasMembres')->findAllMembresFromProjet($projet->getId());
+            $membres      = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasMembres')->findAllMembresFromProjet($projet->getId());
+            $partenaires  = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasPartenaires')->findAllPartenairesFromProjet($projet->getId());
+            $sliders      = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasSliders')->findAllSliderFromProjet($projet->getId());
+            $publications = $this->getDoctrine()->getRepository('AppBundle:PublicationsHasProjets')->findAllPublicationsFromProjet($projet->getId());
 
             return $this->render('AppBundle:PublicProjets:profil.html.twig', array(
-                'projet'  => $projet,
-                'membres' => $membres
+                'projet'       => $projet,
+                'membres'      => $membres,
+                'partenaires'  => $partenaires,
+                'sliders'      => $sliders,
+                'publications' => $publications
             ));
         } else
         {

@@ -5,7 +5,8 @@ namespace AppBundle\Controller\Administration;
 use AppBundle\Entity\Slider;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Slider controller.
@@ -40,10 +41,11 @@ class SliderController extends Controller
     public function newAction(Request $request)
     {
         $slider = new Slider();
-        $form = $this->createForm('AppBundle\Form\SliderType', $slider);
+        $form   = $this->createForm('AppBundle\Form\SliderType', $slider);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->persist($slider);
             $em->flush();
@@ -53,7 +55,7 @@ class SliderController extends Controller
 
         return $this->render('@App/Administration/slider/new.html.twig', array(
             'slider' => $slider,
-            'form' => $form->createView(),
+            'form'   => $form->createView(),
         ));
     }
 
@@ -68,7 +70,7 @@ class SliderController extends Controller
         $deleteForm = $this->createDeleteForm($slider);
 
         return $this->render('@App/Administration/slider/show.html.twig', array(
-            'slider' => $slider,
+            'slider'      => $slider,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -82,18 +84,19 @@ class SliderController extends Controller
     public function editAction(Request $request, Slider $slider)
     {
         $deleteForm = $this->createDeleteForm($slider);
-        $editForm = $this->createForm('AppBundle\Form\SliderType', $slider);
+        $editForm   = $this->createForm('AppBundle\Form\SliderType', $slider);
         $editForm->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid())
+        {
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('administration_slider_edit', array('id' => $slider->getId()));
         }
 
         return $this->render('@App/Administration/slider/edit.html.twig', array(
-            'slider' => $slider,
-            'edit_form' => $editForm->createView(),
+            'slider'      => $slider,
+            'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -109,7 +112,8 @@ class SliderController extends Controller
         $form = $this->createDeleteForm($slider);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->remove($slider);
             $em->flush();
@@ -130,7 +134,6 @@ class SliderController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('administration_slider_delete', array('id' => $slider->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

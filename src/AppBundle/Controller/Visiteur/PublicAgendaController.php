@@ -19,7 +19,7 @@ class PublicAgendaController extends Controller
     public function indexAction()
     {
         $evt = $this->getDoctrine()->getRepository('AppBundle:Agenda')->findAll();
-        return $this->render('@App/PublicAgenda/index.html.twig',[
+        return $this->render('@App/PublicAgenda/index.html.twig', [
             'evenements' => $evt
         ]);
     }

@@ -9,6 +9,7 @@ use AppBundle\Entity\ProjetsHasMembres;
 use AppBundle\Entity\ProjetsHasPartenaires;
 use AppBundle\Entity\ProjetsHasPlateformes;
 use AppBundle\Entity\ProjetsHasSliders;
+use function Couchbase\defaultDecoder;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -198,7 +199,7 @@ class ProjetsController extends Controller
     /**
      * @param Request $request
      * @return Response
-     * @Route("/ajax/membre", name="administration_projets_ajax_option_add", methods={"POST"})
+     * @Route("/ajax/add/option", name="administration_projets_ajax_option_add", methods={"POST"})
      */
     public function projetOptionAjaxAction(Request $request)
     {
@@ -216,40 +217,46 @@ class ProjetsController extends Controller
                 $projetoption = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasMembres')->findBy(array('membreCrestic' => $idoption, 'projet' => $idprojet));
                 $e_m          = new ProjetsHasMembres();
                 $set          = 'setMembreCrestic';
-                $texte        = '';
+                $texte        = 'Membre associé au projet';
                 break;
             case 'equipe':
                 $option       = $this->getDoctrine()->getRepository('AppBundle:Equipes')->find($idoption);
                 $projetoption = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasEquipes')->findBy(array('equipe' => $idoption, 'projet' => $idprojet));
                 $e_m          = new ProjetsHasEquipes();
                 $set          = 'setEquipe';
-                $texte        = '';
+                $texte        = 'Equipe associée au projet';
                 break;
             case 'partenaire':
                 $option       = $this->getDoctrine()->getRepository('AppBundle:Partenaires')->find($idoption);
                 $projetoption = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasPartenaires')->findBy(array('partenaire' => $idoption, 'projet' => $idprojet));
                 $e_m          = new ProjetsHasPartenaires();
                 $set          = 'setPartenaire';
-                $texte        = '';
+                $texte        = 'Partenaire associé au projet';
                 break;
             case 'slider':
                 $option       = $this->getDoctrine()->getRepository('AppBundle:Slider')->find($idoption);
                 $projetoption = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasSliders')->findBy(array('slider' => $idoption, 'projet' => $idprojet));
                 $e_m          = new ProjetsHasSliders();
                 $set          = 'setSlider';
-                $texte        = '';
+                $texte        = 'Slide ajouté au projet';
                 break;
             case 'plateforme':
                 $option       = $this->getDoctrine()->getRepository('AppBundle:Plateformes')->find($idoption);
                 $projetoption = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasPlateformes')->findBy(array('plateforme' => $idoption, 'projet' => $idprojet));
                 $e_m          = new ProjetsHasPlateformes();
                 $set          = 'setPlateforme';
-                $texte        = '';
+                $texte        = 'Plateforme associée au projet';
                 break;
+            default:
+                $e_m          = null;
+                $option       = false;
+                $projetoption = null;
+                $texte        = 'Erreur';
+                $set          = '';
         }
 
 
-        if ($projet && $option && count($projetoption) == 0)
+        if ($projet && $option && count($projetoption) == 0 && $e_m !== null)
         {
             $e_m->setProjet($projet);
             $e_m->$set($option);
@@ -259,29 +266,65 @@ class ProjetsController extends Controller
             return new Response($texte, 200);
         } else
         {
-            return new Response('nok', 500);
+            return new Response('Erreur lors de la modification des options du projet', 500);
         }
     }
 
     /**
      * @param Request $request
      * @return Response
-     * @Route("/ajax/membrer", name="administration_projets_ajax_option_remove", methods={"POST"})
+     * @Route("/ajax/remove/option", name="administration_projets_ajax_option_remove", methods={"POST"})
      */
     public function projetMembreAjaxRemoveAction(Request $request)
     {
         $idprojet = $request->request->get('projet');
-        $idmembre = $request->request->get('membre');
+        $idoption = $request->request->get('idoption');
+        $type     = $request->request->get('type');
 
-        $projetmembre = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasMembres')->findBy(array('membreCrestic' => $idmembre, 'projet' => $idprojet));
 
+        $projet = $this->getDoctrine()->getRepository('AppBundle:Projets')->find($idprojet);
 
-        $em = $this->getDoctrine()->getManager();
-        foreach ($projetmembre as $e)
+        switch ($type)
         {
-            $em->remove($e);
+            case 'membre':
+                $projetoption = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasMembres')->findBy(array('membreCrestic' => $idoption, 'projet' => $idprojet));
+                $texte        = 'Membre retiré du projet';
+                break;
+            case 'equipe':
+                $projetoption = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasEquipes')->findBy(array('equipe' => $idoption, 'projet' => $idprojet));
+                $texte        = 'Equipe retirée du projet';
+                break;
+            case 'partenaire':
+                $projetoption = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasPartenaires')->findBy(array('partenaire' => $idoption, 'projet' => $idprojet));
+                $texte        = 'Partenaire retiré du projet';
+                break;
+            case 'slider':
+                $projetoption = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasSliders')->findBy(array('slider' => $idoption, 'projet' => $idprojet));
+                $texte        = 'Slide retiré du projet';
+                break;
+            case 'plateforme':
+                $projetoption = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasPlateformes')->findBy(array('plateforme' => $idoption, 'projet' => $idprojet));
+                $texte        = 'Plateforme retirée du projet';
+                break;
+            default:
+                $projetoption = null;
+                $texte        = 'Rien à retirer';
+                break;
         }
-        $em->flush();
-        return new Response('ok', 200);
+
+
+        if (count($projetoption) > 0)
+        {
+            $em = $this->getDoctrine()->getManager();
+            foreach ($projetoption as $p)
+            {
+                $em->remove($p);
+            }
+            $em->flush();
+            return new Response($texte, 200);
+        } else
+        {
+            return new Response('Erreur lors de la modification des options du projet', 500);
+        }
     }
 }

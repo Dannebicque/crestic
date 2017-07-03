@@ -31,6 +31,7 @@ class ProjetsType extends AbstractType
             ->add('dateDebut', DateType::class, array('label' => 'Date de début du projet'))
             ->add('dateFin', DateType::class, array('label' => 'Date de fin prévue du projet'))
             ->add('financement', TextType::class, array('label' => 'Modes de financement du projet'))
+            ->add('identification', TextType::class, array('label' => 'Indentification du projet'))
             ->add('url', TextType::class, array('label' => 'Site Web du projet', 'required' => false))
             ->add('budgetGlobal', TextType::class, array('label' => "Montant du budget global"))
             ->add('video')

@@ -12,8 +12,7 @@
 					{{ plateforme.nom }}
 				</b>
 			</p>
-			Slider
-			{#{{ html.getSlidersCarousel(plateforme.sliders,'divCarouselSliders')|raw }}#}
+            {{ include('@App/Includes/inc.slider.html.twig', {image: plateforme.image, titre:plateforme.nom, sliders: sliders, type:'plateformes'}) }}
 
 
 			<div class="row mt40">
@@ -92,8 +91,11 @@
 							{{ 'visiteur.plateforme.projetsrecherches'|trans }}
 						</h4>
 					</div>
-					projets
-					{#{{ html.getEntity1HasEntity2(plateforme.projets,'getProjet')|raw }}#}
+					<ul>
+                        {% for projet in plateforme.projets %}
+							<li><a href="{{ path('public_projet_profil', {slug:projet.projet.slug}) }}" target="_blank">{{ projet.projet.titre }}</a></li>
+                        {% endfor %}
+					</ul>
 				</div>
 			</div>
 

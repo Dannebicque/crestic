@@ -27,6 +27,8 @@
                 <td>{{ membreCrestic.statutLong }}</td>
                 <td>{{ membreCrestic.site }}</td>
                 <td>
+                    <a href="{{ path('administration_membres_init', { 'id': membreCrestic.id }) }}" class="btn
+                            btn-warning" title="Initialiser le compte"><i class="fa fa-magic"></i></a>
 	                <a href="{{ path('administration_membres_show_light', { 'id': membreCrestic.id }) }}" target="_blank" class="btn
 	                btn-info" title="Voir"><i class="fa fa-eye"></i> </a>
 	                <a href="{{ path('administration_membres_edit', { 'id': membreCrestic.id }) }}" class="btn

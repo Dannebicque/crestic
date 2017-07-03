@@ -24,10 +24,10 @@ class DefaultController extends Controller
 
     public function menuAlternatifAction()
     {
-        $equipes = $this->getDoctrine()->getRepository('AppBundle:Equipes')->findAllEquipesActives();
+        $equipes      = $this->getDoctrine()->getRepository('AppBundle:Equipes')->findAllEquipesActives();
         $departements = $this->getDoctrine()->getRepository('AppBundle:Departements')->findAll();
-        $plateformes = $this->getDoctrine()->getRepository('AppBundle:Plateformes')->findAll();
-        $projets = $this->getDoctrine()->getRepository('AppBundle:Projets')->findAll();
+        $plateformes  = $this->getDoctrine()->getRepository('AppBundle:Plateformes')->findAll();
+        $projets      = $this->getDoctrine()->getRepository('AppBundle:Projets')->findAll();
 
 
         return $this->render('AppBundle:Default:menuAlternatif.html.twig', array(
@@ -46,14 +46,14 @@ class DefaultController extends Controller
     public function organigrammeAction()
     {
         $result = array(
-            'directeur'                 => $this->getDoctrine()->getRepository('AppBundle:Organigramme')->findAllOrganigramme('Directeur'),
-            'directeurAdjoint'          => $this->getDoctrine()->getRepository('AppBundle:Organigramme')->findAllOrganigramme('Directeur Adjoint'),
-            'conseilLaboratoire'        => $this->getDoctrine()->getRepository('AppBundle:MembresCrestic')->findAllConseilLaboratoire(),
-            'departement'               => $this->getDoctrine()->getRepository('AppBundle:Departements')->findAllDepartements(),
-            'equipe'                    => $this->getDoctrine()->getRepository('AppBundle:Equipes')->findAllEquipes(),
-            'secretaire'                => $this->getDoctrine()->getRepository('AppBundle:Organigramme')->findAllOrganigramme('Secrétaire'),
-            'assistante'                => $this->getDoctrine()->getRepository('AppBundle:Organigramme')->findAllOrganigramme('assistante'),
-            'technicien'                => $this->getDoctrine()->getRepository('AppBundle:Organigramme')->findAllOrganigramme('Technicien')
+            'directeur'          => $this->getDoctrine()->getRepository('AppBundle:Organigramme')->findAllOrganigramme('Directeur'),
+            'directeurAdjoint'   => $this->getDoctrine()->getRepository('AppBundle:Organigramme')->findAllOrganigramme('Directeur Adjoint'),
+            'conseilLaboratoire' => $this->getDoctrine()->getRepository('AppBundle:MembresCrestic')->findAllConseilLaboratoire(),
+            'departement'        => $this->getDoctrine()->getRepository('AppBundle:Departements')->findAllDepartements(),
+            'equipe'             => $this->getDoctrine()->getRepository('AppBundle:Equipes')->findAllEquipes(),
+            'secretaire'         => $this->getDoctrine()->getRepository('AppBundle:Organigramme')->findAllOrganigramme('Secrétaire'),
+            'assistante'         => $this->getDoctrine()->getRepository('AppBundle:Organigramme')->findAllOrganigramme('assistante'),
+            'technicien'         => $this->getDoctrine()->getRepository('AppBundle:Organigramme')->findAllOrganigramme('Technicien')
         );
 
         return $this->render('@App/Default/organigramme.html.twig', [
@@ -110,7 +110,7 @@ class DefaultController extends Controller
         {
             foreach ($request->files as $file)
             {
-               //var_dump($file);
+                //var_dump($file);
                 // générer un nom aléatoire et essayer de deviner l'extension (plus sécurisé)
                 $extension = $file->guessExtension();
                 if (!$extension)
@@ -118,9 +118,9 @@ class DefaultController extends Controller
                     // l'extension n'a pas été trouvée
                     $extension = 'bin';
                 }
-                $nomfile = rand(1, 99999).'_'.date('YmdHis').'.'.$extension;
-                $dir = $this->get('kernel')->getRootDir().'/../web/uploads/images/';
-                $filetowrite = $request->getSchemeAndHttpHost().'/uploads/images/' . $nomfile;
+                $nomfile     = rand(1, 99999) . '_' . date('YmdHis') . '.' . $extension;
+                $dir         = $this->get('kernel')->getRootDir() . '/../web/uploads/images/';
+                $filetowrite = $request->getSchemeAndHttpHost() . '/uploads/images/' . $nomfile;
                 $file->move($dir, $nomfile);
                 return new JsonResponse(array('location' => $filetowrite));
             }
@@ -129,10 +129,11 @@ class DefaultController extends Controller
             // Respond to the successful upload with JSON.
             // Use a location key to specify the path to the saved image resource.
             // { location : '/your/uploaded/image/file'}
-        } else {
+        } else
+        {
             // Notify editor that the upload failed
             header("HTTP/1.0 500 Server Error");
         }
-        return new Response('',200);
+        return new Response('', 200);
     }
 }

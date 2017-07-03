@@ -5,7 +5,8 @@ namespace AppBundle\Controller\Utilisateur;
 use AppBundle\Entity\Activites;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Activite controller.
@@ -40,10 +41,11 @@ class ActivitesController extends Controller
     public function newAction(Request $request)
     {
         $activite = new Activites($this->getUser());
-        $form = $this->createForm('AppBundle\Form\ActivitesType', $activite);
+        $form     = $this->createForm('AppBundle\Form\ActivitesType', $activite);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->persist($activite);
             $em->flush();
@@ -53,7 +55,7 @@ class ActivitesController extends Controller
 
         return $this->render('@App/Utilisateur/activites/new.html.twig', array(
             'activite' => $activite,
-            'form' => $form->createView(),
+            'form'     => $form->createView(),
         ));
     }
 
@@ -68,7 +70,7 @@ class ActivitesController extends Controller
         $deleteForm = $this->createDeleteForm($activite);
 
         return $this->render('@App/Utilisateur/activites/show.html.twig', array(
-            'activite' => $activite,
+            'activite'    => $activite,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -84,14 +86,15 @@ class ActivitesController extends Controller
         $editForm = $this->createForm('AppBundle\Form\ActivitesType', $activite);
         $editForm->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid())
+        {
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('utilisateur_activites_show', array('id' => $activite->getId()));
         }
 
         return $this->render('@App/Utilisateur/activites/edit.html.twig', array(
-            'activite' => $activite,
+            'activite'  => $activite,
             'edit_form' => $editForm->createView(),
         ));
     }
@@ -107,7 +110,8 @@ class ActivitesController extends Controller
         $form = $this->createDeleteForm($activite);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->remove($activite);
             $em->flush();
@@ -128,7 +132,6 @@ class ActivitesController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('utilisateur_activites_delete', array('id' => $activite->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

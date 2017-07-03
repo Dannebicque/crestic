@@ -5,7 +5,8 @@ namespace AppBundle\Controller\Administration;
 use AppBundle\Entity\Revues;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Revue controller.
@@ -40,10 +41,11 @@ class RevuesController extends Controller
     public function newAction(Request $request)
     {
         $revue = new Revues();
-        $form = $this->createForm('AppBundle\Form\RevuesType', $revue);
+        $form  = $this->createForm('AppBundle\Form\RevuesType', $revue);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->persist($revue);
             $em->flush();
@@ -53,7 +55,7 @@ class RevuesController extends Controller
 
         return $this->render('@App/Administration/revues/new.html.twig', array(
             'revue' => $revue,
-            'form' => $form->createView(),
+            'form'  => $form->createView(),
         ));
     }
 
@@ -68,7 +70,7 @@ class RevuesController extends Controller
         $deleteForm = $this->createDeleteForm($revue);
 
         return $this->render('@App/Administration/revues/show.html.twig', array(
-            'revue' => $revue,
+            'revue'       => $revue,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -84,7 +86,8 @@ class RevuesController extends Controller
         $editForm = $this->createForm('AppBundle\Form\RevuesType', $revue);
         $editForm->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid())
+        {
             $this->getDoctrine()->getManager()->flush();
             $this->get('session')->getFlashBag()->add('alert-success', 'Modifications enregistrées');
 
@@ -92,7 +95,7 @@ class RevuesController extends Controller
         }
 
         return $this->render('@App/Administration/revues/edit.html.twig', array(
-            'revue' => $revue,
+            'revue'     => $revue,
             'edit_form' => $editForm->createView(),
         ));
     }
@@ -108,7 +111,8 @@ class RevuesController extends Controller
         $form = $this->createDeleteForm($revue);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->remove($revue);
             $em->flush();
@@ -129,7 +133,6 @@ class RevuesController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('administration_revues_delete', array('id' => $revue->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

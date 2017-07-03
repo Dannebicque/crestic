@@ -5,7 +5,8 @@ namespace AppBundle\Controller\Administration;
 use AppBundle\Entity\Emplois;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Emplois controller.
@@ -40,10 +41,11 @@ class EmploisController extends Controller
     public function newAction(Request $request)
     {
         $emplois = new Emplois();
-        $form = $this->createForm('AppBundle\Form\EmploisType', $emplois);
+        $form    = $this->createForm('AppBundle\Form\EmploisType', $emplois);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->persist($emplois);
             $em->flush();
@@ -53,7 +55,7 @@ class EmploisController extends Controller
 
         return $this->render('@App/Administration/emplois/new.html.twig', array(
             'emplois' => $emplois,
-            'form' => $form->createView(),
+            'form'    => $form->createView(),
         ));
     }
 
@@ -68,7 +70,7 @@ class EmploisController extends Controller
         $deleteForm = $this->createDeleteForm($emplois);
 
         return $this->render('@App/Administration/emplois/show.html.twig', array(
-            'emplois' => $emplois,
+            'emplois'     => $emplois,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -84,7 +86,8 @@ class EmploisController extends Controller
         $editForm = $this->createForm('AppBundle\Form\EmploisType', $emplois);
         $editForm->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid())
+        {
             $this->getDoctrine()->getManager()->flush();
             $this->get('session')->getFlashBag()->add('alert-success', 'Modifications enregistrées');
 
@@ -92,7 +95,7 @@ class EmploisController extends Controller
         }
 
         return $this->render('@App/Administration/emplois/edit.html.twig', array(
-            'emplois' => $emplois,
+            'emplois'   => $emplois,
             'edit_form' => $editForm->createView(),
         ));
     }
@@ -108,7 +111,8 @@ class EmploisController extends Controller
         $form = $this->createDeleteForm($emplois);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->remove($emplois);
             $em->flush();
@@ -129,7 +133,6 @@ class EmploisController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('administration_emplois_delete', array('id' => $emplois->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

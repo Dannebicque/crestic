@@ -108,20 +108,21 @@ visiteur:
         responsabilitesAdministratives: Administratif
         valorisation: Valorisation
         evaluation: Evaluation
-        editoriale: Editoriale
+        editoriale: Editorial
     membreConseilLabo: Membre du conseil de laboratoire
     projet:
         title: Projet
         description: Description
         informations: Informations
         dernierespublications: Dernières publications
-        financeurs: Partenaires Financeurs
+        financeurs: Financeurs
         membresprojet: Membres impliqués
         partenaires: Partenaires
         responsable: Responsable
         periode: Dates
         contact: Contact
         url: Site web
+        identification: Identification
     plateforme:
         title: Plateforme
         description: Description

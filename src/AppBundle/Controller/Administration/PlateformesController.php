@@ -44,10 +44,11 @@ class PlateformesController extends Controller
     public function newAction(Request $request)
     {
         $plateforme = new Plateformes();
-        $form = $this->createForm('AppBundle\Form\PlateformesType', $plateforme);
+        $form       = $this->createForm('AppBundle\Form\PlateformesType', $plateforme);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->persist($plateforme);
             $em->flush();
@@ -57,7 +58,7 @@ class PlateformesController extends Controller
 
         return $this->render('@App/Administration/plateformes/new.html.twig', array(
             'plateforme' => $plateforme,
-            'form' => $form->createView(),
+            'form'       => $form->createView(),
         ));
     }
 
@@ -72,7 +73,7 @@ class PlateformesController extends Controller
         $deleteForm = $this->createDeleteForm($plateforme);
 
         return $this->render('@App/Administration/plateformes/show.html.twig', array(
-            'plateforme' => $plateforme,
+            'plateforme'  => $plateforme,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -88,7 +89,8 @@ class PlateformesController extends Controller
         $editForm = $this->createForm('AppBundle\Form\PlateformesType', $plateforme);
         $editForm->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid())
+        {
             $this->getDoctrine()->getManager()->flush();
             $this->get('session')->getFlashBag()->add('alert-success', 'Modifications enregistrées');
 
@@ -97,7 +99,7 @@ class PlateformesController extends Controller
 
         return $this->render('@App/Administration/plateformes/edit.html.twig', array(
             'plateforme' => $plateforme,
-            'edit_form' => $editForm->createView(),
+            'edit_form'  => $editForm->createView(),
         ));
     }
 
@@ -112,7 +114,8 @@ class PlateformesController extends Controller
         $form = $this->createDeleteForm($plateforme);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->remove($plateforme);
             $em->flush();
@@ -133,8 +136,7 @@ class PlateformesController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('administration_plateformes_delete', array('id' => $plateforme->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 
     /**
@@ -160,70 +162,55 @@ class PlateformesController extends Controller
 
 
         return $this->render('@App/Administration/plateformes/options.html.twig', array(
-            'plateforme'      => $id,
-            't'           => $t,
-            'projets' => $this->getDoctrine()->getRepository('AppBundle:Projets')->findAllProjets(),
-            'sliders'     => $this->getDoctrine()->getRepository('AppBundle:Slider')->findAllSlider(),
+            'plateforme' => $id,
+            't'          => $t,
+            'projets'    => $this->getDoctrine()->getRepository('AppBundle:Projets')->findAllProjets(),
+            'sliders'    => $this->getDoctrine()->getRepository('AppBundle:Slider')->findAllSlider(),
         ));
     }
 
     /**
      * @param Request $request
      * @return Response
-     * @Route("/ajax/membre", name="administration_plateformes_ajax_option_add", methods={"POST"})
+     * @Route("/ajax/options/add", name="administration_plateformes_ajax_option_add", methods={"POST"})
      */
-    public function projetOptionAjaxAction(Request $request)
+    public function plateformeOptionAjaxAction(Request $request)
     {
-        $idprojet = $request->request->get('projet');
-        $idoption = $request->request->get('idoption');
-        $type     = $request->request->get('type');
+        $idplateforme = $request->request->get('plateforme');
+        $idoption     = $request->request->get('idoption');
+        $type         = $request->request->get('type');
 
 
-        $projet = $this->getDoctrine()->getRepository('AppBundle:Projets')->find($idprojet);
+        $projet = $this->getDoctrine()->getRepository('AppBundle:Plateformes')->find($idplateforme);
 
         switch ($type)
         {
-            case 'membre':
-                $option       = $this->getDoctrine()->getRepository('AppBundle:MembresCrestic')->find($idoption);
-                $projetoption = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasMembres')->findBy(array('membreCrestic' => $idoption, 'projet' => $idprojet));
-                $e_m          = new ProjetsHasMembres();
-                $set          = 'setMembreCrestic';
-                $texte        = '';
-                break;
-            case 'equipe':
-                $option       = $this->getDoctrine()->getRepository('AppBundle:Equipes')->find($idoption);
-                $projetoption = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasEquipes')->findBy(array('equipe' => $idoption, 'projet' => $idprojet));
-                $e_m          = new ProjetsHasEquipes();
-                $set          = 'setEquipe';
-                $texte        = '';
-                break;
-            case 'partenaire':
-                $option       = $this->getDoctrine()->getRepository('AppBundle:Partenaires')->find($idoption);
-                $projetoption = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasPartenaires')->findBy(array('partenaire' => $idoption, 'projet' => $idprojet));
-                $e_m          = new ProjetsHasPartenaires();
-                $set          = 'setPartenaire';
-                $texte        = '';
-                break;
             case 'slider':
                 $option       = $this->getDoctrine()->getRepository('AppBundle:Slider')->find($idoption);
-                $projetoption = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasSliders')->findBy(array('slider' => $idoption, 'projet' => $idprojet));
-                $e_m          = new ProjetsHasSliders();
+                $projetoption = $this->getDoctrine()->getRepository('AppBundle:PlateformesHasSliders')->findBy(array('slider' => $idoption, 'plateforme' => $idplateforme));
+                $e_m          = new PlateformesHasSliders();
                 $set          = 'setSlider';
-                $texte        = '';
+                $texte        = 'Slide ajouté à la plateforme';
                 break;
-            case 'plateforme':
-                $option       = $this->getDoctrine()->getRepository('AppBundle:Plateformes')->find($idoption);
-                $projetoption = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasPlateformes')->findBy(array('plateforme' => $idoption, 'projet' => $idprojet));
+            case 'projet':
+                $option       = $this->getDoctrine()->getRepository('AppBundle:Projets')->find($idoption);
+                $projetoption = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasPlateformes')->findBy(array('plateforme' => $idplateforme, 'projet' => $idoption));
                 $e_m          = new ProjetsHasPlateformes();
-                $set          = 'setPlateforme';
-                $texte        = '';
+                $set          = 'setProjet';
+                $texte        = 'Projet associé à la plateforme';
                 break;
+            default:
+                $option       = false;
+                $projetoption = null;
+                $e_m          = null;
+                $texte        = '';
+                $set          = '';
         }
 
 
-        if ($projet && $option && count($projetoption) == 0)
+        if ($projet && $option && count($projetoption) == 0 && $e_m !== null && $set != '')
         {
-            $e_m->setProjet($projet);
+            $e_m->setPlateforme($projet);
             $e_m->$set($option);
             $em = $this->getDoctrine()->getManager();
             $em->persist($e_m);
@@ -231,29 +218,53 @@ class PlateformesController extends Controller
             return new Response($texte, 200);
         } else
         {
-            return new Response('nok', 500);
+            return new Response('Erreur lors de la modification des options de la plateforme', 500);
         }
     }
 
     /**
      * @param Request $request
      * @return Response
-     * @Route("/ajax/membrer", name="administration_plateforme_ajax_option_remove", methods={"POST"})
+     * @Route("/ajax/options/remove", name="administration_plateforme_ajax_option_remove", methods={"POST"})
      */
-    public function plateformeMembreAjaxRemoveAction(Request $request)
+    public function plateformeAjaxRemoveAction(Request $request)
     {
-        $idprojet = $request->request->get('projet');
-        $idmembre = $request->request->get('membre');
+        $idplateforme = $request->request->get('plateforme');
+        $idoption     = $request->request->get('idoption');
+        $type         = $request->request->get('type');
 
-        $projetmembre = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasMembres')->findBy(array('membreCrestic' => $idmembre, 'projet' => $idprojet));
 
+        $plateforme = $this->getDoctrine()->getRepository('AppBundle:Plateformes')->find($idplateforme);
 
-        $em = $this->getDoctrine()->getManager();
-        foreach ($projetmembre as $e)
+        switch ($type)
         {
-            $em->remove($e);
+            case 'projet':
+                $projetoption = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasPlateformes')->findBy(array('plateforme' => $idplateforme, 'projet' => $idoption));
+                $texte        = 'Suppression d\'un projet associé à la plateforme';
+                break;
+            case 'slider':
+                $projetoption = $this->getDoctrine()->getRepository('AppBundle:PlateformesHasSliders')->findBy(array('slider' => $idoption, 'plateforme' => $idplateforme));
+                $texte        = 'Suppression d\'un slide associé à la plateforme';
+                break;
+            default:
+                $projetoption = null;
+                $texte        = 'erreur';
+                break;
         }
-        $em->flush();
-        return new Response('ok', 200);
+
+
+        if ($plateforme && count($projetoption) > 0)
+        {
+            $em = $this->getDoctrine()->getManager();
+            foreach ($projetoption as $e)
+            {
+                $em->remove($e);
+            }
+            $em->flush();
+            return new Response($texte, 200);
+        } else
+        {
+            return new Response('Erreur lors de la modification des options de la plateforme', 500);
+        }
     }
 }

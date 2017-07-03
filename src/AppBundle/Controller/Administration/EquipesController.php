@@ -47,10 +47,11 @@ class EquipesController extends Controller
     public function newAction(Request $request)
     {
         $equipe = new Equipes();
-        $form = $this->createForm('AppBundle\Form\EquipesType', $equipe);
+        $form   = $this->createForm('AppBundle\Form\EquipesType', $equipe);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->persist($equipe);
             $em->flush();
@@ -60,7 +61,7 @@ class EquipesController extends Controller
 
         return $this->render('@App/Administration/equipes/new.html.twig', array(
             'equipe' => $equipe,
-            'form' => $form->createView(),
+            'form'   => $form->createView(),
         ));
     }
 
@@ -75,7 +76,7 @@ class EquipesController extends Controller
         $deleteForm = $this->createDeleteForm($equipe);
 
         return $this->render('@App/Administration/equipes/show.html.twig', array(
-            'equipe' => $equipe,
+            'equipe'      => $equipe,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -91,7 +92,8 @@ class EquipesController extends Controller
         $editForm = $this->createForm('AppBundle\Form\EquipesType', $equipe);
         $editForm->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid())
+        {
             $this->getDoctrine()->getManager()->flush();
             $this->get('session')->getFlashBag()->add('alert-success', 'Modifications enregistrées');
 
@@ -99,7 +101,7 @@ class EquipesController extends Controller
         }
 
         return $this->render('@App/Administration/equipes/edit.html.twig', array(
-            'equipe' => $equipe,
+            'equipe'    => $equipe,
             'edit_form' => $editForm->createView(),
         ));
     }
@@ -115,7 +117,8 @@ class EquipesController extends Controller
         $form = $this->createDeleteForm($equipe);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->remove($equipe);
             $em->flush();
@@ -149,32 +152,36 @@ class EquipesController extends Controller
         $t = array();
 
         /** @var EquipesHasMembres $membre */
-        foreach ($id->getMembres() as $membre) {
+        foreach ($id->getMembres() as $membre)
+        {
             $t['membre'][$membre->getMembreCrestic()->getId()] = $membre;
         }
 
         /** @var EquipesHasDepartements $membre */
-        foreach ($id->getDepartements() as $dpt) {
+        foreach ($id->getDepartements() as $dpt)
+        {
             $t['departements'][$dpt->getDepartement()->getId()] = $dpt;
         }
 
         /** @var EquipesHasSliders $membre */
-        foreach ($id->getSliders() as $slide) {
+        foreach ($id->getSliders() as $slide)
+        {
             $t['slider'][$slide->getSlider()->getId()] = $slide;
         }
 
         /** @var ProjetsHasEquipes $membre */
-        foreach ($id->getProjets() as $projet) {
+        foreach ($id->getProjets() as $projet)
+        {
             $t['projet'][$projet->getProjet()->getId()] = $projet;
         }
 
         return $this->render('@App/Administration/equipes/options.html.twig', array(
-            'equipe' => $id,
-            't' => $t,
-            'membres' => $this->getDoctrine()->getRepository('AppBundle:MembresCrestic')->findAllMembresCrestic(),
-            'projets' => $this->getDoctrine()->getRepository('AppBundle:Projets')->findAllProjets(),
+            'equipe'       => $id,
+            't'            => $t,
+            'membres'      => $this->getDoctrine()->getRepository('AppBundle:MembresCrestic')->findAllMembresCrestic(),
+            'projets'      => $this->getDoctrine()->getRepository('AppBundle:Projets')->findAllProjets(),
             'departements' => $this->getDoctrine()->getRepository('AppBundle:Departements')->findAllDepartements(),
-            'sliders' => $this->getDoctrine()->getRepository('AppBundle:Slider')->findAllSlider()
+            'sliders'      => $this->getDoctrine()->getRepository('AppBundle:Slider')->findAllSlider()
         ));
     }
 
@@ -189,11 +196,12 @@ class EquipesController extends Controller
         $idequipe = $request->request->get('equipe');
         $idmembre = $request->request->get('membre');
 
-        $equipe = $this->getDoctrine()->getRepository('AppBundle:Equipes')->find($idequipe);
-        $membre = $this->getDoctrine()->getRepository('AppBundle:MembresCrestic')->find($idmembre);
+        $equipe       = $this->getDoctrine()->getRepository('AppBundle:Equipes')->find($idequipe);
+        $membre       = $this->getDoctrine()->getRepository('AppBundle:MembresCrestic')->find($idmembre);
         $equipemembre = $this->getDoctrine()->getRepository('AppBundle:EquipesHasMembres')->findBy(array('membreCrestic' => $idmembre, 'equipe' => $idequipe));
 
-        if ($equipe && $membre && count($equipemembre) == 0) {
+        if ($equipe && $membre && count($equipemembre) == 0)
+        {
             $e_m = new EquipesHasMembres();
             $e_m->setEquipe($equipe);
             $e_m->setMembreCrestic($membre);
@@ -201,7 +209,8 @@ class EquipesController extends Controller
             $em->persist($e_m);
             $em->flush();
             return new Response('ok', 200);
-        } else {
+        } else
+        {
             return new Response('nok', 500);
         }
     }
@@ -239,11 +248,12 @@ class EquipesController extends Controller
         $idequipe = $request->request->get('equipe');
         $idprojet = $request->request->get('projet');
 
-        $equipe = $this->getDoctrine()->getRepository('AppBundle:Equipes')->find($idequipe);
-        $projet = $this->getDoctrine()->getRepository('AppBundle:Projets')->find($idprojet);
+        $equipe       = $this->getDoctrine()->getRepository('AppBundle:Equipes')->find($idequipe);
+        $projet       = $this->getDoctrine()->getRepository('AppBundle:Projets')->find($idprojet);
         $equipeprojet = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasEquipes')->findBy(array('projet' => $idprojet, 'equipe' => $idequipe));
 
-        if ($equipe && $projet && count($equipeprojet) == 0) {
+        if ($equipe && $projet && count($equipeprojet) == 0)
+        {
             $e_m = new ProjetsHasEquipes();
             $e_m->setEquipe($equipe);
             $e_m->setProjet($projet);
@@ -251,7 +261,8 @@ class EquipesController extends Controller
             $em->persist($e_m);
             $em->flush();
             return new Response('ok', 200);
-        } else {
+        } else
+        {
             return new Response('nok', 500);
         }
     }
@@ -285,14 +296,15 @@ class EquipesController extends Controller
      */
     public function equipeDepartementAjaxAction(Request $request)
     {
-        $idequipe = $request->request->get('equipe');
+        $idequipe      = $request->request->get('equipe');
         $iddepartement = $request->request->get('departement');
 
-        $equipe = $this->getDoctrine()->getRepository('AppBundle:Equipes')->find($idequipe);
-        $departement = $this->getDoctrine()->getRepository('AppBundle:Departements')->find($iddepartement);
+        $equipe            = $this->getDoctrine()->getRepository('AppBundle:Equipes')->find($idequipe);
+        $departement       = $this->getDoctrine()->getRepository('AppBundle:Departements')->find($iddepartement);
         $equipedepartement = $this->getDoctrine()->getRepository('AppBundle:EquipesHasDepartements')->findBy(array('departement' => $iddepartement, 'equipe' => $idequipe));
 
-        if ($equipe && $departement && count($equipedepartement) == 0) {
+        if ($equipe && $departement && count($equipedepartement) == 0)
+        {
             $e_m = new EquipesHasDepartements();
             $e_m->setEquipe($equipe);
             $e_m->setDepartement($departement);
@@ -300,7 +312,8 @@ class EquipesController extends Controller
             $em->persist($e_m);
             $em->flush();
             return new Response('ok', 200);
-        } else {
+        } else
+        {
             return new Response('nok', 500);
         }
     }
@@ -313,7 +326,7 @@ class EquipesController extends Controller
      */
     public function equipeDepartementAjaxRemoveAction(Request $request)
     {
-        $idequipe = $request->request->get('equipe');
+        $idequipe      = $request->request->get('equipe');
         $iddepartement = $request->request->get('departement');
 
         $equipedepartement = $this->getDoctrine()->getRepository('AppBundle:EquipesHasDepartements')->findBy(array('departement' => $iddepartement, 'equipe' => $idequipe));
@@ -338,11 +351,12 @@ class EquipesController extends Controller
         $idequipe = $request->request->get('equipe');
         $idslider = $request->request->get('slider');
 
-        $equipe = $this->getDoctrine()->getRepository('AppBundle:Equipes')->find($idequipe);
-        $slider = $this->getDoctrine()->getRepository('AppBundle:Slider')->find($idslider);
+        $equipe       = $this->getDoctrine()->getRepository('AppBundle:Equipes')->find($idequipe);
+        $slider       = $this->getDoctrine()->getRepository('AppBundle:Slider')->find($idslider);
         $equipeslider = $this->getDoctrine()->getRepository('AppBundle:EquipesHasSliders')->findBy(array('slider' => $idslider, 'equipe' => $idequipe));
 
-        if ($equipe && $slider && count($equipeslider) == 0) {
+        if ($equipe && $slider && count($equipeslider) == 0)
+        {
             $e_m = new EquipesHasSliders();
             $e_m->setEquipe($equipe);
             $e_m->setSlider($slider);
@@ -350,7 +364,8 @@ class EquipesController extends Controller
             $em->persist($e_m);
             $em->flush();
             return new Response('ok', 200);
-        } else {
+        } else
+        {
             return new Response('nok', 500);
         }
     }

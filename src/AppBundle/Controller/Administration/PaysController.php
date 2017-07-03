@@ -5,7 +5,8 @@ namespace AppBundle\Controller\Administration;
 use AppBundle\Entity\Pays;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Pays controller.
@@ -39,11 +40,12 @@ class PaysController extends Controller
      */
     public function newAction(Request $request)
     {
-        $pay = new Pay();
+        $pay  = new Pay();
         $form = $this->createForm('AppBundle\Form\PaysType', $pay);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->persist($pay);
             $em->flush();
@@ -52,7 +54,7 @@ class PaysController extends Controller
         }
 
         return $this->render('@App/Administration/pays/new.html.twig', array(
-            'pay' => $pay,
+            'pay'  => $pay,
             'form' => $form->createView(),
         ));
     }
@@ -68,7 +70,7 @@ class PaysController extends Controller
         $deleteForm = $this->createDeleteForm($pay);
 
         return $this->render('@App/Administration/pays/show.html.twig', array(
-            'pay' => $pay,
+            'pay'         => $pay,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -84,7 +86,8 @@ class PaysController extends Controller
         $editForm = $this->createForm('AppBundle\Form\PaysType', $pay);
         $editForm->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid())
+        {
             $this->getDoctrine()->getManager()->flush();
             $this->get('session')->getFlashBag()->add('alert-success', 'Modifications enregistrées');
 
@@ -92,7 +95,7 @@ class PaysController extends Controller
         }
 
         return $this->render('@App/Administration/pays/edit.html.twig', array(
-            'pay' => $pay,
+            'pay'       => $pay,
             'edit_form' => $editForm->createView(),
         ));
     }
@@ -108,7 +111,8 @@ class PaysController extends Controller
         $form = $this->createDeleteForm($pay);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->remove($pay);
             $em->flush();
@@ -129,7 +133,6 @@ class PaysController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('administration_pays_delete', array('id' => $pay->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

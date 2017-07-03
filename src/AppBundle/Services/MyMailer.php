@@ -27,6 +27,14 @@ class MyMailer
     {
         $this->mailer = $mailer;
         $this->templating = $templating;
+
+        // Create the Transport
+        //$transport = new \Swift_SmtpTransport('smtps.univ-reims.fr', 465, 'ssl');
+        //        $transport->setUsername('annebi01@univ-reims.fr');
+        //$transport->setPassword('krause59');
+
+// Create the Mailer using your created Transport
+        //$this->mailer = new \Swift_Mailer($transport);
     }
 
     protected function sendMessage(array $to, $subject, $template)
@@ -37,11 +45,11 @@ class MyMailer
             ->setFrom($this->from, $this->name)
             ->setTo($this->checkTo($to))
             ->setSubject($subject)
-            ->setBody($template)
+            ->setBody($template);
             //->setReplyTo($this->reply,$name)
-            ->setContentType('text/html');
-
+            //->setContentType('text/html');
         $this->mailer->send($mail);
+
     }
 
     private function checkTo(array $mails)
@@ -63,7 +71,6 @@ class MyMailer
     {
         $template = $this->templating->render('@App/Mails/login.txt.twig', array('user' =>$user));
         $this->sendMessage(array($user->getEmail()), 'Votre Login pour le site du CReSTIC', $template );
-
         $template = $this->templating->render('@App/Mails/password.txt.twig', array('user' =>$user, 'password' => $password));
         $this->sendMessage(array($user->getEmail()), 'Votre mot de passe pour le site du CReSTIC', $template );
     }

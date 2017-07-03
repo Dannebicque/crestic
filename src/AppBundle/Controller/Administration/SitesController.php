@@ -5,7 +5,8 @@ namespace AppBundle\Controller\Administration;
 use AppBundle\Entity\Sites;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Site controller.
@@ -43,7 +44,8 @@ class SitesController extends Controller
         $form = $this->createForm('AppBundle\Form\SitesType', $site);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->persist($site);
             $em->flush();
@@ -68,7 +70,7 @@ class SitesController extends Controller
         $deleteForm = $this->createDeleteForm($site);
 
         return $this->render('@App/Administration/sites/show.html.twig', array(
-            'site' => $site,
+            'site'        => $site,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -84,7 +86,8 @@ class SitesController extends Controller
         $editForm = $this->createForm('AppBundle\Form\SitesType', $site);
         $editForm->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid())
+        {
             $this->getDoctrine()->getManager()->flush();
             $this->get('session')->getFlashBag()->add('alert-success', 'Modifications enregistrées');
 
@@ -92,7 +95,7 @@ class SitesController extends Controller
         }
 
         return $this->render('@App/Administration/sites/edit.html.twig', array(
-            'site' => $site,
+            'site'      => $site,
             'edit_form' => $editForm->createView(),
         ));
     }
@@ -108,7 +111,8 @@ class SitesController extends Controller
         $form = $this->createDeleteForm($site);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->remove($site);
             $em->flush();
@@ -129,7 +133,6 @@ class SitesController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('administration_sites_delete', array('id' => $site->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }
