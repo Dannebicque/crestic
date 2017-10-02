@@ -59,12 +59,6 @@ class Actualites
      * @ORM\Column(name="titre", type="string", length=255)
      */
     private $titre;
-    /**
-     * @var string
-     * @Gedmo\Translatable
-     * @ORM\Column(name="keywords", type="string", length=255, nullable=true)
-     */
-    private $keywords;
 
     /**
      * @var string
@@ -124,30 +118,6 @@ class Actualites
     public function setTitre($titre)
     {
         $this->titre = $titre;
-
-        return $this;
-    }
-
-    /**
-     * Get keywords
-     *
-     * @return string
-     */
-    public function getKeywords()
-    {
-        return $this->keywords;
-    }
-
-    /**
-     * Set keywords
-     *
-     * @param string $keywords
-     *
-     * @return Actualites
-     */
-    public function setKeywords($keywords)
-    {
-        $this->keywords = $keywords;
 
         return $this;
     }

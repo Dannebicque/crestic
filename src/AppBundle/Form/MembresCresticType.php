@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -22,13 +23,15 @@ class MembresCresticType extends AbstractType
             ->add('cnu', ChoiceType::class, array('choices' => array('61' => '61', '27' => '27'), 'required' => false, 'label' => 'CNU'))
             ->add('status', ChoiceType::class, array(
                 'choices'    => array(
-                    'Professeur'            => 'PR',
-                    'Maître de Conférences' => 'MCF',
-                    'Post-Doctorant'        => 'PDOC',
-                    'ATER'                  => 'ATER',
-                    'Doctorant'             => 'DOC',
-                    'Administratif'         => 'ADM',
-                    'Technicien'            => 'TEC',
+                    'Professeur'                  => 'PR',
+                    'Maître de Conférences'       => 'MCF',
+                    'Prof. Praticien Hospitalier' => 'PUPH',
+                    'MCF. Praticien Hospitalier'  => 'MCUPH',
+                    'Post-Doctorant'              => 'PDOC',
+                    'ATER'                        => 'ATER',
+                    'Doctorant'                   => 'DOC',
+                    'Administratif'               => 'ADM',
+                    'Technicien'                  => 'TEC',
                 )
                 , 'required' => true, 'label' => 'Statut',
             ))
@@ -47,6 +50,8 @@ class MembresCresticType extends AbstractType
             ->add('datenomination', DateType::class, array('required' => false, 'label' => 'Date de nomination'))
             ->add('email', TextType::class, array('required' => true, 'label' => 'Email'))
             ->add('username', TextType::class, array('required' => true, 'label' => 'Login (Urca si possible)'))
+            ->add('membreConseilLabo', CheckboxType::class, array('required' => true, 'label' => 'Membre du Conseil de laboratoire'))
+
             ->add('role', ChoiceType::class, array(
                 'choices'  => array(
                     'Membre du CReSTIC'                       => 'ROLE_UTILISATEUR',

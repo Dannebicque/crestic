@@ -13,7 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
 class PublicationsChapitres  extends Publications
 {
     protected $type = 'chapitre';
+    protected $couleur = "#8A7BAF";
 
+    public function getCouleur()
+    {
+        return $this->couleur;
+    }
 
     /**
      * @var integer
@@ -44,6 +49,13 @@ class PublicationsChapitres  extends Publications
      * @ORM\Column(name="serie", type="string", length=255, nullable=true)
      */
     private $serie;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="numero", type="string", length=20, nullable=true)
+     */
+    private $numero;
 
     /**
      * @var string
@@ -249,5 +261,29 @@ class PublicationsChapitres  extends Publications
     public function getVulgarisation()
     {
         return $this->vulgarisation;
+    }
+
+    /**
+     * Set numero
+     *
+     * @param string $numero
+     *
+     * @return PublicationsChapitres
+     */
+    public function setNumero($numero)
+    {
+        $this->numero = $numero;
+
+        return $this;
+    }
+
+    /**
+     * Get numero
+     *
+     * @return string
+     */
+    public function getNumero()
+    {
+        return $this->numero;
     }
 }

@@ -20,8 +20,8 @@ class PublicationsRevuesType extends AbstractType
     {
         $builder
 
-            ->add('volume', TextType::class, array('label' => 'Volume'))
-            ->add('numero', TextType::class, array('label' => 'Numéro'))
+            ->add('volume', TextType::class, array('label' => 'Volume', 'required' => false))
+            ->add('numero', TextType::class, array('label' => 'Numéro', 'required' => false))
             ->add('comiteLecture', CheckboxType::class, array('label' => 'Avec Comité de lecture', 'required' => false, 'data' => true))
             ->add('vulgarisation', CheckboxType::class, array('label' => 'Revue de vulgarisation', 'required' => false))
             ->add('editorial', CheckboxType::class, array('label' => 'Contribution editoriale', 'required' => false))

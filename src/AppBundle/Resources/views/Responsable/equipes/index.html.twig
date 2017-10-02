@@ -1,0 +1,40 @@
+{% extends '::base-responsable.html.twig' %}
+
+{% block title %}
+	Equipes
+{% endblock %}
+
+{% block breadcrumbs %}
+	Equipes /
+{% endblock %}
+
+{% block content %}
+    <h1>Liste des équipes dont vous êtes responsable</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Nom long</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for equipe in equipes if equipe.active == true %}
+            <tr>
+                <td>{{ equipe.nom }}</td>
+                <td>{{ equipe.nomlong }}</td>
+                <td>
+					<a href="{{ path('responsable_equipes_options', { 'id': equipe.id }) }}" class="btn
+                            btn-success" data-toggle="tooltip" data-placement="bottom" title="Modifier les membres"><i class="fa fa-wrench"></i></a>
+	                <a href="{{ path('public_equipes_profil', { 'slug': equipe.slug }) }}" target="_blank" class="btn
+	                btn-info" title="Voir"><i class="fa fa-eye"></i> </a>
+	                <a href="{{ path('responsable_equipes_edit', { 'id': equipe.id }) }}" class="btn
+                            btn-warning" title="Modifier"><i class="fa fa-pencil"></i></a>
+
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

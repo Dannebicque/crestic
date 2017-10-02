@@ -18,9 +18,8 @@ class PublicationsRapportsType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('numero', TextType::class, array('label' => 'Numéro'))
-            ->add('ville', TextType::class, array('label' => 'Ville', 'required' => false))
-            ->add('abbrevCompany', TextType::class, array('label' => 'Entreprise', 'required' => false));
+        $builder->add('numero', TextType::class, array('label' => 'Numéro', 'required' => false))
+            ->add('abbrevCompany', TextType::class, array('label' => 'Institution', 'required' => false));
 
         $builder->add('bar', PublicationsType::class, array(
             'data_class' => PublicationsRapports::class,

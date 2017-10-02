@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller\Visiteur;
 
+use AppBundle\Entity\Publications;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\BrowserKit\Response;
@@ -19,7 +20,7 @@ class PublicPublicationsController extends Controller
      */
     public function indexAction()
     {
-        $equipes           = $this->getDoctrine()->getManager()->getRepository('AppBundle:Equipes')->findAll();
+        $equipes           = $this->getDoctrine()->getManager()->getRepository('AppBundle:Equipes')->findAllEquipesActives();
         $projets           = $this->getDoctrine()->getManager()->getRepository('AppBundle:Projets')->findAll();
         $departements      = $this->getDoctrine()->getManager()->getRepository('AppBundle:Departements')->findAll();
         $countpublications = $this->getDoctrine()->getRepository('AppBundle:Publications')->count();
@@ -33,14 +34,53 @@ class PublicPublicationsController extends Controller
         ));
     }
 
-    /**
-     * @Route("/show/{id}", name="public_publication_show")
-     */
-    public function showAction($id)
+    private function getPublicationFromType($id, $type)
     {
+        switch ($type)
+        {
+            case 'revue':
+                $publication = $this->getDoctrine()->getRepository('AppBundle:PublicationsRevues')->find($id);
+                break;
+            case 'conference':
+                $publication = $this->getDoctrine()->getRepository('AppBundle:PublicationsConferences')->find($id);
+                break;
+            case 'rapport':
+                $publication = $this->getDoctrine()->getRepository('AppBundle:PublicationsRapports')->find($id);
+                break;
+            case 'these':
+                $publication = $this->getDoctrine()->getRepository('AppBundle:PublicationsTheses')->find($id);
+                break;
+            case 'brevet':
+                $publication = $this->getDoctrine()->getRepository('AppBundle:PublicationsBrevets')->find($id);
+                break;
+            case 'ouvrage':
+                $publication = $this->getDoctrine()->getRepository('AppBundle:PublicationsOuvrages')->find($id);
+                break;
+            case 'chapitre':
+                $publication = $this->getDoctrine()->getRepository('AppBundle:PublicationsChapitres')->find($id);
+                break;
+        }
+
+        return $publication;
+    }
 
 
-        return $this->render('AppBundle:PublicPublications:show.html.twig', array());
+    /**
+     * @Route("/show/{id}/{type}", name="public_publication_show")
+     */
+    public function showAction($id, $type)
+    {
+        $publication         = $this->getPublicationFromType($id, $type);
+        $publiHasEquipes     = $this->getDoctrine()->getRepository('AppBundle:PublicationsHasEquipes')->findAllPublicationsFromEquipe($publication->getId());
+        $publiHasProjets     = $this->getDoctrine()->getRepository('AppBundle:PublicationsHasProjets')->findAllPublicationsFromProjet($publication->getId());
+        $publiHasPlateformes = $this->getDoctrine()->getRepository('AppBundle:PublicationsHasPlateformes')->findAllPlateformesFromPublication($publication->getId());
+
+        return $this->render('@App/PublicPublications/show.html.twig', array(
+            'publication' => $publication,
+            'equipes'     => $publiHasEquipes,
+            'projets'     => $publiHasProjets,
+            'plateformes' => $publiHasPlateformes,
+        ));
     }
 
     /**
@@ -49,21 +89,17 @@ class PublicPublicationsController extends Controller
      */
     public function searchAction(Request $request)
     {
-        $equipe          = $request->request->get('equipe');
-        $projet          = $request->request->get('projet');
-        $departement     = $request->request->get('departement');
-        $typePublication = $request->request->get('typePublication');
-        $auteur          = $request->request->get('auteur');
-        $keywords        = $request->request->get('keywords');
-        $dateDebut       = $request->request->get('dateDebut');
-        $dateFin         = $request->request->get('dateFin');
+        $criteres['equipe']          = $request->request->get('equipe');
+        $criteres['projet']          = $request->request->get('projet');
+        $criteres['departement']     = $request->request->get('departement');
+        $criteres['typePublication'] = $request->request->get('typePublication');
+        $criteres['auteur']          = $request->request->get('auteur');
+        $criteres['keywords']        = $request->request->get('keywords');
+        $criteres['dateDebut']       = $request->request->get('dateDebut');
+        $criteres['dateFin']         = $request->request->get('dateFin');
 
-        $critere = ''; //todo: liste des critères
+        $publications = $this->getDoctrine()->getRepository('AppBundle:Publications')->findSearchPublications($criteres['typePublication'], $criteres);
 
-        // jsute le type.
-        $publications = $this->getDoctrine()->getRepository('AppBundle:' . $typePublication)->findAll();
-
-        $nb = count($publications);
         $t  = array();
         for ($i = 2004; $i <= date('Y'); $i++)
         {
@@ -71,6 +107,7 @@ class PublicPublicationsController extends Controller
         }
         $t[0] = array();
 
+        /** @var Publications $p */
         foreach ($publications as $p)
         {
             $t[$p->getAnneePublication()][] = $p;
@@ -78,8 +115,8 @@ class PublicPublicationsController extends Controller
 
         return $this->render('@App/PublicPublications/resultat_recherche.html.twig', array(
             'publications' => $t,
-            'criteres'     => $critere,
-            'nbresult'     => $nb
+            'nbresult'     => count($publications),
+            'criteres'     => 'criteres'
         ));
     }
 

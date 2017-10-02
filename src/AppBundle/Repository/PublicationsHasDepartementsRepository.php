@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\PublicationsHasDepartements;
+
 /**
  * PublicationsHasDepartementsRepository
  *
@@ -39,34 +41,51 @@ class PublicationsHasDepartementsRepository extends \Doctrine\ORM\EntityReposito
         return $result;
     }
 
-    public function findAllPublicationsFromDepartementBuilder($id_equipe)
+    public function findAllPublicationsFromDepartementBuilder($id_departement)
     {
         return $this->createQueryBuilder('a','a.id')
             ->select ('a')
             ->innerJoin('a.publication', 'b')
-            ->where('a.equipe = ?1')
-            ->setParameter(1,$id_equipe)
+            ->where('a.departement')
+            ->setParameter(1,$id_departement)
             ->orderBy('b.anneePublication','DESC');
     }
 
-    public function findAllPublicationsFromDepartement ($id_equipe)
+    public function findAllPublicationsFromDepartement ($id_departement)
     {
-        return $this->findAllPublicationsFromDepartementBuilder($id_equipe)->getQuery()->getResult();
+        return $this->findAllPublicationsFromDepartementBuilder($id_departement)->getQuery()->getResult();
     }
 
-    public function findLastPublicationsFromDepartementBuilder($id_equipe, $nb)
+    public function findLastPublicationsFromDepartementBuilder($id_departement, $nb)
     {
         return $this->createQueryBuilder('a','a.id')
             ->select ('a')
             ->innerJoin('AppBundle:Publications', 'p', 'WITH', 'a.publication = p.id')
-            ->where('a.equipe = ?1')
-            ->setParameter(1, $id_equipe)
+            ->where('a.departement')
+            ->setParameter(1, $id_departement)
             ->orderBy('p.anneePublication, p.moisPublication', 'DESC')
             ->setMaxResults($nb);
     }
 
-    public function findLastPublicationsFromDepartement ($id_equipe, $nb)
+    public function findLastPublicationsFromDepartement ($id_departement, $nb)
     {
-        return $this->findLastPublicationsFromDepartementBuilder($id_equipe, $nb)->getQuery()->getResult();
+        return $this->findLastPublicationsFromDepartementBuilder($id_departement, $nb)->getQuery()->getResult();
+    }
+
+    public function getArrayIdFromDepartementPublications($idDepartement)
+    {
+        $result = array();
+        $array  =  $this->findAllPublicationsFromDepartement($idDepartement);
+
+        /** @var PublicationsHasDepartements $pub */
+        foreach ($array as $pub)
+        {
+            if ($pub->getDepartement() !== null && $pub->getDepartement()->getId() == $idDepartement)
+            {
+                $result[$pub->getId()] = $pub->getPublication()->getAnneePublication();
+            }
+        }
+
+        return $result;
     }
 }

@@ -14,6 +14,10 @@ use Symfony\Component\Routing\Router;
  */
 class PublicationsHasMembresRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @param $id_publication
+     * @return array
+     */
     public function getArrayOfChoiceSelectPublicationHasMembre($id_publication)
     {
         $result = array();
@@ -37,11 +41,19 @@ class PublicationsHasMembresRepository extends \Doctrine\ORM\EntityRepository
         return $result;
     }
 
+    /**
+     * @param $id_publication
+     * @return array
+     */
     public function findAllMembresFromPublication($id_publication)
     {
         return $this->findAllMembresFromPublicationBuilder($id_publication)->getQuery()->getResult();
     }
 
+    /**
+     * @param $id_publication
+     * @return \Doctrine\ORM\QueryBuilder
+     */
     public function findAllMembresFromPublicationBuilder($id_publication)
     {
         return $this->createQueryBuilder('a', 'a.id')
@@ -114,7 +126,14 @@ class PublicationsHasMembresRepository extends \Doctrine\ORM\EntityRepository
             } elseif ($auteur->getMembreExterieur() !== null)
             {
                 $t['id'] = $auteur->getMembreExterieur()->getId();
-                $t['nom'] = $auteur->getMembreExterieur()->getNom();
+                if ($auteur->getMembreExterieur()->getAncienMembresCrestic() === true)
+                {
+                    $t['nom'] = $auteur->getMembreExterieur()->getNom(). ' (anc.)';
+                } else
+                {
+                    $t['nom'] = $auteur->getMembreExterieur()->getNom();
+
+                }
                 $t['prenom'] = $auteur->getMembreExterieur()->getPrenom();
                 $t['type'] = 'ext';
                 $t['slug'] = $auteur->getMembreExterieur()->getId();
@@ -129,5 +148,27 @@ class PublicationsHasMembresRepository extends \Doctrine\ORM\EntityRepository
         }
 
         return $tjson;
+    }
+
+    public function getArrayIdFromAuteurPublications($idAuteur)
+    {
+        $result = array();
+        $array  =  $this->createQueryBuilder('a', 'a.id')
+            ->select('a')
+            ->where('a.membreCrestic = :auteur')
+            ->setParameter('auteur', $idAuteur)
+            ->getQuery()
+            ->getResult();
+
+        /** @var PublicationsHasMembres $pub */
+        foreach ($array as $pub)
+        {
+            if ($pub->getMembreCrestic() !== null && $pub->getMembreCrestic()->getId() == $idAuteur)
+            {
+                $result[$pub->getId()] = $pub->getPublication()->getAnneePublication();
+            }
+        }
+
+        return $result;
     }
 }

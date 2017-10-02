@@ -16,8 +16,10 @@
 				</thead>
 				{% for membre in membres if membre.status == cat.code %}
 					<tr>
-						<td>{{ membre.nom|title }}</td>
-						<td>{{ membre.prenom|title }}</td>
+						<td><a href="{{ path('public_membres_profil', {slug: membre.slug}) }}" target="_blank"
+							   title="Profil de {{ membre.display }}">{{ membre.nom|title }}</a></td>
+						<td><a href="{{ path('public_membres_profil', {slug: membre.slug}) }}" target="_blank"
+							   title="Profil de {{ membre.display }}">{{ membre.prenom|title }}</a></td>
 						<td>{{ membre.statutLong }}</td>
 						<td>{% if membre.departementMembre != null %}{{ membre.departementMembre.sigle }}{% else %} - {%
 							endif %}</td>

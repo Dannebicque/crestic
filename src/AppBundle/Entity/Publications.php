@@ -58,7 +58,7 @@ abstract class Publications
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
-     * @Vich\UploadableField(mapping="publications_pdf", fileNameProperty="pdf")
+     * @Vich\UploadableField(mapping="publications_pdf", fileNameProperty="pdf", nullable=true)
      *
      * @var File
      */

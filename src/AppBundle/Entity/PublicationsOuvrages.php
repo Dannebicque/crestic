@@ -13,7 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
 class PublicationsOuvrages  extends Publications
 {
     protected $type = 'ouvrage';
+    protected $couleur = "#68979B";
 
+    public function getCouleur()
+    {
+        return $this->couleur;
+    }
     /**
      * @var integer
      *
@@ -50,6 +55,20 @@ class PublicationsOuvrages  extends Publications
      * @ORM\Column(name="vulgarisation", type="boolean")
      */
     private $vulgarisation = false;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="monographie", type="boolean")
+     */
+    private $monographie = false;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="collectif", type="boolean")
+     */
+    private $collectif = false;
 
     /**
      * @var string
@@ -250,5 +269,53 @@ class PublicationsOuvrages  extends Publications
     public function getVulgarisation()
     {
         return $this->vulgarisation;
+    }
+
+    /**
+     * Set monographie
+     *
+     * @param boolean $monographie
+     *
+     * @return PublicationsOuvrages
+     */
+    public function setMonographie($monographie)
+    {
+        $this->monographie = $monographie;
+
+        return $this;
+    }
+
+    /**
+     * Get monographie
+     *
+     * @return boolean
+     */
+    public function getMonographie()
+    {
+        return $this->monographie;
+    }
+
+    /**
+     * Set collectif
+     *
+     * @param boolean $collectif
+     *
+     * @return PublicationsOuvrages
+     */
+    public function setCollectif($collectif)
+    {
+        $this->collectif = $collectif;
+
+        return $this;
+    }
+
+    /**
+     * Get collectif
+     *
+     * @return boolean
+     */
+    public function getCollectif()
+    {
+        return $this->collectif;
     }
 }

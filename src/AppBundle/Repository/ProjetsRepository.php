@@ -85,4 +85,14 @@ class ProjetsRepository extends \Doctrine\ORM\EntityRepository
                 ->getQuery()
             ->getResult();
     }
+
+    public function findAllProjetsResponsable($user)
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e.responsable = :user')
+            ->setParameter('user', $user)
+            ->orderBy('e.actif, e.titre', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

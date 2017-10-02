@@ -1,0 +1,163 @@
+<div class="alert alert-info-rw">
+	{{ nbresult }} publications
+</div>
+<br />
+<ul>
+	{% for annee in  "now"|date('Y')..2004 if publications[annee]|length > 0 %}
+		<li>{{ annee }}
+			<ul class="da-liste-biblio">
+				{% for publication in publications[annee] %}
+					<li style="border-left: 3px solid {{ publication.couleur }}">
+						<div class="row">
+							<div class="col-sm-3">
+								<div class="btn-group">
+									<a href="{{ path('public_publication_show', {id:publication.id, type: publication.type}) }}" class="btn" target="_blank" title="Détails">
+										<span class="fa fa-eye"></span>
+									</a>
+									<a href="{{ publication.doi }}" class="btn" target="_blank" title="DOI">
+										<span class="fa fa-external-link"></span>
+									</a>
+
+									{% if publication.url != '' or publication.url != null %}
+										<a href="{{ publication.url }}" class="btn" target="_blank"
+										   title="Site web">
+											<span class="fa fa-globe"></span>
+										</a>
+									{% else %}
+										<a href="#" class="btn" target="_blank"
+										   title="Site web" disabled="" style="color:darkgray">
+											<span class="fa fa-globe"></span>
+										</a>
+									{% endif %}
+
+									{% if publication.hal != '' or publication.hal != null %}
+									<a href="{{ publication.hal }}" class="btn" target="_blank"
+									   title="Lien HAL">
+										<span class="fa fa-newspaper-o"></span>
+									</a>
+									{% else %}
+										<a href="{{ publication.hal }}" class="btn" target="_blank"
+										   title="Lien HAL" disabled="" style="color:darkgray">
+											<span class="fa fa-newspaper-o"></span>
+										</a>
+									{% endif %}
+
+
+										{% if publication.pdfVisible == true or not is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
+											<a href="{{ publication.pdf }}" class="btn" target="_blank"
+											   title="PDF">
+												<span class="fa fa-file-pdf-o"></span>
+											</a>
+										{% else %}
+											<a href="{{ publication.pdf }}" class="btn" target="_blank"
+											   title="PDF" disabled="" style="color:darkgray">
+												<span class="fa fa-file-pdf-o"></span>
+											</a>
+										{% endif %}
+
+									<a href="#" class="btn bibtex" target="_blank"
+									   title="Bibtex" data-toggle="modal" data-target="#modalBibTex" data-publication="{{ publication.id }}">
+										<span class="fa fa-share-alt"></span>
+									</a>
+								</div>
+							</div>
+
+							<div class="col-sm-7">
+								<span>{{ biblio.formatIEEE(publication) | raw }}</span>
+							</div>
+							<div class="col-sm-2">
+                                {% if publication.publicationInternationale == true %} <span class="fa fa-globe" title="{{ 'publications.apercu.internationale.oui'|trans }}"></span>{% endif %}
+							</div>
+						</div>
+					</li>
+				{% endfor %}
+			</ul>
+		</li>
+	{% endfor %}
+	<li>Plus anciennes
+		<ul class="da-liste-biblio">
+			{% for publication in publications[0] %}
+				<li>
+					<div class="row">
+						<div class="col-sm-3">
+							<div class="btn-toolbar" role="toolbar">
+								<a href="" class="btn btn-primary" target="_blank" title="DOI">
+									<span class="fa fa-external-link"></span>
+								</a>
+
+								<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1"
+								        data-toggle="dropdown">
+									<span class="fa fa-download"></span>
+								</button>
+								<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+									<li role="presentation">
+										<a role="menuitem" tabindex="-1" href="#">PDF</a></li>
+									si loggé
+									<li role="presentation">
+										<a role="menuitem" tabindex="-1" href="#">BibTex</a></li>
+									<li role="presentation">
+										<a role="menuitem" tabindex="-1" href="#">Something else
+										                                          here</a></li>
+								</ul>
+							</div>
+						</div>
+
+						<div class="col-sm-9">
+							<span>{{ biblio.formatIEEE(publication) | raw }}</span>
+						</div>
+					</div>
+				</li>
+			{% endfor %}
+		</ul>
+	</li>
+</ul>
+
+
+<!-- Default Modal -->
+<div class="modal fade" id="modalBibTex" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title" id="defaultModalLabel">Export BibTex</h4>
+			</div>
+			<div class="modal-body" >
+				<p id="body-bibtex">Content goes here.</p>
+				<a id="copy-text">copy Text</a>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-rw btn-success" data-dismiss="modal">Fermer</button>
+			</div>
+		</div><!-- /modal content -->
+	</div><!-- /modal dialog -->
+</div><!-- /modal holder -->
+<!-- End Default Modal -->
+
+<script>
+    $(document).ready(function () {
+		$('.bibtex').on('click', function(){
+		    $('#body-bibtex').empty().load("{{ path('public_publication_ajax_bibtex') }}", {'publication': $(this).data('publication')});
+		});
+
+		$('#copy-text').on('click', function(){
+            CopyToClipboard('bibtex');
+		});
+	});
+
+    function CopyToClipboard(containerid) {
+        if (document.selection) {
+            var range = document.body.createTextRange();
+            range.moveToElementText(document.getElementById(containerid));
+            range.select().createTextRange();
+            document.execCommand("Copy");
+
+        } else if (window.getSelection) {
+            var range = document.createRange();
+            range.selectNode(document.getElementById(containerid));
+            window.getSelection().addRange(range);
+            document.execCommand("Copy");
+            console.log(range);
+            alert("text copied")
+        }}
+
+</script>

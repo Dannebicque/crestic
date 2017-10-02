@@ -67,10 +67,35 @@
 			</div>
 		</div>
 		<div class="col-sm-12">
-			<pre>
-				{{ biblio.formatBibtex(publication)|raw }}
+			<pre>{{ biblio.formatBibtex(publication)|raw }}
 			</pre>
 		</div>
 	</div>
-	projets, equipes, plateformes
+
+	<div class="row">
+		<div class="col-sm-4">
+			<h4>Projets associés</h4>
+			{% for projet in projets %}
+			<a href="{{ path('public_projet_profil', {slug:projet.projet.slug}) }}">{{ projet.projet.titre }}</a>
+			{% else %}
+			 -
+			{% endfor %}
+		</div>
+		<div class="col-sm-4">
+			<h4>Equipes associées</h4>
+            {% for equipe in equipes %}
+				<a href="{{ path('public_equipes_profil', {slug:equipe.equipe.slug}) }}">{{ equipe.equipe.nom }}</a>
+            {% else %}
+				-
+            {% endfor %}
+		</div>
+		<div class="col-sm-4">
+			<h4>Plateformes utilisées</h4>
+            {% for plateforme in plateformes %}
+				<a href="{{ path('public_plateformes_profil', {slug:plateforme.plateforme.slug}) }}">{{ plateforme.plateforme.nom }}</a>
+            {% else %}
+				-
+            {% endfor %}
+		</div>
+	</div>
 {% endblock %}

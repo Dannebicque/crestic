@@ -1,12 +1,12 @@
-<div id="slider3" class="carousel slide" data-ride="carousel">
+<div id="divCarouselSliders" class="carousel slide" data-ride="carousel">
     {# on affiche l'image d'illustration en fixe #}
     {# sinon affiche l'image d'illustration et les images du slider #}
 
     <!-- Indicators -->
     <ol class="carousel-indicators carousel-indicators-caption">
-        <li data-target="#slider3" data-slide-to="0" class="active"></li>
+        <li data-target="#divCarouselSliders" data-slide-to="0" class="active"></li>
         {% for slide in sliders %}
-            <li data-target="#slider3" data-slide-to="{{ loop.index }}"></li>
+            <li data-target="#divCarouselSliders" data-slide-to="{{ loop.index }}"></li>
         {% endfor %}
     </ol>
 
@@ -14,14 +14,14 @@
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
         <div class="item active">
-            <img class="img-responsive" src="{{ asset('uploads/'~type~'/'~image) }}" alt="Illustration du projet">
+            <img class="img-responsive" src="{{ asset('uploads/'~type~'/'~image)|imagine_filter('slider') }}" alt="Illustration du projet">
             <div class="carousel-caption fadeInUpBig-animated fadeInUpBig animated">
                 <h3 class="no-margin text-white">{{ titre }}</h3>
             </div>
         </div>
         {% for slide in sliders %}
             <div class="item">
-                <img class="img-responsive" src="{{ asset('uploads/slider/'~slide.slider.image) }}" alt="Slide {{ loop.index }}">
+                <img class="img-responsive" src="{{ asset('uploads/slider/'~slide.slider.image)|imagine_filter('slider') }}" alt="Slide {{ loop.index }}">
                 <div class="carousel-caption fadeInUpBig-animated fadeInUpBig animated">
                     <h3 class="no-margin text-white">{{ slide.slider.titre }}</h3>
                     <p class="text-light-grey no-margin"><a href="{{ slide.slider.url }}" target="_blank"> {{ slide.slider.texte }}</a></p>
@@ -32,10 +32,10 @@
 
     {% if sliders|length > 0 %}
         <!-- Controls uniquement si plus de une image -->
-        <a class="left carousel-control" href="#slider3" role="button" data-slide="prev">
+        <a class="left carousel-control" href="#divCarouselSliders" role="button" data-slide="prev">
             <span class="ion-ios7-arrow-left carousel-arrow-left" aria-hidden="true"></span>
         </a>
-        <a class="right carousel-control" href="#slider3" role="button" data-slide="next">
+        <a class="right carousel-control" href="#divCarouselSliders" role="button" data-slide="next">
             <span class="ion-ios7-arrow-right carousel-arrow-right" aria-hidden="true"></span>
         </a>
     {% endif %}

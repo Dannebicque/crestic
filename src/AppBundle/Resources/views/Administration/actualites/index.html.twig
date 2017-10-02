@@ -12,7 +12,6 @@
             <tr>
 	            <th>Titre</th>
 	            <th>Image</th>
-                <th>Mots clés</th>
 	            <th>Posté le</th>
                 <th>Actions</th>
             </tr>
@@ -22,7 +21,6 @@
             <tr>
                 <td>{{ actualite.titre }}</td>
 	            <td></td>
-                <td>{{ actualite.keywords }}</td>
 	            <td>{% if actualite.updated %}{{ actualite.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
 	            <td>
 		            <a href="{{ path('administration_actualites_show', { 'id': actualite.id }) }}" class="btn btn-info"

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.getLocale() }}">
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="description"
+	      content="Site officiel du laboratoire de recherche CRESTIC, automatique, traitement du signal et informatique."/>
+	<meta name="keywords" content="crestic, research la, automatique, traitement du signal, informatique, research">
+	<meta name="author" content="David Annebicque">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<link href="{{ asset('favicon.ico') }}" rel="shortcut icon" type="image/x-icon"/>
+
+	<title>{% block title %}Bienvenue{% endblock %} | CRESTIC | URCA | Site du laboratoire de recherche CRESTIC de
+	                                                l'Université de Reims Champagne Ardenne</title>
+
+	<link href="{{ asset('assets/css/royal_preloader.css') }}" rel="stylesheet"/>
+	<link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet"/>
+	<link href="{{ asset('assets/css/bootstrap-treeview.css') }}" rel="stylesheet"/>
+	<link href="{{ asset('assets/css/style.css') }}" rel="stylesheet"/>
+	<link href="{{ asset('assets/css/bootstrap-social.css') }}" rel="stylesheet"/>
+	<link href="{{ asset('assets/css/owl.carousel.css') }}" rel="stylesheet"/>
+	<link href="{{ asset('assets/css/jquery.snippet.css') }}" rel="stylesheet"/>
+	<link href="{{ asset('assets/css/buttons.css') }}" rel="stylesheet"/>
+	<link href="{{ asset('assets/css/ionicons.min.css') }}" rel="stylesheet"/>
+	<link href="{{ asset('assets/css/font-awesome.css') }}" rel="stylesheet"/>
+	<link href="{{ asset('assets/css/magnific-popup.css') }}" rel="stylesheet"/>
+	<link href="{{ asset('assets/jquery-ui-1.11.4/jquery-ui.css') }}" rel="stylesheet"/>
+	<link href="{{ asset('assets/datatables/datatables.min.css') }}" rel="stylesheet"/>
+	<link href="{{ asset('assets/lou-multi-select-a789e06/css/multi-select.css') }}" rel="stylesheet"/>
+	<link href="{{ asset('assets/css/nosstyles.css') }}" rel="stylesheet"/>
+	<link href="{{ asset('assets/fullcalendar/fullcalendar.css') }}" rel="stylesheet"/>
+	<link href="{{ asset('assets/select2-master/dist/css/select2.min.css') }}" rel="stylesheet"/>
+	<link href="{{ asset('assets/css/crestic.css') }}" rel="stylesheet"/>
+
+	{% block stylesheets %}{% endblock %}
+
+	<!-- balises opengraph --> {# todo: a définir à la volée ? #}
+	<meta property="og:title" content="CRESTIC: Centre de Recherche en STIC, Université de Reims Champagne Ardenne"/>
+	<meta property="og:description"
+	      content="Site officiel du laboratoire de recherche CRESTIC, automatique, traitement du signal et informatique."/>
+	<meta property="og:type" content="website"/>
+	<meta property="og:url" content="http://site.davidannebicque.ovh/app_dev.php/fr/"/>
+	<meta property="og:image" content="http://site.davidannebicque.ovh/uploads/actualites/56bb48be348ed.jpg"/>
+
+	<!-- Twitter car -->
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:site" content="@crestic">
+	<meta name="twitter:creator" content="@davidannebicque">
+	<meta name="twitter:title" content="CRESTIC: Centre de Recherche en STIC, Université de Reims Champagne Ardenne">
+	<meta name="twitter:description"
+	      content="Site officiel du laboratoire de recherche CRESTIC, automatique, traitement du signal et informatique.">
+	<meta name="twitter:image" content="http://site.davidannebicque.ovh/uploads/actualites/56bb48be348ed.jpg">
+</head>
+<body class="royal_preloader scrollreveal">
+{% block beginBody %}
+{% endblock %}
+
+<div id="royal_preloader">
+</div>
+
+{{ include('top-menu.html.twig') }}
+<div class="header">
+	<div class="container">
+		<div class="row" id="div_breadcrumbs">
+			<a href="{{ path('homepage_responsable') }}"><span class="fa fa-home"></span> Votre espace</a> /
+			{% block breadcrumbs %}ici la page {% endblock %}
+		</div><!-- /row -->
+	</div><!-- /container -->
+</div>
+
+{% block mainContent %}
+	<section class="mt40 mb40">
+		<div class="container-fluid">
+			{% block content %}
+			{% endblock %}
+		</div>
+	</section><!-- /content -->
+	<!-- End Content Section -->
+{% endblock %}
+
+<!-- Begin Footer -->
+<footer class="footer-light">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-2">
+				<a href="http://www.univ-reims.fr" target="_blank">
+					<img src="{{ asset('assets/img/web.jpg') }}" alt="Logo URCA" height="50px">
+				</a>
+			</div>
+			<div class="col-sm-10 mg25-xs">
+				<p>
+					<small class="address">
+						<span class="ion-home da-footer-info-icons"></span>
+						CReSTIC - UFR Sciences Exactes et Naturelles - Moulin de la Housse - BP 1039 - 51687 Reims CEDEX 2<br />
+						<span class="ion-email da-footer-info-icons"></span>
+						<a href="mailto:{{ configuration.mail }}" target="_blank">{{ configuration.mail }}</a>
+						<span class="ion-ios7-telephone da-footer-info-icons"></span>
+						{{ configuration.telephonePrincipal }}
+					</small>
+				</p>
+				<p class="copyright">
+					Template &copy; 2015 Raleway. All rights reserved. Site et développement &copy; CReSTIC & David
+					Annebicque, Fabien Bradmetz
+					<a href="{{ path('visiteur_page', {slug:'mentions-legales'}) }}">{{ 'navigation.mentions-legales.title'|trans }}</a>
+				</p>
+			</div>
+		</div>
+	</div>
+</footer>
+
+<script src="{{ asset('assets/js/jquery-2.1.4.min.js') }}"></script>
+<script src="{{ asset('assets/js/royal_preloader.min.js') }}"></script>
+<script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/js/jquery.easing.min.js') }}"></script>
+<script src="{{ asset('assets/js/jquery.mixitup.min.js') }}"></script>
+<script src="{{ asset('assets/js/scrollReveal.js') }}"></script>
+<script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
+<script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>
+<script src="{{ asset('assets/js/jquery.snippet.min.js') }}"></script>
+<script src="{{ asset('assets/js/jquery.fitvids.js') }}"></script>
+<script src="{{ asset('assets/js/activate-snippet.js') }}"></script>
+<script src="{{ asset('assets/js/skrollr.min.js') }}"></script>
+<script src="{{ asset('assets/datatables/datatables.min.js') }}"></script>
+<script src="{{ asset('assets/lou-multi-select-a789e06/js/jquery.multi-select.js') }}"></script>
+<script src="{{ asset('assets/js/jquery.editable.min.js') }}"></script>
+<script src="{{ asset('assets/jquery-ui-1.11.4/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('assets/fullcalendar/lib/moment.min.js') }}"></script>
+<script src="{{ asset('assets/fullcalendar/fullcalendar.min.js') }}"></script>
+<script src="{{ asset('assets/fullcalendar/lang-all.js') }}"></script>
+<script src="{{ asset('assets/js/main.js') }}"></script>
+<script src="{{ asset('assets/select2-master/dist/js/select2.full.min.js') }}"></script>
+<script src="{{ asset('assets/js/notify.min.js') }}"></script>
+<script src="{{ asset('assets/tinymce/tinymce.min.js') }}"></script>
+<script src="{{ asset('assets/js/david.js') }}"></script>
+
+<script language="JavaScript">
+	var config = {
+		easing: 'hustle',
+		mobile: true,
+		delay: 'onload'
+	};
+	window.sr = new scrollReveal(config);
+
+	$.notify.defaults({globalPosition: 'top right'});
+
+	$(document).ready(function (e) {
+
+		tinymce.init({
+			selector: '.tinyMCE',
+			height: 400,
+			language: 'fr_FR',
+			menubar: false,
+			plugins: [
+				'advlist autolink lists link image charmap print preview anchor',
+				'searchreplace visualblocks code fullscreen',
+				'insertdatetime media table contextmenu paste code'
+			],
+			toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist' +
+			' numlist outdent indent | link image table',
+			content_css: '//www.tinymce.com/css/codepen.min.css',
+			automatic_uploads: true,
+			default_link_target: "_blank",
+            setup: function(editor) {
+                editor.getElement().removeAttribute('required');
+            },
+			extended_valid_elements : "pre",
+			images_upload_url: '{{ path('tinymce_upload') }}',
+			file_browser_callback: function(field_name, url, type, win) {
+				win.document.getElementById(field_name).value = 'my browser value';
+			},
+			file_browser_callback_types: 'image',
+			file_picker_callback: function(cb, value, meta) {
+				console.log('picker');
+
+				var input = document.createElement('input');
+				input.setAttribute('type', 'file');
+				input.setAttribute('accept', 'image/*');
+
+				// Note: In modern browsers input[type="file"] is functional without
+				// even adding it to the DOM, but that might not be the case in some older
+				// or quirky browsers like IE, so you might want to add it to the DOM
+				// just in case, and visually hide it. And do not forget do remove it
+				// once you do not need it anymore.
+
+				input.onchange = function() {
+					var file = this.files[0];
+
+					// Note: Now we need to register the blob in TinyMCEs image blob
+					// registry. In the next release this part hopefully won't be
+					// necessary, as we are looking to handle it internally.
+					var id = 'blobid' + (new Date()).getTime();
+					var blobCache = tinymce.activeEditor.editorUpload.blobCache;
+					var blobInfo = blobCache.create(id, file);
+					blobCache.add(blobInfo);
+
+					// call the callback and populate the Title field with the file name
+					cb(blobInfo.blobUri(), { title: file.name });
+				};
+
+				input.click();
+			}
+		});
+	});
+</script>
+
+{% if app.session.flashBag is defined %}
+	<script>
+		{% if app.session.flashBag.has('alert-success') %}
+		{% for msg in app.session.flashBag.get('alert-success') %}
+		$.notify("{{ msg|trans }}", "success");
+		{% endfor %}
+		{% endif %}
+
+		{% if app.session.flashBag.has('alert-info') %}
+		{% for msg in app.session.flashBag.get('alert-info') %}
+		$.notify("{{ msg|trans }}", "info");
+		{% endfor %}
+		{% endif %}
+
+		{% if app.session.flashBag.has('alert-warning') %}
+		{% for msg in app.session.flashBag.get('alert-warning') %}
+		$.notify("{{ msg|trans }}", "warn");
+		{% endfor %}
+		{% endif %}
+
+		{% if app.session.flashBag.has('alert-danger') %}
+		{% for msg in app.session.flashBag.get('alert-danger') %}
+		$.notify("{{ msg|trans }}", "error");
+		{% endfor %}
+		{% endif %}
+	</script>
+{% endif %}
+
+{% block javascripts %}
+	{#block pour contenir les JS spécifiques aux pages#}
+{% endblock %}
+
+{% block endBody %}
+{% endblock %}
+</body>
+</html>

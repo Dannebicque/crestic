@@ -50,63 +50,63 @@ class PublicationsRepository extends \Doctrine\ORM\EntityRepository
         $qb = $this->createQueryBuilder('a');
         //$qb->select ('a.id');
 
-        $qb->innerJoin($type_publication, 'typu'  , 'WITH' , 'a.id = typu.id');
+        //$qb->innerJoin('AppBundle:'.$type_publication, 'typu'  , 'WITH' , 'a.id = typu.id');
 
         $equipe_id = $data['equipe'];
         if ($equipe_id != '')
         {
-            if ($equipe_id == "-2")
-            {
-
-            }
-            else
-            {
-                if ($equipe_id == "-1")
+//            if ($equipe_id == "-2")
+//            {
+//
+//            }
+//            else
+//            {
+                if ($equipe_id != "-1")
+//                {
+//
+//                    $qb->innerJoin('AppBundle:PublicationsHasEquipes', 'eq'  , 'WITH' , 'a.id = eq.publication');
+//                }
+//                else
                 {
-
-                    $qb->innerJoin('AppBundle:PublicationsHasEquipes', 'eq'  , 'WITH' , 'a.id = eq.publication');
-                }
-                else
-                {
-                    $qb->innerJoin('AppBundle:PublicationsHasEquipes', 'eq'  , 'WITH' , 'a.id = eq.publication AND eq.equipe = :equipe_id');
+                    $qb->leftJoin('AppBundle:PublicationsHasEquipes', 'eq'  , 'WITH' , 'a.id = eq.publication AND eq.equipe = :equipe_id');
                     $qb->setParameter('equipe_id' ,$equipe_id);
                 }
-            }
+            //}
         }
 
         $projet_id = $data['projet'];
         if ($projet_id != '')
         {
-            if ($projet_id == "-2")
-            {
-
-            }
-            else
-            {
-                if ($projet_id == "-1")
+//            if ($projet_id == "-2")
+//            {
+//
+//            }
+//            else
+//            {
+                if ($projet_id != "-1")
+//                {
+//                    $qb->innerJoin('AppBundle:PublicationsHasProjets', 'pr'  , 'WITH' , 'a.id = pr.publication');
+//                }
+//                else
                 {
-                    $qb->innerJoin('AppBundle:PublicationsHasProjets', 'pr'  , 'WITH' , 'a.id = pr.publication');
-                }
-                else
-                {
-                    $qb->innerJoin('AppBundle:PublicationsHasProjets', 'pr'  , 'WITH' , 'a.id = pr.publication AND pr.projet = :projet_id');
+                    $qb->leftJoin('AppBundle:PublicationsHasProjets', 'pr'  , 'WITH' , 'a.id = pr.publication AND pr.projet = :projet_id');
                     $qb->setParameter('projet_id' ,$projet_id);
 
                 }
-            }
+            //}
         }
 
 
         $departement_id = $data['departement'];
         if ($departement_id != '')
         {
-            if ($departement_id == "-1")
+            if ($departement_id != "-1")
             {
-            }
-            else
-            {
-                $qb->innerJoin('AppBundle:PublicationsHasEquipes', 'pueq', 'WITH' , 'a.id        = pueq.publication');
-                $qb->innerJoin('AppBundle:EquipesHasDepartements'     , 'de'  , 'WITH' , 'pueq.equipe = de.equipe AND de.departement = :departement_id');
+//            }
+//            else
+//            {
+                $qb->leftJoin('AppBundle:PublicationsHasEquipes', 'pueq', 'WITH' , 'a.id        = pueq.publication');
+                $qb->leftJoin('AppBundle:EquipesHasDepartements'     , 'de'  , 'WITH' , 'pueq.equipe = de.equipe AND de.departement = :departement_id');
                 $qb->setParameter('departement_id' ,$departement_id);
             }
 

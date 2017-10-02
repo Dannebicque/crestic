@@ -1,170 +1,203 @@
 {% extends '::base.html.twig' %}
 
 {% block content %}
-	<div class="row">
-		<div class="col-sm-12">
-			<div class="heading mb20">
-				<h2>
-					{{ 'visiteur.rechercher.publications'|trans }}
-				</h2>
-			</div>
-		</div>
-		<div class="col-sm-12">
-			<div class="form-horizontal">
-				<div class="form-group">
-					<label for="equipe" class="col-sm-2">
-						{{ 'publications.templates.TRecherchePublications.equipe'|trans }}
-					</label>
-					<div class="col-sm-10">
-						<select class="form-control" id="equipe" name="equipe">
-							<option value="-2" selected>Tous les membres (sans équipes)</option>
-							<option value="-1" >Toutes les équipes</option>
-							{% for equipe in equipes %}
-								<option value="{{  equipe.id }}">{{ equipe.nom }}</option>
-							{%  endfor %}
-						</select>
-					</div>
-				</div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="heading mb20">
+                <h2>
+                    {{ 'visiteur.rechercher.publications'|trans }}
+                </h2>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label for="equipe" class="col-sm-2">
+                        {{ 'publications.templates.TRecherchePublications.equipe'|trans }}
+                    </label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="equipe" name="equipe">
+                            <option value="-2" selected>Tous les membres (sans équipes)</option>
+                            <option value="-1">Toutes les équipes</option>
+                            {% for equipe in equipes %}
+                                <option value="{{ equipe.id }}">{{ equipe.nom }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
 
-				<div class="form-group">
-					<label for="projet" class="col-sm-2">
-						{{ 'publications.templates.TRecherchePublications.projet'|trans }}
-					</label>
-					<div class="col-sm-10">
-						<select class="form-control" id="projet" name="projet">
-							<option value="-2" selected>Sans les projets</option>
-							<option value="-1" >Tous les projets</option>
-							{% for projet in projets %}
-								<option value="{{  projet.id }}">{{ projet.titre }}</option>
-							{%  endfor %}
-						</select>
-					</div>
-				</div>
+                <div class="form-group">
+                    <label for="projet" class="col-sm-2">
+                        {{ 'publications.templates.TRecherchePublications.projet'|trans }}
+                    </label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="projet" name="projet">
+                            <option value="-2" selected>Sans les projets</option>
+                            <option value="-1">Tous les projets</option>
+                            {% for projet in projets %}
+                                <option value="{{ projet.id }}">{{ projet.titre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
 
-				<div class="form-group">
-					<label for="departement" class="col-sm-2">
-						{{ 'publications.templates.TRecherchePublications.departement'|trans }}
-					</label>
-					<div class="col-sm-10">
-						<select class="form-control" id="departement" name="departement">
-							<option value="-1" selected>Tous les départements</option>
-							{% for departement in departements %}
-								<option value="{{  departement.id }}">{{ departement.nom }}</option>
-							{%  endfor %}
-						</select>
-					</div>
-				</div>
+                <div class="form-group">
+                    <label for="departement" class="col-sm-2">
+                        {{ 'publications.templates.TRecherchePublications.departement'|trans }}
+                    </label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="departement" name="departement">
+                            <option value="-1" selected>Tous les départements</option>
+                            {% for departement in departements %}
+                                <option value="{{ departement.id }}">{{ departement.nom }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
 
-				<div class="form-group">
-					<label for="typePublication" class="col-sm-2">
-						{{ 'publications.templates.TRecherchePublications.typePublication'|trans }}
-					</label>
-					<div class="col-sm-10">
-						<select class="form-control" id="typePublication" name="typePublication">
-							<option value="Publications" selected>
-								{{ 'publications.templates.TRecherchePublications.publications'|trans }}
-							</option>
+                <div class="form-group">
+                    <label for="typePublication" class="col-sm-2">
+                        {{ 'publications.templates.TRecherchePublications.typePublication'|trans }}
+                    </label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="typePublication" name="typePublication">
+                            <option value="Publications" selected>
+                                {{ 'publications.templates.TRecherchePublications.publications'|trans }}
+                            </option>
 
-							<option value="PublicationsBrevets">
-								{{ 'publications.templates.TRecherchePublications.brevets'|trans }}
-							</option>
-							<option value="PublicationsConferences">
-								{{ 'publications.templates.TRecherchePublications.conferences'|trans }}
-							</option>
-							<option value="PublicationsOuvrages">
-								{{ 'publications.templates.TRecherchePublications.ouvrages'|trans }}
-							</option>
-							<option value="PublicationsChapitres">
-								{{ 'publications.templates.TRecherchePublications.chapitres'|trans }}
-							</option>
-							<option value="PublicationsRapports">
-								{{ 'publications.templates.TRecherchePublications.rapports'|trans }}
-							</option>
-							<option value="PublicationsRevues">
-								{{ 'publications.templates.TRecherchePublications.revues'|trans }}
-							</option>
-							<option value="PublicationsTheses">
-								{{ 'publications.templates.TRecherchePublications.theses'|trans }}
-							</option>
-						</select>
-					</div>
-				</div>
+                            <option value="PublicationsBrevets">
+                                {{ 'publications.templates.TRecherchePublications.brevets'|trans }}
+                            </option>
+                            <option value="PublicationsConferences">
+                                {{ 'publications.templates.TRecherchePublications.conferences'|trans }}
+                            </option>
+                            <option value="PublicationsOuvrages">
+                                {{ 'publications.templates.TRecherchePublications.ouvrages'|trans }}
+                            </option>
+                            <option value="PublicationsChapitres">
+                                {{ 'publications.templates.TRecherchePublications.chapitres'|trans }}
+                            </option>
+                            <option value="PublicationsRapports">
+                                {{ 'publications.templates.TRecherchePublications.rapports'|trans }}
+                            </option>
+                            <option value="PublicationsRevues">
+                                {{ 'publications.templates.TRecherchePublications.revues'|trans }}
+                            </option>
+                            <option value="PublicationsTheses">
+                                {{ 'publications.templates.TRecherchePublications.theses'|trans }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
 
-				<div class="form-group">
-					<label for="auteur" class="col-sm-2">
-						{{ 'publications.templates.TRecherchePublications.auteur'|trans }}
-					</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" id="auteur" name="auteur">
-					</div>
-				</div>
+                <div class="form-group">
+                    <label for="auteur" class="col-sm-2">
+                        {{ 'publications.templates.TRecherchePublications.auteur'|trans }}
+                    </label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="auteur" name="auteur">
+                    </div>
+                </div>
 
-				<div class="form-group">
-					<label for="keywords" class="col-sm-2">
-						{{ 'publications.templates.TRecherchePublications.keywords'|trans }}
-					</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" id="keywords" name="keywords">
-					</div>
-				</div>
+                <div class="form-group">
+                    <label for="keywords" class="col-sm-2">
+                        {{ 'publications.templates.TRecherchePublications.keywords'|trans }}
+                    </label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="keywords" name="keywords">
+                    </div>
+                </div>
 
-				<div class="form-group">
-					<label for="datePlage" class="col-sm-2">
-						{{ 'publications.templates.TRecherchePublications.datePlage'|trans }}
-					</label>
-					<div class="col-sm-10">
-						{{ 'Entre'|trans }}
-						<input type="text" class="form-control" id="dateDebut" name="dateDebut">
-						{{ 'et'|trans }}
-						<input type="text" class="form-control" id="dateFin" name="dateFin">
-					</div>
-				</div>
+                <div class="form-group">
+                    <label for="datePlage" class="col-sm-2">
+                        {{ 'publications.templates.TRecherchePublications.datePlage'|trans }}
+                    </label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="datePlage" class="col-sm-2">
+                                        {{ 'Entre'|trans }}
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" id="dateDebut" name="dateDebut">
+                                            <option value=""></option>
+                                            {% for i in 2005.."now"|date('Y') %}
+                                                <option value="{{ i }}">{{ i }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
 
-				<div class="form-group">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="datePlage" class="col-sm-2">
+                                        {{ 'et'|trans }}
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" id="dateFin" name="dateFin">
+                                            <option value=""></option>
+                                            {% for i in 2005.."now"|date('Y') %}
+                                                <option value="{{ i }}">{{ i }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
 
-					<button class="btn btn-rw btn-primary" id="onRecherchePublications">
-						{{ 'publications.templates.TRecherchePublications.valider'|trans }}
-					</button>
+                                </div>
+                            </div>
+                        </div>
 
-					<button class="btn btn-rw btn-primary" id="onRecherchePublicationsInit">
-						{{ 'publications.templates.TRecherchePublications.default'|trans }}
-					</button>
-				</div>
-			</div>
 
-		</div>
-		<div class="col-sm-12" id="resultats_recherches">
-			<div class="alert alert-info-rw">
-				Il y a {{ nbpublis }} publications sur le site. Précisez au moins un critère de recherche pour
-				obtenir des résultats</div>
-		</div>
-	</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+
+                    <button class="btn btn-rw btn-primary" id="onRecherchePublications">
+                        {{ 'publications.templates.TRecherchePublications.valider'|trans }}
+                    </button>
+
+                    <button class="btn btn-rw btn-primary" id="onRecherchePublicationsInit">
+                        {{ 'publications.templates.TRecherchePublications.default'|trans }}
+                    </button>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-sm-12" id="resultats_recherches">
+            <div class="alert alert-info-rw">
+                Il y a {{ nbpublis }} publications sur le site. Précisez au moins un critère de recherche pour
+                obtenir des résultats
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
-<script>
-	$(document).ready(function (e) {
-		$('#onRecherchePublicationsInit').click(function(){
-			//initialisation des champs et de la recherche
-			$html = '<div class="alert alert-info-rw">';
-			$html = $html + 'Il y a {{ nbpublis }} publications sur le site. Précisez au moins un critère de recherche pour obtenir des résultats';
-			$html = $html + '</div>';
+    <script>
+        $(document).ready(function (e) {
+            $('#onRecherchePublicationsInit').click(function () {
+                //initialisation des champs et de la recherche
+                $html = '<div class="alert alert-info-rw">';
+                $html = $html + 'Il y a {{ nbpublis }} publications sur le site. Précisez au moins un critère de recherche pour obtenir des résultats';
+                $html = $html + '</div>';
 
-			$('#resultats_recherches').empty().append($html);
-		});
+                $('#resultats_recherches').empty().append($html);
+            });
 
-		$('#onRecherchePublications').click(function(){
-			$('#resultats_recherches').empty().load("{{ path('public_publications_search') }}",{
-				'equipe': $('#equipe').val(),
-				'projet': $('#projet').val(),
-				'departement': $('#departement').val(),
-				'typePublication':$('#typePublication').val(),
-				'auteur':$('#auteur').val(),
-				'keywords':$('#keywords').val(),
-				'dateDebut':$('#dateDebut').val(),
-				'dateFin':$('#dateFin').val()
-			});
-		})
-	});
-</script>
+            $('#onRecherchePublications').click(function () {
+                $('#resultats_recherches').empty().load("{{ path('public_publications_search') }}", {
+                    'equipe': $('#equipe').val(),
+                    'projet': $('#projet').val(),
+                    'departement': $('#departement').val(),
+                    'typePublication': $('#typePublication').val(),
+                    'auteur': $('#auteur').val(),
+                    'keywords': $('#keywords').val(),
+                    'dateDebut': $('#dateDebut').val(),
+                    'dateFin': $('#dateFin').val()
+                });
+            })
+        });
+    </script>
 {% endblock %}

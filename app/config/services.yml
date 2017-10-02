@@ -10,6 +10,9 @@ services:
     kernel.biblio:
         class: AppBundle\Services\Biblio
         arguments: ["@doctrine.orm.entity_manager", '@kernel.html']
+    kernel.publications:
+            class: AppBundle\Services\MyPublications
+            arguments: ["@doctrine.orm.entity_manager"]
     kernel.html:
         class: AppBundle\Services\Html
         arguments: ['@router']

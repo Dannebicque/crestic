@@ -20,8 +20,8 @@
             <tr>
                 <th>Internationale</th>
                 <td>{% if partenaire.internationale %}Oui{% else %}Non{% endif %}</td>
-                <th>Financeur</th>
-                <td>{% if partenaire.financeur %}Oui{% else %}Non{% endif %}</td>
+                <th>Type</th>
+                <td>{{ partenaire.typePartenaireLong }}</td>
             </tr>
             <tr>
                 <th>Image</th>

@@ -1,0 +1,75 @@
+{% extends '::base-responsable.html.twig' %}
+
+{% block breadcrumbs %}
+	<a href="{{ path('responsable_projets_index') }}">Projets</a> / Détails
+{% endblock %}
+
+{% block content %}
+    <h1>Détails d'un projet</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Titre</th>
+                <td>{{ projet.titre }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ projet.description|raw }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ projet.image }}</td>
+            </tr>
+            <tr>
+                <th>Date de début</th>
+                <td>{% if projet.dateDebut %}{{ projet.dateDebut|date('d/m/Y') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Date de fin</th>
+                <td>{% if projet.dateFin %}{{ projet.dateFin|date('d/m/Y') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Financement</th>
+                <td>{{ projet.financement }}</td>
+            </tr>
+            <tr>
+                <th>Identification</th>
+                <td>{{ projet.identification }}</td>
+            </tr>
+            <tr>
+                <th>Url</th>
+                <td><a href="{{ projet.url }}" target="_blank"> {{ projet.url }}</a></td>
+            </tr>
+            <tr>
+                <th>Budget global</th>
+                <td>{{ projet.budgetGlobal }} €</td>
+            </tr>
+            <tr>
+                <th>Actif</th>
+                <td>{% if projet.actif %}Oui{% else %}Non, terminé{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Video</th>
+                <td>{{ projet.video }}</td>
+            </tr>
+            <tr>
+                <th>Projet international</th>
+                <td>{% if projet.projetInternational %}Oui{% else %}Non{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Projet de valorisation</th>
+                <td>{% if projet.projetValorisation %}Oui{% else %}Non{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Projet de thèse</th>
+                <td>{% if projet.projetThese %}Oui{% else %}Non{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Projet RI</th>
+                <td>{% if projet.projetRi %}Oui{% else %}Non{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+	{{ include('@App/Responsable/footer-show.html.twig', {var: 'projets', obj:projet.id}) }}
+{% endblock %}

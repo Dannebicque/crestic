@@ -109,6 +109,15 @@ class EquipesRepository extends \Doctrine\ORM\EntityRepository
 
     }
 
-
+    public function findAllEquipesResponsable($user)
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e.active = 1')
+            ->andWhere('e.responsable = :user')
+            ->setParameter('user', $user)
+            ->orderBy('e.nom', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 
 }

@@ -87,7 +87,7 @@ class MembresCrestic extends BaseUser
      *
      * @ORM\Column(name="status", type="string", length=4, nullable=true)
      */
-    private $status; //PR, MCF, IE, ADM ...
+    private $status; //PR, MCF, IE, ADM, PUPH, MCUPH...
 
     /**
      * @var string

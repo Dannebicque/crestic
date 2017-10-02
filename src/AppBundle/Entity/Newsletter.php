@@ -98,5 +98,28 @@ class Newsletter
     {
         return $this->envoye;
     }
-}
 
+    /**
+     * Set blocs
+     *
+     * @param \AppBundle\Entity\BlocNewsletter $blocs
+     *
+     * @return Newsletter
+     */
+    public function setBlocs(\AppBundle\Entity\BlocNewsletter $blocs = null)
+    {
+        $this->blocs = $blocs;
+
+        return $this;
+    }
+
+    /**
+     * Get blocs
+     *
+     * @return \AppBundle\Entity\BlocNewsletter
+     */
+    public function getBlocs()
+    {
+        return $this->blocs;
+    }
+}

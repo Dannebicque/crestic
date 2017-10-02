@@ -197,7 +197,7 @@ h1,h2,h3,h4,h5,h6 {
 
 h1 {
 	font-weight:700;
-	text-transform:uppercase;
+	/*text-transform:uppercase;*/
 }
 
 h2 {
@@ -1705,7 +1705,7 @@ blockquote {
 	margin:0;
 	padding-top:4px;
 	font-weight:700;
-	text-transform:uppercase;
+	/*text-transform:uppercase;*/
 }
 .breadcrumb {
 	padding:0;

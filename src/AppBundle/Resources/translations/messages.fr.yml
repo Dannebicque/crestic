@@ -25,7 +25,7 @@ top_bar:
 
 navigation:
     mentions-legales.title: Mentions Légales
-    actualites.title: Actualites
+    actualites.title: Actualités
     agenda.title: Agenda
     emplois.title: 'Offres d''emploi, thèses, post-doc'
     presentation.title: Présentation
@@ -55,6 +55,8 @@ membres.crestic: Membres du CReSTIC
 DOC: Doctorant
 MCF: Maître de conférences
 PR: Professeur
+PUPH : PU-PH
+MCUPH : MCU-PH
 
 visiteur:
     equipe:
@@ -101,7 +103,7 @@ visiteur:
         publications: Publications
         departement: Département
         themes: Thématiques
-        vulgarisation: Vulgarisation
+        vulgarisation: Animation
         international: International
         enseignements: Enseignement
         responsabilitesScientifiques: Scientifique
@@ -132,13 +134,13 @@ visiteur:
         contact: Contact
         url: Site Web
         publications: Dernières publications
-        projetsrecherches: Projets de recherche
+        projetsrecherches: Projets de recherche en lien avec la plateforme
     organigramme:
         title: Organigramme du CReSTIC
         direction: Direction du CReSTIC
         directeur: Directeur
         directeurAdjoint: Directeur Adjoint
-        conseil: Conseil de laboratoire
+        conseil: Conseil de Laboratoire
         departement: Département
         equipe: Equipe
         administratif: Service administratif
@@ -148,6 +150,12 @@ visiteur:
         publications: Rechercher des publications
     departement:
         acces: Détails de l'équipe
+    offre:
+        titre: Titre de l'offre
+        date: Date souhaitée
+        duree: Durée
+        description: Description
+        resume: Résumé
 
 utilisateur:
     demandesOM:

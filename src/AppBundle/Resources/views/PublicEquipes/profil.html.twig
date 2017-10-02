@@ -3,174 +3,156 @@
 {% block title %}CReSTIC | Equipe | {{ equipe.nom }} {% endblock %}
 
 {% block content %}
-	<!-- Begin Content Section -->
-	<section>
-		<div class="container">
-			<p class="lead text-center fadeInLeft-animated mb40">
-				{{ 'visiteur.equipe.title'|trans }}
-				<b>
-					{{ equipe.nom }}
-				</b><br />
-				{{ equipe.nomlong }}
-			</p>
+    <!-- Begin Content Section -->
+    <section>
+        <div class="container">
+            <p class="lead text-center fadeInLeft-animated mb40">
+                {{ 'visiteur.equipe.title'|trans }}
+                <b>
+                    {{ equipe.nom }}
+                </b><br/>
+                {{ equipe.nomlong }}
+            </p>
             {{ include('@App/Includes/inc.slider.html.twig', {image: equipe.image, titre:equipe.nomlong, sliders: sliders, type: 'equipes'}) }}
 
 
-			<!-- Begin Content 1 -->
-			<div class="row mt40">
-				<!-- Begin Tabs -->
-				<div class="col-sm-6">
-					<div class="heading mt15-xs">
-						<h4>
-							{{ 'visiteur.equipe.themerecherche'|trans }}
-						</h4>
-					</div>
-					{{ equipe.themeRecherche|raw }}
-				</div>
+            <!-- Begin Content 1 -->
+            <div class="row mt40">
+                <!-- Begin Tabs -->
+                <div class="col-sm-6">
+                    <div class="heading mt15-xs">
+                        <h4>
+                            {{ 'visiteur.equipe.themerecherche'|trans }}
+                        </h4>
+                    </div>
+                    {{ equipe.themeRecherche|raw }}
+                </div>
 
-				<!-- Quick Info -->
-				<div class="col-sm-6">
-					<div class="heading text-center mt30-xs">
-						<h4>
-							{{ 'visiteur.equipe.informations'|trans }}
-						</h4>
-					</div>
-					<dl class="dl-horizontal">
-						<dt>
-							{{ 'visiteur.equipe.responsable'|trans }}
-						</dt>
-						<dd>
-							{% if equipe.responsable != null %}
-								<a href="{{ path('public_membres_profil', {slug: equipe.responsable.slug}) }}"
-								   title="Profil de {{ equipe.responsable.display }}"
-								   target="_blank">{{ equipe.responsable.display }}</a>
-							{% else %}
-								-
-							{% endif %}
-						</dd>
-						<dt>
-							{{ 'visiteur.equipe.contact'|trans }}
-						</dt>
-						<dd>
-							{%  if equipe.responsable != null %}
-								<a href="mailto:{{ equipe.responsable.email }}" target="_blank">{{ equipe.responsable
-									.email }}</a>
-							{%  endif %}
-						</dd>
-						<dt>
-							{{ 'visiteur.equipe.departements'|trans }}
-						</dt>
-						<dd>
-							{% for dept in equipe.departements %}
-							<a href="{{ path('public_departement', {slug: dept.departement.slug}) }}" title="Détails du
+                <!-- Quick Info -->
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="heading text-center mt30-xs">
+                                <h4>
+                                    {{ 'visiteur.equipe.informations'|trans }}
+                                </h4>
+                            </div>
+                            <dl class="dl-horizontal">
+                                <dt>
+                                    {{ 'visiteur.equipe.responsable'|trans }}
+                                </dt>
+                                <dd>
+                                    {% if equipe.responsable != null %}
+                                        <a href="{{ path('public_membres_profil', {slug: equipe.responsable.slug}) }}"
+                                           title="Profil de {{ equipe.responsable.display }}"
+                                           target="_blank">{{ equipe.responsable.display }}</a>
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </dd>
+                                <dt>
+                                    {{ 'visiteur.equipe.contact'|trans }}
+                                </dt>
+                                <dd>
+                                    {% if equipe.responsable != null %}
+                                        <a href="mailto:{{ equipe.responsable.email }}"
+                                           target="_blank">{{ equipe.responsable
+                                            .email }}</a>
+                                    {% endif %}
+                                </dd>
+                                <dt>
+                                    {{ 'visiteur.equipe.departements'|trans }}
+                                </dt>
+                                <dd>
+                                    {% for dept in equipe.departements %}
+                                        <a href="{{ path('public_departement', {slug: dept.departement.slug}) }}"
+                                           title="Détails du
 							département {{ dept.departement.nom }}">{{ dept.departement.nom }}</a>
-								{% if not loop.last %} | {% endif %}
-							{% endfor %}
-						</dd>
-					</dl>
-					<br />
-					{% if equipe.video != '' %}
-						<div class="heading text-center mt30-xs">
-							<h4>
-								{{ 'visiteur.equipe.informations'|trans }}
-							</h4>
-						</div>
-						Include vidéo
-					{% endif %}
-				</div>
-			</div>
+                                        {% if not loop.last %} | {% endif %}
+                                    {% endfor %}
+                                </dd>
+                            </dl>
+                            <br/>
+                            {% if equipe.video != '' %}
+                                <div class="heading text-center mt30-xs">
+                                    <h4>
+                                        {{ 'visiteur.equipe.informations'|trans }}
+                                    </h4>
+                                </div>
+                                Include vidéo
+                            {% endif %}
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="heading">
+                                <h4>
+                                    {{ 'visiteur.equipe.projetsrecherches'|trans }}
+                                </h4>
+                            </div>
+                            <div class="row">
+                                {% for projet in equipe.projets %}
+                                    <div class="col-sm-12 col-lg-4">
+                                        <div class="bloc-info">
+                                            <a href="{{ path('public_projet_profil', {slug:projet.projet.slug}) }}"
+                                                title="Détails du projet {{ projet.projet.titre }}"
+                                                target="_blank">{{ projet.projet.titre }}</a>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-			<br />
+            <br/>
 
-			<div class="row mt30">
-				<div class="col-sm-12">
-					<div class="heading">
-						<h4>
-							{{ 'visiteur.equipe.projetsrecherches'|trans }}
-						</h4>
-					</div>
-					<div class="row">
-					{% for projet in equipe.projets %}
-						<div class="col-sm-12 col-lg-4">
-							<div class="bloc-info">
-								<h4>{{ projet.projet.titre }}</h4>
-								<a href="{{ path('public_projet_profil', {slug:projet.projet.slug}) }}"
-								   title="Détails du projet {{ projet.projet.titre }}"
-								   class="btn btn-primary btn-rw"><span
-											class="fa fa-plus-circle"></span> {{ 'visiteur.equipe.acces'|trans }}
-								</a>
-							</div>
-						</div>
-					{% endfor %}
-					</div>
-				</div>
-				<div class="col-sm-12">
-					<div class="heading">
-						<h4>
-							{{ 'visiteur.equipe.publications'|trans }}
-						</h4>
-					</div>
-					{#todo: liste des dernières publications#}
-					{#{{ biblio.getListPublications(equipe.publications, false)|raw }}#}
-				</div>
-			</div>
-			<br />
+            <div class="row mt30">
 
-			<div class="row mt30">
-				<div class="col-sm-12">
-					<div class="heading text-center mt15-xs">
-						<h4>
-							{{ 'visiteur.equipe.membresequipe'|trans }}
-						</h4>
-					</div>
-					<div class="row">
-						<div class="col-sm-12" id="divMembresMosaique">
-							{% for membre in membres %}
-								<div id="membreCresticMosaique" class="row col-sm-3 text-center" style="margin-bottom:15px">
-									<div class="row text-center">
-										<div class="membreCresticMosaiqueImage col-sm-12">
-											<img src="{{ asset('uploads/membresCrestic/'~membre.membreCrestic.image) }}"
-											     style="width:auto;height:100px">
-										</div>
-										<div class="membreCresticMosaiqueMosaiqueStatus col-sm-12">-{{ membre
-											.membreCrestic.statutLong|trans
-											}}-</div>
-										<div class="membreCresticMosaiqueMosaiqueNom col-sm-12">
-											<a href="{{ path('public_membres_profil', {slug:membre.membreCrestic.slug}) }}"
-											   target="_blank" title="Profil de {{ membre.membreCrestic.display }}">{{ membre.membreCrestic.display
-												}}</a>
-										</div>
-										<div class="col-sm-12">
-											<a class="membreCresticMosaiqueMosaiqueMail" href="mailto:{{ membre.membreCrestic.email }}"
-											   target="_blank">
-												<span class="ion-android-mail team-ico mr5 ml5"></span>
-											</a>
-										</div>
-									</div>
-								</div>
-							{% endfor %}
-						</div>
-					</div>
-				</div>
-			</div><!-- /row -->
-			<!-- End Content 3 -->
-		</div><!-- /container -->
-	</section><!-- /section -->
-	<!-- End Content Section -->
+                <div class="col-sm-12">
+                    <div class="heading">
+                        <h4>
+                            {{ 'visiteur.equipe.publications'|trans }}
+                        </h4>
+                    </div>
+                    {#todo: liste des dernières publications#}
+                    {#{{ biblio.getListPublications(equipe.publications, false)|raw }}#}
+                </div>
+            </div>
+            <br/>
 
-	<script>
-		var div_carousel_sliders = $('#divCarouselSliders');
-		var div_carousel_height  = '300px';
-		div_carousel_sliders.carousel();
-		$('#divCarouselSliders .carousel-inner').css('background-color' , 'none');
-		$('#divCarouselSliders .carousel-caption').css('background-color','none');
-		$('#divCarouselSliders').css('max-height' , div_carousel_height);
-		$('#divCarouselSliders').css('overflow'   ,'hidden');
-		$('#divCarouselSliders .item img').css('width' ,'auto');
-		$('#divCarouselSliders .item img').css('height' ,div_carousel_height);
-		$('#divCarouselSliders .item img').css('margin' ,'auto');
-
-	</script>
-
-
+            <div class="row mt30">
+                <div class="col-sm-12">
+                    <div class="heading text-center mt15-xs">
+                        <h4>
+                            {{ 'visiteur.equipe.membresequipe'|trans }}
+                        </h4>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12" id="divMembresMosaique">
+                            {% for membre in membres %}
+                                <div id="membreCresticMosaique" class="row col-sm-3 text-center"
+                                     style="margin-bottom:15px">
+                                    <div class="row text-center">
+                                        <div class="membreCresticMosaiqueImage col-sm-12">
+                                            <img src="{{ asset('uploads/membresCrestic/'~membre.membreCrestic.image) }}"
+                                                 style="width:auto;height:100px">
+                                        </div>
+                                        <div class="membreCresticMosaiqueMosaiqueStatus col-sm-12">{{ membre
+                                            .membreCrestic.statutLong|trans }}</div>
+                                        <div class="membreCresticMosaiqueMosaiqueNom col-sm-12">
+                                            <a href="{{ path('public_membres_profil', {slug:membre.membreCrestic.slug}) }}"
+                                               target="_blank"
+                                               title="Profil de {{ membre.membreCrestic.display }}">{{ membre.membreCrestic.display }}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /row -->
+            <!-- End Content 3 -->
+        </div><!-- /container -->
+    </section><!-- /section -->
+    <!-- End Content Section -->
 {% endblock %}

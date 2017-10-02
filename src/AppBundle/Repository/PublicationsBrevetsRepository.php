@@ -16,24 +16,6 @@ class PublicationsBrevetsRepository extends \Doctrine\ORM\EntityRepository
         return $this->findBy(array(),array('created' => 'DESC'));
     }
 
-    /*public function findAllFiltre()
-    {
-    Test pour renvoyer que les champs qu'il faut sur les filtres car cela prend beaucoup de mémoire
-        $queryBuilder = $this->_em->createQueryBuilder()
-            ->select   ('publication.id')
-            ->addSelect('publication.titre')
-            ->addSelect('publication.dateDelivrance')
-            ->addSelect('publication.numeroDelivrance')
-            ->addSelect('publication.pays')
-            ->from    ('AppBundle:PublicationsBrevets','publication');
-
-        $query   = $queryBuilder->getQuery();
-        $results =$query->getResult();
-
-        return $results;
-
-    }*/
-
     public function getTotal()
     {
         return $this->createQueryBuilder('p')
@@ -53,5 +35,4 @@ class PublicationsBrevetsRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult();
     }
-
 }

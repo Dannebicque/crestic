@@ -11,6 +11,7 @@
     <ul class="nav nav-tabs" role="tablist">
         <li class="active"><a href="#membres" role="tab" data-toggle="tab">Membres</a></li>
         <li><a href="#partenaires" role="tab" data-toggle="tab">Partenaires</a></li>
+        <li><a href="#financeurs" role="tab" data-toggle="tab">Financeurs</a></li>
         <li><a href="#equipes" role="tab" data-toggle="tab">Equipes</a></li>
         <li><a href="#plateformes" role="tab" data-toggle="tab">Plateformes</a></li>
         <li><a href="#slider" role="tab" data-toggle="tab">Slider</a></li>
@@ -80,6 +81,28 @@
                         <td><a href="#" class="btn btn-warning remove" data-idoption="{{ partenaire.id }}"  data-type="partenaire"><span class="fa fa-minus"></span></a></td>
                     {% else %}
                         <td><a href="#" class="btn btn-success add" data-idoption="{{ partenaire.id }}"  data-type="partenaire"><span class="fa fa-plus"></span></a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="tab-pane" id="financeurs">
+        <table class="table" id="listefinanceur">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for financeur in financeurs %}
+                <tr>
+                    <td>{{ financeur.nom }}</td>
+                    {% if t.financeurs[financeur.id] is defined %}
+                        <td><a href="#" class="btn btn-warning remove" data-idoption="{{ financeur.id }}"  data-type="financeur"><span class="fa fa-minus"></span></a></td>
+                    {% else %}
+                        <td><a href="#" class="btn btn-success add" data-idoption="{{ financeur.id }}"  data-type="financeur"><span class="fa fa-plus"></span></a></td>
                     {% endif %}
                 </tr>
             {% endfor %}
@@ -158,6 +181,12 @@
         );
 
         $('#listepartenaire').DataTable(
+            {
+                "bSort": false
+            }
+        );
+
+        $('#listefinanceur').DataTable(
             {
                 "bSort": false
             }

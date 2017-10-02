@@ -25,6 +25,15 @@ class PublicationsHasProjetsRepository extends \Doctrine\ORM\EntityRepository
         return $this->findAllPublicationsFromProjetBuilder($id_projet)->getQuery()->getResult();
     }
 
+    public function findAllProjetsFromPublication ($idpublication)
+    {
+        return $this->createQueryBuilder('a','a.id')
+            ->select ('a')
+            ->where('a.publication = ?1')
+            ->setParameter(1,$idpublication)
+            ->getQuery()->getResult();
+    }
+
     public function getArrayIdFromPublicationProjets ($id_projet)
     {
         $result = array();
@@ -57,7 +66,7 @@ class PublicationsHasProjetsRepository extends \Doctrine\ORM\EntityRepository
 
     public function findAllIdProjets($idpublication)
     {
-        $projets = $this->findAllPublicationsFromProjet($idpublication);
+        $projets = $this->findAllProjetsFromPublication($idpublication);
         $t =array();
         /** @var PublicationsHasProjets $e */
         foreach ($projets as $e)
@@ -66,5 +75,22 @@ class PublicationsHasProjetsRepository extends \Doctrine\ORM\EntityRepository
         }
 
         return $t;
+    }
+
+    public function getArrayIdFromProjetPublications($idProjet)
+    {
+        $result = array();
+        $array  =  $this->findAllPublicationsFromProjet($idProjet);
+
+        /** @var PublicationsHasProjets $pub */
+        foreach ($array as $pub)
+        {
+            if ($pub->getProjet() !== null && $pub->getProjet()->getId() == $idProjet)
+            {
+                $result[$pub->getId()] = $pub->getPublication()->getAnneePublication();
+            }
+        }
+
+        return $result;
     }
 }

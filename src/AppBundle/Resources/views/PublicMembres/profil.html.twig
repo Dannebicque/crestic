@@ -4,13 +4,13 @@
 {% block content %}
 	<div class="heading mb20">
 		<h1>
-			{{ user.display }} <span style="font-size:16px">- {{ user.statutLong|trans }} </span></h1>
+			{{ user.display }}</h1>
 
 	</div>
 			<div class="row">
 				<div class="col-sm-4 text-center">
 					<div class="content-box-profile content-box-bordered no-margin">
-						<img src="{{ asset('uploads/membresCrestic/'~user.image) }}" height="200px" alt="Photo de {{
+						<img src="{{ asset('uploads/membresCrestic/'~user.image)|imagine_filter('slider') }}" height="200px" alt="Photo de {{
 						user.display }}" />
 						{% if user.membreAssocie == true %}
 							<p>{{ 'visiteur.membreAssocie'|trans }}</p>
@@ -181,6 +181,12 @@
 					</li>
 				{% endif %}
 
+					<li>
+						<a href="#publications" role="tab" data-toggle="tab">
+                            {{ 'visiteur.MembresCrestic.publications'| trans }}
+						</a>
+					</li>
+
 				{% if attribute (user,'international') is not empty %}
 					<li>
 						<a href="#international" role="tab" data-toggle="tab">
@@ -294,22 +300,26 @@
 
 					</div>
 				{% endif %}
+
+				<div class="tab-pane" id="publications">
+                    {{ include('@App/PublicPublications/listepublications.html.twig') }}
+
+				</div>
 			</div>
 
-			<div class="row col-sm-12">
+			{#<div class="row col-sm-12">
 
 				<div class="row">
 					<div class="col-sm-12">
 						<h4 class="team-member-name-imgtop">
 							{{ 'visiteur.MembresCrestic.publications'|trans }}
 						</h4>
-						{#{{ biblio.getListPublications (user.publicationsHasMembres) | raw }}#}
 					</div>
 				</div>
 
 
 			</div>
-		{#</div>#}
+		#}{#</div>#}
 	{#</div>#}
 {% endblock %}
 

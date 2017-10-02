@@ -204,11 +204,17 @@ liip_imagine:
             filters:
                 #thumbnail: { size: [120, 120], mode: inset }
                 relative_resize: { widen: 120 }
+        slider:
+            jpeg_quality: 80
+            filters:
+                #thumbnail: { size: [120, 120], mode: inset }
+                #relative_resize: { widen: 300 }
+                thumbnail: { size: [120, 300], mode: outbound }
 
         profil:
             jpeg_quality: 80
             filters:
-                thumbnail: { size: [256, 256], mode: outbound }
+                thumbnail: { size: [200, 200], mode: outbound }
         ppe:
             jpeg_quality: 80
             filters:

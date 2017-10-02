@@ -13,6 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
 class PublicationsBrevets extends Publications
 {
     protected $type = 'brevet';
+    protected $couleur = "#F2FAA7";
+
+    public function getCouleur()
+    {
+        return $this->couleur;
+    }
 
 
     /**
@@ -58,6 +64,13 @@ class PublicationsBrevets extends Publications
      * @ORM\Column(name="secteur", type="string", length=255, nullable=true)
      */
     private $secteur;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="typeBrevet", type="string", length=6, nullable=true)
+     */
+    private $typeBrevet = 'brevet'; //brevet => brevet, lettre => lettre d'intention
 
     /**
      *
@@ -236,5 +249,43 @@ class PublicationsBrevets extends Publications
     public function getPays()
     {
         return $this->pays;
+    }
+
+
+    /**
+     * Set typeBrevet
+     *
+     * @param string $typeBrevet
+     *
+     * @return PublicationsBrevets
+     */
+    public function setTypeBrevet($typeBrevet)
+    {
+        $this->typeBrevet = $typeBrevet;
+
+        return $this;
+    }
+
+    /**
+     * Get typeBrevet
+     *
+     * @return string
+     */
+    public function getTypeBrevet()
+    {
+        return $this->typeBrevet;
+    }
+
+    /**
+     * Get typeBrevet
+     *
+     * @return string
+     */
+    public function getTypeBrevetLong()
+    {
+        if ($this->typeBrevet === 'lettre') {
+            return 'Lettre d\'intention';
+        }
+        return 'Brevet';
     }
 }

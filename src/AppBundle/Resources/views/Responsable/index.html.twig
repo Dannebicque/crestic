@@ -1,0 +1,40 @@
+{% extends('::base-utilisateur.html.twig') %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="heading mb20">
+                <h2>
+                    Administration Responsabilité
+                </h2>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-3" style="text-align: center">
+                    <a href="{{ path('responsable_equipes_index') }}">
+                        <span class="ion-android-friends bordered-icon-lg"></span><br/>
+                        Vos Equipes
+                    </a>
+                </div>
+                <div class="col-sm-3" style="text-align: center">
+                    <a href="{{ path('responsable_projets_index') }}">
+                        <span class="ion-android-lightbulb bordered-icon-lg"></span><br/>
+                        Vos Projets
+                    </a>
+                </div>
+                <div class="col-sm-3" style="text-align: center">
+                    <a href="{{ path('responsable_projets_new') }}">
+                        <span class="ion-android-lightbulb bordered-icon-lg"></span><br/>
+                        Ajouter un Projet
+                    </a>
+                </div>
+                <div class="col-sm-3" style="text-align: center">
+                    <a href="{{ path('responsable_plateformes_index') }}">
+                        <span class="ion-beaker bordered-icon-lg"></span><br/>
+                        Vos Plateformes
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

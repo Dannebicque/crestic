@@ -84,4 +84,21 @@ class PublicationsHasEquipesRepository extends \Doctrine\ORM\EntityRepository
 
         return $t;
     }
+
+    public function getArrayIdFromEquipePublications($idEquipe)
+    {
+        $result = array();
+        $array  =  $this->findAllPublicationsFromEquipe($idEquipe);
+
+        /** @var PublicationsHasEquipes $pub */
+        foreach ($array as $pub)
+        {
+            if ($pub->getEquipe() !== null && $pub->getEquipe()->getId() == $idEquipe)
+            {
+                $result[$pub->getId()] = $pub->getPublication()->getAnneePublication();
+            }
+        }
+
+        return $result;
+    }
 }

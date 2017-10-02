@@ -1,0 +1,320 @@
+{% extends '::base-responsable.html.twig' %}
+
+{% block breadcrumbs %}
+	<a href="{{ path('responsable_equipes_index') }}">Equipes</a> / Membres /
+{% endblock %}
+
+{% block content %}
+    <h1>Options de l'équipe : {{ equipe.nom }}</h1>
+    <h2>{{ equipe.nomlong }}</h2>
+    <br />
+
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="active"><a href="#membres" role="tab" data-toggle="tab">Membres</a></li>
+        <li><a href="#projets" role="tab" data-toggle="tab">Projets</a></li>
+        <li><a href="#departements" role="tab" data-toggle="tab">Départements</a></li>
+        <li><a href="#slider" role="tab" data-toggle="tab">Slider</a></li>
+    </ul>
+
+<div class="tab-content tab-default tab-default">
+    <div class="tab-pane active" id="membres">
+        <table class="table" id="listemembre">
+            <thead>
+            <tr>
+                <th>Nom Prénom</th>
+                <th>Statut</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for membre in membres %}
+                <tr>
+                    <td>{{ membre|linkMembre|raw }}</td>
+                    <td>{{ membre.statutlong }}</td>
+                    {% if t.membre[membre.id] is defined %}
+                        <td><a href="#" class="btn btn-warning removemembre" data-membre="{{ membre.id }}"><span class="fa fa-minus"></span></a></td>
+                    {% else %}
+                        <td><a href="#" class="btn btn-success addmembre" data-membre="{{ membre.id }}"><span class="fa fa-plus"></span></a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="tab-pane" id="projets">
+        <table class="table" id="listeprojet">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for projet in projets %}
+                <tr>
+                    <td>{{ projet.titre }}</td>
+                    {% if t.projet[projet.id] is defined %}
+                        <td><a href="#" class="btn btn-warning removeprojet" data-projet="{{ projet.id }}"><span class="fa fa-minus"></span></a></td>
+                    {% else %}
+                        <td><a href="#" class="btn btn-success addprojet" data-projet="{{ projet.id }}"><span class="fa fa-plus"></span></a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+    <div class="tab-pane" id="departements">
+        <table class="table" id="listedepartement">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for departement in departements %}
+                <tr>
+                    <td>{{ departement.nom }}</td>
+                    {% if t.departements[departement.id] is defined %}
+                        <td><a href="#" class="btn btn-warning removedepartement" data-departement="{{ departement.id }}"><span class="fa fa-minus"></span></a></td>
+                    {% else %}
+                        <td><a href="#" class="btn btn-success adddepartement" data-departement="{{ departement.id }}"><span class="fa fa-plus"></span></a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="tab-pane" id="slider">
+        <table class="table" id="listeslider">
+            <thead>
+            <tr>
+                <th>Titre</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for slider in sliders %}
+                <tr>
+                    <td>{{ slider.titre }}</td>
+                    {% if t.slider[slider.id] is defined %}
+                        <td><a href="#" class="btn btn-warning removeslider" data-slider="{{ slider.id }}"><span class="fa fa-minus"></span></a></td>
+                    {% else %}
+                        <td><a href="#" class="btn btn-success addslider" data-slider="{{ slider.id }}"><span class="fa fa-plus"></span></a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+    <br />
+    <div class="row">
+        <div class="col-sm-9" style="text-align: right" >
+            <a href="{{ path('responsable_equipes_index') }}">Retour à la liste</a>
+        </div>
+        <div class="col-sm-3" style="text-align: right" >
+            <a href="{{ path('responsable_equipes_edit', { 'id': equipe.id }) }}" class="btn
+            btn-warning btn-block">Modifier l'équipe</a>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    $( document ).ready(function(){
+        $('#listemembre').DataTable(
+            {
+                "bSort": false
+            }
+        );
+
+        $('#listedepartement').DataTable(
+            {
+                "bSort": false
+            }
+        );
+
+        $('#listeprojet').DataTable(
+            {
+                "bSort": false
+            }
+        );
+
+        $('#listeslider').DataTable(
+            {
+                "bSort": false
+            }
+        );
+    });
+
+    $(document).on('click', '.addmembre', function(e) {
+        e.preventDefault();
+        $obj = $(this);
+        $.ajax({
+            url: "{{ path('responsable_equipes_ajax_membre') }}",
+            data: {
+                equipe: {{ equipe.id }},
+                membre: $obj.data('membre')
+            },
+            method: 'post',
+            success: function(){
+                $.notify("Membre ajouté à l'équipe", "success");
+                $obj.removeClass('btn-success addmembre').addClass('btn-warning removemembre').children('span').removeClass('fa-plus').addClass('fa-minus');
+            },
+            error: function(){
+                $.notify("Erreur lors de l'ajout du membre à l'équipe", "error");
+            }
+        });
+    });
+
+    $(document).on('click', '.removemembre', function(e) {
+        e.preventDefault();
+        $obj = $(this);
+        $.ajax({
+            url: "{{ path('responsable_equipes_ajax_membre_remove') }}",
+            data: {
+                equipe: {{ equipe.id }},
+                membre: $obj.data('membre')
+            },
+            method: 'post',
+            success: function(){
+                $.notify("Membre retiré de l'équipe", "success");
+                $obj.removeClass('btn-warning removemembre').addClass('btn-success addmembre').children('span').removeClass('fa-minus').addClass('fa-plus');
+
+            },
+            error: function(){
+                $.notify("Erreur lors du retrait du membre à l'équipe", "error");
+            }
+        });
+    });
+
+    $(document).on('click', '.addprojet', function(e) {
+        e.preventDefault();
+        $obj = $(this);
+        $.ajax({
+            url: "{{ path('responsable_equipes_ajax_projet') }}",
+            data: {
+                equipe: {{ equipe.id }},
+                projet: $obj.data('projet')
+            },
+            method: 'post',
+            success: function(){
+                $.notify("Projet associé à l'équipe", "success");
+                $obj.removeClass('btn-success addprojet').addClass('btn-warning removeprojet').children('span').removeClass('fa-plus').addClass('fa-minus');
+            },
+            error: function(){
+                $.notify("Erreur lors de l'association du projet à l'équipe", "error");
+            }
+        });
+    });
+
+    $(document).on('click', '.removeprojet', function(e) {
+        e.preventDefault();
+        $obj = $(this);
+        $.ajax({
+            url: "{{ path('responsable_equipes_ajax_projet_remove') }}",
+            data: {
+                equipe: {{ equipe.id }},
+                projet: $obj.data('projet')
+            },
+            method: 'post',
+            success: function(){
+                $.notify("Projet retiré de l'équipe", "success");
+                $obj.removeClass('btn-warning removeprojet').addClass('btn-success addprojet').children('span').removeClass('fa-minus').addClass('fa-plus');
+
+            },
+            error: function(){
+                $.notify("Erreur lors du retrait du projet à l'équipe", "error");
+            }
+        });
+    });
+
+    $(document).on('click', '.adddepartement', function(e) {
+        e.preventDefault();
+        $obj = $(this);
+        $.ajax({
+            url: "{{ path('responsable_equipes_ajax_departement') }}",
+            data: {
+                equipe: {{ equipe.id }},
+                departement: $obj.data('departement')
+            },
+            method: 'post',
+            success: function(){
+                $.notify("Département associé à l'équipe", "success");
+                $obj.removeClass('btn-success adddepartement').addClass('btn-warning removedepartement').children('span').removeClass('fa-plus').addClass('fa-minus');
+            },
+            error: function(){
+                $.notify("Erreur lors de l'ajout du departement à l'équipe", "error");
+            }
+        });
+    });
+
+    $(document).on('click', '.removedepartement', function(e) {
+        e.preventDefault();
+        $obj = $(this);
+        $.ajax({
+            url: "{{ path('responsable_equipes_ajax_departement_remove') }}",
+            data: {
+                equipe: {{ equipe.id }},
+                departement: $obj.data('departement')
+            },
+            method: 'post',
+            success: function(){
+                $.notify("Département retiré de l'équipe", "success");
+                $obj.removeClass('btn-warning removedepartement').addClass('btn-success adddepartement').children('span').removeClass('fa-minus').addClass('fa-plus');
+
+            },
+            error: function(){
+                $.notify("Erreur lors du retrait du departement à l'équipe", "error");
+            }
+        });
+    });
+
+    $(document).on('click', '.addslider', function(e) {
+        e.preventDefault();
+        $obj = $(this);
+        $.ajax({
+            url: "{{ path('responsable_equipes_ajax_slider') }}",
+            data: {
+                equipe: {{ equipe.id }},
+                slider: $obj.data('slider')
+            },
+            method: 'post',
+            success: function(){
+                $.notify("Slide ajouté à l'équipe", "success");
+                $obj.removeClass('btn-success addslider').addClass('btn-warning removeslider').children('span').removeClass('fa-plus').addClass('fa-minus');
+            },
+            error: function(){
+                $.notify("Erreur lors de l'ajout du slide à l'équipe", "error");
+            }
+        });
+    });
+
+    $(document).on('click', '.removeslider', function(e) {
+        e.preventDefault();
+        $obj = $(this);
+        $.ajax({
+            url: "{{ path('responsable_equipes_ajax_slider_remove') }}",
+            data: {
+                equipe: {{ equipe.id }},
+                slider: $obj.data('slider')
+            },
+            method: 'post',
+            success: function(){
+                $.notify("Slide retiré de l'équipe", "success");
+                $obj.removeClass('btn-warning removeslider').addClass('btn-success addslider').children('span').removeClass('fa-minus').addClass('fa-plus');
+
+            },
+            error: function(){
+                $.notify("Erreur lors du retrait du slider à l'équipe", "error");
+            }
+        });
+    });
+
+</script>
+{% endblock %}

@@ -8,11 +8,13 @@
 		<li>{{ annee }}
 			<ul class="da-liste-biblio">
 				{% for publication in publications[annee] %}
-					<li>
+					<li style="border-left: 3px solid {{ publication.couleur }}">
 						<div class="row">
 							<div class="col-sm-3">
 								<div class="btn-group">
-
+									<a href="{{ path('public_publication_show', {id:publication.id, type: publication.type}) }}" class="btn" target="_blank" title="Détails">
+										<span class="fa fa-eye"></span>
+									</a>
 									<a href="{{ publication.doi }}" class="btn" target="_blank" title="DOI">
 										<span class="fa fa-external-link"></span>
 									</a>
@@ -90,8 +92,8 @@
 								</button>
 								<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 									<li role="presentation">
-										<a role="menuitem" tabindex="-1" href="#">PDF</a></li>{#
-									si loggé #}
+										<a role="menuitem" tabindex="-1" href="#">PDF</a></li>
+									si loggé
 									<li role="presentation">
 										<a role="menuitem" tabindex="-1" href="#">BibTex</a></li>
 									<li role="presentation">

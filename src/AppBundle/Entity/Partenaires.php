@@ -48,11 +48,11 @@ class Partenaires
     private $internationale = False;
 
     /**
-     * @var boolean
+     * @var string
      *
-     * @ORM\Column(name="financeur", type="boolean")
+     * @ORM\Column(name="typePartenaire", type="string", length=1)
      */
-    private $financeur = False;
+    private $typePartenaire = 'A';
 
     /**
      * @var string
@@ -133,17 +133,6 @@ class Partenaires
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set id
-     *
-     * @return integer
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
     }
 
     /**
@@ -300,7 +289,7 @@ class Partenaires
      *
      * @param ProjetsHasPartenaires $projet
      *
-     * @return Projets
+     * @return Partenaires
      */
     public function addProjet(ProjetsHasPartenaires $projet)
     {
@@ -330,26 +319,40 @@ class Partenaires
     }
 
     /**
-     * Set financeur
+     * Set typePartenaire
      *
-     * @param boolean $financeur
+     * @param string $typePartenaire
      *
      * @return Partenaires
      */
-    public function setFinanceur($financeur)
+    public function setTypePartenaire($typePartenaire)
     {
-        $this->financeur = $financeur;
+        $this->typePartenaire = $typePartenaire;
 
         return $this;
     }
 
     /**
-     * Get financeur
+     * Get typePartenaire
      *
-     * @return boolean
+     * @return string
      */
-    public function getFinanceur()
+    public function getTypePartenaire()
     {
-        return $this->financeur;
+        return $this->typePartenaire;
+    }
+
+    /**
+     * Get typePartenaireLong
+     *
+     * @return string
+     */
+    public function getTypePartenaireLong()
+    {
+        if ($this->typePartenaire === 'A') {
+            return 'Académique';
+        }
+
+        return 'Industriel';
     }
 }

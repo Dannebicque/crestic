@@ -26,7 +26,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Demandeom controller.
+ * Publications controller.
  *
  * @Route("/espace-utilisateur/publications")
  */
@@ -442,7 +442,7 @@ class PublicationsController extends Controller
         $publiHasProjets     = $this->getDoctrine()->getRepository('AppBundle:PublicationsHasProjets')->findAllPublicationsFromProjet($publication->getId());
         $publiHasPlateformes = $this->getDoctrine()->getRepository('AppBundle:PublicationsHasPlateformes')->findAllPlateformesFromPublication($publication->getId());
 
-        return $this->render('@App/Utilisateur/publications/show.html.twig', array(
+        return $this->render('AppBundle:Utilisateur/publications:show.html.twig', array(
             'publication' => $publication,
             'equipes'     => $publiHasEquipes,
             'projets'     => $publiHasProjets,
@@ -459,27 +459,21 @@ class PublicationsController extends Controller
                 break;
             case 'conference':
                 $publication = $this->getDoctrine()->getRepository('AppBundle:PublicationsConferences')->find($id);
-
                 break;
             case 'rapport':
                 $publication = $this->getDoctrine()->getRepository('AppBundle:PublicationsRapports')->find($id);
-
                 break;
             case 'these':
                 $publication = $this->getDoctrine()->getRepository('AppBundle:PublicationsTheses')->find($id);
-
                 break;
             case 'brevet':
                 $publication = $this->getDoctrine()->getRepository('AppBundle:PublicationsBrevets')->find($id);
-
                 break;
             case 'ouvrage':
                 $publication = $this->getDoctrine()->getRepository('AppBundle:PublicationsOuvrages')->find($id);
-
                 break;
             case 'chapitre':
                 $publication = $this->getDoctrine()->getRepository('AppBundle:PublicationsChapitres')->find($id);
-
                 break;
         }
 

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller\Visiteur;
 
+use AppBundle\Entity\Publications;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -9,12 +10,11 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Class PublicMembresController
  * @package AppBundle\Controller
- * @Route("/membres")
  */
 class PublicMembresController extends Controller
 {
     /**
-     * @Route("/", name="public_membres")
+     * @Route("/membres/", name="public_membres")
      */
     public function indexAction()
     {
@@ -25,14 +25,31 @@ class PublicMembresController extends Controller
     /**
      * @param $slug
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/profil/{slug}", name="public_membres_profil")
+     * @Route("/{slug}", name="public_membres_profil")
      */
     public function profilAction($slug)
     {
         $user = $this->getDoctrine()->getRepository('AppBundle:MembresCrestic')->findOneBy(array('slug' => $slug));
 
+        $publications = $this->getDoctrine()->getRepository('AppBundle:Publications')->findAllPublicationsFromMembre($user->getId());
+
+        $t  = array();
+        for ($i = 2004; $i <= date('Y'); $i++)
+        {
+            $t[$i] = array();
+        }
+        $t[0] = array();
+
+        /** @var Publications $p */
+        foreach ($publications as $p)
+        {
+            $t[$p->getAnneePublication()][] = $p;
+        }
+
         return $this->render('@App/PublicMembres/profil.html.twig', array(
-            'user' => $user
+            'user' => $user,
+            'publications' => $t,
+            'nbresult'     => count($publications),
         ));
     }
 
@@ -90,11 +107,14 @@ class PublicMembresController extends Controller
         $membres = $this->getDoctrine()->getRepository('AppBundle:MembresCrestic')->findAllMembresCrestic();
 
         $categories = array(
-            array('code' => 'PR', 'libelle' => 'professeurs'),
+            array('code' => 'PR', 'libelle' => 'Professeurs'),
             array('code' => 'MCF', 'libelle' => 'Maîtres de Conférences'),
+            array('code' => 'PUPH', 'libelle' => 'Prof. Praticien Hospitalier'),
+            array('code' => 'MCUPH', 'libelle' => 'MCF Praticien Hospitalier'),
             array('code' => 'CAS', 'libelle' => 'Chercheurs Associés'),
             array('code' => 'ING', 'libelle' => 'Ingénieurs et techniciens'),
-            array('code' => 'PDOC', 'libelle' => 'Post-Doctorants'),
+            array('code' => 'PAST', 'libelle' => 'PAST/MAST'),
+            array('code' => 'PDOC', 'libelle' => 'ATER, Post-Doctorants, Ingénieurs contractuels'),
             array('code' => 'DOC', 'libelle' => 'Doctorants'),
             array('code' => 'ADM', 'libelle' => 'Personnels administratifs'),
         );

@@ -40,8 +40,8 @@
 				</h2>
 			</div>
 			<div class="row">
-			{% for evt in evenements %}
-				<div class="col-sm-4">
+			{% for evt in evenements if date(evt.datefin) >= date() %}
+					<div class="col-sm-4">
 					<div class="row">
 						<div class="col-sm-4">
 							<div class="bl-jour">{{ evt.datedebut|date('d/m') }}</div>
@@ -49,11 +49,16 @@
 						</div>
 						<div class="col-sm-8">
                             <h3>{{ evt.titre }}</h3>
-							<p>{{ evt.description|raw }}</p>
 							<p class="bl-footer">{{ evt.lieu }}, du {{ evt.datedebut|date('d/m/Y') }}, {{ evt.heuredebut|date('H:i') }} au {{ evt.datefin|date('d/m/Y') }}, {{ evt.heurefin|date('H:i') }}</p>
+							<p>{{ evt.description|slice(0, 50)|raw }}...</p>
+
 						</div>
 					</div>
 
+				</div>
+				{% else %}
+				<div class="alert alert-warning">
+					Aucun événement programmé.
 				</div>
 			{% endfor %}
 			</div>

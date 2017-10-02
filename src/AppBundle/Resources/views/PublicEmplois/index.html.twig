@@ -1,6 +1,6 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}AppBundle:PublicActualites:index{% endblock %}
+{% block title %}Offres d'emplois{% endblock %}
 
 {% block content %}
 	<div class="row">
@@ -15,31 +15,31 @@
 					<table class="table">
 						<thead>
 						<tr>
-							<th>Titre</th>
-							<th>Contact</th>
-							<th>Publié le</th>
+							<th>Emploi</th>
+							<th>Date de publication</th>
 							<th>Durée</th>
 							<th>Détails</th>
+							<th>Contact</th>
 						</tr>
 						</thead>
 						<tbody>
 						{% for offre in offres %}
 							<tr>
 								<td>{{ offre.titre }}</td>
-								<td>
-									{% if offre.membreCrestic != null %}
-										<a href="{{ path('public_membres_profil', {slug: offre.membreCrestic.slug}) }}"
-										   title="Profil du membre {{ offre.membreCrestic.display }}"
-										   target="_blank">{{ offre.membreCrestic.display }}</a>
-									{% else %}
-										-
-									{% endif %}
-								</td>
+
 								<td>{{ offre.created|date('d/m/Y') }}</td>
 								<td>{{ offre.duree }}</td>
 								<td>
-									{#todo : modal vers l'offre#}
-									Modal
+									<a href="#" data-offre="{{ offre.id }}" class="detailOffre btn btn-info" title="Plus d'informations sur l'offre" data-toggle="modal" data-target="#modalOffre"><span class="fa fa-eye"></span></a>
+								</td>
+								<td>
+                                    {% if offre.contact != null %}
+										<a href="{{ path('public_membres_profil', {slug: offre.contact.slug}) }}"
+										   title="Profil du membre {{ offre.contact.display }}"
+										   target="_blank">{{ offre.contact.display }}</a>
+                                    {% else %}
+										-
+                                    {% endif %}
 								</td>
 							</tr>
 						{% endfor %}
@@ -49,4 +49,34 @@
 			</div>
 		</div>
 	</div>
+
+
+	<!-- Default Modal -->
+	<div class="modal fade" id="modalOffre" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title" id="defaultModalLabel">Information sur l'offre d'emploi</h4>
+				</div>
+				<div class="modal-body" id="body-detailOffre">
+					Content
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-rw btn-success" data-dismiss="modal">Fermer</button>
+				</div>
+			</div><!-- /modal content -->
+		</div><!-- /modal dialog -->
+	</div><!-- /modal holder -->
+	<!-- End Default Modal -->
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    $(document).ready(function () {
+        $('.detailOffre').on('click', function(){
+            $('#body-detailOffre').empty().load("{{ path('public_emploi_details') }}", {'offre': $(this).data('offre')});
+        });
+    });
+</script>
 {% endblock %}

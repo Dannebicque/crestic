@@ -18,12 +18,13 @@ class PublicationsOuvragesType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('titreOuvrage', TextType::class, array('label' => 'Titre de l\'ouvrage'))
+        $builder
             ->add('typeOuvrage', TextareaType::class, array('label' => 'Type d\'ouvrage', 'required' => false))
             ->add('serie', TextType::class, array('label' => 'Série', 'required' => false))
             ->add('vulgarisation', CheckboxType::class, array('label' => 'Ouvrage de vulgarisation', 'required' => false))
+            ->add('monographie', CheckboxType::class, array('label' => 'Monographie', 'required' => false))
+            ->add('collectif', CheckboxType::class, array('label' => 'Ouvrage Collectif', 'required' => false))
             ->add('isbn', TextType::class, array('label' => 'ISBN', 'required' => false))
-            ->add('redacteurChef', TextType::class, array('label' => 'Rédacteur en chef', 'required' => false))
             ->add('editeur', EntityType::class, array('class' => 'AppBundle\Entity\Editeurs', 'choice_label' => 'nom', 'label' => 'Editeur', 'required' => false));
 
         $builder->add('bar', PublicationsType::class, array(

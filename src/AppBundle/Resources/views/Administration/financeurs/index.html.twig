@@ -1,0 +1,40 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+    Financeurs /
+{% endblock %}
+
+{% block content %}
+    <h1>Liste des financeurs</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Url</th>
+                <th>Internationale</th>
+                <th>Type</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for financeur in financeurs %}
+            <tr>
+                <td>{{ financeur.nom }}</td>
+                <td>{{ financeur.url }}</td>
+                <td>{% if financeur.internationale %}Oui{% else %}Non{% endif %}</td>
+                <td>{{ financeur.typeFinanceurLong }}</td>
+
+                <td>
+                    <a href="{{ path('administration_financeurs_show', { 'id': financeur.id }) }}" class="btn btn-info"
+                       title="Voir"><i class="fa fa-eye"></i> </a>
+                    <a href="{{ path('administration_financeurs_edit', { 'id': financeur.id }) }}" class="btn
+                            btn-warning" title="Modifier"><i class="fa fa-pencil"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('administration_financeurs_new') }}" class="btn btn-primary">Créer un nouveau financeur</a>
+{% endblock %}

@@ -51,6 +51,7 @@ class Plateformes
      * 
      * @ORM\ManyToOne(targetEntity="MembresCrestic",inversedBy="plateformes")
      * @ORM\JoinColumn(name="responsable_id",referencedColumnName="id")
+     * @ORM\OrderBy({"nom" = "ASC"})
      */
      private $responsable;
 

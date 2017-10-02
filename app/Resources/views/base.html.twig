@@ -39,8 +39,6 @@
 			position: relative;
 			-moz-border-radius: 15px;
 			-webkit-border-radius: 15px;
-			border-radius: 2px;
-			border: 1px solid #e6e9ed;
 			background-color: #fefefe;
 			color: #595959;
 			font-style: normal;
@@ -170,8 +168,20 @@
 <script src="{{ asset('assets/js/main.js') }}"></script>
 <script src="{{ asset('assets/select2-master/dist/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('assets/js/notify.min.js') }}"></script>
+<script src="{{ asset('assets/js/david.js') }}"></script>
 
-<script language="JavaScript">
+<script>
+    var div_carousel_sliders = $('#divCarouselSliders');
+    var div_carousel_height  = '300px';
+    div_carousel_sliders.carousel();
+    $('#divCarouselSliders .carousel-inner').css('background-color' , 'none');
+    $('#divCarouselSliders .carousel-caption').css('background-color','none');
+    $('#divCarouselSliders').css('max-height' , div_carousel_height);
+    $('#divCarouselSliders').css('overflow'   ,'hidden');
+    $('#divCarouselSliders .item img').css('width' ,'auto');
+    $('#divCarouselSliders .item img').css('height' ,div_carousel_height);
+    $('#divCarouselSliders .item img').css('margin' ,'auto');
+
 	var config = {
 		easing: 'hustle',
 		mobile: true,

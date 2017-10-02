@@ -1,7 +1,99 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}AppBundle:PublicationsController:show{% endblock %}
+{% block title %}CReSTIC | Publication | {{ publication.titre }}{% endblock %}
 
-{% block body %}
-<h1>Welcome to the PublicationsController:show page</h1>
-{% endblock %}
+{% block content %}
+    <div class="heading">
+        <h4>
+            {{ publication.titre }} {% if publication.publicationInternationale == true %} <span class="fa fa-globe" title="{{ 'publications.apercu.internationale.oui'|trans }}"></span>{% endif %}
+        </h4>
+    </div>
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="row">
+                <div class="col-sm-12">{{ biblio.getAllAuteurs(publication)|raw }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12"> <i>{{  publication.keywords }}</i></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    {{ publication.resume|raw }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    {{ publication.commentaire }}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 text-center">
+            <div class="content-box-profile content-box-bordered no-margin">
+                <div class="team-description">
+                    <dl class="dl-horizontal dl-apercu-horizontal">
+                        {% if publication.pageDebut != 0 and publication.pageDebut != null and publication.pageFin != 0 and publication
+                        .pageFin != null %}
+                            <dt>{{ 'publications.apercu.pagination'|trans }}</dt>
+                            <dd>pp. {{ publication.pageDebut }} - {{ publication.pageFin }}</dd>
+                        {% endif %}
+                        <dt>{{ 'publications.apercu.datepubli'|trans }}</dt>
+                        <dd>{{ publication.moisPublication }} / {{ publication.anneePublication }}</dd>
+                        {% if publication.pdf != '' and publication.pdf != null %}
+                            {%  if publication.pdfVisible == true or is_granted('ROLE_USER') %}
+                                {{ html.getButton(publication, 'Apercu', 'pdf')|raw }}
+                            {% endif %}
+                        {% endif %}
+
+                        {% if publication.doi != null and publication.doi != '' %}
+                            <dt>{{ 'publications.apercu.doi'|trans }}</dt>
+                            <dd>{{ html.getUrl(publication.doi)|raw }}</dd>
+                        {% endif %}
+                        {% if publication.url != null and publication.url != '' %}
+                            <dt>{{ 'publications.apercu.url'|trans }}</dt>
+                            <dd>{{ html.getUrl(publication.url)|raw }}</dd>
+                        {% endif %}
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="alert alert-info">
+                {{ biblio.formatIEEE(publication)|raw }}
+            </div>
+        </div>
+        <div class="col-sm-12">
+			<pre>{{ biblio.formatBibtex(publication)|raw }}
+			</pre>
+        </div>
+    </div>
+
+    <div class="row">
+    <div class="col-sm-4">
+        <h4>Projets associés</h4>
+        {% for projet in projets %}
+            <a href="{{ path('public_projet_profil', {slug:projet.projet.slug}) }}">{{ projet.projet.titre }}</a>
+        {% else %}
+            -
+        {% endfor %}
+    </div>
+    <div class="col-sm-4">
+        <h4>Equipes associées</h4>
+        {% for equipe in equipes %}
+            <a href="{{ path('public_equipes_profil', {slug:equipe.equipe.slug}) }}">{{ equipe.equipe.nom }}</a>
+        {% else %}
+            -
+        {% endfor %}
+    </div>
+    <div class="col-sm-4">
+        <h4>Plateformes utilisées</h4>
+        {% for plateforme in plateformes %}
+            <a href="{{ path('public_plateformes_profil', {slug:plateforme.plateforme.slug}) }}">{{ plateforme.plateforme.nom }}</a>
+        {% else %}
+            -
+        {% endfor %}
+    </div>
+    </div>{% endblock %}

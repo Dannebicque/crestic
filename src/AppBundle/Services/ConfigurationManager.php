@@ -29,7 +29,7 @@ class ConfigurationManager {
 
     public function getFaxPrincipal()
     {
-        return $this->getData('faxPrincipal');
+        return $this->getData('fax');
     }
 
     public function getMail()

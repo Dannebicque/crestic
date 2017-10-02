@@ -34,9 +34,7 @@
 									{{ 'visiteur.organigramme.directeur'|trans }}
 									<br/>
 									{% for directeur in organigramme['directeur'] %}
-										<strong>
 											{{ directeur|linkMembre|raw }}
-										</strong>
 									{% endfor %}
 									<br/>
 
@@ -44,7 +42,7 @@
 									<br/>
 
 									{% for directeurAdjoint in organigramme['directeurAdjoint'] %}
-										<strong>{{ directeurAdjoint|linkMembre|raw }}</strong>
+										{{ directeurAdjoint|linkMembre|raw }}
 									{% endfor %}
 								</div>
 							</div>
@@ -54,12 +52,7 @@
 					<div class="row">
 						<div class="col-sm-12">
 							<div class="panel panel-default">
-								<div class="panel-heading">{{ 'visiteur.organigramme.conseil'|trans }}</div>
-								<div class="panel-body">
-									{% for conseilLaboratoire in organigramme['conseilLaboratoire'] %}
-										{{ conseilLaboratoire|linkMembre|raw }}
-									{% endfor %}
-								</div>
+								<div class="panel-heading">{{ 'visiteur.organigramme.conseil'|trans }} (16 membres)</div>
 							</div>
 						</div>
 					</div>
@@ -86,11 +79,9 @@
 						<div class="panel panel-danger">
 							<div class="panel-heading">
 								{{ 'visiteur.organigramme.departement'|trans }}
-								<strong>{{ departement.sigle }} - {{ departement.nom }} </strong><br/>
+									{{ departement.sigle }} - {{ departement.nom }}<br/>
 								{{ 'visiteur.organigramme.responsable'|trans }} :
-								<strong>
 									{{ departement.membreCrestic|linkMembre|raw }}
-								</strong>
 							</div>
 
 							<div class="panel-body">
@@ -106,7 +97,7 @@
 
 																<a href="{{ path('public_equipes_profil', {slug: equipe
 																	.slug}) }}" title="Profil
-								de {{ equipe.nom }}" target="_blank"><strong>{{ equipe.nom }}</strong><br/>
+								de {{ equipe.nom }}" target="_blank">{{ equipe.nom }}<br/>
 																	{{ equipe.nomlong }}</a>
 																<br/>
 															{{ 'visiteur.organigramme.responsable'|trans }} :

@@ -10,7 +10,7 @@
                 {{ projet.titre }}
             </b>
         </p>
-       {{ include('@App/Includes/inc.slider.html.twig', {image: projet.image, titre:projet.titre, sliders: sliders, type:'projets'}) }}
+        {{ include('@App/Includes/inc.slider.html.twig', {image: projet.image, titre:projet.titre, sliders: sliders, type:'projets'}) }}
 
         <!-- Begin Content 1 -->
         <div class="row mt40">
@@ -27,55 +27,58 @@
 
             <!-- Quick Info -->
             <div class="col-sm-6">
-                <div class="heading text-center mt30-xs">
-                    <h4>
-                        {{ 'visiteur.projet.informations'|trans }}
-                    </h4>
-                </div>
-
-                <dl class="dl-horizontal">
-                    <dt>
-                        {{ 'visiteur.projet.responsable'|trans }}
-                    </dt>
-                    <dd>
-                        {% if projet.responsable != null %}
-                            <a href="{{ path('public_membres_profil', {slug: projet.responsable.slug}) }}"
-                               title="Profil de {{ projet.responsable.display }}"
-                               target="_blank">{{ projet.responsable.display }}</a>
-                        {% else %}
-                            -
-                        {% endif %}
-                    </dd>
-                    <dt>
-                        {{ 'visiteur.projet.periode'|trans }}
-                    </dt>
-                    <dd>
-                        {{ projet.dateDebut|date('d/m/Y') }} - {{ projet.dateFin|date('d/m/Y') }}
-                    </dd>
-                    <dt>
-                        {{ 'visiteur.projet.identification'|trans }}
-                    </dt>
-                    <dd>
-                        {{ projet.identification }}
-                    </dd>
-                    <dt>
-                        {{ 'visiteur.projet.contact'|trans }}
-                    </dt>
-                    <dd>
-                        {% if projet.responsable != null %}
-                            <a href="mailto:{{ projet.responsable.email }}" target="_blank">{{ projet.responsable
-                                .email }}</a>
-                        {% endif %}
-                    </dd>
-                    <dt>
-                        {{ 'visiteur.projet.url'|trans }}
-                    </dt>
-                    <dd>
-                        <a href="{{ projet.url }}" target="_blank">{{ projet.url }}
-                        </a>
-                    </dd>
-                </dl>
                 <div class="row">
+                    <div class="col-sm-12">
+                        <div class="heading text-center mt30-xs">
+                            <h4>
+                                {{ 'visiteur.projet.informations'|trans }}
+                            </h4>
+                        </div>
+
+                        <dl class="dl-horizontal">
+                            <dt>
+                                {{ 'visiteur.projet.responsable'|trans }}
+                            </dt>
+                            <dd>
+                                {% if projet.responsable != null %}
+                                    <a href="{{ path('public_membres_profil', {slug: projet.responsable.slug}) }}"
+                                       title="Profil de {{ projet.responsable.display }}"
+                                       target="_blank">{{ projet.responsable.display }}</a>
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </dd>
+                            <dt>
+                                {{ 'visiteur.projet.periode'|trans }}
+                            </dt>
+                            <dd>
+                                {{ projet.dateDebut|date('d/m/Y') }} - {{ projet.dateFin|date('d/m/Y') }}
+                            </dd>
+                            <dt>
+                                {{ 'visiteur.projet.identification'|trans }}
+                            </dt>
+                            <dd>
+                                {{ projet.identification }}
+                            </dd>
+                            <dt>
+                                {{ 'visiteur.projet.contact'|trans }}
+                            </dt>
+                            <dd>
+                                {% if projet.responsable != null %}
+                                    <a href="mailto:{{ projet.responsable.email }}"
+                                       target="_blank">{{ projet.responsable
+                                        .email }}</a>
+                                {% endif %}
+                            </dd>
+                            <dt>
+                                {{ 'visiteur.projet.url'|trans }}
+                            </dt>
+                            <dd>
+                                <a href="{{ projet.url }}" target="_blank">{{ projet.url }}
+                                </a>
+                            </dd>
+                        </dl>
+                    </div>
                     <div class="col-sm-12">
                         <div class="heading text-center mt30-xs">
                             <h4>
@@ -161,20 +164,4 @@
             </div>
         </div>
     </div>
-{% endblock %}
-
-{% block javascripts %}
-    <script>
-        var div_carousel_sliders = $('#divCarouselSliders');
-        var div_carousel_height = '300px';
-        div_carousel_sliders.carousel();
-        $('#divCarouselSliders .carousel-inner').css('background-color', 'none');
-        $('#divCarouselSliders .carousel-caption').css('background-color', 'none');
-        $('#divCarouselSliders').css('max-height', div_carousel_height);
-        $('#divCarouselSliders').css('overflow', 'hidden');
-        $('#divCarouselSliders .item img').css('width', 'auto');
-        $('#divCarouselSliders .item img').css('height', div_carousel_height);
-        $('#divCarouselSliders .item img').css('margin', 'auto');
-
-    </script>
 {% endblock %}

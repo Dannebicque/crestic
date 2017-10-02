@@ -5,6 +5,7 @@ namespace AppBundle\Controller\Administration;
 use AppBundle\Entity\Plateformes;
 use AppBundle\Entity\Projets;
 use AppBundle\Entity\ProjetsHasEquipes;
+use AppBundle\Entity\ProjetsHasFinanceurs;
 use AppBundle\Entity\ProjetsHasMembres;
 use AppBundle\Entity\ProjetsHasPartenaires;
 use AppBundle\Entity\ProjetsHasPlateformes;
@@ -183,6 +184,12 @@ class ProjetsController extends Controller
             $t['partenaires'][$partenaire->getPartenaire()->getId()] = $partenaire;
         }
 
+        /** @var ProjetsHasFinanceurs $financeur */
+        foreach ($id->getFinanceurs() as $financeur)
+        {
+            $t['financeurs'][$financeur->getFinanceur()->getId()] = $financeur;
+        }
+
         return $this->render('@App/Administration/projets/options.html.twig', array(
             'projet'      => $id,
             't'           => $t,
@@ -191,6 +198,7 @@ class ProjetsController extends Controller
             'plateformes' => $this->getDoctrine()->getRepository('AppBundle:Plateformes')->findAllPlateformes(),
             'sliders'     => $this->getDoctrine()->getRepository('AppBundle:Slider')->findAllSlider(),
             'partenaires' => $this->getDoctrine()->getRepository('AppBundle:Partenaires')->findAllPartenaires(),
+            'financeurs' => $this->getDoctrine()->getRepository('AppBundle:Financeurs')->findAllFinanceurs(),
 
 
         ));
@@ -233,6 +241,13 @@ class ProjetsController extends Controller
                 $set          = 'setPartenaire';
                 $texte        = 'Partenaire associé au projet';
                 break;
+            case 'financeur':
+                $option       = $this->getDoctrine()->getRepository('AppBundle:Financeurs')->find($idoption);
+                $projetoption = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasFinanceurs')->findBy(array('financeur' => $idoption, 'projet' => $idprojet));
+                $e_m          = new ProjetsHasFinanceurs();
+                $set          = 'setFinanceur';
+                $texte        = 'Financeur associé au projet';
+                break;
             case 'slider':
                 $option       = $this->getDoctrine()->getRepository('AppBundle:Slider')->find($idoption);
                 $projetoption = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasSliders')->findBy(array('slider' => $idoption, 'projet' => $idprojet));
@@ -264,10 +279,9 @@ class ProjetsController extends Controller
             $em->persist($e_m);
             $em->flush();
             return new Response($texte, 200);
-        } else
-        {
-            return new Response('Erreur lors de la modification des options du projet', 500);
         }
+            return new Response('Erreur lors de la modification des options du projet', 500);
+
     }
 
     /**

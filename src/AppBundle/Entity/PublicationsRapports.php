@@ -13,7 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
 class PublicationsRapports  extends Publications
 {
     protected $type = 'rapport';
+    protected $couleur = "#7788AA";
 
+    public function getCouleur()
+    {
+        return $this->couleur;
+    }
     /**
      * @var integer
      *
@@ -29,13 +34,6 @@ class PublicationsRapports  extends Publications
      * @ORM\Column(name="numero", type="integer", nullable=true)
      */
     private $numero;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="ville", type="string", length=200, nullable=true)
-     */
-    private $ville = '';
 
     /**
      * @var string
@@ -76,30 +74,6 @@ class PublicationsRapports  extends Publications
     public function getNumero()
     {
         return $this->numero;
-    }
-
-    /**
-     * Set ville
-     *
-     * @param integer $ville
-     *
-     * @return PublicationsRapports
-     */
-    public function setVille($ville)
-    {
-        $this->ville = $ville;
-
-        return $this;
-    }
-
-    /**
-     * Get ville
-     *
-     * @return integer
-     */
-    public function getVille()
-    {
-        return $this->ville;
     }
 
     /**

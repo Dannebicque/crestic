@@ -20,16 +20,16 @@ class PublicationsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('titre', TextType::class, array('label' => 'Titre'))
-            ->add('resume', TextareaType::class, array('label' => 'Résumé'))
-            ->add('keywords', TextType::class, array('label' => 'Mots clés'))
-            ->add('pdfFile', FileType::class, array('label' => 'PDF'))
+            ->add('resume', TextareaType::class, array('label' => 'Résumé', 'required' => false))
+            ->add('keywords', TextType::class, array('label' => 'Mots clés', 'required' => false))
+            ->add('pdfFile', FileType::class, array('label' => 'PDF', 'required' => false))
             ->add('pdfVisible', CheckboxType::class, array('label' => 'PDF visible', 'required' => false))
             ->add('doi', TextType::class, array('label' => 'DOI', 'required' => false))
             ->add('url', TextType::class, array('label' => 'URL', 'required' => false))
             ->add('commentaire', TextareaType::class, array('label' => 'Commentaire libre', 'required' => false))
             ->add('pageDebut', TextType::class, array('label' => 'Page de début', 'required' => false))
             ->add('pageFin', TextType::class, array('label' => 'Page de fin', 'required' => false))
-            ->add('moisPublication', ChoiceType::class, array('label' => 'Mois de publication', 'choices' => array(
+            ->add('moisPublication', ChoiceType::class, array('label' => 'Mois de publication', 'required' => false, 'choices' => array(
                 'Janvier' => 1,
                 'Février' =>2,
                 'Mars' => 3,

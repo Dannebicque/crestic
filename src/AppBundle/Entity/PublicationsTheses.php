@@ -13,7 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
 class PublicationsTheses extends Publications
 {
     protected $type = 'these';
+    protected $couleur = "#817FB2";
 
+    public function getCouleur()
+    {
+        return $this->couleur;
+    }
     /**
      * @var integer
      *
@@ -43,6 +48,13 @@ class PublicationsTheses extends Publications
      * @ORM\Column(name="departement", type="string", length= 255, nullable=true)
      */
     private $departement;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="discipline", type="string", length= 255, nullable=true)
+     */
+    private $discipline;
 
     /**
      * @var string
@@ -278,5 +290,29 @@ class PublicationsTheses extends Publications
     public function getPhdorhdr()
     {
         return $this->phdorhdr;
+    }
+
+    /**
+     * Set discipline
+     *
+     * @param string $discipline
+     *
+     * @return PublicationsTheses
+     */
+    public function setDiscipline($discipline)
+    {
+        $this->discipline = $discipline;
+
+        return $this;
+    }
+
+    /**
+     * Get discipline
+     *
+     * @return string
+     */
+    public function getDiscipline()
+    {
+        return $this->discipline;
     }
 }

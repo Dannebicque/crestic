@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -28,10 +29,10 @@ class ProjetsResponsableType extends AbstractType
             ->add('url', TextType::class, array('label' => 'Site Web du projet'))
             ->add('budgetGlobal', TextType::class, array('label' => "Montant du budget global"))
             ->add('video')
-            ->add('projetInternational', CheckboxType::class, array('label' => 'Projet international'))
-            ->add('projetValorisation', CheckboxType::class, array('label' => 'Projet de valorisation'))
-            ->add('projetThese', CheckboxType::class, array('label' => 'Projet support d\une thèse'))
-            ->add('projetRi', CheckboxType::class, array('label' => 'Projet Relations Internationales'))
+            ->add('projetInternational', ChoiceType::class, array('label' => 'Projet international', 'choices' => array('Oui' => true, 'Non' => false), 'expanded' => true))
+            ->add('projetValorisation', ChoiceType::class, array('label' => 'Projet de valorisation', 'choices' => array('Oui' => true, 'Non' => false), 'expanded' => true))
+            ->add('projetThese', ChoiceType::class, array('label' => 'Projet support d\une thèse', 'choices' => array('Oui' => true, 'Non' => false), 'expanded' => true))
+            ->add('projetRi', ChoiceType::class, array('label' => 'Projet Relations Internationales', 'choices' => array('Oui' => true, 'Non' => false), 'expanded' => true))
             ;
     }
     

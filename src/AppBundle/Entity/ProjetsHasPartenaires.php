@@ -34,13 +34,6 @@ class ProjetsHasPartenaires
      */
     private $partenaire;
 
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="financeur", type="boolean",nullable=true)
-     */
-    private $financeur = False;
-
     public function __toString()
     {
         return $this->getProjet().' '.$this->getPartenaire();

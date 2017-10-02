@@ -5,6 +5,7 @@ namespace AppBundle\Form;
 use AppBundle\Entity\PublicationsBrevets;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -23,6 +24,7 @@ class PublicationsBrevetsType extends AbstractType
             ->add('dateDelivrance', DateType::class, array('label' => 'Date de délivrance', 'required' => false))
             ->add('numeroDelivrance', TextType::class, array('label' => 'Numéro de délivrance', 'required' => false))
             ->add('secteur', TextareaType::class, array('label' => 'Secteur', 'required' => false))
+            ->add('typeBrevet', ChoiceType::class, array('label' => 'Type de dépôt', 'choices' => array('Brevet' => 'brevet', 'Lettre d\'intention' => 'lettre'), 'expanded' =>true, 'required' => false))
             ->add('pays', EntityType::class, array('class' => 'AppBundle\Entity\Pays', 'choice_label' => 'nomFR', 'label' => 'Pays', 'required' => false));
 
         $builder->add('bar', PublicationsType::class, array(

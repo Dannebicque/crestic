@@ -21,9 +21,10 @@ class PublicationsChapitresType extends AbstractType
         $builder->add('titreOuvrage', TextType::class, array('label' => 'Titre de l\'ouvrage'))
             ->add('typeOuvrage', TextareaType::class, array('label' => 'Type d\'ouvrage', 'required' => false))
             ->add('serie', TextType::class, array('label' => 'Série', 'required' => false))
+            ->add('numero', TextType::class, array('label' => 'Numéro de chapitre', 'required' => false))
             ->add('isbn', TextType::class, array('label' => 'ISBN', 'required' => false))
             ->add('redacteurChef', TextType::class, array('label' => 'Rédacteur en chef', 'required' => false))
-            ->add('vulgarisation', CheckboxType::class, array('label' => 'Chapitre de culgarisation'))
+            ->add('vulgarisation', CheckboxType::class, array('label' => 'Chapitre de vulgarisation'))
             ->add('editeur', EntityType::class, array('class' => 'AppBundle\Entity\Editeurs', 'choice_label' => 'nom', 'label' => 'Editeur'));
 
         $builder->add('bar', PublicationsType::class, array(

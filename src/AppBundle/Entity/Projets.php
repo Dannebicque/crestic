@@ -80,6 +80,7 @@ class Projets
      *
      * @ORM\ManyToOne(targetEntity="MembresCrestic", inversedBy="equipes",cascade={"persist"})
      * @ORM\JoinColumn(name="responable_id",referencedColumnName="id")
+     * @ORM\OrderBy({"nom" = "ASC"})
      */
     private $responsable;
 
@@ -184,6 +185,12 @@ class Projets
      * @ORM\OneToMany(targetEntity="ProjetsHasPartenaires", mappedBy="projet", cascade={"persist"})
      */
     private $partenaires;
+
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProjetsHasFinanceurs", mappedBy="projet", cascade={"persist"})
+     */
+    private $financeurs;
 
     /**
      *
@@ -1011,5 +1018,39 @@ class Projets
     public function removeEmplois(\AppBundle\Entity\Emplois $emplois)
     {
         $this->emplois->removeElement($emplois);
+    }
+
+    /**
+     * Add financeur
+     *
+     * @param \AppBundle\Entity\ProjetsHasFinanceurs $financeur
+     *
+     * @return Projets
+     */
+    public function addFinanceur(\AppBundle\Entity\ProjetsHasFinanceurs $financeur)
+    {
+        $this->financeurs[] = $financeur;
+
+        return $this;
+    }
+
+    /**
+     * Remove financeur
+     *
+     * @param \AppBundle\Entity\ProjetsHasFinanceurs $financeur
+     */
+    public function removeFinanceur(\AppBundle\Entity\ProjetsHasFinanceurs $financeur)
+    {
+        $this->financeurs->removeElement($financeur);
+    }
+
+    /**
+     * Get financeurs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFinanceurs()
+    {
+        return $this->financeurs;
     }
 }

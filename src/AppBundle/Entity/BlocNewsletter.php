@@ -161,5 +161,45 @@ class BlocNewsletter
     {
         return $this->image;
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->newletter = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Add newletter
+     *
+     * @param \AppBundle\Entity\Newsletter $newletter
+     *
+     * @return BlocNewsletter
+     */
+    public function addNewletter(\AppBundle\Entity\Newsletter $newletter)
+    {
+        $this->newletter[] = $newletter;
+
+        return $this;
+    }
+
+    /**
+     * Remove newletter
+     *
+     * @param \AppBundle\Entity\Newsletter $newletter
+     */
+    public function removeNewletter(\AppBundle\Entity\Newsletter $newletter)
+    {
+        $this->newletter->removeElement($newletter);
+    }
+
+    /**
+     * Get newletter
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getNewletter()
+    {
+        return $this->newletter;
+    }
+}

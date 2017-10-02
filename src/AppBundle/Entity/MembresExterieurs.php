@@ -88,17 +88,6 @@ class MembresExterieurs
         return $this->id;
     }
 
-    /**
-     * Set id
-     *
-     * @return integer
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
-    }
-
     public function __toString()
     {
         return ucfirst($this->prenom).' '.ucfirst($this->nom);
@@ -175,30 +164,6 @@ class MembresExterieurs
     public function getNomLabo()
     {
         return $this->nomLabo;
-    }
-
-    /**
-     * Set situationLabo
-     *
-     * @param string $situationLabo
-     *
-     * @return MembresExterieurs
-     */
-    public function setSituationLabo($situationLabo)
-    {
-        $this->situationLabo = $situationLabo;
-
-        return $this;
-    }
-
-    /**
-     * Get situationLabo
-     *
-     * @return string
-     */
-    public function getSituationLabo()
-    {
-        return $this->situationLabo;
     }
 
     /**

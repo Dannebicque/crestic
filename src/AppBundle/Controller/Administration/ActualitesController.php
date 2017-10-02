@@ -52,8 +52,7 @@ class ActualitesController extends Controller
             $repository = $em->getRepository('Gedmo\\Translatable\\Entity\\Translation');
 
             $repository->translate($actualite, 'titre', 'en', $form->get('titreen')->getData())
-                ->translate($actualite, 'message', 'en', $form->get('messageen')->getData())
-                ->translate($actualite, 'keywords', 'en', $form->get('keywordsen')->getData());
+                ->translate($actualite, 'message', 'en', $form->get('messageen')->getData());
 
             $em->persist($actualite);
             $em->flush();

@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Liste des partenaires (financeur ou non)</h1>
+    <h1>Liste des partenaires</h1>
 
     <table class="table">
         <thead>
@@ -23,7 +23,7 @@
                 <td>{{ partenaire.nom }}</td>
                 <td>{{ partenaire.url }}</td>
                 <td>{% if partenaire.internationale %}Oui{% else %}Non{% endif %}</td>
-                <td>{% if partenaire.financeur %}Oui{% else %}Non{% endif %}</td>
+                <td>{{ partenaire.typePartenaireLong }}</td>
 
                 <td>
                     <a href="{{ path('administration_partenaires_show', { 'id': partenaire.id }) }}" class="btn btn-info"
