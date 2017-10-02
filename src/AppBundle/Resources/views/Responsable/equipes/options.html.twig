@@ -9,6 +9,9 @@
     <h2>{{ equipe.nomlong }}</h2>
     <br />
 
+    <a href="{{ path('responsable_equipes_options', { 'id': equipe.id }) }}" class="btn btn-success pull-right"><i class="fa fa-refresh"></i> Actualiser</a>
+    <br>
+
     <ul class="nav nav-tabs" role="tablist">
         <li class="active"><a href="#membres" role="tab" data-toggle="tab">Membres</a></li>
         <li><a href="#projets" role="tab" data-toggle="tab">Projets</a></li>
@@ -18,6 +21,7 @@
 
 <div class="tab-content tab-default tab-default">
     <div class="tab-pane active" id="membres">
+        <div class="alert alert-info">Cette partie vous permet d'associer les membres du CReSTIC à votre équipe.</div>
         <table class="table" id="listemembre">
             <thead>
             <tr>
@@ -42,6 +46,8 @@
         </table>
     </div>
     <div class="tab-pane" id="projets">
+        <div class="alert alert-info">Cette partie vous permet d'associer les projets du laboratoire à votre équipe. Si un projet n'apparaît pas, et que vous en êtes le responsable, <a href="{{ path('responsable_projets_new') }}">vous pouvez le créer ici</a></div>
+
         <table class="table" id="listeprojet">
             <thead>
             <tr>
@@ -87,6 +93,7 @@
         </table>
     </div>
     <div class="tab-pane" id="slider">
+        <div class="alert alert-info">Vous pouvez associer ici une image de slider à votre équipe. Le slider est le diaporama qui défile sur la page de votre équipe. Vous pouvez associer autant d'image que désiré. <a href="{{ path('responsable_slider_index') }}" target="_blank">Vous pouvez ajouter des images ici du slider ici</a>.</div>
         <table class="table" id="listeslider">
             <thead>
             <tr>
@@ -114,11 +121,11 @@
     <br />
     <div class="row">
         <div class="col-sm-9" style="text-align: right" >
-            <a href="{{ path('responsable_equipes_index') }}">Retour à la liste</a>
+            <a href="{{ path('responsable_equipes_index') }}" class="btn btn-success">Paramètrage terminé, retour à la liste</a>
         </div>
         <div class="col-sm-3" style="text-align: right" >
             <a href="{{ path('responsable_equipes_edit', { 'id': equipe.id }) }}" class="btn
-            btn-warning btn-block">Modifier l'équipe</a>
+            btn-warning btn-block">Modifier les informations de l'équipe</a>
         </div>
     </div>
 

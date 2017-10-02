@@ -96,6 +96,12 @@ class Slider
      */
     private $plateformes;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="MembresCrestic")
+     * @ORM\OrderBy({"nom" = "ASC"})
+     */
+    private $auteur;
+
     public function __construct()
     {
         $this->equipes      = new ArrayCollection();
@@ -391,5 +397,29 @@ class Slider
     public function getPlateformes()
     {
         return $this->plateformes;
+    }
+
+    /**
+     * Set auteur
+     *
+     * @param \AppBundle\Entity\MembresCrestic $auteur
+     *
+     * @return Slider
+     */
+    public function setAuteur(\AppBundle\Entity\MembresCrestic $auteur = null)
+    {
+        $this->auteur = $auteur;
+
+        return $this;
+    }
+
+    /**
+     * Get auteur
+     *
+     * @return \AppBundle\Entity\MembresCrestic
+     */
+    public function getAuteur()
+    {
+        return $this->auteur;
     }
 }

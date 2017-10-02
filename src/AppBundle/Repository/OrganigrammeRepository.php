@@ -12,16 +12,17 @@ class OrganigrammeRepository extends \Doctrine\ORM\EntityRepository
 {
 
     /**
-     * @return array
+     * @param $responsabiliteFonction
+     *
+     * @return \Doctrine\ORM\QueryBuilder
      */
-
     public function findAllOrganigrammeBuilder($responsabiliteFonction)
     {
         return $this->createQueryBuilder('a','a.id')
             ->select ('a')
             ->where ('a.responsabiliteFonction = ?1' )
             ->innerJoin('a.membreCrestic','b')
-            ->orderBy('b.nom','asc')
+            ->orderBy('a.ordre','asc')
             ->setParameter(1,$responsabiliteFonction);
     }
 
@@ -33,6 +34,8 @@ class OrganigrammeRepository extends \Doctrine\ORM\EntityRepository
     {
         $result = array();
         $array = $this->findAllOrganigrammeBuilder($responsabiliteFonction)->getQuery()->getResult();
+
+
         foreach ($array as $key=>$value)
         {
             $result[] = $value->getMembreCrestic();

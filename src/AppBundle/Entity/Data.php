@@ -6,7 +6,7 @@
  * Time: 22:14
  */
 
-namespace DA\KernelBundle\Entity;
+namespace AppBundle\Entity;
 
 /**
  * Class Configuration
@@ -25,8 +25,31 @@ class Data
         array('code' => 'ING', 'libelle' => 'Ingénieurs et techniciens'),
         array('code' => 'PAST', 'libelle' => 'PAST/MAST'),
         array('code' => 'PDOC', 'libelle' => 'ATER, Post-Doctorants, Ingénieurs contractuels'),
-        array('code' => 'DOC', 'libelle' => 'Doctorants'),
+        array('code' => 'DOC', 'libelle' => 'Doctorants URCA'),
+        array('code' => 'DOCHU', 'libelle' => 'Doctorants Hors URCA'),
         array('code' => 'ADM', 'libelle' => 'Personnels administratifs'),
     );
+
+    const TAB_STATUS_FORM = array(
+        'Professeurs' => 'PR',
+        'Maîtres de Conférences' => 'MCF',
+        'Prof. Praticien Hospitalier' => 'PUPH',
+        'MCF Praticien Hospitalier' => 'MCUPH',
+        'Chercheurs Associés' => 'CAS',
+        'Ingénieurs et techniciens' => 'ING',
+        'PAST/MAST' => 'PAST',
+        'ATER, Post-Doctorants, Ingénieurs contractuels' => 'PDOC',
+        'Doctorants URCA' => 'DOC',
+        'Doctorants Hors URCA' => 'DOCHU',
+        'Personnels administratifs' => 'ADM',
+    );
+
+    const TAB_ORGANIGRAMME = array(
+        "Directeur" => "Directeur",
+        "Directeur Adjoint" => "Directeur Adjoint",
+        "Secrétaire" => "Secrétaire",
+        "Technicien" => "Technicien"
+    );
+
 
 }

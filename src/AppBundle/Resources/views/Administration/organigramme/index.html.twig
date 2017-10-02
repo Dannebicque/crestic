@@ -1,0 +1,38 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+    <a href="{{ path('administration_organigramme_index') }}">Organigramme</a> /
+{% endblock %}
+
+{% block content %}
+    <h1>Organigrammes list</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Membre</th>
+                <th>Fonction</th>
+                <th>Ordre</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for organigramme in organigrammes %}
+            <tr>
+                <td>{{ organigramme.membreCrestic.display }}</td>
+                <td>{{ organigramme.responsabiliteFonction }}</td>
+                <td>{{ organigramme.ordre }}</td>
+                <td>
+                    <a href="{{ path('administration_organigramme_edit', { 'id': organigramme.id }) }}" class="btn
+                            btn-warning" title="Modifier"><i class="fa fa-pencil"></i></a>
+                    <a href="{{ path('administration_organigramme_delete', { 'id': organigramme.id }) }}" class="btn
+                            btn-danger" title="Supprimer"><i class="fa fa-times"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('administration_organigramme_new') }}" class="btn btn-primary">Ajouter un membre dans l'organigramme</a>
+
+{% endblock %}

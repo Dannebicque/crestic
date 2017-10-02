@@ -29,11 +29,18 @@ class Organigramme
     private $membreCrestic;
 
     /**
-     * @var boolean
+     * @var string
      *
      * @ORM\Column(name="responsabiliteFonction", type="text",nullable=true)
      */
     private $responsabiliteFonction;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="order", type="integer")
+     */
+    private $ordre = 1;
 
 
     public function __toString()
@@ -48,17 +55,6 @@ class Organigramme
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set id
-     *
-     * @return integer
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
     }
 
     /**
@@ -108,5 +104,29 @@ class Organigramme
     public function getMembreCrestic()
     {
         return $this->membreCrestic;
+    }
+
+    /**
+     * Set ordre
+     *
+     * @param integer $ordre
+     *
+     * @return Organigramme
+     */
+    public function setOrdre($ordre)
+    {
+        $this->ordre = $ordre;
+
+        return $this;
+    }
+
+    /**
+     * Get ordre
+     *
+     * @return integer
+     */
+    public function getOrdre()
+    {
+        return $this->ordre;
     }
 }

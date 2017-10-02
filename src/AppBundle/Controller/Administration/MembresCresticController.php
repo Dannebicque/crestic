@@ -41,7 +41,7 @@ class MembresCresticController extends Controller
     public function newAction(Request $request)
     {
         $membresCrestic = new Membrescrestic();
-        $form           = $this->createForm('AppBundle\Form\MembresCresticType', $membresCrestic);
+        $form           = $this->createForm('AppBundle\Form\MembresCrestic-Type', $membresCrestic);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
@@ -116,7 +116,7 @@ class MembresCresticController extends Controller
     public function editAction(Request $request, MembresCrestic $membresCrestic)
     {
         $deleteForm = $this->createDeleteForm($membresCrestic);
-        $editForm   = $this->createForm('AppBundle\Form\MembresCresticType', $membresCrestic);
+        $editForm   = $this->createForm('AppBundle\Form\MembresCresticCompletType', $membresCrestic);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid())
