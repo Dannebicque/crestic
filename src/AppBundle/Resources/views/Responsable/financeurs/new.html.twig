@@ -1,0 +1,16 @@
+{% extends 'base-responsable.html.twig' %}
+
+{% block breadcrumbs %}
+    <a href="{{ path('responsable_financeurs_index') }}">Financeurs</a> / Ajout d'un financeur /
+{% endblock %}
+
+{% block content %}
+    <h1>Ajout d'un financeur</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+    {{ include('@App/Responsable/footer-new.html.twig', {var: 'financeurs'}) }}
+    {{ form_end(form) }}
+
+
+{% endblock %}

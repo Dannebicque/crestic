@@ -8,6 +8,9 @@
     <h1>Options de la plateforme : {{ plateforme.nom }}</h1>
     <br />
 
+    <a href="{{ path('responsable_plateformes_options', { 'id': plateforme.id }) }}" class="btn btn-success pull-right"><i class="fa fa-refresh"></i> Actualiser</a>
+    <br>
+
     <ul class="nav nav-tabs" role="tablist">
         <li class="active"><a href="#projets" role="tab" data-toggle="tab">Projets</a></li>
         <li><a href="#slider" role="tab" data-toggle="tab">Slider</a></li>
@@ -15,6 +18,8 @@
 
 <div class="tab-content tab-default tab-default">
     <div class="tab-pane" id="slider">
+        <div class="alert alert-info">Vous pouvez associer ici une image de slider à votre équipe. Le slider est le diaporama qui défile sur la page de votre équipe. Vous pouvez associer autant d'image que désiré. <a href="{{ path('responsable_slider_index') }}" target="_blank">Vous pouvez ajouter des images ici du slider ici</a>.</div>
+
         <table class="table" id="listeslider">
             <thead>
             <tr>

@@ -180,11 +180,12 @@ abstract class Publications
     private $nbPages;
 
     /**
+    /**
      * @var integer
      *
      * @ORM\Column(name="moisPublication", type="integer", nullable=true)
      */
-    private $moisPublication;
+    private $moisPublication = 0;
 
     /**
      * @var integer
@@ -205,6 +206,7 @@ abstract class Publications
      */
     public function __construct()
     {
+        $this->anneePublication = date('Y');
         $this->membres      = new \Doctrine\Common\Collections\ArrayCollection();
         $this->equipes      = new \Doctrine\Common\Collections\ArrayCollection();
         $this->plateformes  = new \Doctrine\Common\Collections\ArrayCollection();
@@ -351,6 +353,26 @@ abstract class Publications
     {
         return $this->doi;
     }
+
+    /**
+     * Get doi
+     *
+     * @return string
+     */
+    public function getDoiLink()
+    {
+        $prefix = 'http://dx.doi.org/';
+        if (substr($this->doi, 0, 4) == 'doi:')
+        {
+            $link = $prefix.substr($this->doi, 4, strlen($this->doi)-4);
+        } else{
+            $link = $prefix.$this->doi;
+        }
+
+        return $link;
+    }
+
+
 
     /**
      * Set doi
@@ -866,5 +888,22 @@ abstract class Publications
     public function getHal()
     {
         return $this->hal;
+    }
+
+    public static function castToMe($obj) {
+
+        $class = get_called_class();
+        $newObj = New $class();
+
+        foreach (get_class_vars(get_class($newObj)) as $property => $value) {
+            if (method_exists($obj, 'get' . ucfirst($property)) && method_exists($newObj, 'set' . ucfirst($property))) {
+                $set = 'set' . ucfirst($property);
+                if (!in_array($set, array('setPdfFile'))) {
+                    $newObj->{'set' . ucfirst($property)}($obj->{'get' . ucfirst($property)}());
+                }
+            }
+        }
+
+        return $newObj;
     }
 }

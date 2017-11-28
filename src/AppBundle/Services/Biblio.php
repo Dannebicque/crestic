@@ -43,82 +43,119 @@ class Biblio
                         $result .= ', ' . $entity->getPays()->getNomEn() . ' Patent';
                     }
 
-                    if ($entity->getNumeroDelivrance() != '' && $entity->getNumeroDelivrance() != Null)
+                    if ($entity->getNumeroDelivrance() !== '' && $entity->getNumeroDelivrance() !== Null)
                     {
                         $result .= ', ' . $entity->getNumeroDelivrance();
                     }
 
-                    if ($entity->getMoisPublicationAbbrev() != '')
+                    if ($entity->getMoisPublicationAbbrev() !== '')
                     {
                         $result .= ', ' . $entity->getMoisPublicationAbbrev();
                     }
 
-                    if ($entity->getAnneePublication() != '' && $entity->getAnneePublication() != 0)
+                    if ($entity->getAnneePublication() !== '' && $entity->getAnneePublication() !== 0)
                     {
                         $result .= ', ' . $entity->getAnneePublication();
                     }
 
                     break;
                 case 'PublicationsTheses':
-                    $result .= 'M.S. thesis';
-                    if ($entity->getAbbrevDepartement() != '')
+                    if ($entity->getPhdorhdr() === 'phd')
+                    {
+                        $result .= ' M.S. thesis';
+                    } else
+                    {
+                        $result .= ' Habilitation Thesis';
+                    }
+
+                    if ($entity->getAbbrevDepartement() !== '')
                     {
                         $result .= ', ' . $entity->getAbbrevDepartement();
-                    } elseif ($entity->getDepartement() != '')
+                    } elseif ($entity->getDepartement() !== '')
                     {
                         $result .= ', ' . $entity->getDepartement();
                     }
 
-                    if ($entity->getAbbrevUniversite() != '')
+                    if ($entity->getAbbrevUniversite() !== '')
                     {
                         $result .= ', ' . $entity->getAbbrevUniversite();
-                    } elseif ($entity->getUniversite() != '')
+                    } elseif ($entity->getUniversite() !== '')
                     {
                         $result .= ', ' . $entity->getUniversite();
                     }
 
-                    if ($entity->getVille() != '')
+                    if ($entity->getVille() !== '')
                     {
                         $result .= ', ' . $entity->getVille();
                     }
 
-                    if ($entity->getPays() != null)
+                    if ($entity->getPays() !== null)
                     {
                         $result .= ', ' . $entity->getPays()->getNomEn();
                     }
 
-                    if ($entity->getAnneePublication() != '' && $entity->getAnneePublication() != 0)
+                    if ($entity->getAnneePublication() !== '' && $entity->getAnneePublication() !== 0)
                     {
                         $result .= ', ' . $entity->getAnneePublication();
-                    } else if ($entity->getDateSoutenance() != null && $entity->getDateSoutenance() != '' && $entity->getDateSoutenance() != '0000-00-00')
+                    } else if ($entity->getDateSoutenance() !== null && $entity->getDateSoutenance() !== '' && $entity->getDateSoutenance() !== '0000-00-00')
                     {
                         $result .= ', ' . $entity->getDateSoutenance()->format('Y');
                     }
                     break;
                 case 'PublicationsChapitres':
+                    $result .= ' in <i>' . $entity->getTitreOuvrage() . '</i>, ';
+                    if ($entity->getEditeur() !== null)
+                    {
+                        if ($entity->getEditeur()->getVille() !== '')
+                        {
+                            $result .= ', ' . $entity->getEditeur()->getVille();
+                        }
 
+                        if ($entity->getEditeur()->getPays() !== null)
+                        {
+                            $result .= ', ' . $entity->getEditeur()->getPays()->getNomEn();
+                        }
+
+                        if ($entity->getEditeur()->getNom() !== '')
+                        {
+                            $result .= ': ' . $entity->getEditeur()->getNom();
+                        }
+                    } else
+                    {
+                        $result .= ' #err. editeur# ';
+                    }
+
+                    if ($entity->getAnneePublication() !== '' && $entity->getAnneePublication() !== 0)
+                    {
+                        $result .= ', ' . $entity->getAnneePublication();
+                    }
+
+                    if ($entity->getPagination() !== '')
+                    {
+                        $result .= ', ' . $entity->getPagination();
+                    }
                     break;
                 case 'PublicationsConferences':
                     if ($entity->getConference() !== null)
                     {
                         $result .= ' in <i>' . $entity->getConference()->getSigleConference() . '</i>';
 
-                        if ($entity->getConference()->getVille() != '')
+                        if ($entity->getConference()->getVille() !== '')
                         {
                             $result .= ', ' . $entity->getConference()->getVille();
                         }
 
-                        if ($entity->getConference()->getPays() != null)
+                        if ($entity->getConference()->getPays() !== null)
                         {
                             $result .= ', ' . $entity->getConference()->getPays()->getNomEn();
                         }
 
-                        if ($entity->getAnneePublication() != '' && $entity->getAnneePublication() != 0)
+                        if ($entity->getAnneePublication() !== '' && $entity->getAnneePublication() !== 0)
                         {
                             $result .= ', ' . $entity->getAnneePublication();
                         }
 
-                        if ($entity->getPagination() != '')
+                        if ($entity->getPagination() !== '')
                         {
                             $result .= ', ' . $entity->getPagination();
                         }
@@ -131,7 +168,7 @@ class Biblio
                     $result .= ' in <i>' . $entity->getTitreOuvrage() . '</i>, x th ed.';
                     if ($entity->getEditeur() !== null)
                     {
-                        if ($entity->getEditeur()->getVille() != '')
+                        if ($entity->getEditeur()->getVille() !== '')
                         {
                             $result .= ', ' . $entity->getEditeur()->getVille();
                         }
@@ -141,7 +178,7 @@ class Biblio
                             $result .= ', ' . $entity->getEditeur()->getPays()->getNomEn();
                         }
 
-                        if ($entity->getEditeur()->getNom() != '')
+                        if ($entity->getEditeur()->getNom() !== '')
                         {
                             $result .= ': ' . $entity->getEditeur()->getNom();
                         }
@@ -150,89 +187,78 @@ class Biblio
                         $result .= ' #err. editeur# ';
                     }
 
-                    if ($entity->getAnneePublication() != '' && $entity->getAnneePublication() != 0)
+                    if ($entity->getAnneePublication() !== '' && $entity->getAnneePublication() !== 0)
                     {
                         $result .= ', ' . $entity->getAnneePublication();
                     }
 
-                    if ($entity->getPagination() != '')
+                    if ($entity->getPagination() !== '')
                     {
                         $result .= ', ' . $entity->getPagination();
                     }
 
                     break;
                 case 'PublicationsRapports':
-                    if ($entity->getAbbrevCompany() != '')
+                    if ($entity->getAbbrevCompany() !== '')
                     {
                         $result .= ', ' . $entity->getAbbrevCompany();
                     }
 
-                    if ($entity->getVille() != '')
-                    {
-                        $result .= ', ' . $entity->getVille();
-                    }
-
-                    if ($entity->getAnneePublication() != '' && $entity->getAnneePublication() != 0)
+                    if ($entity->getAnneePublication() !== '' && $entity->getAnneePublication() !== 0)
                     {
                         $result .= ', ' . $entity->getAnneePublication();
                     }
                     break;
                 case 'PublicationsRevues':
-                    if ($entity->getRevue() != null)
+                    if ($entity->getRevue() !== null)
                     {
 
                         //A.J. Jakeman, Elsevier, Environmental Modelling & Software
 
-                        if ($entity->getRedacteurChef() != '')
+                        if ($entity->getRedacteurChef() !== '')
                         {
                             $result .= ', ' . $entity->getRedacteurChef();
                         }
 
-                        if ($entity->getRevue()->getEditeur() != null)
+                        if ($entity->getRevue()->getEditeur() !== null)
                         {
                             $result .= ', ' . $entity->getRevue()->getEditeur()->getNom();
                         }
 
-                        if ($entity->getRevue()->getSigleRevue() != '')
-                        {
-                            $result .= ', ' . $entity->getRevue()->getSigleRevue();
-                        } else
-                        {
-                            $result .= ', ' . $entity->getRevue()->getTitreRevue();
-                        }
+                        $result .= ', ' . $entity->getRevue()->getTitreRevue();
 
-                        if ($entity->getVolume() != '')
+                        if ($entity->getVolume() !== '')
                         {
                             $result .= ', ' . $entity->getVolume();
 
-                            if ($entity->getNumero() != '')
+                            if ($entity->getNumero() !== '')
                             {
                                 $result .= '(' . $entity->getNumero() . ')';
                             }
 
-                            if ($entity->getPagination() != '')
+                            if ($entity->getPagination() !== '')
                             {
                                 $result .= ':' . $entity->getPagination();
                             }
                         } else
                         {
-                            if ($entity->getPagination() != '')
+                            if ($entity->getPagination() !== '')
                             {
                                 $result .= ', pp. ' . $entity->getPagination();
                             }
                         }
 
 
-                        if ($entity->getMoisPublicationAbbrev() != '')
+                        if ($entity->getMoisPublicationAbbrev() !== '')
                         {
                             $result .= ', ' . $entity->getMoisPublicationAbbrev();
-                            if ($entity->getAnneePublication() != '')
+                            if ($entity->getAnneePublication() !== '')
                             {
                                 $result .= ' ' . $entity->getAnneePublication();
                             }
                         } else
                         {
-                            if ($entity->getAnneePublication() != '')
+                            if ($entity->getAnneePublication() !== '')
                             {
                                 $result .= ', ' . $entity->getAnneePublication();
                             }
@@ -323,7 +349,7 @@ class Biblio
                 break;
             }
 
-            case 'CAppBundle\Entity\PublicationsChapitres' :
+            case 'AppBundle\Entity\PublicationsChapitres' :
             {
                 $result = 'PublicationsChapitres';
                 break;

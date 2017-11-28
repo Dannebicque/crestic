@@ -486,4 +486,11 @@ class Conferences
         //Cachan, France, May 14-16, 2014.
         return 'conférence';
     }
+
+    public function getjson()
+    {
+        return array('id' => $this->id,
+                     'nom' => $this->nomConference,
+                     'sigle' => $this->sigleConference);
+    }
 }

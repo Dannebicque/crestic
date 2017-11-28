@@ -38,7 +38,7 @@ class Organigramme
     /**
      * @var integer
      *
-     * @ORM\Column(name="order", type="integer")
+     * @ORM\Column(name="ordre", type="integer")
      */
     private $ordre = 1;
 

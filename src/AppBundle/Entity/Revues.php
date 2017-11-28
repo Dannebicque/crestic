@@ -41,7 +41,7 @@ class Revues
      *
      * @ORM\Column(name="internationale", type="boolean")
      */
-    private $internationale;
+    private $internationale = true;
 
     /**
      * @var float
@@ -305,13 +305,13 @@ class Revues
 
     public function display()
     {
-        if ($this->sigleRevue != '')
+        if ($this->sigleRevue !== '')
         {
             return $this->sigleRevue.', '.$this->titreRevue;
-        } else
-        {
-            return $this->titreRevue;
         }
+
+        return $this->titreRevue;
+
     }
 
     /**
@@ -384,5 +384,12 @@ class Revues
     public function getUpdated()
     {
         return $this->updated;
+    }
+
+    public function getjson()
+    {
+        return array('id' => $this->id,
+            'titre' => $this->titreRevue,
+            'sigle' => $this->sigleRevue);
     }
 }

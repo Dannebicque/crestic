@@ -2,7 +2,7 @@
 
 namespace AppBundle\Form;
 
-use DA\KernelBundle\Entity\Data;
+use AppBundle\Entity\Data;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 
-class Type extends AbstractType
+class MembresCresticType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -23,8 +23,8 @@ class Type extends AbstractType
             ->add('prenom', TextType::class, array('required' => true, 'label' => 'Prénom'))
             ->add('cnu', ChoiceType::class, array('choices' => array('61' => '61', '27' => '27'), 'required' => false, 'label' => 'CNU'))
             ->add('status', ChoiceType::class, array(
-                'choices'    => Data::TAB_STATUS_FORM
-                , 'required' => true, 'label' => 'Statut',
+                'choices'    => Data::TAB_STATUS_FORM,
+                'required' => true, 'label' => 'Statut',
             ))
             ->add('site', ChoiceType::class, array(
                 'choices'    => array(
@@ -41,7 +41,7 @@ class Type extends AbstractType
             ->add('datenomination', DateType::class, array('required' => false, 'label' => 'Date de nomination'))
             ->add('email', TextType::class, array('required' => true, 'label' => 'Email'))
             ->add('username', TextType::class, array('required' => true, 'label' => 'Login (Urca si possible)'))
-            ->add('membreConseilLabo', CheckboxType::class, array('required' => true, 'label' => 'Membre du Conseil de laboratoire'))
+            ->add('membreConseilLabo', ChoiceType::class, array('required' => true, 'label' => 'Membre du Conseil de laboratoire','choices' => array('Oui' => true, 'Non' => false), 'expanded' => true ))
 
             ->add('role', ChoiceType::class, array(
                 'choices'  => array(

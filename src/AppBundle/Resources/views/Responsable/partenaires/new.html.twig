@@ -1,0 +1,16 @@
+{% extends 'base-responsable.html.twig' %}
+
+{% block breadcrumbs %}
+    <a href="{{ path('responsable_partenaires_index') }}">Partenaires</a> / Ajout d'un partenaire /
+{% endblock %}
+
+{% block content %}
+    <h1>Ajout d'un partenaire</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+    {{ include('@App/Responsable/footer-new.html.twig', {var: 'partenaires'}) }}
+    {{ form_end(form) }}
+
+
+{% endblock %}

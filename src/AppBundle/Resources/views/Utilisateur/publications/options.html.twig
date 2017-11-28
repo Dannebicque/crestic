@@ -23,6 +23,10 @@
 				Commencer à saisir les premières lettres du nom de l'auteur
 			</div>
 		</div>
+
+		<div class="form-group">
+			<label class="col-sm-3"><a href="#modalAddAuteur" id="addAuteur" data-toggle="modal">L'auteur n'est pas dans la liste ?</a></label>
+		</div>
 	</div>
 	<div class="row">
 		<div class="col-sm-12" id="listeauteurs">
@@ -111,6 +115,26 @@
 			<a href="{{ path('utilisateur_publications_index') }}" class="btn btn-success">Terminer</a>&nbsp;&nbsp;
 		</div>
 	</div>
+
+	<!-- Default Modal -->
+	<div class="modal fade" id="modalAddAuteur" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title" id="defaultModalLabel">Ajout d'un co-auteur</h4>
+				</div>
+				<div class="modal-body" id="body-auteur">
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-rw btn-warning" data-dismiss="modal">Annuler</button>
+					<button type="button" class="btn btn-rw btn-success" data-dismiss="modal" id="btnAddAuteur">Ajouter</button>
+				</div>
+			</div><!-- /modal content -->
+		</div><!-- /modal dialog -->
+	</div><!-- /modal holder -->
+	<!-- End Default Modal -->
 {% endblock %}
 
 	{% block javascripts %}
@@ -118,6 +142,12 @@
             $liste = $('#listeauteurs');
 
             $(document).ready(function (e) {
+
+                $('#addAuteur').click(function(){
+                    $('#body-auteur').empty().load("{{ path('utilisateur_auteur_ajax_modal') }}");
+
+				});
+
 				$('#auteur').keyup(function () {
 					$val = $(this).val();
 					$resultat = $('#resultats');
@@ -146,41 +176,8 @@
 										dataType: 'JSON',
 										method: 'POST',
 										success: function (data) {
-											$html = '<table class="table">';
-
-											$.each(data, function (index) {
-												auteur = data[index];
-												disabledup = '';
-												disableddown = '';
-												if (auteur.position === 1) {
-													disabledup = 'disabled';
-												}
-
-												if (auteur.position === data.length) {
-													disableddown = 'disabled';
-												}
-												$html = $html + '<tr id="lig_'+auteur.id+'_'+auteur.type+'">';
-												$html = $html + '<td>' + auteur.position + '</td>';
-												$html = $html + '<td>';
-												$html = $html + auteur.prenom + " " + auteur.nom;
-												$html = $html + '</td>';
-												$html = $html + '<td style="width:20%">';
-												$html = $html + '<button class="btn btn-primary auteur-up" ' +
-													disabledup + ' data-auteur="'+auteur.id+'" data-type="'+auteur.type+'"><span class="fa ' +
-													'fa-arrow-circle-o-up"></span></button>';
-												$html = $html + '<button class="btn btn-primary auteur-down" ' + disableddown +
-													' data-auteur="'+auteur.id+'" data-type="'+auteur.type+'"><span class="fa fa-arrow-circle-o-down"></span></button>';
-												$html = $html + '<a href="'+auteur.link+'" target="_blank" class="btn btn-info"><span class="fa ' +
-													'fa-eye"></span></a>';
-												$html = $html + '<button class="btn btn-danger supprimer" data-auteur="'+auteur.id+'" data-type="'+auteur.type+'"><span class="fa ' +
-													'fa-times"></span></button>';
-												$html = $html + '</td>';
-												$html = $html + '</tr>';
-
-											});
-											$html = $html + '</table>';
-											$liste.empty().append($html);
-										}
+                                            updateListe(data);
+                                        }
 									});
 								});
 							},
@@ -242,6 +239,66 @@
 					});
 				}
 			});
+
+            $(document).on('click', '#btnAddAuteur', function (e){
+                e.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ path('utilisateur_auteur_ajax_modal') }}",
+                    data: $('form[name="appbundle_membresexterieurs"]').serialize()
+                }).done(function(data) {
+                    $.ajax({
+                        url: "{{ path('ajax_add_auteur') }}",
+                        data: {'auteur': data.id, 'publication': {{ publication.id }},
+                            'type':'ext' },
+                        dataType: 'JSON',
+                        method: 'POST',
+                        success: function (data) {
+                            updateListe(data);
+                        }
+                    });
+                }).fail(function(data) {
+                    // Optionally alert the user of an error here...
+                });
+            });
+
+            function updateListe(data)
+			{
+                $html = '<table class="table">';
+
+                $.each(data, function (index) {
+                    auteur = data[index];
+                    disabledup = '';
+                    disableddown = '';
+                    if (auteur.position === 1) {
+                        disabledup = 'disabled';
+                    }
+
+                    if (auteur.position === data.length) {
+                        disableddown = 'disabled';
+                    }
+                    $html = $html + '<tr id="lig_'+auteur.id+'_'+auteur.type+'">';
+                    $html = $html + '<td>' + auteur.position + '</td>';
+                    $html = $html + '<td>';
+                    $html = $html + auteur.prenom + " " + auteur.nom;
+                    $html = $html + '</td>';
+                    $html = $html + '<td style="width:20%">';
+                    $html = $html + '<button class="btn btn-primary auteur-up" ' +
+                        disabledup + ' data-auteur="'+auteur.id+'" data-type="'+auteur.type+'"><span class="fa ' +
+                        'fa-arrow-circle-o-up"></span></button>';
+                    $html = $html + '<button class="btn btn-primary auteur-down" ' + disableddown +
+                        ' data-auteur="'+auteur.id+'" data-type="'+auteur.type+'"><span class="fa fa-arrow-circle-o-down"></span></button>';
+                    $html = $html + '<a href="'+auteur.link+'" target="_blank" class="btn btn-info"><span class="fa ' +
+                        'fa-eye"></span></a>';
+                    $html = $html + '<button class="btn btn-danger supprimer" data-auteur="'+auteur.id+'" data-type="'+auteur.type+'"><span class="fa ' +
+                        'fa-times"></span></button>';
+                    $html = $html + '</td>';
+                    $html = $html + '</tr>';
+
+                });
+                $html = $html + '</table>';
+                $liste.empty().append($html);
+			}
 
             function auteurUpDown($obj, $sens)
             {

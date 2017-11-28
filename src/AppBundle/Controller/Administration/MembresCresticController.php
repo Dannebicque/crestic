@@ -3,6 +3,7 @@
 namespace AppBundle\Controller\Administration;
 
 use AppBundle\Entity\MembresCrestic;
+use AppBundle\Form\MembresCresticType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -41,7 +42,7 @@ class MembresCresticController extends Controller
     public function newAction(Request $request)
     {
         $membresCrestic = new Membrescrestic();
-        $form           = $this->createForm('AppBundle\Form\MembresCrestic-Type', $membresCrestic);
+        $form           = $this->createForm(MembresCresticType::class, $membresCrestic);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
@@ -66,7 +67,7 @@ class MembresCresticController extends Controller
 
             $this->get('my.mailer')->sendMailFirstConnexion($fuser, $password);
 
-            //return $this->redirectToRoute('administration_membres_show_light', array('id' => $fuser->getId()));
+            return $this->redirectToRoute('administration_membres_show_light', array('id' => $fuser->getId()));
         }
 
         return $this->render('@App/Administration/membrescrestic/new.html.twig', array(

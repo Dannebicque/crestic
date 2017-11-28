@@ -1,4 +1,4 @@
-{% for partenaire in partenaires if partenaire.partenaire.financeur == finance %}
+{% for partenaire in partenaires %}
     <div class="col-sm-3"  style="text-align: center">
         <a href="{{ partenaire.partenaire.url }}" target="_blank"><img src="{{ asset('uploads/partenaires/'~partenaire.partenaire.image)|imagine_filter('partenaire')  }}" alt="logo" /><br>
             {% if partenaire.partenaire.internationale == true %}<span class="fa fa-globe"></span> {% endif %}{{ partenaire.partenaire.nom }}

@@ -4,7 +4,7 @@
 		<th></th>
 	</tr>
 	{% for publication in publications %}
-		<tr>
+		<tr id="ligne_{{ publication.id }}">
 			<td>{{ publication.titre }}</td>
 			<td>
 				<a href="{{ path('utilisateur_publications_etape2', { 'id': publication.id }) }}" class="btn
@@ -16,7 +16,10 @@
                             btn-warning" data-toggle="tooltip" data-placement="bottom" title="Modifier
                              les informations de la publication"><i class="fa
                             fa-pencil"></i></a>
-
+				<a href="{{ path('utilisateur_publication_switch', { 'id': publication.id , type:type}) }}" class="btn btn-danger" data-toggle="modal" data-placement="bottom" title="Modifier le type de publication"><i class="fa fa-exchange"></i></a>
+				<a href="#modalSuppressionPublication" data-publication="{{ publication.id }}" data-type="{{ type }}" class="btn
+                            btn-danger suppressionPublication" data-toggle="modal" data-placement="bottom" title="Supprimer la publication"><i class="fa
+                            fa-times"></i></a>
 			</td>
 		</tr>
 	{% endfor %}

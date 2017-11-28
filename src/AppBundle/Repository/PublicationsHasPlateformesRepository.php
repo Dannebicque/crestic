@@ -67,4 +67,15 @@ class PublicationsHasPlateformesRepository extends \Doctrine\ORM\EntityRepositor
 
         return $t;
     }
+
+    public function updatePubli($old, $new)
+    {
+        $qb = $this->createQueryBuilder('u');
+        $q = $qb->update( )
+            ->set('u.publication', $new)
+            ->where('u.publication = ?1')
+            ->setParameter(1, $old)
+            ->getQuery();
+        $q->execute();
+    }
 }

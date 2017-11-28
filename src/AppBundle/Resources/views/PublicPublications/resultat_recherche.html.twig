@@ -4,32 +4,38 @@
 </div>
 <br />
 <ul>
-	{% for annee in  "now"|date('Y')..2004 if publications[annee]|length > 0 %}
+	{% for annee in  anneefin..2004 if publications[annee]|length > 0 %}
 		<li>{{ annee }}
 			<ul class="da-liste-biblio">
 				{% for publication in publications[annee] %}
-					<li style="border-left: 3px solid {{ publication.couleur }}">
+					<li>
 						<div class="row">
 							<div class="col-sm-3">
 								<div class="btn-group">
+									<a href="#" class="btn"><span style="background-color: {{ publication.couleur }}; width: 20px; height: 20px;display:inline-block">&nbsp;</span></a>
+
 									<a href="{{ path('public_publication_show', {id:publication.id, type: publication.type}) }}" class="btn" target="_blank" title="Détails">
 										<span class="fa fa-eye"></span>
 									</a>
-									<a href="{{ publication.doi }}" class="btn" target="_blank" title="DOI">
+                                    {% if publication.doi != '' or publication.doi != null %}
+									<a href="{{ publication.doiLink }}" class="btn" target="_blank" title="DOI">
 										<span class="fa fa-external-link"></span>
 									</a>
+                                    {% else %}
+                                        {% if publication.url != '' or publication.url != null %}
+											<a href="{{ publication.url }}" class="btn" target="_blank"
+											   title="Site web">
+												<span class="fa fa-globe"></span>
+											</a>
+                                        {% else %}
+											<a href="#" class="btn" target="_blank"
+											   title="Site web" disabled="" style="color:darkgray">
+												<span class="fa fa-globe"></span>
+											</a>
+                                        {% endif %}
+                                        {% endif %}
 
-									{% if publication.url != '' or publication.url != null %}
-										<a href="{{ publication.url }}" class="btn" target="_blank"
-										   title="Site web">
-											<span class="fa fa-globe"></span>
-										</a>
-									{% else %}
-										<a href="#" class="btn" target="_blank"
-										   title="Site web" disabled="" style="color:darkgray">
-											<span class="fa fa-globe"></span>
-										</a>
-									{% endif %}
+
 
 									{% if publication.hal != '' or publication.hal != null %}
 									<a href="{{ publication.hal }}" class="btn" target="_blank"

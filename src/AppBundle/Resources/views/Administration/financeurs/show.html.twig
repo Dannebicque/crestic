@@ -25,11 +25,11 @@
             </tr>
             <tr>
                 <th>Image</th>
-                <td colspan="3"><img src="{{ asset('uploads/financeurs/'~financeur.image) }}" alt="logo du financeur" /></td>
+                <td colspan="3"><img src="{{ asset('uploads/partenaires/'~financeur.image)|imagine_filter('partenaire') }}" alt="logo du financeur" /></td>
             </tr>
         </tbody>
     </table>
 
-    {{ include('@App/Administration/footer-show.html.twig', {var: 'partenaires', obj:financeur.id}) }}
+    {{ include('@App/Administration/footer-show.html.twig', {var: 'financeurs', obj:financeur.id}) }}
 
 {% endblock %}

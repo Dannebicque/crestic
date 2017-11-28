@@ -47,7 +47,7 @@
 
                         {% if publication.doi != null and publication.doi != '' %}
                             <dt>{{ 'publications.apercu.doi'|trans }}</dt>
-                            <dd>{{ html.getUrl(publication.doi)|raw }}</dd>
+                            <dd>{{ html.getUrl(publication.doiLink)|raw }}</dd>
                         {% endif %}
                         {% if publication.url != null and publication.url != '' %}
                             <dt>{{ 'publications.apercu.url'|trans }}</dt>

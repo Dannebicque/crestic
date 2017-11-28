@@ -101,7 +101,8 @@ class PublicPublicationsController extends Controller
         $publications = $this->getDoctrine()->getRepository('AppBundle:Publications')->findSearchPublications($criteres['typePublication'], $criteres);
 
         $t  = array();
-        for ($i = 2004; $i <= date('Y'); $i++)
+        $anneeFin = (int)date('Y')+1;
+        for ($i = 2004; $i <= $anneeFin; $i++)
         {
             $t[$i] = array();
         }
@@ -116,7 +117,8 @@ class PublicPublicationsController extends Controller
         return $this->render('@App/PublicPublications/resultat_recherche.html.twig', array(
             'publications' => $t,
             'nbresult'     => count($publications),
-            'criteres'     => 'criteres'
+            'criteres'     => 'criteres',
+            'anneefin'=>$anneeFin
         ));
     }
 

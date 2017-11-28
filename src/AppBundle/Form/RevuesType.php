@@ -17,41 +17,41 @@ class RevuesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('titreRevue', TextType::class, array(
-            'label'              => 'titreRevue',
+            'label'              => 'Titre de la revue',
             'translation_domain' => 'messages',
             'required'           => true,
         ))
             ->add('sigleRevue', TextType::class, array(
-                'label'              => 'sigleRevue',
+                'label'              => 'Sigle de la revue',
                 'translation_domain' => 'messages',
                 'required'           => true,
             ))
             ->add('internationale', ChoiceType::class, array(
                 'choices'            => array('Oui' => true, 'Non' => false),
-                'label'              => 'internationale',
+                'label'              => 'Revue internationale',
                 'translation_domain' => 'messages',
                 'required'           => true,
                 'expanded'           => true,
             ))
             ->add('impactFactor', TextType::class, array(
-                'label'              => 'impactFactor',
+                'label'              => 'Impact Factor',
                 'translation_domain' => 'messages',
-                'required'           => true,
+                'required'           => false,
             ))
             ->add('classification', TextType::class, array(
-                'label'              => 'classification',
+                'label'              => 'Classification',
                 'translation_domain' => 'messages',
-                'required'           => true,
+                'required'           => false,
             ))
             ->add('url', TextType::class, array(
-                'label'              => 'url',
+                'label'              => 'Site web',
                 'translation_domain' => 'messages',
-                'required'           => true,
+                'required'           => false,
             ))
             ->add('editeur', EntityType::class, array(
                 'class'              => 'AppBundle\Entity\Editeurs',
                 'choice_label'       => 'nom',
-                'label'              => 'editeur',
+                'label'              => 'Editeur',
                 'translation_domain' => 'messages',
                 'required'           => false,
             ));

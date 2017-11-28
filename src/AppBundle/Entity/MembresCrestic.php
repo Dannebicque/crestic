@@ -1410,9 +1410,11 @@ class MembresCrestic extends BaseUser
 
     public function getInitialePrenom()
     {
-        $prenom = explode(' ', $this->prenom);
+        $prenom = str_replace(' ','-', $this->prenom);
+
+        $tprenom = explode('-', $prenom);
         $texte = '';
-        foreach ($prenom as $item)
+        foreach ($tprenom as $item)
         {
             $texte .= strtoupper(substr($item,0,1)).'. ';
         }
@@ -1440,7 +1442,12 @@ class MembresCrestic extends BaseUser
         return ucfirst($this->prenom)." ".mb_strtoupper($this->nom);
     }
 
-    function generate_slug($str) {
+    /**
+     * @param $str
+     *
+     * @return string
+     */
+    public function generate_slug($str) {
 
         $table = array(
             'Š'=>'S', 'š'=>'s', 'Đ'=>'Dj', 'đ'=>'dj', 'Ž'=>'Z', 'ž'=>'z', 'Č'=>'C', 'č'=>'c', 'Ć'=>'C', 'ć'=>'c',

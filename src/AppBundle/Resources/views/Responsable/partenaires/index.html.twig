@@ -1,0 +1,40 @@
+{% extends 'base-responsable.html.twig' %}
+
+{% block breadcrumbs %}
+    Partenaires /
+{% endblock %}
+
+{% block content %}
+    <h1>Liste des partenaires</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Url</th>
+                <th>Internationale</th>
+                <th>Type Partenariat</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for partenaire in partenaires %}
+            <tr>
+                <td>{{ partenaire.nom }}</td>
+                <td>{{ partenaire.url }}</td>
+                <td>{% if partenaire.internationale %}Oui{% else %}Non{% endif %}</td>
+                <td>{{ partenaire.typePartenaireLong }}</td>
+
+                <td>
+                    <a href="{{ path('administration_partenaires_show', { 'id': partenaire.id }) }}" class="btn btn-info"
+                       title="Voir"><i class="fa fa-eye"></i> </a>
+                    <a href="{{ path('administration_partenaires_edit', { 'id': partenaire.id }) }}" class="btn
+                            btn-warning" title="Modifier"><i class="fa fa-pencil"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('administration_partenaires_new') }}" class="btn btn-primary">Créer un nouveau partenaire</a>
+{% endblock %}

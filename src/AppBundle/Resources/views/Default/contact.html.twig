@@ -37,8 +37,7 @@
 							{{ configuration.mail }}</a>
 					</address>
 					<p>
-						{#todo: gérer la modal#}
-						{#{{ html.getButton(venirReims, 'Apercu', 'button_rect', 'dialog', {'title' : 'contact.commentVenir', 'icone' : 'fa fa-road'})|raw }}#}
+						<a href="#modalCommentVenir" data-slug="venir-reims" data-site="null" class="commentVenir btn btn-info" title="{{ 'contact.commentVenir'|trans }}" data-toggle="modal"><i class="fa fa-road"></i> {{ 'contact.commentVenir'|trans }}</a>
 					</p>
 				</div>
 			</div>
@@ -95,9 +94,7 @@
 								</p>
 								{% if site.cms != null %}
 									<p>
-										{# todo: remettre modal#}
-										{#{{ html.getButton(site.cms, 'Apercu', 'button_rect', 'dialog', {'title' : #}
-											{#'contact.commentVenir', 'icone' : 'fa fa-road'})|raw }}#}
+										<a href="#modalCommentVenir" data-slug="{{ site.cms.slug }}" data-site="{{ site.id }}" class="commentVenir btn btn-info" title="{{ 'contact.commentVenir'|trans }}" data-toggle="modal"><i class="fa fa-road"></i> {{ 'contact.commentVenir'|trans }}</a>
 									</p>
 								{% endif %}
 							</div>
@@ -108,33 +105,35 @@
 		</div>
 	</div>
 <br />
-	<script>
-		$(document).ready(function () {
-			var alert = $('#confirm-message');
 
-			$('#valid-form-contact').click(function (e) {
-				e.preventDefault();
-				$.ajax({
-					data: {
-						nom: $('#InputName').val(),
-						email: $('#InputEmail').val(),
-						message: $('#InputMessage').val(),
-						sujet: $('#InputSujet').val()
-					},
-					url: "{{ path('public_contact_SendMessage') }}", //todo: a remettre
-					method: 'POST',
-					success: function (data) {
-						alert.empty();
-						alert.removeClass('alert-danger-rw').addClass('alert-success-rw').append("{{ 'visiteur.contact
-						.envoi.confirmation'|trans }}")
-					},
-					error: function () {
-						alert.empty();
-						alert.removeClass('alert-success-rw').addClass('alert-danger-rw').append("{{ 'visiteur.contact
-						.envoi.erreur'|trans }}")
-					}
-				});
-			});
+
+<!-- Default Modal -->
+	<div class="modal fade" id="modalCommentVenir" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title" id="defaultModalLabel">Comment venir</h4>
+				</div>
+				<div class="modal-body" id="body-commentVenir">
+					Content
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-rw btn-success" data-dismiss="modal">Fermer</button>
+				</div>
+			</div><!-- /modal content -->
+		</div><!-- /modal dialog -->
+	</div><!-- /modal holder -->
+	<!-- End Default Modal -->
+
+{% endblock %}
+
+{% block javascripts %}
+	<script>
+		$(document).ready(function(e){
+		    $('.commentVenir').click(function(){
+			            $('#body-commentVenir').empty().load("{{ path('public_contact_comment_venir') }}", {'slug': $(this).data('slug'), 'site': $(this).data('site')});
+		    });
 		});
 	</script>
 {% endblock %}

@@ -19,7 +19,7 @@ class PublicationsThesesType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('dateSoutenance', DateType::class, array('label' => 'Date de soutenance'))
+        $builder->add('dateSoutenance', DateType::class, array('label' => 'Date de soutenance', 'years' => range(2000, date('Y')+1)))
             ->add('departement', TextType::class, array('label' => 'Laboratoire de recherche', 'required' => false))
             ->add('discipline', TextType::class, array('label' => 'Discipline ou Champs', 'required' => false))
             ->add('abbrevDepartement', TextType::class, array('label' => 'Abbréviation du laboratoire', 'required' => false))

@@ -8,6 +8,9 @@
     <h1>Options du projet : {{ projet.titre }}</h1>
     <br />
 
+    <a href="{{ path('responsable_projets_options', { 'id': projet.id }) }}" class="btn btn-success pull-right"><i class="fa fa-refresh"></i> Actualiser</a>
+    <br>
+
     <ul class="nav nav-tabs" role="tablist">
         <li class="active"><a href="#membres" role="tab" data-toggle="tab">Membres</a></li>
         <li><a href="#partenaires" role="tab" data-toggle="tab">Partenaires</a></li>
@@ -19,6 +22,8 @@
 
 <div class="tab-content tab-default tab-default">
     <div class="tab-pane active" id="membres">
+        <div class="alert alert-info">Cette partie vous permet d'associer les membres du CReSTIC à votre projet.</div>
+
         <table class="table" id="listemembre">
             <thead>
             <tr>
@@ -43,6 +48,8 @@
         </table>
     </div>
     <div class="tab-pane" id="equipes">
+        <div class="alert alert-info">Cette partie vous permet d'associer les équipes du CReSTIC à votre projet.</div>
+
         <table class="table" id="listeequipe">
             <thead>
             <tr>
@@ -66,6 +73,8 @@
 
     </div>
     <div class="tab-pane" id="partenaires">
+        <div class="alert alert-info">Cette partie vous permet d'associer des partenaires à votre projet. <a href="{{ path('responsable_partenaires_index') }}" target="_blank">Vous pouvez ajouter des partenaires ici</a>.</div>
+
         <table class="table" id="listepartenaire">
             <thead>
             <tr>
@@ -88,6 +97,8 @@
         </table>
     </div>
     <div class="tab-pane" id="financeurs">
+        <div class="alert alert-info">Cette partie vous permet d'associer des financeurs à votre projet. <a href="{{ path('responsable_financeurs_index') }}" target="_blank">Vous pouvez ajouter des financeurs ici</a>.</div>
+
         <table class="table" id="listefinanceur">
             <thead>
             <tr>
@@ -110,6 +121,8 @@
         </table>
     </div>
     <div class="tab-pane" id="slider">
+        <div class="alert alert-info">Vous pouvez associer ici une image de slider à votre équipe. Le slider est le diaporama qui défile sur la page de votre équipe. Vous pouvez associer autant d'image que désiré. <a href="{{ path('responsable_slider_index') }}" target="_blank">Vous pouvez ajouter des images ici du slider ici</a>.</div>
+
         <table class="table" id="listeslider">
             <thead>
             <tr>

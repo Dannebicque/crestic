@@ -22,6 +22,7 @@ class MembresCresticCompletType extends AbstractType
         $builder
             ->add('nom', TextType::class, array('required' => true, 'label' => 'Nom'))
             ->add('prenom', TextType::class, array('required' => true, 'label' => 'Prénom'))
+            ->add('email', TextType::class, array('required' => true, 'label' => 'Email URCA'))
 
             ->add('slug', TextType::class, array('required' => false, 'label' => 'Slug (pour l\'URL du profil)'))
             ->add('imageFile', FileType::class, array('required'=>false, 'label' => 'Photo'))

@@ -86,7 +86,7 @@
                             </h4>
                         </div>
                         <div class="row">
-                            {{ include('@App/Includes/inc.partenaires.html.twig', {finance: true}) }}
+                            {{ include('@App/Includes/inc.financeurs.html.twig') }}
                         </div>
                     </div>
                 </div>
@@ -127,8 +127,8 @@
                                         <img src="{{ asset('uploads/membresCrestic/'~membre.membreCrestic.image) }}"
                                              style="width:auto;height:100px">
                                     </div>
-                                    <div class="membreCresticMosaiqueMosaiqueStatus col-sm-12">-{{ membre
-                                        .membreCrestic.statutLong|trans }}-
+                                    <div class="membreCresticMosaiqueMosaiqueStatus col-sm-12">{{ membre
+                                        .membreCrestic.statutLong|trans }}
                                     </div>
                                     <div class="membreCresticMosaiqueMosaiqueNom col-sm-12">
                                         <a href="{{ path('public_membres_profil', {slug: membre.membreCrestic.slug}) }}"
@@ -159,7 +159,7 @@
                     </h4>
                 </div>
                 <div class="row">
-                    {{ include('@App/Includes/inc.partenaires.html.twig', {finance: false}) }}
+                    {{ include('@App/Includes/inc.partenaires.html.twig') }}
                 </div>
             </div>
         </div>

@@ -91,12 +91,23 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @Route("/contact/send", name="public_contact_SendMessage")
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @Route("/contact/commentVenir", name="public_contact_comment_venir")
      */
-    public function contactSendMessageAction(Request $request)
+    public function contactCommentVenirAction(Request $request)
     {
+        $cms = $this->getDoctrine()->getRepository('AppBundle:Cms')->findOneBy(array('slug' => $request->request->get('slug')));
 
+        if ($request->request->get('site') != null)
+            $site = $this->getDoctrine()->getRepository('AppBundle:Sites')->find($request->request->get('site'));
+        else
+            $site = null;
+
+        return $this->render('@App/Default/contactCommentVenir.html.twig', [
+            'cms' => $cms,
+            'site' => $site
+        ]);
     }
 
     /**

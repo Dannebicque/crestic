@@ -34,7 +34,8 @@ class PublicMembresController extends Controller
         $publications = $this->getDoctrine()->getRepository('AppBundle:Publications')->findAllPublicationsFromMembre($user->getId());
 
         $t  = array();
-        for ($i = 2004; $i <= date('Y'); $i++)
+        $anneeFin = (int)date('Y')+1;
+        for ($i = 2004; $i <= $anneeFin; $i++)
         {
             $t[$i] = array();
         }
@@ -50,6 +51,7 @@ class PublicMembresController extends Controller
             'user' => $user,
             'publications' => $t,
             'nbresult'     => count($publications),
+            'anneefin' => $anneeFin
         ));
     }
 

@@ -101,4 +101,15 @@ class PublicationsHasEquipesRepository extends \Doctrine\ORM\EntityRepository
 
         return $result;
     }
+
+    public function updatePubli($old, $new)
+    {
+        $qb = $this->createQueryBuilder('u');
+        $q = $qb->update( )
+            ->set('u.publication', $new)
+            ->where('u.publication = ?1')
+            ->setParameter(1, $old)
+            ->getQuery();
+        $q->execute();
+    }
 }

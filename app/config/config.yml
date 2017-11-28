@@ -208,8 +208,8 @@ liip_imagine:
             jpeg_quality: 80
             filters:
                 #thumbnail: { size: [120, 120], mode: inset }
-                #relative_resize: { widen: 300 }
-                thumbnail: { size: [120, 300], mode: outbound }
+                #relative_resize: { heighten: 120 }
+                thumbnail: { size: [120, 300], mode: inset }
 
         profil:
             jpeg_quality: 80

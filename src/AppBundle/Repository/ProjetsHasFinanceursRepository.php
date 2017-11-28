@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\ProjetsHasFinanceurs;
+
 /**
  * ProjetsHasFinanceursRepository
  *
@@ -10,4 +12,38 @@ namespace AppBundle\Repository;
  */
 class ProjetsHasFinanceursRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findAllFinanceursFromProjetBuilder($id_projet)
+    {
+        return $this->createQueryBuilder('a','a.id')
+            ->select ('a')
+            ->innerJoin('a.financeur', 'b')
+            ->where('a.projet = ?1')
+            ->setParameter(1,$id_projet)
+            ->orderBy('b.nom','ASC');
+    }
+
+    public function findAllFinanceursFromProjet ($id_projet)
+    {
+        return $this->findAllFinanceursFromProjetBuilder($id_projet)->getQuery()->getResult();
+    }
+
+
+
+    public function getArrayIdFromFinanceursPartenaires ($id_projet)
+    {
+        $result = array();
+        $array  =  $this->findAllFinanceursFromProjet($id_projet);
+
+        /**
+         * @var  $key
+         * @var ProjetsHasFinanceurs $value
+         */
+        foreach ($array as $key=>$value)
+        {
+            $id = $value->getFinanceur()->getId();
+            $result[] = $id;
+        }
+        return $result;
+    }
+
 }

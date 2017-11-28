@@ -1,0 +1,29 @@
+{% extends 'base-utilisateur.html.twig' %}
+
+{% block breadcrumbs %}
+    <a href="">Vos Publications</a> / Ajout d'une publication / étape 2
+{% endblock %}
+{% block content %}
+    <h2>Modification du type de publication</h2>
+    <div class="row">
+        <div class="col-sm-12">
+            <form action="{{ path('utilisateur_publication_switch', { 'id': publication.id , type:type}) }}" method="POST">
+            <p>Titre de la publication : {{ publication.titre }}</p>
+            <p>Type de publication actuel : {{ type }}</p>
+            <p>Modifier pour :
+                <select class="form-control" name="newType">
+                    <option value="">Ne rien changer</option>
+                    <option value="revue">Revue</option>
+                    <option value="conference">Conférence</option>
+                    <option value="rapport">Rapport</option>
+                    <option value="these">Thèse/HDR</option>
+                    <option value="brevet">Brevet</option>
+                    <option value="ouvrage">Ouvrage</option>
+                    <option value="chapitre">Chapitre</option>
+
+                </select></p>
+            <p><button class="btn btn-warning" type="submit">Modifier</button></p>
+            </form>
+        </div>
+    </div>
+{% endblock %}

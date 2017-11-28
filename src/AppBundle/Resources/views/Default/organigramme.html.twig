@@ -1,5 +1,13 @@
 {% extends '::base.html.twig' %}
 
+{% block stylesheets %}
+	<style>
+	.lienOrganigramme a{
+		color: white;
+	}
+	</style>
+{% endblock %}
+
 {% block content %}
 	<div class="row">
 		<div class="col-sm-12">
@@ -77,7 +85,7 @@
 				{% for departement in organigramme['departement'] %}
 					<div class="col-sm-6 text-center">
 						<div class="panel panel-danger">
-							<div class="panel-heading">
+							<div class="panel-heading lienOrganigramme">
 								{{ 'visiteur.organigramme.departement'|trans }}
 									{{ departement.sigle }} - {{ departement.nom }}<br/>
 								{{ 'visiteur.organigramme.responsable'|trans }} :

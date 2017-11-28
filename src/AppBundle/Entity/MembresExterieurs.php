@@ -54,7 +54,7 @@ class MembresExterieurs
      *
      * @ORM\Column(name="international", type="boolean")
      */
-    private $international = false;
+    private $international = true;
 
     /**
      *
@@ -192,11 +192,14 @@ class MembresExterieurs
 
     public function getInitialePrenom()
     {
-        $prenom = explode(' ', $this->prenom);
+        $prenom = str_replace(' ','-', $this->prenom);
+
+        $tprenom = explode('-', $prenom);
         $texte = '';
-        foreach ($prenom as $item)
+
+        foreach ($tprenom as $item)
         {
-            $texte .= strtoupper(substr($item,0,1)).'.&nbsp;';
+            $texte .= strtoupper(substr($item,0,1)).'. ';
         }
 
         return $texte;
@@ -311,5 +314,14 @@ class MembresExterieurs
     public function getPays()
     {
         return $this->pays;
+    }
+
+    public function getJson()
+    {
+        return array(
+            'id' => $this->id,
+            'nom'=> $this->getNom(),
+            'prenom' => $this->getPrenom()
+        );
     }
 }

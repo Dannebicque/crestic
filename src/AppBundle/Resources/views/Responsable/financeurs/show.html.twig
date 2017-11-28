@@ -1,0 +1,35 @@
+{% extends 'base-responsable.html.twig' %}
+
+{% block breadcrumbs %}
+    <a href="{{ path('responsable_financeurs_index') }}">Financeurs</a> / Détails /
+{% endblock %}
+
+{% block content %}
+    <h1>Financeur</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Nom</th>
+                <td colspan="3">{{ financeur.nom }}</td>
+            </tr>
+            <tr>
+                <th>Url</th>
+                <td colspan="3">{{ financeur.url }}</td>
+            </tr>
+            <tr>
+                <th>Internationale</th>
+                <td>{% if financeur.internationale %}Oui{% else %}Non{% endif %}</td>
+                <th>Type</th>
+                <td>{{ financeur.typeFinanceurLong }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td colspan="3"><img src="{{ asset('uploads/financeurs/'~financeur.image) }}" alt="logo du financeur" /></td>
+            </tr>
+        </tbody>
+    </table>
+
+    {{ include('@App/Responsable/footer-show.html.twig', {var: 'financeurs', obj:financeur.id}) }}
+
+{% endblock %}

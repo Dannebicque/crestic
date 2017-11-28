@@ -10,7 +10,7 @@
 			<div class="row">
 				<div class="col-sm-4 text-center">
 					<div class="content-box-profile content-box-bordered no-margin">
-						<img src="{{ asset('uploads/membresCrestic/'~user.image)|imagine_filter('slider') }}" height="200px" alt="Photo de {{
+						<img src="{{ asset('uploads/membresCrestic/'~user.image)|imagine_filter('profil') }}" height="200px" alt="Photo de {{
 						user.display }}" />
 						{% if user.membreAssocie == true %}
 							<p>{{ 'visiteur.membreAssocie'|trans }}</p>

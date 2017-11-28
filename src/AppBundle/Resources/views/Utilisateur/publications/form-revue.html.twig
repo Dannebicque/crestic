@@ -17,8 +17,11 @@
 </div>
 
 <div class="row">
-	<div class="col-sm-6">
+	<div class="col-sm-4">
 		{{ form_row(form.revue) }}
+	</div>
+	<div class="col-sm-2">
+		<a href="#modalAddRevue" id="addRevue" data-toggle="modal" class="btn btn-info btn-block"><i class="fa fa-plus-circle"></i> Ajouter une revue</a>
 	</div>
 	<div class="col-sm-6">
 		{{ form_row(form.editeur) }}
@@ -38,3 +41,23 @@
 	<div class="col-sm-4">{{ form_row(form.vulgarisation) }}</div>
 	<div class="col-sm-4">{{ form_row(form.editorial) }}</div>
 </div>
+
+<!-- Default Modal -->
+<div class="modal fade" id="modalAddRevue" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title" id="defaultModalLabel">Création d'une revue</h4>
+			</div>
+			<div class="modal-body" id="body-revue">
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-rw btn-warning" data-dismiss="modal">Annuler</button>
+				<button type="button" class="btn btn-rw btn-success" data-dismiss="modal" id="btnAddRevue">Ajouter</button>
+			</div>
+		</div><!-- /modal content -->
+	</div><!-- /modal dialog -->
+</div><!-- /modal holder -->
+<!-- End Default Modal -->

@@ -26,6 +26,7 @@ class PublicProjetsController extends Controller
         {
             $membres      = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasMembres')->findAllMembresFromProjet($projet->getId());
             $partenaires  = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasPartenaires')->findAllPartenairesFromProjet($projet->getId());
+            $financeurs  = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasFinanceurs')->findAllFinanceursFromProjet($projet->getId());
             $sliders      = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasSliders')->findAllSliderFromProjet($projet->getId());
             $publications = $this->getDoctrine()->getRepository('AppBundle:PublicationsHasProjets')->findAllPublicationsFromProjet($projet->getId());
 
@@ -33,6 +34,7 @@ class PublicProjetsController extends Controller
                 'projet'       => $projet,
                 'membres'      => $membres,
                 'partenaires'  => $partenaires,
+                'financeurs'   => $financeurs,
                 'sliders'      => $sliders,
                 'publications' => $publications
             ));
