@@ -37,6 +37,9 @@ class DemandeOMController extends Controller
      *
      * @Route("/new", name="utilisateur_demande-om_new")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
@@ -67,7 +70,9 @@ class DemandeOMController extends Controller
      *
      * @Route("/{id}", name="utilisateur_demande-om_show")
      * @Method("GET")
-     */
+     * @param DemandeOM $demandeOM
+     * @return \Symfony\Component\HttpFoundation\Response
+*/
     public function showAction(DemandeOM $demandeOM)
     {
         $deleteForm = $this->createDeleteForm($demandeOM);
@@ -83,7 +88,10 @@ class DemandeOMController extends Controller
      *
      * @Route("/{id}/edit", name="utilisateur_demande-om_edit")
      * @Method({"GET", "POST"})
-     */
+     * @param Request   $request
+     * @param DemandeOM $demandeOM
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+*/
     public function editAction(Request $request, DemandeOM $demandeOM)
     {
         $editForm = $this->createForm('AppBundle\Form\DemandeOMUtilisateurType', $demandeOM);
@@ -107,7 +115,10 @@ class DemandeOMController extends Controller
      *
      * @Route("/{id}", name="utilisateur_demande-om_delete")
      * @Method("DELETE")
-     */
+     * @param Request   $request
+     * @param DemandeOM $demandeOM
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+*/
     public function deleteAction(Request $request, DemandeOM $demandeOM)
     {
         $form = $this->createDeleteForm($demandeOM);

@@ -24,10 +24,11 @@ class EquipesRepository extends \Doctrine\ORM\EntityRepository
 	}
 
 
-
-	/**
-	 * @return array
-	 */
+    /**
+     * @param null $array_options
+     *
+     * @return \Doctrine\ORM\QueryBuilder|null
+     */
 
 	public function findAllEquipesBuilder($array_options = null)
 	{
@@ -76,11 +77,12 @@ class EquipesRepository extends \Doctrine\ORM\EntityRepository
 		}
 
 		return $result;
-	}
+    }
 
-	/**
-	 * @return array
-	 */
+    /**
+     * @param null $array_options
+     * @return array
+     */
 
 	public function findAllEquipes($array_options = null)
 	{

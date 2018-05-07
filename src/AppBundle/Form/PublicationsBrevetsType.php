@@ -24,8 +24,18 @@ class PublicationsBrevetsType extends AbstractType
             ->add('dateDelivrance', DateType::class, array('label' => 'Date de délivrance', 'required' => false))
             ->add('numeroDelivrance', TextType::class, array('label' => 'Numéro de délivrance', 'required' => false))
             ->add('secteur', TextareaType::class, array('label' => 'Secteur', 'required' => false))
-            ->add('typeBrevet', ChoiceType::class, array('label' => 'Type de dépôt', 'choices' => array('Brevet' => 'brevet', 'Lettre d\'intention' => 'lettre'), 'expanded' =>true, 'required' => false))
-            ->add('pays', EntityType::class, array('class' => 'AppBundle\Entity\Pays', 'choice_label' => 'nomFR', 'label' => 'Pays', 'required' => false));
+            ->add('typeBrevet', ChoiceType::class, array(
+                'label'    => 'Type de dépôt',
+                'choices'  => array('Brevet' => 'brevet', 'Lettre d\'intention' => 'lettre'),
+                'expanded' => true,
+                'required' => false
+            ))
+            ->add('pays', EntityType::class, array(
+                'class'        => 'AppBundle\Entity\Pays',
+                'choice_label' => 'nomFR',
+                'label'        => 'Pays',
+                'required'     => false
+            ));
 
         $builder->add('bar', PublicationsType::class, array(
             'data_class' => PublicationsBrevets::class,

@@ -18,9 +18,10 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Vich\UploaderBundle\VichUploaderBundle(),
+            new L3\Bundle\CasBundle\L3CasBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),
-//            new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
-//            new Genemu\Bundle\FormBundle\GenemuFormBundle(),
+            //            new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
+            //            new Genemu\Bundle\FormBundle\GenemuFormBundle(),
 
             new AppBundle\AppBundle(),
         ];
@@ -35,23 +36,23 @@ class AppKernel extends Kernel
         return $bundles;
     }
 
-    public function getRootDir()
-    {
-        return __DIR__;
-    }
-
     public function getCacheDir()
     {
-        return dirname(__DIR__).'/var/cache/'.$this->getEnvironment();
+        return dirname(__DIR__) . '/var/cache/' . $this->getEnvironment();
     }
 
     public function getLogDir()
     {
-        return dirname(__DIR__).'/var/logs';
+        return dirname(__DIR__) . '/var/logs';
     }
 
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load($this->getRootDir().'/config/config_'.$this->getEnvironment().'.yml');
+        $loader->load($this->getRootDir() . '/config/config_' . $this->getEnvironment() . '.yml');
+    }
+
+    public function getRootDir()
+    {
+        return __DIR__;
     }
 }

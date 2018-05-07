@@ -44,6 +44,9 @@ class EquipesController extends Controller
      *
      * @Route("/{id}", name="responsable_equipes_show")
      * @Method("GET")
+     * @param Equipes $equipe
+     *
+     * @return Response
      */
     public function showAction(Equipes $equipe)
     {
@@ -57,7 +60,10 @@ class EquipesController extends Controller
      *
      * @Route("/{id}/edit", name="responsable_equipes_edit")
      * @Method({"GET", "POST"})
-     */
+     * @param Request $request
+     * @param Equipes $equipe
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+*/
     public function editAction(Request $request, Equipes $equipe)
     {
         $editForm = $this->createForm('AppBundle\Form\EquipesResponsableType', $equipe);

@@ -52,7 +52,7 @@ class Financeurs
      *
      * @ORM\Column(name="internationale", type="boolean",nullable=true)
      */
-    private $internationale = False;
+    private $internationale = false;
 
     /**
      * @var string
@@ -90,15 +90,15 @@ class Financeurs
      */
     private $projets;
 
-    public function __toString()
-    {
-        return $this->getNom();
-    }
-
     public function __construct()
     {
         $this->projets = new ArrayCollection();
         $this->equipes = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->getNom();
     }
 
     /**
@@ -204,8 +204,7 @@ class Financeurs
     {
         $this->imageFile = $image;
 
-        if ($image)
-        {
+        if ($image) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
             $this->setUpdated(new \DateTime('now'));
@@ -261,6 +260,16 @@ class Financeurs
     }
 
     /**
+     * Get internationale
+     *
+     * @return boolean
+     */
+    public function getInternationale()
+    {
+        return $this->internationale;
+    }
+
+    /**
      * Set internationale
      *
      * @param boolean $internationale
@@ -272,16 +281,6 @@ class Financeurs
         $this->internationale = $internationale;
 
         return $this;
-    }
-
-    /**
-     * Get internationale
-     *
-     * @return boolean
-     */
-    public function getInternationale()
-    {
-        return $this->internationale;
     }
 
     /**
@@ -319,6 +318,16 @@ class Financeurs
     }
 
     /**
+     * Get typeFinanceur
+     *
+     * @return string
+     */
+    public function getTypeFinanceur()
+    {
+        return $this->typeFinanceur;
+    }
+
+    /**
      * Set typeFinanceur
      *
      * @param string $typeFinanceur
@@ -330,16 +339,6 @@ class Financeurs
         $this->typeFinanceur = $typeFinanceur;
 
         return $this;
-    }
-
-    /**
-     * Get typeFinanceur
-     *
-     * @return string
-     */
-    public function getTypeFinanceur()
-    {
-        return $this->typeFinanceur;
     }
 
     /**

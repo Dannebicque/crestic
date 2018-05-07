@@ -1,6 +1,6 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}{{ 'agenda.crestic'|trans }}{% endblock %}
+{% block title %}{{ 'visiteur.agenda.title'|trans }}{% endblock %}
 
 {% block stylesheets %}
 <style>
@@ -36,7 +36,7 @@
 		<div class="col-sm-12">
 			<div class="heading mb20">
 				<h2>
-					{{ 'agenda.crestic'|trans }}
+					{{ 'visiteur.agenda.title'|trans }}
 				</h2>
 			</div>
 			<div class="row">
@@ -51,14 +51,14 @@
                             <h3>{{ evt.titre }}</h3>
 							<p class="bl-footer">{{ evt.lieu }}, du {{ evt.datedebut|date('d/m/Y') }}, {{ evt.heuredebut|date('H:i') }} au {{ evt.datefin|date('d/m/Y') }}, {{ evt.heurefin|date('H:i') }}</p>
 							<p>{{ evt.description|slice(0, 50)|raw }}...</p>
-
+							<a href="{{ path('public_agenda_show', {id: evt.id}) }}">{{ 'visiteur.index.agenda.lirePlus'|trans }}</a>
 						</div>
 					</div>
 
 				</div>
 				{% else %}
 				<div class="alert alert-warning">
-					Aucun événement programmé.
+                    {{ 'visiteur.agenda.pasdevenement'|trans }}
 				</div>
 			{% endfor %}
 			</div>

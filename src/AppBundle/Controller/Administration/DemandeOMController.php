@@ -3,6 +3,7 @@
 namespace AppBundle\Controller\Administration;
 
 use AppBundle\Entity\DemandeOM;
+use AppBundle\Form\DemandeOMType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -37,11 +38,14 @@ class DemandeOMController extends Controller
      *
      * @Route("/new", name="administration_demande-om_new")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
         $demandeOM = new DemandeOM();
-        $form      = $this->createForm('AppBundle\Form\DemandeOMType', $demandeOM);
+        $form      = $this->createForm(DemandeOMType::class, $demandeOM);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
@@ -64,7 +68,9 @@ class DemandeOMController extends Controller
      *
      * @Route("/{id}", name="administration_demande-om_show")
      * @Method("GET")
-     */
+     * @param DemandeOM $demandeOM
+     * @return \Symfony\Component\HttpFoundation\Response
+*/
     public function showAction(DemandeOM $demandeOM)
     {
         $deleteForm = $this->createDeleteForm($demandeOM);
@@ -80,10 +86,13 @@ class DemandeOMController extends Controller
      *
      * @Route("/{id}/edit", name="administration_demande-om_edit")
      * @Method({"GET", "POST"})
-     */
+     * @param Request   $request
+     * @param DemandeOM $demandeOM
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+*/
     public function editAction(Request $request, DemandeOM $demandeOM)
     {
-        $editForm = $this->createForm('AppBundle\Form\DemandeOMType', $demandeOM);
+        $editForm = $this->createForm(DemandeOMType::class, $demandeOM);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid())
@@ -105,7 +114,10 @@ class DemandeOMController extends Controller
      *
      * @Route("/{id}", name="administration_demande-om_delete")
      * @Method("DELETE")
-     */
+     * @param Request   $request
+     * @param DemandeOM $demandeOM
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+*/
     public function deleteAction(Request $request, DemandeOM $demandeOM)
     {
         $form = $this->createDeleteForm($demandeOM);

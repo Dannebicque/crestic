@@ -20,7 +20,7 @@
         <td>
             <a href="{{ path('administration_publications_options', { 'id': pub.id }) }}" class="btn
                             btn-success" data-toggle="tooltip" data-placement="bottom" title="Modifier les options"><i class="fa fa-wrench"></i></a>
-            <a href="{{ path('public_publication_show', { 'id': pub.id }) }}" target="_blank" class="btn btn-info"
+            <a href="{{ path('public_publication_show', { 'id': pub.id, 'type':type }) }}" target="_blank" class="btn btn-info"
                title="Voir"><i class="fa fa-eye"></i> </a>
             <a href="{{ path('administration_publications_edit', { 'id': pub.id }) }}" class="btn
                             btn-warning" title="Modifier"><i class="fa fa-pencil"></i></a>

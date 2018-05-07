@@ -329,8 +329,7 @@ class Emplois
     {
         $this->pdfFile = $image;
 
-        if ($image)
-        {
+        if ($image) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
             $this->updated = new \DateTime('now');
@@ -374,7 +373,7 @@ class Emplois
     /**
      * Set contact
      *
-     * @param MembresCrestic $projet
+     * @param Projets $projet
      *
      * @return Emplois
      */

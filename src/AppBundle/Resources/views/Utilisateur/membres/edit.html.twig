@@ -1,7 +1,7 @@
 {% extends '::base-utilisateur.html.twig' %}
 
 {% block breadcrumbs %}
-	Modification de vos informations /
+	Modification de vos informations
 {% endblock %}
 
 {% block content %}
@@ -13,8 +13,9 @@
 
 	{{ form_start(edit_form) }}
 	<div class="row" style="text-align: right">
-		<div class="col-sm-6">&nbsp;</div>
+		<div class="col-sm-3">&nbsp;</div>
 		<div class="col-sm-3"><a href="{{ path('homepage_utilisateur') }}">Retour / Annuler</a></div>
+        <div class="col-sm-3"><a href="{{ path('utilisateur_membres_edit_en') }}" target="_blank">Editer la version Anglaise (nouvel onglet)</a></div>
 		<div class="col-sm-3"><button type="submit" class="btn btn-block btn-primary">Enregistrer</button> </div>
 	</div>
 	<div class="row">
@@ -87,10 +88,10 @@
 				<div class="team-description">
 					{#todo: réseaux sociaux#}
 					{#{{ html.getEntity1HasEntity2 (membresCrestic.reseaux , 'getReseau') | raw }}#}
-					<!-- Social -->
+					<!-- Social
 					<a href="#"><span class="ion-social-twitter team-ico mr15"></span></a>
 					<a href="#"><span class="ion-social-facebook team-ico mr15"></span></a>
-					<a href="#"><span class="ion-social-googleplus-outline team-ico"></span></a>
+					<a href="#"><span class="ion-social-googleplus-outline team-ico"></span></a>-->
 				</div>
 			</div>
 
@@ -113,7 +114,10 @@
 			<h4>CV</h4>
 			{{ form_widget(edit_form.cv) }}
 			<br>
-
+			<h4>HAL</h4>
+            <p>Identifiant Hal</p>
+            {{ form_widget(edit_form.idhal) }}
+			<br/><br/>
 			<h4>Données personnelles (non diffusées)</h4>
 			<dl>
 				<dt>

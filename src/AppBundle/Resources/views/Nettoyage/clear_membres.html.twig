@@ -1,0 +1,100 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block title %}Nettoyage des membres{% endblock %}
+
+{% block content %}
+    <h1>Nettoyage des membres</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>email</th>
+            <th>Satut</th>
+            <th>Site</th>
+            <th>Bâtiment</th>
+            <th>Bureau</th>
+            <th>Adresse</th>
+        </tr>
+        </thead>
+        {% for membre in membres %}
+            <tr>
+                <td>
+                    <a href="#" class="updateMembre" data-type="text" data-pk="{{ membre.id }}"
+                       data-name="nom">{{ membre.nom }}</a>
+                </td>
+                <td>
+                    <a href="#" class="updateMembre" data-type="text" data-pk="{{ membre.id }}"
+                       data-name="prenom">{{ membre.prenom }}</a>
+                </td>
+                <td>
+                    <a href="#" class="updateMembre" data-type="text" data-pk="{{ membre.id }}"
+                       data-name="email">{{ membre.email }}</a>
+                </td>
+                <td>
+                    <a href="#" class="updateMembreStatut" data-type="select" data-pk="{{ membre.id }}"
+                       data-name="status">{{ membre.statutLong }}</a>
+                </td>
+                <td>
+                    <a href="#" class="updateMembreSite" data-type="select" data-pk="{{ membre.id }}"
+                       data-name="site">{{ membre.site }}</a>
+                </td>
+                <td>
+                    <a href="#" class="updateMembre" data-type="text" data-pk="{{ membre.id }}"
+                       data-name="batiment">{{ membre.batiment }}</a>
+                </td>
+                <td>
+                    <a href="#" class="updateMembre" data-type="text" data-pk="{{ membre.id }}"
+                       data-name="bureau">{{ membre.bureau }}</a>
+                </td>
+                <td>
+                    <a href="#" class="updateMembre" data-type="textarea" data-pk="{{ membre.id }}"
+                       data-name="adresse">{{ membre.adresse }}</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+      $(document).ready(function () {
+        $('.updateMembre').editable(
+          {
+            type: 'text',
+            url: "{{ path('nettoyage_update_membre') }}"
+          }
+        );
+        $('.updateMembreStatut').editable(
+          {
+            source: [
+              {value: '', text: ''},
+              {value: 'PR', text: 'Professeurs'},
+              {value: 'MCF', text: 'Maîtres de Conférences'},
+              {value: 'PUPH', text: 'Prof. Praticien Hospitalier'},
+              {value: 'MCUP', text: 'MCF Praticien Hospitalier'},
+              {value: 'CAS', text: 'Chercheurs Associés'},
+              {value: 'ING', text: 'Ingénieurs et techniciens'},
+              {value: 'PAST', text: 'PAST/MAST'},
+              {value: 'PDOC', text: 'ATER, Post-Doctorants, Ingénieurs contractuels'},
+              {value: 'DOC', text: 'Doctorants URCA'},
+              {value: 'DOCH', text: 'Doctorants Hors URCA'},
+              {value: 'ADM', text: 'Personnels administratifs'}
+            ],
+            url: "{{ path('nettoyage_update_membre') }}"
+          }
+        );
+        $('.updateMembreSite').editable(
+          {
+            source: [
+              {value: 'Châlons en Champagne', text: 'Châlons en Champagne'},
+              {value: 'Charleville-Mézières', text: 'Charleville-Mézières'},
+              {value: 'Reims', text: 'Reims'},
+              {value: 'Troyes', text: 'Troyes'}
+            ],
+            url: "{{ path('nettoyage_update_membre') }}"
+          }
+        );
+      });
+    </script>
+{% endblock %}

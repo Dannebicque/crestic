@@ -11,7 +11,9 @@ namespace AppBundle\Repository;
 class PlateformesRepository extends \Doctrine\ORM\EntityRepository
 {
     /**
-     * @return array
+     * @param null $array_options
+     *
+     * @return \Doctrine\ORM\QueryBuilder|null
      */
 
     public function findAllPlateformesBuilder($array_options = null)
@@ -71,6 +73,16 @@ class PlateformesRepository extends \Doctrine\ORM\EntityRepository
         return $this->createQueryBuilder('a')
             ->orderBy('a.updated', 'desc')
             ->setMaxResults($nb)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllPlateformesResponsable($user)
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e.responsable = :user')
+            ->setParameter('user', $user)
+            ->orderBy('e.nom', 'ASC')
             ->getQuery()
             ->getResult();
     }

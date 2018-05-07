@@ -19,8 +19,16 @@ class MembresExterieursType extends AbstractType
         $builder->add('nom', TextType::class, array('label' => 'Nom', 'required' => true))
             ->add('prenom', TextType::class, array('label' => 'Prénom', 'required' => true))
             ->add('nomLabo', TextType::class, array('label' => 'Laboratoire/Université', 'required' => false))
-            ->add('laboUrca', ChoiceType::class, array('label' => 'Laboratoire URCA', 'choices' => array('Oui' => true, 'Non' => false), 'expanded' => true))
-            ->add('international', ChoiceType::class, array('label' => 'Co-auteur international', 'choices' => array('Oui' => true, 'Non' => false), 'expanded' => true))
+            ->add('laboUrca', ChoiceType::class, array(
+                'label'    => 'Laboratoire URCA',
+                'choices'  => array('Oui' => true, 'Non' => false),
+                'expanded' => true
+            ))
+            ->add('international', ChoiceType::class, array(
+                'label'    => 'Co-auteur international',
+                'choices'  => array('Oui' => true, 'Non' => false),
+                'expanded' => true
+            ))
             ->add('email', TextType::class, array('label' => 'Email', 'required' => false))
             ->add('pays', EntityType::class, array(
                 'class'              => 'AppBundle\Entity\Pays',
@@ -30,7 +38,7 @@ class MembresExterieursType extends AbstractType
                 'required'           => false,
             ));
     }
-    
+
     /**
      * {@inheritdoc}
      */

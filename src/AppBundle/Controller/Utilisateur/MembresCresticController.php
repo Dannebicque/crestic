@@ -20,6 +20,9 @@ class MembresCresticController extends Controller
      *
      * @Route("edit", name="utilisateur_membres_edit")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request)
     {
@@ -40,4 +43,31 @@ class MembresCresticController extends Controller
         ));
     }
 
+    /**
+     * Displays a form to edit an existing membresCrestic entity.
+     *
+     * @Route("edit/anglais", name="utilisateur_membres_edit_en")
+     * @Method({"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function editEnAction(Request $request)
+    {
+        $membresCrestic = $this->getUser();
+        $editForm       = $this->createForm('AppBundle\Form\MembresCresticUtilisateurEnType', $membresCrestic);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid())
+        {
+            $this->getDoctrine()->getManager()->flush();
+            $this->get('session')->getFlashBag()->add('success', 'Modifications enregistrées');
+            return $this->redirectToRoute('utilisateur_membres_edit_en');
+        }
+
+        return $this->render('@App/Utilisateur/membres/edit_en.html.twig', array(
+            'membresCrestic' => $membresCrestic,
+            'edit_form'      => $editForm->createView(),
+        ));
+    }
 }

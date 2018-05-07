@@ -27,3 +27,9 @@ services:
     my.mailer:
         class: AppBundle\Services\MyMailer
         arguments: ['@mailer', '@templating']
+
+    urca.cas_authenticator:
+        class: AppBundle\Controller\CasAuthenticator
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@security.token_storage'

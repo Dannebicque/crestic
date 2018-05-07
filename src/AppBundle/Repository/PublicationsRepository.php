@@ -150,8 +150,6 @@ class PublicationsRepository extends \Doctrine\ORM\EntityRepository
             $qb->setParameter('dateFin_annee'  ,$dateFin_annee);
         }
 
-
-
         return $qb;
 
     }

@@ -23,11 +23,15 @@ class DemandeOMUtilisateurType extends AbstractType
             ->add('objet', TextType::class, array('label' => 'Objet de la mission'))
             ->add('ville', TextType::class, array('label' => 'Ville'))
             ->add('commentaire', TextType::class, array('required' => false))
-            ->add('omSansFrais', ChoiceType::class, array('label' => 'OM Sans Frais', 'choices' => array('Oui' => true, 'Non' => false), 'expanded' => true))
-            ->add('ligneBudget', TextType::class, array('required'=> true, 'label' => 'Projet ou convention'))
+            ->add('omSansFrais', ChoiceType::class, array(
+                'label'    => 'OM Sans Frais',
+                'choices'  => array('Oui' => true, 'Non' => false),
+                'expanded' => true
+            ))
+            ->add('ligneBudget', TextType::class, array('required' => true, 'label' => 'Projet ou convention'))
             ->add('pays', EntityType::class, array('class' => 'AppBundle\Entity\Pays', 'choice_label' => 'nomFr'));
     }
-    
+
     /**
      * {@inheritdoc}
      */

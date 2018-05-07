@@ -19,14 +19,31 @@ class MembresCresticController extends Controller
     /**
      * Lists all membresCrestic entities.
      *
-     * @Route("/", name="administration_membres_index")
+     * @Route("/actuels", name="administration_membres_index_actuels")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexActuelsAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $membresCrestics = $em->getRepository('AppBundle:MembresCrestic')->findAll();
+        $membresCrestics = $em->getRepository('AppBundle:MembresCrestic')->findBy(array('ancienMembresCrestic' => false));
+
+        return $this->render('@App/Administration/membrescrestic/index.html.twig', array(
+            'membresCrestics' => $membresCrestics,
+        ));
+    }
+
+    /**
+     * Lists all membresCrestic entities.
+     *
+     * @Route("/anciens", name="administration_membres_index_anciens")
+     * @Method("GET")
+     */
+    public function indexAnciensAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $membresCrestics = $em->getRepository('AppBundle:MembresCrestic')->findBy(array('ancienMembresCrestic' => true));;
 
         return $this->render('@App/Administration/membrescrestic/index.html.twig', array(
             'membresCrestics' => $membresCrestics,
@@ -38,6 +55,9 @@ class MembresCresticController extends Controller
      *
      * @Route("/new", name="administration_membres_new")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
@@ -65,7 +85,7 @@ class MembresCresticController extends Controller
 
             $em->flush();
 
-            $this->get('my.mailer')->sendMailFirstConnexion($fuser, $password);
+            //$this->get('my.mailer')->sendMailFirstConnexion($fuser, $password);
 
             return $this->redirectToRoute('administration_membres_show_light', array('id' => $fuser->getId()));
         }
@@ -81,7 +101,9 @@ class MembresCresticController extends Controller
      *
      * @Route("/{id}", name="administration_membres_show")
      * @Method("GET")
-     */
+     * @param MembresCrestic $membresCrestic
+     * @return \Symfony\Component\HttpFoundation\Response
+*/
     public function showAction(MembresCrestic $membresCrestic)
     {
         $deleteForm = $this->createDeleteForm($membresCrestic);
@@ -97,7 +119,9 @@ class MembresCresticController extends Controller
      *
      * @Route("/new/{id}", name="administration_membres_show_light")
      * @Method("GET")
-     */
+     * @param MembresCrestic $membresCrestic
+     * @return \Symfony\Component\HttpFoundation\Response
+*/
     public function showLightAction(MembresCrestic $membresCrestic)
     {
         $deleteForm = $this->createDeleteForm($membresCrestic);
@@ -113,7 +137,10 @@ class MembresCresticController extends Controller
      *
      * @Route("/{id}/edit", name="administration_membres_edit")
      * @Method({"GET", "POST"})
-     */
+     * @param Request        $request
+     * @param MembresCrestic $membresCrestic
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+*/
     public function editAction(Request $request, MembresCrestic $membresCrestic)
     {
         $deleteForm = $this->createDeleteForm($membresCrestic);
@@ -140,7 +167,10 @@ class MembresCresticController extends Controller
      *
      * @Route("/{id}", name="administration_membres_delete")
      * @Method("DELETE")
-     */
+     * @param Request        $request
+     * @param MembresCrestic $membresCrestic
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+*/
     public function deleteAction(Request $request, MembresCrestic $membresCrestic)
     {
         $form = $this->createDeleteForm($membresCrestic);
@@ -152,6 +182,26 @@ class MembresCresticController extends Controller
             $em->remove($membresCrestic);
             $em->flush();
         }
+
+        return $this->redirectToRoute('administration_membres_index');
+    }
+
+    /**
+     * Deletes a membresCrestic entity.
+     *
+     * @Route("/ancien/{id}", name="administration_membres_update_ancien")
+     * @Method("GET")
+     * @param Request        $request
+     * @param MembresCrestic $membresCrestic
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function updateAncienAction(Request $request, MembresCrestic $membresCrestic)
+    {
+
+            $em = $this->getDoctrine()->getManager();
+            $membresCrestic->setAncienMembresCrestic(true);
+            $em->persist($membresCrestic);
+            $em->flush();
 
         return $this->redirectToRoute('administration_membres_index');
     }
@@ -173,8 +223,10 @@ class MembresCresticController extends Controller
 
     /**
      * @param MembresCrestic $id
+     *
      * @internal param MembresCrestic $mebre
      * @Route("/init/{id}", name="administration_membres_init")
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function initCompteAction(MembresCrestic $id)
     {

@@ -27,43 +27,12 @@ class ConferencesType extends AbstractType
                 'translation_domain' => 'messages',
                 'required'           => true,
             ))
-            ->add('ville', TextType::class, array(
-                'label'              => 'ville',
-                'translation_domain' => 'messages',
-                'required'           => true,
-            ))
-//            ->add('dateDebut', DateType::class)
-//            ->add('dateFin', DateType::class)
-            ->add('tauxSelection', TextType::class, array(
-                'label'              => 'tauxSelection',
-                'translation_domain' => 'messages',
-                'required'           => true,
-            ))
-            ->add('url', TextType::class, array(
-                'label'              => 'url',
-                'translation_domain' => 'messages',
-                'required'           => true,
-            ))
             ->add('internationale', ChoiceType::class, array(
                 'choices'            => array('Oui' => true, 'Non' => false),
                 'label'              => 'internationale',
                 'translation_domain' => 'messages',
-                'expanded'          => true,
+                'expanded'           => true,
                 'required'           => true,
-            ))
-            ->add('pays', EntityType::class, array(
-                'class'              => 'AppBundle\Entity\Pays',
-                'choice_label'       => 'nomFr',
-                'label'              => 'pays',
-                'translation_domain' => 'messages',
-                'required'           => false,
-            ))
-            ->add('editeur', EntityType::class, array(
-                'class'              => 'AppBundle\Entity\Editeurs',
-                'choice_label'       => 'nom',
-                'label'              => 'editeur',
-                'translation_domain' => 'messages',
-                'required'           => false,
             ));
     }
 

@@ -37,7 +37,7 @@
 							{{ configuration.mail }}</a>
 					</address>
 					<p>
-						<a href="#modalCommentVenir" data-slug="venir-reims" data-site="null" class="commentVenir btn btn-info" title="{{ 'contact.commentVenir'|trans }}" data-toggle="modal"><i class="fa fa-road"></i> {{ 'contact.commentVenir'|trans }}</a>
+						<a href="#modalCommentVenir" data-slug="venir-reims" data-site="null" class="commentVenir btn btn-info" title="{{ 'visiteur.contact.commentVenir'|trans }}" data-toggle="modal"><i class="fa fa-road"></i> {{ 'visiteur.contact.commentVenir'|trans }}</a>
 					</p>
 				</div>
 			</div>
@@ -94,7 +94,7 @@
 								</p>
 								{% if site.cms != null %}
 									<p>
-										<a href="#modalCommentVenir" data-slug="{{ site.cms.slug }}" data-site="{{ site.id }}" class="commentVenir btn btn-info" title="{{ 'contact.commentVenir'|trans }}" data-toggle="modal"><i class="fa fa-road"></i> {{ 'contact.commentVenir'|trans }}</a>
+										<a href="#modalCommentVenir" data-slug="{{ site.cms.slug }}" data-site="{{ site.id }}" class="commentVenir btn btn-info" title="{{ 'visiteur.contact.commentVenir'|trans }}" data-toggle="modal"><i class="fa fa-road"></i> {{ 'visiteur.contact.commentVenir'|trans }}</a>
 									</p>
 								{% endif %}
 							</div>
@@ -112,14 +112,14 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-					<h4 class="modal-title" id="defaultModalLabel">Comment venir</h4>
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">{{ 'fermer'|trans }}</span></button>
+					<h4 class="modal-title" id="defaultModalLabel">{{ 'visiteur.contact.commentVenir'|trans }}</h4>
 				</div>
 				<div class="modal-body" id="body-commentVenir">
 					Content
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-rw btn-success" data-dismiss="modal">Fermer</button>
+					<button type="button" class="btn btn-rw btn-success" data-dismiss="modal">{{ 'fermer'|trans }}</button>
 				</div>
 			</div><!-- /modal content -->
 		</div><!-- /modal dialog -->

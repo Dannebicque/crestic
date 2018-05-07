@@ -16,14 +16,27 @@ class CmsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('titre', TextType::class, array(
-            'label'              => 'Titre',
-            'required'           => true,
+            'label'    => 'Titre',
+            'required' => true,
         ))
             ->add('texte', TextareaType::class, array(
-                'label'              => 'Texte',
-                'required'           => false,
-                'attr'               => array('class' => 'tinyMCE')
-            ));
+                'label'    => 'Texte',
+                'required' => false,
+                'attr'     => array('class' => 'tinyMCE')
+            ))
+        ->add('titreen', TextType::class, array(
+        'label'    => 'Titre (Anglais)',
+        'required' => false,
+        'data'     =>  $options['data']['titreen'],
+        'mapped'   => false,
+    ))
+        ->add('texteen', TextareaType::class, array(
+            'label'    => 'Texte (Anglais)',
+            'required' => false,
+            'mapped'   => false,
+            'data'     =>  $options['data']['texteen'],
+            'attr'     => array('class' => 'tinyMCE')
+        ));
 //            ->add('slug', TextType::class, array(
 //                'label'              => 'Slug (ne pas modifier)',
 //                'required'           => false,
@@ -37,6 +50,8 @@ class CmsType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Cms',
+            'titreen' => null,
+            'texteen' => null
         ));
     }
 

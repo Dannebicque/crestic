@@ -11,7 +11,9 @@ namespace AppBundle\Repository;
 class SliderRepository extends \Doctrine\ORM\EntityRepository
 {
     /**
-     * @return array
+     * @param null $array_options
+     *
+     * @return \Doctrine\ORM\QueryBuilder|null
      */
 
     public function findAllSliderBuilder($array_options = null)
@@ -56,6 +58,7 @@ class SliderRepository extends \Doctrine\ORM\EntityRepository
 
 
     /**
+     * @param null $array_options
      * @return array
      */
 

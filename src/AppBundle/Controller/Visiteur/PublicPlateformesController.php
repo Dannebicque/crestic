@@ -15,6 +15,9 @@ class PublicPlateformesController extends Controller
 {
     /**
      * @Route("/{slug}", name="public_plateformes_profil")
+     * @param $slug
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function profilAction($slug)
     {
@@ -24,11 +27,13 @@ class PublicPlateformesController extends Controller
         {
             $sliders = $this->getDoctrine()->getRepository('AppBundle:PlateformesHasSliders')->findAllSliderFromPlateforme($plateforme->getId());
             $projets = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasPlateformes')->findAllProjetsFromPlateforme($plateforme->getId());
+            $publications = $this->getDoctrine()->getRepository('AppBundle:PublicationsHasPlateformes')->findLastPublicationsFromPlateforme($plateforme->getId(), 3);
 
             return $this->render('AppBundle:PublicPlateformes:profil.html.twig', array(
                 'plateforme' => $plateforme,
                 'sliders'    => $sliders,
-                'projets'    => $projets
+                'projets'    => $projets,
+                'publications' => $publications
             ));
         } else
         {

@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Cms
  *
@@ -62,120 +63,24 @@ class Pays
      */
     private $demandesOM;
 
-    public function __toString()
-    {
-        return $this->getNomFR();
-    }
-
     public function __construct()
     {
         $this->demandesOM = new ArrayCollection();
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function __toString()
     {
-        return $this->id;
+        return $this->getNomFR();
     }
 
     /**
-     * Set code
-     *
-     * @param integer $code
-     *
-     * @return Pays
-     */
-    public function setCode($code)
-    {
-        $this->code = $code;
-
-        return $this;
-    }
-
-    /**
-     * Get code
-     *
-     * @return integer
-     */
-    public function getCode()
-    {
-        return $this->code;
-    }
-
-    /**
-     * Set alpha2
-     *
-     * @param string $alpha2
-     *
-     * @return Pays
-     */
-    public function setAlpha2($alpha2)
-    {
-        $this->alpha2 = $alpha2;
-
-        return $this;
-    }
-
-    /**
-     * Get alpha2
+     * Get nomFR
      *
      * @return string
      */
-    public function getAlpha2()
+    public function getNomFR()
     {
-        return $this->alpha2;
-    }
-
-    /**
-     * Set alpha3
-     *
-     * @param string $alpha3
-     *
-     * @return Pays
-     */
-    public function setAlpha3($alpha3)
-    {
-        $this->alpha3 = $alpha3;
-
-        return $this;
-    }
-
-    /**
-     * Get alpha3
-     *
-     * @return string
-     */
-    public function getAlpha3()
-    {
-        return $this->alpha3;
-    }
-
-    /**
-     * Set nomEN
-     *
-     * @param string $nomEN
-     *
-     * @return Pays
-     */
-    public function setNomEN($nomEN)
-    {
-        $this->nomEN = $nomEN;
-
-        return $this;
-    }
-
-    /**
-     * Get nomEN
-     *
-     * @return string
-     */
-    public function getNomEN()
-    {
-        return $this->nomEN;
+        return $this->nomFR;
     }
 
     /**
@@ -193,13 +98,109 @@ class Pays
     }
 
     /**
-     * Get nomFR
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Get code
+     *
+     * @return integer
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
+     * Set code
+     *
+     * @param integer $code
+     *
+     * @return Pays
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * Get alpha2
      *
      * @return string
      */
-    public function getNomFR()
+    public function getAlpha2()
     {
-        return $this->nomFR;
+        return $this->alpha2;
+    }
+
+    /**
+     * Set alpha2
+     *
+     * @param string $alpha2
+     *
+     * @return Pays
+     */
+    public function setAlpha2($alpha2)
+    {
+        $this->alpha2 = $alpha2;
+
+        return $this;
+    }
+
+    /**
+     * Get alpha3
+     *
+     * @return string
+     */
+    public function getAlpha3()
+    {
+        return $this->alpha3;
+    }
+
+    /**
+     * Set alpha3
+     *
+     * @param string $alpha3
+     *
+     * @return Pays
+     */
+    public function setAlpha3($alpha3)
+    {
+        $this->alpha3 = $alpha3;
+
+        return $this;
+    }
+
+    /**
+     * Get nomEN
+     *
+     * @return string
+     */
+    public function getNomEN()
+    {
+        return $this->nomEN;
+    }
+
+    /**
+     * Set nomEN
+     *
+     * @param string $nomEN
+     *
+     * @return Pays
+     */
+    public function setNomEN($nomEN)
+    {
+        $this->nomEN = $nomEN;
+
+        return $this;
     }
 
     /**
@@ -207,7 +208,7 @@ class Pays
      *
      * @param DemandeOM $demandeOM
      *
-     * @return DemandeOM
+     * @return Pays
      */
     public function addDemandeOM(DemandeOM $demandeOM)
     {

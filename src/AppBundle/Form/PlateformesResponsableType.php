@@ -17,13 +17,13 @@ class PlateformesResponsableType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('description', TextareaType::class, array('label' => 'Description de la plateforme', 'attr' => array('class' => 'tinyMCE')))
+            ->add('description', TextareaType::class,
+                array('label' => 'Description de la plateforme', 'attr' => array('class' => 'tinyMCE')))
             ->add('localisation', TextType::class, array('label' => 'Localisation de la plateforle'))
             ->add('imageFile', FileType::class, array('label' => 'Illustration de la plateforme', 'required' => false))
-            ->add('url', TextType::class, array('label' => 'Site web de la plateforme', 'required' => false))
-        ;
+            ->add('url', TextType::class, array('label' => 'Site web de la plateforme', 'required' => false));
     }
-    
+
     /**
      * {@inheritdoc}
      */

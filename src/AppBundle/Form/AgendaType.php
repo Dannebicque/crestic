@@ -21,11 +21,10 @@ class AgendaType extends AbstractType
         $builder->add('titre', TextType::class, array('required' => true, 'label' => 'Titre'))
             ->add('description', TextareaType::class, array('attr' => array('class' => 'tinyMCE')))
             ->add('datedebut', DateType::class, array('required' => true, 'label' => 'Date de début'))
-            ->add('heuredebut',TimeType::class, array('required' => true, 'label' => 'Heure de début'))
-            ->add('datefin',DateType::class, array('required' => true, 'label' => 'Date de fin'))
+            ->add('heuredebut', TimeType::class, array('required' => true, 'label' => 'Heure de début'))
+            ->add('datefin', DateType::class, array('required' => true, 'label' => 'Date de fin'))
             ->add('heurefin', TimeType::class, array('required' => true, 'label' => 'Heure de fin'))
-            ->add('lieu', TextType::class, array('required' => true, 'label' => 'Lieu'))
-            /*->add('type', ChoiceType::class, array('choices' => array('Séminaires du laboratoire' => 'Séminaires du laboratoire',
+            ->add('lieu', TextType::class, array('required' => true, 'label' => 'Lieu'))/*->add('type', ChoiceType::class, array('choices' => array('Séminaires du laboratoire' => 'Séminaires du laboratoire',
                                                                       'Conférences' => 'Conférences',
                                                                       'Soutenances Thèses/HDR' => 'Soutenances Thèses/HDR',
                                                                       'Réunions' => 'Réunions',
@@ -33,7 +32,7 @@ class AgendaType extends AbstractType
             ), 'required' => true))*/
         ;
     }
-    
+
     /**
      * {@inheritdoc}
      */

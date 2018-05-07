@@ -20,10 +20,13 @@ class DemandeOMType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('membreCrestic', EntityType::class, array('label' => 'Membre du CReSTIC',
-                'class' =>'AppBundle\Entity\MembresCrestic',
-                'empty_data'=> 'Choisir un responsable',
-                'choice_label' => 'display', 'attr' => array('class'=> 'select2' )))
+            ->add('membreCrestic', EntityType::class, array(
+                'label'        => 'Membre du CReSTIC',
+                'class'        => 'AppBundle\Entity\MembresCrestic',
+                'empty_data'   => 'Choisir un responsable',
+                'choice_label' => 'display',
+                'attr'         => array('class' => 'select2')
+            ))
             ->add('dateDepart', DateType::class, array('label' => 'Date de départ'))
             ->add('heureDepart', TimeType::class, array('label' => 'Heure de départ'))
             ->add('dateRetour', DateType::class, array('label' => 'Date de retour'))
@@ -32,11 +35,15 @@ class DemandeOMType extends AbstractType
             ->add('ville', TextType::class, array('label' => 'Ville'))
             ->add('pays', EntityType::class, array('class' => 'AppBundle\Entity\Pays', 'choice_label' => 'nomFr'))
             ->add('commentaire', TextType::class, array('required' => false, 'label' => 'Commentaire sur la demande'))
-            ->add('omSansFrais',ChoiceType::class, array('label' => 'OM sans frais', 'choices' => array('Oui' => true, 'Non' => false), 'expanded' => true))
-            ->add('ligneBudget', TextType::class, array('required'=> false));
+            ->add('omSansFrais', ChoiceType::class, array(
+                'label'    => 'OM sans frais',
+                'choices'  => array('Oui' => true, 'Non' => false),
+                'expanded' => true
+            ))
+            ->add('ligneBudget', TextType::class, array('required' => false));
 
     }
-    
+
     /**
      * {@inheritdoc}
      */

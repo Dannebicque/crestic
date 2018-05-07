@@ -37,6 +37,9 @@ class ActualitesController extends Controller
      *
      * @Route("/new", name="administration_actualites_new")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
@@ -71,6 +74,9 @@ class ActualitesController extends Controller
      *
      * @Route("/{id}", name="administration_actualites_show")
      * @Method("GET")
+     * @param Actualites $actualite
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAction(Actualites $actualite)
     {
@@ -87,6 +93,10 @@ class ActualitesController extends Controller
      *
      * @Route("/{id}/edit", name="administration_actualites_edit")
      * @Method({"GET", "POST"})
+     * @param Request    $request
+     * @param Actualites $actualite
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, Actualites $actualite)
     {
@@ -112,6 +122,10 @@ class ActualitesController extends Controller
      *
      * @Route("/{id}", name="administration_actualites_delete")
      * @Method("DELETE")
+     * @param Request    $request
+     * @param Actualites $actualite
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request, Actualites $actualite)
     {

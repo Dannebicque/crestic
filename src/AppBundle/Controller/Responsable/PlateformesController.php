@@ -27,8 +27,9 @@ class PlateformesController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
 
-        $plateformes = $em->getRepository('AppBundle:Plateformes')->findAll();
+        $plateformes = $em->getRepository('AppBundle:Plateformes')->findAllPlateformesResponsable($user->getId());
 
         return $this->render('@App/Responsable/plateformes/index.html.twig', array(
             'plateformes' => $plateformes,
@@ -40,11 +41,14 @@ class PlateformesController extends Controller
      *
      * @Route("/new", name="responsable_plateformes_new")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function newAction(Request $request)
     {
         $plateforme = new Plateformes();
-        $form       = $this->createForm('AppBundle\Form\PlateformesType', $plateforme);
+        $form       = $this->createForm('AppBundle\Form\PlateformesResponsableType', $plateforme);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
@@ -67,7 +71,9 @@ class PlateformesController extends Controller
      *
      * @Route("/{id}", name="responsable_plateformes_show")
      * @Method("GET")
-     */
+     * @param Plateformes $plateforme
+     * @return Response
+*/
     public function showAction(Plateformes $plateforme)
     {
         $deleteForm = $this->createDeleteForm($plateforme);
@@ -83,10 +89,13 @@ class PlateformesController extends Controller
      *
      * @Route("/{id}/edit", name="responsable_plateformes_edit")
      * @Method({"GET", "POST"})
-     */
+     * @param Request     $request
+     * @param Plateformes $plateforme
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+*/
     public function editAction(Request $request, Plateformes $plateforme)
     {
-        $editForm = $this->createForm('AppBundle\Form\PlateformesType', $plateforme);
+        $editForm = $this->createForm('AppBundle\Form\PlateformesResponsableType', $plateforme);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid())
@@ -108,7 +117,10 @@ class PlateformesController extends Controller
      *
      * @Route("/{id}", name="responsable_plateformes_delete")
      * @Method("DELETE")
-     */
+     * @param Request     $request
+     * @param Plateformes $plateforme
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+*/
     public function deleteAction(Request $request, Plateformes $plateforme)
     {
         $form = $this->createDeleteForm($plateforme);

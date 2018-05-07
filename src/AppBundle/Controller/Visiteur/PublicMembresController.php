@@ -24,6 +24,7 @@ class PublicMembresController extends Controller
 
     /**
      * @param $slug
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/{slug}", name="public_membres_profil")
      */
@@ -33,41 +34,58 @@ class PublicMembresController extends Controller
 
         $publications = $this->getDoctrine()->getRepository('AppBundle:Publications')->findAllPublicationsFromMembre($user->getId());
 
-        $t  = array();
-        $anneeFin = (int)date('Y')+1;
-        for ($i = 2004; $i <= $anneeFin; $i++)
-        {
+        $t = array();
+        $anneeFin = (int)date('Y') + 1;
+        for ($i = 2004; $i <= $anneeFin; $i++) {
             $t[$i] = array();
+            $t[$i]['PublicationsConferences'] = array();
+            $t[$i]['PublicationsChapitres'] = array();
+            $t[$i]['PublicationsBrevets'] = array();
+            $t[$i]['PublicationsOuvrages'] = array();
+            $t[$i]['PublicationsRapports'] = array();
+            $t[$i]['PublicationsRevues'] = array();
+            $t[$i]['PublicationsTheses'] = array();
         }
         $t[0] = array();
 
         /** @var Publications $p */
-        foreach ($publications as $p)
-        {
-            $t[$p->getAnneePublication()][] = $p;
+        foreach ($publications as $p) {
+            $type = str_replace("AppBundle\\Entity\\", "", get_class($p));
+            // echo '#'.get_class($p).'#<br />';
+            $t[$p->getAnneePublication()][$type][] = $p;
         }
 
+        $types = array(
+            'PublicationsOuvrages',
+            'PublicationsTheses',
+            'PublicationsRevues',
+            'PublicationsChapitres',
+            'PublicationsConferences',
+            'PublicationsBrevets',
+            'PublicationsRapports'
+        );
+
         return $this->render('@App/PublicMembres/profil.html.twig', array(
-            'user' => $user,
+            'user'         => $user,
             'publications' => $t,
             'nbresult'     => count($publications),
-            'anneefin' => $anneeFin
+            'anneefin'     => $anneeFin,
+            'types'        => $types
         ));
     }
 
     /**
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/ajax/trombi", name="public_membres_trombi_lettre")
      */
     public function trombiLoadAction(Request $request)
     {
         $lettre = $request->request->get('lettre');
-        if ($lettre != 'tous')
-        {
+        if ($lettre !== 'tous') {
             $membres = $this->getDoctrine()->getRepository('AppBundle:MembresCrestic')->findByLettre($lettre);
-        } else
-        {
+        } else {
             $membres = $this->getDoctrine()->getRepository('AppBundle:MembresCrestic')->findAllMembresCrestic();
         }
 
@@ -79,6 +97,7 @@ class PublicMembresController extends Controller
 
     /**
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/ajax/annuaire", name="public_membres_annuaire_lettre")
      */
@@ -86,11 +105,9 @@ class PublicMembresController extends Controller
     {
         $lettre = $request->request->get('lettre');
 
-        if ($lettre != 'tous')
-        {
+        if ($lettre != 'tous') {
             $membres = $this->getDoctrine()->getRepository('AppBundle:MembresCrestic')->findByLettre($lettre);
-        } else
-        {
+        } else {
             $membres = $this->getDoctrine()->getRepository('AppBundle:MembresCrestic')->findAllMembresCrestic();
         }
 

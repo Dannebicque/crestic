@@ -52,13 +52,22 @@ class Editeurs
 
     /**
      * @ORM\OneToMany(targetEntity="Revues", mappedBy="editeur")
-     */   
+     */
     private $revues;
 
     /**
      * @ORM\OneToMany(targetEntity="PublicationsOuvrages", mappedBy="editeur")
      */
     private $ouvrages;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->revues = new ArrayCollection();
+        $this->ouvrages = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -73,12 +82,25 @@ class Editeurs
     /**
      * Set id
      *
-     * @return integer
+     * @param $id
+     *
+     * @return Editeurs
      */
     public function setId($id)
     {
         $this->id = $id;
+
         return $this;
+    }
+
+    /**
+     * Get nom
+     *
+     * @return string
+     */
+    public function getNom()
+    {
+        return $this->nom;
     }
 
     /**
@@ -96,13 +118,13 @@ class Editeurs
     }
 
     /**
-     * Get nom
+     * Get pays
      *
      * @return string
      */
-    public function getNom()
+    public function getPays()
     {
-        return $this->nom;
+        return $this->pays;
     }
 
     /**
@@ -120,13 +142,13 @@ class Editeurs
     }
 
     /**
-     * Get pays
+     * Get lien
      *
      * @return string
      */
-    public function getPays()
+    public function getLien()
     {
-        return $this->pays;
+        return $this->lien;
     }
 
     /**
@@ -143,30 +165,10 @@ class Editeurs
         return $this;
     }
 
-    /**
-     * Get lien
-     *
-     * @return string
-     */
-    public function getLien()
-    {
-        return $this->lien;
-    }
-
     public function __toString()
     {
         return $this->nom;
     }
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->revues = new ArrayCollection();
-        $this->ouvrages = new ArrayCollection();
-    }
-
 
     /**
      * Add revue
@@ -207,7 +209,7 @@ class Editeurs
      *
      * @param PublicationsOuvrages $ouvrage
      *
-     * @return Ouvrages
+     * @return Editeurs
      */
     public function addOuvrage(PublicationsOuvrages $ouvrage)
     {
@@ -237,6 +239,16 @@ class Editeurs
     }
 
     /**
+     * Get ville
+     *
+     * @return string
+     */
+    public function getVille()
+    {
+        return $this->ville;
+    }
+
+    /**
      * Set ville
      *
      * @param string $ville
@@ -248,15 +260,5 @@ class Editeurs
         $this->ville = $ville;
 
         return $this;
-    }
-
-    /**
-     * Get ville
-     *
-     * @return string
-     */
-    public function getVille()
-    {
-        return $this->ville;
     }
 }

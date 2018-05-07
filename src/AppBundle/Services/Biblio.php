@@ -27,7 +27,7 @@ class Biblio
 
     public function formatIEEE($entity)
     {
-        if ($entity !== null)
+        if (is_object($entity) && $entity !== null)
         {
             $result = '';
 
@@ -48,12 +48,12 @@ class Biblio
                         $result .= ', ' . $entity->getNumeroDelivrance();
                     }
 
-                    if ($entity->getMoisPublicationAbbrev() !== '')
+                    if ($entity->getMoisPublicationAbbrev() !== '' && $entity->getMoisPublicationAbbrev() !== NULL)
                     {
                         $result .= ', ' . $entity->getMoisPublicationAbbrev();
                     }
 
-                    if ($entity->getAnneePublication() !== '' && $entity->getAnneePublication() !== 0)
+                    if ($entity->getAnneePublication() !== '' && $entity->getAnneePublication() !== 0 && $entity->getAnneePublication() !== NULL)
                     {
                         $result .= ', ' . $entity->getAnneePublication();
                     }
@@ -68,23 +68,23 @@ class Biblio
                         $result .= ' Habilitation Thesis';
                     }
 
-                    if ($entity->getAbbrevDepartement() !== '')
+                    if ($entity->getAbbrevDepartement() !== '' && $entity->getAbbrevDepartement() !== NULL)
                     {
                         $result .= ', ' . $entity->getAbbrevDepartement();
-                    } elseif ($entity->getDepartement() !== '')
+                    } elseif ($entity->getDepartement() !== '' && $entity->getDepartement() !== NULL)
                     {
                         $result .= ', ' . $entity->getDepartement();
                     }
 
-                    if ($entity->getAbbrevUniversite() !== '')
+                    if ($entity->getAbbrevUniversite() !== '' && $entity->getAbbrevUniversite() !== NULL)
                     {
                         $result .= ', ' . $entity->getAbbrevUniversite();
-                    } elseif ($entity->getUniversite() !== '')
+                    } elseif ($entity->getUniversite() !== '' && $entity->getUniversite() !== NULL)
                     {
                         $result .= ', ' . $entity->getUniversite();
                     }
 
-                    if ($entity->getVille() !== '')
+                    if ($entity->getVille() !== '' && $entity->getVille() !== NULL)
                     {
                         $result .= ', ' . $entity->getVille();
                     }
@@ -94,7 +94,7 @@ class Biblio
                         $result .= ', ' . $entity->getPays()->getNomEn();
                     }
 
-                    if ($entity->getAnneePublication() !== '' && $entity->getAnneePublication() !== 0)
+                    if ($entity->getAnneePublication() !== '' && $entity->getAnneePublication() !== 0 && $entity->getAnneePublication() !== NULL)
                     {
                         $result .= ', ' . $entity->getAnneePublication();
                     } else if ($entity->getDateSoutenance() !== null && $entity->getDateSoutenance() !== '' && $entity->getDateSoutenance() !== '0000-00-00')
@@ -103,10 +103,10 @@ class Biblio
                     }
                     break;
                 case 'PublicationsChapitres':
-                    $result .= ' in <i>' . $entity->getTitreOuvrage() . '</i>, ';
+                    $result .= ' in <i>' . $entity->getTitreOuvrage() . '</i> ';
                     if ($entity->getEditeur() !== null)
                     {
-                        if ($entity->getEditeur()->getVille() !== '')
+                        if ($entity->getEditeur()->getVille() !== '' && $entity->getEditeur()->getVille() !== NULL)
                         {
                             $result .= ', ' . $entity->getEditeur()->getVille();
                         }
@@ -116,48 +116,51 @@ class Biblio
                             $result .= ', ' . $entity->getEditeur()->getPays()->getNomEn();
                         }
 
-                        if ($entity->getEditeur()->getNom() !== '')
+                        if ($entity->getEditeur()->getNom() !== '' && $entity->getEditeur()->getNom() !== NULL)
                         {
-                            $result .= ': ' . $entity->getEditeur()->getNom();
+                            $result .= ', ' . $entity->getEditeur()->getNom();
                         }
                     } else
                     {
                         $result .= ' #err. editeur# ';
                     }
 
-                    if ($entity->getAnneePublication() !== '' && $entity->getAnneePublication() !== 0)
-                    {
-                        $result .= ', ' . $entity->getAnneePublication();
-                    }
-
-                    if ($entity->getPagination() !== '')
+                    if ($entity->getPagination() !== '' && $entity->getPagination() !== NULL)
                     {
                         $result .= ', ' . $entity->getPagination();
+                    }
+
+                    if ($entity->getAnneePublication() !== '' && $entity->getAnneePublication() !== 0 && $entity->getAnneePublication() !== NULL)
+                    {
+                        $result .= ', ' . $entity->getAnneePublication();
                     }
                     break;
                 case 'PublicationsConferences':
                     if ($entity->getConference() !== null)
                     {
-                        $result .= ' in <i>' . $entity->getConference()->getSigleConference() . '</i>';
-
-                        if ($entity->getConference()->getVille() !== '')
+                        if ($entity->getConference()->getSigleConference() !== '') {
+                            $result .= ' in <i>' . $entity->getConference()->getSigleConference() . '</i>';
+                        } else {
+                            $result .= ' in <i>' . $entity->getConference()->getNomConference() . '</i>';
+                        }
+                        if ($entity->getVille() !== '' && $entity->getVille() !== NULL)
                         {
-                            $result .= ', ' . $entity->getConference()->getVille();
+                            $result .= ', ' . $entity->getVille();
                         }
 
-                        if ($entity->getConference()->getPays() !== null)
+                        if ($entity->getPays() !== null)
                         {
-                            $result .= ', ' . $entity->getConference()->getPays()->getNomEn();
+                            $result .= ', ' . $entity->getPays()->getNomEn();
                         }
 
-                        if ($entity->getAnneePublication() !== '' && $entity->getAnneePublication() !== 0)
-                        {
-                            $result .= ', ' . $entity->getAnneePublication();
-                        }
-
-                        if ($entity->getPagination() !== '')
+                        if ($entity->getPagination() !== '' && $entity->getPagination() !== NULL)
                         {
                             $result .= ', ' . $entity->getPagination();
+                        }
+
+                        if ($entity->getAnneePublication() !== '' && $entity->getAnneePublication() !== 0 && $entity->getAnneePublication() !== NULL)
+                        {
+                            $result .= ', ' . $entity->getAnneePublication();
                         }
                     } else
                     {
@@ -168,7 +171,7 @@ class Biblio
                     $result .= ' in <i>' . $entity->getTitreOuvrage() . '</i>, x th ed.';
                     if ($entity->getEditeur() !== null)
                     {
-                        if ($entity->getEditeur()->getVille() !== '')
+                        if ($entity->getEditeur()->getVille() !== '' && $entity->getEditeur()->getVille() !== NULL)
                         {
                             $result .= ', ' . $entity->getEditeur()->getVille();
                         }
@@ -178,7 +181,7 @@ class Biblio
                             $result .= ', ' . $entity->getEditeur()->getPays()->getNomEn();
                         }
 
-                        if ($entity->getEditeur()->getNom() !== '')
+                        if ($entity->getEditeur()->getNom() !== '' && $entity->getEditeur()->getNom() !== NULL)
                         {
                             $result .= ': ' . $entity->getEditeur()->getNom();
                         }
@@ -187,24 +190,26 @@ class Biblio
                         $result .= ' #err. editeur# ';
                     }
 
-                    if ($entity->getAnneePublication() !== '' && $entity->getAnneePublication() !== 0)
-                    {
-                        $result .= ', ' . $entity->getAnneePublication();
-                    }
-
-                    if ($entity->getPagination() !== '')
+                    if ($entity->getPagination() !== '' && $entity->getPagination() !== NULL)
                     {
                         $result .= ', ' . $entity->getPagination();
                     }
 
+                    if ($entity->getAnneePublication() !== '' && $entity->getAnneePublication() !== 0 && $entity->getAnneePublication() !== NULL)
+                    {
+                        $result .= ', ' . $entity->getAnneePublication();
+                    }
+
+
+
                     break;
                 case 'PublicationsRapports':
-                    if ($entity->getAbbrevCompany() !== '')
+                    if ($entity->getAbbrevCompany() !== '' && $entity->getAbbrevCompany() !== NULL)
                     {
                         $result .= ', ' . $entity->getAbbrevCompany();
                     }
 
-                    if ($entity->getAnneePublication() !== '' && $entity->getAnneePublication() !== 0)
+                    if ($entity->getAnneePublication() !== '' && $entity->getAnneePublication() !== 0 && $entity->getAnneePublication() !== NULL)
                     {
                         $result .= ', ' . $entity->getAnneePublication();
                     }
@@ -215,7 +220,7 @@ class Biblio
 
                         //A.J. Jakeman, Elsevier, Environmental Modelling & Software
 
-                        if ($entity->getRedacteurChef() !== '')
+                        if ($entity->getRedacteurChef() !== '' && $entity->getRedacteurChef() !== NULL)
                         {
                             $result .= ', ' . $entity->getRedacteurChef();
                         }
@@ -227,38 +232,38 @@ class Biblio
 
                         $result .= ', ' . $entity->getRevue()->getTitreRevue();
 
-                        if ($entity->getVolume() !== '')
+                        if ($entity->getVolume() !== '' && $entity->getVolume() !== NULL)
                         {
                             $result .= ', ' . $entity->getVolume();
 
-                            if ($entity->getNumero() !== '')
+                            if ($entity->getNumero() !== '' && $entity->getNumero() !== 0 && $entity->getNumero() !== NULL)
                             {
                                 $result .= '(' . $entity->getNumero() . ')';
                             }
 
-                            if ($entity->getPagination() !== '')
+                            if ($entity->getPagination() !== '' && $entity->getPagination() !== NULL)
                             {
                                 $result .= ':' . $entity->getPagination();
                             }
                         } else
                         {
-                            if ($entity->getPagination() !== '')
+                            if ($entity->getPagination() !== '' && $entity->getPagination() !== NULL)
                             {
                                 $result .= ', pp. ' . $entity->getPagination();
                             }
                         }
 
 
-                        if ($entity->getMoisPublicationAbbrev() !== '')
+                        if ($entity->getMoisPublicationAbbrev() !== '' && $entity->getMoisPublicationAbbrev() !== NULL)
                         {
                             $result .= ', ' . $entity->getMoisPublicationAbbrev();
-                            if ($entity->getAnneePublication() !== '')
+                            if ($entity->getAnneePublication() !== '' && $entity->getAnneePublication() !== NULL)
                             {
                                 $result .= ' ' . $entity->getAnneePublication();
                             }
                         } else
                         {
-                            if ($entity->getAnneePublication() !== '')
+                            if ($entity->getAnneePublication() !== '' && $entity->getAnneePublication() !== NULL)
                             {
                                 $result .= ', ' . $entity->getAnneePublication();
                             }
@@ -302,30 +307,31 @@ class Biblio
 
     private function getAuteurs($entity)
     {
-        $auteurs  = $this->entityManager->getRepository('AppBundle:PublicationsHasMembres')->findBy(array('publication' => $entity->getId()), array('position' => 'ASC'));
-        $tAuteurs = array();
-        $i        = 0;
-        foreach ($auteurs as $auteur)
-        {
-            if ($auteur->getMembreCrestic() !== null && $auteur->getMembreExterieur() === null)
-            {
-                $tAuteurs['auteur'][$i]     = $this->html->linkAuteur($auteur->getMembreCrestic(), $auteur->getMembreCrestic()->getAuteurIEEE());
-                $tAuteurs['auteurLien'][$i] = $this->html->linkAuteur($auteur->getMembreCrestic());
-                $i++;
-            } elseif ($auteur->getMembreExterieur() !== null && $auteur->getMembreCrestic() === null)
-            {
-                $tAuteurs['auteur'][$i]     = $auteur->getMembreExterieur()->getAuteurIEEE();
-                $tAuteurs['auteurLien'][$i] = $auteur->getMembreExterieur()->getAuteurIEEE();
-                $i++;
-            } else
-            {
-                $tAuteurs[] = '#-#';
+        if (is_object($entity) && method_exists($entity, 'getId')) {
+            $auteurs = $this->entityManager->getRepository('AppBundle:PublicationsHasMembres')->findBy(array('publication' => $entity->getId()),
+                array('position' => 'ASC'));
+            $tAuteurs = array();
+            $i = 0;
+            foreach ($auteurs as $auteur) {
+                if ($auteur->getMembreCrestic() !== null && $auteur->getMembreExterieur() === null) {
+                    $tAuteurs['auteur'][$i] = $this->html->linkAuteur($auteur->getMembreCrestic(),
+                        $auteur->getMembreCrestic()->getAuteurIEEE());
+                    $tAuteurs['auteurLien'][$i] = $this->html->linkAuteur($auteur->getMembreCrestic());
+                    $i++;
+                } elseif ($auteur->getMembreExterieur() !== null && $auteur->getMembreCrestic() === null) {
+                    $tAuteurs['auteur'][$i] = $auteur->getMembreExterieur()->getAuteurIEEE();
+                    $tAuteurs['auteurLien'][$i] = $auteur->getMembreExterieur()->getAuteurIEEE();
+                    $i++;
+                } else {
+                    $tAuteurs[] = '#-#';
+                }
+
             }
 
+            // a tester la taille, uniquement deux auteurs
+            return $tAuteurs;
         }
-
-        // a tester la taille, uniquement deux auteurs
-        return $tAuteurs;
+        return array('-err-');
     }
 
     /**
@@ -556,9 +562,32 @@ class Biblio
         }
     }
 
-    public
-    function getAllAuteurs()
+    public function getAllAuteurs($entity)
     {
+        $auteurs  = $this->entityManager->getRepository('AppBundle:PublicationsHasMembres')->findBy(array('publication' => $entity->getId()), array('position' => 'ASC'));
+        //$i        = 0;
+        $html = '';
 
+        foreach ($auteurs as $auteur)
+        {
+            if ($auteur->getMembreCrestic() !== null && $auteur->getMembreExterieur() === null)
+            {
+                $html .= $this->html->linkAuteur($auteur->getMembreCrestic(), $auteur->getMembreCrestic()->getAuteurIEEE()).', ';
+                //$tAuteurs['auteurLien'][$i] = $this->html->linkAuteur($auteur->getMembreCrestic());
+                //$i++;
+            } elseif ($auteur->getMembreExterieur() !== null && $auteur->getMembreCrestic() === null)
+            {
+                $html     .= $auteur->getMembreExterieur()->getAuteurIEEE().', ';
+                //$tAuteurs['auteurLien'][$i] = $auteur->getMembreExterieur()->getAuteurIEEE();
+                //$i++;
+            } else
+            {
+                $html     .= '#-#';
+            }
+
+        }
+
+        // a tester la taille, uniquement deux auteurs
+        return $html;
     }
 }

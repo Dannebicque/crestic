@@ -43,6 +43,9 @@ class EquipesController extends Controller
      *
      * @Route("/new", name="administration_equipes_new")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function newAction(Request $request)
     {
@@ -70,7 +73,9 @@ class EquipesController extends Controller
      *
      * @Route("/{id}", name="administration_equipes_show")
      * @Method("GET")
-     */
+     * @param Equipes $equipe
+     * @return Response
+*/
     public function showAction(Equipes $equipe)
     {
         $deleteForm = $this->createDeleteForm($equipe);
@@ -86,7 +91,10 @@ class EquipesController extends Controller
      *
      * @Route("/{id}/edit", name="administration_equipes_edit")
      * @Method({"GET", "POST"})
-     */
+     * @param Request $request
+     * @param Equipes $equipe
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+*/
     public function editAction(Request $request, Equipes $equipe)
     {
         $editForm = $this->createForm('AppBundle\Form\EquipesType', $equipe);
@@ -111,7 +119,10 @@ class EquipesController extends Controller
      *
      * @Route("/{id}", name="administration_equipes_delete")
      * @Method("DELETE")
-     */
+     * @param Request $request
+     * @param Equipes $equipe
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+*/
     public function deleteAction(Request $request, Equipes $equipe)
     {
         $form = $this->createDeleteForm($equipe);

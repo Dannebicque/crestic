@@ -1,8 +1,9 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}CReSTIC | Actualité | {{ actualite.titre }} {% endblock %}
+{% block title %}{{ 'visiteur.actualite.title'|trans }} | {{ actualite.titre }} {% endblock %}
 
 {% block content %}
 
 	{{ include('@App/Includes/inc.actualite.html.twig', {actualite:actualite}) }}
+	<a href="{{ path('public_actualites') }}">{{ 'visiteur.index.actualites.retour'|trans }}</a>
 {% endblock %}

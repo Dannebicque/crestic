@@ -1,0 +1,38 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block title %}Nettoyage des publications{% endblock %}
+
+{% block content %}
+    <h1>Nettoyage des publications</h1>
+    <table>
+        <thead>
+        <tr>
+            <td>N°</td>
+            <th>Titre</th>
+        </tr>
+        </thead>
+        {% for publication in publications %}
+            <tr>
+                <td>
+                    {{ loop.index }}
+                </td>
+                <td>
+                    <a href="#" class="updatePublications" data-type="textarea" data-pk="{{ publication.id }}" data-name="titre">{{ publication.titre }}</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+      $(document).ready(function() {
+        $('.updatePublications').editable(
+          {
+            type: 'text',
+            url: "{{ path('nettoyage_update_publication') }}"
+          }
+        );
+      });
+    </script>
+{% endblock %}

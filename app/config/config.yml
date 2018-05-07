@@ -149,8 +149,8 @@ vich_uploader:
         membresCrestic_images:
             uri_prefix:        /uploads/membresCrestic
             upload_destination: '%kernel.root_dir%/../web/uploads/membresCrestic'
-            delete_on_update:   true
-            delete_on_remove:   true
+            delete_on_update:   false
+            delete_on_remove:   false
             namer:              vich_uploader.namer_uniqid
 #        reseaux_images:
 #            uri_prefix:         /uploads/reseaux
@@ -202,8 +202,11 @@ liip_imagine:
         partenaire:
             jpeg_quality: 80
             filters:
-                #thumbnail: { size: [120, 120], mode: inset }
-                relative_resize: { widen: 120 }
+                #relative_resize: { heighten: 120 }
+                 scale:
+
+                                    # input 300x900px -> output 900x2700px (relative up-scale)
+                      dim: [ 120, 120 ]
         slider:
             jpeg_quality: 80
             filters:
@@ -219,3 +222,12 @@ liip_imagine:
             jpeg_quality: 80
             filters:
                 thumbnail: { widen: 540, mode: outbound }
+
+l3_cas:
+    host: cas.univ-reims.fr               # Cas Server
+    path: /cas/                                             # App path if not in root (eg. cas.test.com/cas)
+    port: 443                                          # Server port
+    ca: false                                           # SSL Certificate
+    handleLogoutRequest: true                           # Single sign out activation (default: false)
+    casLogoutTarget: http://crestic.univ-reims.fr    # Redirect path after logout
+    force: false                                         # Allows cas check mode and not force, user : __NO_USER__ if not connected (If force false, Single sign out cant work).

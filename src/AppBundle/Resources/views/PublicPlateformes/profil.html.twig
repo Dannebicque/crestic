@@ -1,6 +1,6 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}CReSTIC | Plateforme | {{ plateforme.nom }} {% endblock %}
+{% block title %}{{ 'visiteur.plateforme.title'|trans }} | {{ plateforme.nom }} {% endblock %}
 
 {% block content %}
 	<!-- Begin Content Section -->
@@ -99,8 +99,7 @@
 							{{ 'visiteur.plateforme.publications'|trans }}
 						</h4>
 					</div>
-					publications
-					{#{{ biblio.getListPublications(plateforme.publications, false)|raw }}#}
+                    {{ include('@App/PublicPublications/publiProfil.html.twig', {publications: publications}) }}
 				</div>
 
 

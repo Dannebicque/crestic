@@ -92,30 +92,27 @@ class Revues
      */
     private $publications;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->publications = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
     public function __toString()
     {
         return $this->getTitreRevue();
     }
 
     /**
-     * Get id
+     * Get titreRevue
      *
-     * @return integer
+     * @return string
      */
-    public function getId()
+    public function getTitreRevue()
     {
-        return $this->id;
-    }
-
-    /**
-     * Set id
-     *
-     * @return integer
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
+        return $this->titreRevue;
     }
 
     /**
@@ -133,13 +130,37 @@ class Revues
     }
 
     /**
-     * Get titreRevue
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set id
+     *
+     * @param $id
+     *
+     * @return Revues
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get sigleRevue
      *
      * @return string
      */
-    public function getTitreRevue()
+    public function getSigleRevue()
     {
-        return $this->titreRevue;
+        return $this->sigleRevue;
     }
 
     /**
@@ -157,13 +178,13 @@ class Revues
     }
 
     /**
-     * Get sigleRevue
+     * Get internationale
      *
-     * @return string
+     * @return boolean
      */
-    public function getSigleRevue()
+    public function getInternationale()
     {
-        return $this->sigleRevue;
+        return $this->internationale;
     }
 
     /**
@@ -181,13 +202,13 @@ class Revues
     }
 
     /**
-     * Get internationale
+     * Get impactFactor
      *
-     * @return boolean
+     * @return float
      */
-    public function getInternationale()
+    public function getImpactFactor()
     {
-        return $this->internationale;
+        return $this->impactFactor;
     }
 
     /**
@@ -205,13 +226,13 @@ class Revues
     }
 
     /**
-     * Get impactFactor
+     * Get classification
      *
-     * @return float
+     * @return string
      */
-    public function getImpactFactor()
+    public function getClassification()
     {
-        return $this->impactFactor;
+        return $this->classification;
     }
 
     /**
@@ -229,20 +250,13 @@ class Revues
     }
 
     /**
-     * Get classification
+     * Get editeur
      *
-     * @return string
+     * @return Editeurs
      */
-    public function getClassification()
+    public function getEditeur()
     {
-        return $this->classification;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->publications = new \Doctrine\Common\Collections\ArrayCollection();
+        return $this->editeur;
     }
 
     /**
@@ -257,16 +271,6 @@ class Revues
         $this->editeur = $editeur;
 
         return $this;
-    }
-
-    /**
-     * Get editeur
-     *
-     * @return Editeurs
-     */
-    public function getEditeur()
-    {
-        return $this->editeur;
     }
 
     /**
@@ -305,13 +309,22 @@ class Revues
 
     public function display()
     {
-        if ($this->sigleRevue !== '')
-        {
-            return $this->sigleRevue.', '.$this->titreRevue;
+        if ($this->sigleRevue !== '') {
+            return $this->sigleRevue . ', ' . $this->titreRevue;
         }
 
         return $this->titreRevue;
 
+    }
+
+    /**
+     * Get url
+     *
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
     }
 
     /**
@@ -329,13 +342,13 @@ class Revues
     }
 
     /**
-     * Get url
+     * Get created
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getUrl()
+    public function getCreated()
     {
-        return $this->url;
+        return $this->created;
     }
 
     /**
@@ -353,13 +366,13 @@ class Revues
     }
 
     /**
-     * Get created
+     * Get updated
      *
      * @return \DateTime
      */
-    public function getCreated()
+    public function getUpdated()
     {
-        return $this->created;
+        return $this->updated;
     }
 
     /**
@@ -376,20 +389,12 @@ class Revues
         return $this;
     }
 
-    /**
-     * Get updated
-     *
-     * @return \DateTime
-     */
-    public function getUpdated()
-    {
-        return $this->updated;
-    }
-
     public function getjson()
     {
-        return array('id' => $this->id,
+        return array(
+            'id'    => $this->id,
             'titre' => $this->titreRevue,
-            'sigle' => $this->sigleRevue);
+            'sigle' => $this->sigleRevue
+        );
     }
 }

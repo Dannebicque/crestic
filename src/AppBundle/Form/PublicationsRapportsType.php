@@ -25,7 +25,7 @@ class PublicationsRapportsType extends AbstractType
             'data_class' => PublicationsRapports::class,
         ));
     }
-    
+
     /**
      * {@inheritdoc}
      */

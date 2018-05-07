@@ -23,32 +23,47 @@ class PublicationsType extends AbstractType
             ->add('resume', TextareaType::class, array('label' => 'Résumé', 'required' => false))
             ->add('keywords', TextType::class, array('label' => 'Mots clés', 'required' => false))
             ->add('pdfFile', FileType::class, array('label' => 'PDF', 'required' => false))
-            ->add('pdfVisible', ChoiceType::class, array('choices' => array('Oui' => true, 'Non' => false), 'expanded' => true, 'label' => 'PDF visible'))
+            ->add('pdfVisible', ChoiceType::class,
+                array('choices' => array('Oui' => true, 'Non' => false), 'expanded' => true, 'label' => 'PDF visible'))
             ->add('doi', TextType::class, array('label' => 'DOI', 'required' => false))
             ->add('url', TextType::class, array('label' => 'URL', 'required' => false))
             ->add('commentaire', TextareaType::class, array('label' => 'Commentaire libre', 'required' => false))
             ->add('pageDebut', TextType::class, array('label' => 'Page de début', 'required' => false))
             ->add('pageFin', TextType::class, array('label' => 'Page de fin', 'required' => false))
-            ->add('moisPublication', ChoiceType::class, array('label' => 'Mois de publication', 'required' => false, 'choices' => array(
-                '' => 0,
-                'Janvier' => 1,
-                'Février' =>2,
-                'Mars' => 3,
-                'Avril' => 4,
-                'Mai' => 5,
-                'Juin' => 6,
-                'Juillet' => 7,
-                'Août' => 8,
-                'Septembre' => 9,
-                'Octobre' => 10,
-                'Novembre' => 11,
-                'Décembre' => 12
-            )))
-
+            ->add('moisPublication', ChoiceType::class, array(
+                'label'    => 'Mois de publication',
+                'required' => false,
+                'choices'  => array(
+                    ''          => 0,
+                    'Janvier'   => 1,
+                    'Février'   => 2,
+                    'Mars'      => 3,
+                    'Avril'     => 4,
+                    'Mai'       => 5,
+                    'Juin'      => 6,
+                    'Juillet'   => 7,
+                    'Août'      => 8,
+                    'Septembre' => 9,
+                    'Octobre'   => 10,
+                    'Novembre'  => 11,
+                    'Décembre'  => 12
+                )
+            ))
             ->add('anneePublication', TextType::class, array('label' => 'Année de publication'))
-            ->add('publicationInternationale', ChoiceType::class, array('expanded' => true, 'label' => 'Type de publication', 'data' => true, 'choices' => array('Publication Internationale' => true, 'Publication Nationale' => false)));
+            ->add('publicationInternationale', ChoiceType::class, array(
+                'expanded' => true,
+                'label'    => 'Type de publication',
+                'data'     => true,
+                'choices'  => array('Publication Internationale' => true, 'Publication Nationale' => false)
+            ))
+            ->add('publicationPourLeCrestic', ChoiceType::class, array(
+                'expanded' => true,
+                'label'    => 'Publication associée au CReSTIC',
+                'data'     => true,
+                'choices'  => array('Publication associée au CReSTIC' => true, 'Publication hors CReSTIC' => false)
+            ));
     }
-    
+
     /**
      * {@inheritdoc}
      */

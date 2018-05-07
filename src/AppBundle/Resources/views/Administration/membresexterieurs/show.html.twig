@@ -1,0 +1,43 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+    <a href="{{ path('administration_membresexterieurs_index') }}">Membres Extérieurs</a> / Détails /
+{% endblock %}
+
+{% block content %}
+    <h1>Détails d'un membre</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Nom</th>
+                <td>{{ membresExterieur.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prénom</th>
+                <td>{{ membresExterieur.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Nomlabo</th>
+                <td>{{ membresExterieur.nomLabo }}</td>
+            </tr>
+            <tr>
+                <th>Labourca</th>
+                <td>{% if membresExterieur.laboUrca %}Oui{% else %}Non{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Membre International</th>
+                <td>{% if membresExterieur.international %}Oui{% else %}Non{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Ancien membre du CReSTIC</th>
+                <td>{% if membresExterieur.ancienMembresCrestic %}Oui{% else %}Non{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ membresExterieur.email }}</td>
+            </tr>
+        </tbody>
+    </table>
+    {{ include('@App/Administration/footer-show.html.twig', {var: 'membresexterieurs', obj:membresExterieur.id}) }}
+{% endblock %}

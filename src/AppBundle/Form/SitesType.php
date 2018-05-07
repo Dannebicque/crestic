@@ -15,7 +15,7 @@ class SitesType extends AbstractType
     {
         $builder->add('adresse')->add('cp')->add('mail')->add('ville')->add('tel')->add('fax')->add('titre')->add('map')->add('principale')->add('membreCrestic')->add('cms');
     }
-    
+
     /**
      * {@inheritdoc}
      */

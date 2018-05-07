@@ -25,14 +25,19 @@ class PublicationsChapitresType extends AbstractType
             ->add('numero', TextType::class, array('label' => 'Numéro de chapitre', 'required' => false))
             ->add('isbn', TextType::class, array('label' => 'ISBN', 'required' => false))
             ->add('redacteurChef', TextType::class, array('label' => 'Rédacteur en chef', 'required' => false))
-            ->add('vulgarisation', ChoiceType::class, array('choices' => array('Oui' => true, 'Non' => false), 'expanded' => true, 'label' => 'Chapitre de vulgarisation'))
-            ->add('editeur', EntityType::class, array('class' => 'AppBundle\Entity\Editeurs', 'choice_label' => 'nom', 'label' => 'Editeur'));
+            ->add('vulgarisation', ChoiceType::class, array(
+                'choices' => array('Oui' => true, 'Non' => false),
+                'expanded' => true,
+                'label' => 'Chapitre de vulgarisation'
+            ))
+            ->add('editeur', EntityType::class,
+                array('class' => 'AppBundle\Entity\Editeurs', 'choice_label' => 'nom', 'label' => 'Editeur'));
 
         $builder->add('bar', PublicationsType::class, array(
             'data_class' => PublicationsChapitres::class,
         ));
     }
-    
+
     /**
      * {@inheritdoc}
      */

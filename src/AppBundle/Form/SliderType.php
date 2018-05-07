@@ -18,10 +18,9 @@ class SliderType extends AbstractType
         $builder->add('imageFile', FileType::class, array())
             ->add('url', TextType::class, array())
             ->add('titre', TextType::class, array())
-            ->add('texte', TextType::class, array())
-            ;
+            ->add('texte', TextType::class, array());
     }
-    
+
     /**
      * {@inheritdoc}
      */

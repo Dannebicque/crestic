@@ -85,10 +85,10 @@ class Projets
     private $responsable;
 
     /**
-    * @var string
-    *
-    * @ORM\Column(name="financement", type="string", length=255,nullable=true)
-    */
+     * @var string
+     *
+     * @ORM\Column(name="financement", type="string", length=255,nullable=true)
+     */
     private $financement;
 
     /**
@@ -169,6 +169,12 @@ class Projets
     private $projetRi = false;
 
     /**
+     * @var string
+     * @ORM\Column(type="string", length=30)
+     */
+    private $typeprojet;
+
+    /**
      *
      * @ORM\OneToMany(targetEntity="ProjetsHasEquipes", mappedBy="projet", cascade={"persist"})
      */
@@ -216,46 +222,39 @@ class Projets
      */
     private $emplois;
 
-    public function __toString()
-    {
-        return ''.$this->getTitre();
-    }
-
+    /**
+     * @var CategorieProjet
+     * @ORM\ManyToOne(targetEntity="CategorieProjet")
+     */
+    private $categorie;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->equipes      = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->equipes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->publications = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->membres      = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->partenaires  = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->plateformes  = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->sliders      = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->emplois      = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->membres = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->partenaires = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->plateformes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->sliders = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->emplois = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function __toString()
     {
-        return $this->id;
+        return '' . $this->getTitre();
     }
 
     /**
-     * Set id
+     * Get titre
      *
-     * @return integer
+     * @return string
      */
-    public function setId($id)
+    public function getTitre()
     {
-        $this->id = $id;
-        return $this;
+        return $this->titre;
     }
 
     /**
@@ -273,13 +272,37 @@ class Projets
     }
 
     /**
-     * Get titre
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set id
+     *
+     * @param $id
+     *
+     * @return Projets
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get description
      *
      * @return string
      */
-    public function getTitre()
+    public function getDescription()
     {
-        return $this->titre;
+        return $this->description;
     }
 
     /**
@@ -297,13 +320,13 @@ class Projets
     }
 
     /**
-     * Get description
+     * Get dateDebut
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getDescription()
+    public function getDateDebut()
     {
-        return $this->description;
+        return $this->dateDebut;
     }
 
     /**
@@ -321,13 +344,13 @@ class Projets
     }
 
     /**
-     * Get dateDebut
+     * Get dateFin
      *
      * @return \DateTime
      */
-    public function getDateDebut()
+    public function getDateFin()
     {
-        return $this->dateDebut;
+        return $this->dateFin;
     }
 
     /**
@@ -345,22 +368,22 @@ class Projets
     }
 
     /**
-     * Get dateFin
+     * Get financement
      *
-     * @return \DateTime
+     * @return string
      */
-    public function getDateFin()
+    public function getFinancement()
     {
-        return $this->dateFin;
+        return $this->financement;
     }
 
     /**
- * Set financement
- *
- * @param string $financement
- *
- * @return Projets
- */
+     * Set financement
+     *
+     * @param string $financement
+     *
+     * @return Projets
+     */
     public function setFinancement($financement)
     {
         $this->financement = $financement;
@@ -369,13 +392,13 @@ class Projets
     }
 
     /**
-     * Get financement
+     * Get identification
      *
      * @return string
      */
-    public function getFinancement()
+    public function getIdentification()
     {
-        return $this->financement;
+        return $this->identification;
     }
 
     /**
@@ -393,13 +416,13 @@ class Projets
     }
 
     /**
-     * Get identification
+     * Get budgetGlobal
      *
      * @return string
      */
-    public function getIdentification()
+    public function getBudgetGlobal()
     {
-        return $this->identification;
+        return $this->budgetGlobal;
     }
 
     /**
@@ -417,13 +440,13 @@ class Projets
     }
 
     /**
-     * Get budgetGlobal
+     * Get slug
      *
      * @return string
      */
-    public function getBudgetGlobal()
+    public function getSlug()
     {
-        return $this->budgetGlobal;
+        return $this->slug;
     }
 
     /**
@@ -441,13 +464,13 @@ class Projets
     }
 
     /**
-     * Get slug
+     * Get actif
      *
-     * @return string
+     * @return boolean
      */
-    public function getSlug()
+    public function getActif()
     {
-        return $this->slug;
+        return $this->actif;
     }
 
     /**
@@ -463,17 +486,6 @@ class Projets
 
         return $this;
     }
-
-    /**
-     * Get actif
-     *
-     * @return boolean
-     */
-    public function getActif()
-    {
-        return $this->actif;
-    }
-
 
     /**
      * Get image
@@ -520,12 +532,21 @@ class Projets
     {
         $this->imageFile = $image;
 
-        if ($image)
-        {
+        if ($image) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
             $this->setUpdated(new \DateTime('now'));
         }
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
     }
 
     /**
@@ -543,13 +564,13 @@ class Projets
     }
 
     /**
-     * Get created
+     * Get updated
      *
      * @return \DateTime
      */
-    public function getCreated()
+    public function getUpdated()
     {
-        return $this->created;
+        return $this->updated;
     }
 
     /**
@@ -567,13 +588,13 @@ class Projets
     }
 
     /**
-     * Get updated
+     * Get responsable
      *
-     * @return \DateTime
+     * @return MembresCrestic
      */
-    public function getUpdated()
+    public function getResponsable()
     {
-        return $this->updated;
+        return $this->responsable;
     }
 
     /**
@@ -591,13 +612,13 @@ class Projets
     }
 
     /**
-     * Get responsable
+     * Get url
      *
-     * @return MembresCrestic
+     * @return string
      */
-    public function getResponsable()
+    public function getUrl()
     {
-        return $this->responsable;
+        return $this->url;
     }
 
     /**
@@ -615,13 +636,13 @@ class Projets
     }
 
     /**
-     * Get url
+     * Get video
      *
      * @return string
      */
-    public function getUrl()
+    public function getVideo()
     {
-        return $this->url;
+        return $this->video;
     }
 
     /**
@@ -639,13 +660,13 @@ class Projets
     }
 
     /**
-     * Get video
+     * Get projetInternational
      *
-     * @return string
+     * @return boolean
      */
-    public function getVideo()
+    public function getProjetInternational()
     {
-        return $this->video;
+        return $this->projetInternational;
     }
 
     /**
@@ -663,13 +684,13 @@ class Projets
     }
 
     /**
-     * Get projetInternational
+     * Get projetValorisation
      *
      * @return boolean
      */
-    public function getProjetInternational()
+    public function getProjetValorisation()
     {
-        return $this->projetInternational;
+        return $this->projetValorisation;
     }
 
     /**
@@ -687,13 +708,13 @@ class Projets
     }
 
     /**
-     * Get projetValorisation
+     * Get projetThese
      *
      * @return boolean
      */
-    public function getProjetValorisation()
+    public function getProjetThese()
     {
-        return $this->projetValorisation;
+        return $this->projetThese;
     }
 
     /**
@@ -711,13 +732,13 @@ class Projets
     }
 
     /**
-     * Get projetThese
+     * Get projetRi
      *
      * @return boolean
      */
-    public function getProjetThese()
+    public function getProjetRi()
     {
-        return $this->projetThese;
+        return $this->projetRi;
     }
 
     /**
@@ -732,16 +753,6 @@ class Projets
         $this->projetRi = $projetRi;
 
         return $this;
-    }
-
-    /**
-     * Get projetRi
-     *
-     * @return boolean
-     */
-    public function getProjetRi()
-    {
-        return $this->projetRi;
     }
 
     /**
@@ -883,7 +894,7 @@ class Projets
     /**
      * Add plateformes
      *
-     * @param ProjetsHasSliders $plateformes
+     * @param ProjetsHasPlateformes $plateformes
      *
      * @return Projets
      */
@@ -967,7 +978,7 @@ class Projets
      *
      * @param Emplois $emploi
      *
-     * @return Emplois
+     * @return Projets
      */
     public function addEmploi(Emplois $emploi)
     {
@@ -1052,5 +1063,47 @@ class Projets
     public function getFinanceurs()
     {
         return $this->financeurs;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTypeprojet()
+    {
+        return $this->typeprojet;
+    }
+
+    /**
+     * @param string $typeprojet
+     */
+    public function setTypeprojet($typeprojet)
+    {
+        $this->typeprojet = $typeprojet;
+    }
+
+
+
+    /**
+     * Set categorie
+     *
+     * @param \AppBundle\Entity\CategorieProjet $categorie
+     *
+     * @return Projets
+     */
+    public function setCategorie(CategorieProjet $categorie = null)
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    /**
+     * Get categorie
+     *
+     * @return \AppBundle\Entity\CategorieProjet
+     */
+    public function getCategorie()
+    {
+        return $this->categorie;
     }
 }

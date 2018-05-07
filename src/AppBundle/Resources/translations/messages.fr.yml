@@ -1,7 +1,6 @@
 
 acces.profl: Accéder au profil de
-agenda:
-    crestic: Agenda du CReSTIC
+
 top_bar:
     address:
         university: 'Université de Reims Champagne-Ardenne'
@@ -45,10 +44,10 @@ ville: Ville
 pays: Pays
 tauxSelection: Taux de sélection
 url: Site web
+urlConference: Site Web de la Conférence
 internationale: Internationale
 editeur: Editeur
 contacts: Contacts
-actualites.crestic : Actualités du CReSTIC
 by: Par
 posted: Posté le
 membres.crestic: Membres du CReSTIC
@@ -56,10 +55,16 @@ DOC: Doctorant
 DOCH: Doctorant Hors URCA
 MCF: Maître de conférences
 PR: Professeur
-PUPH : PU-PH
-MCUPH : MCU-PH
+PUPH: PU-PH
+MCUPH: MCU-PH
 
 visiteur:
+    membreAssocie: Membre associé
+    agenda:
+        title: Agenda du CReSTIC
+        pasdevenement: Aucun événement programmé.
+    actualite:
+        title: Actualités du CReSTIC
     equipe:
         title: Equipe
         themerecherche: Thèmatique de recherche
@@ -70,11 +75,19 @@ visiteur:
         responsable: Responsable
         contact: Contact
         departements: Département(s)
+        detail: Détails de l'équipe
     liste.title: Liste des membres
     annuaire.title: Annuaire des membres
     trombinoscope.title: Trombinoscope
     emploisIndex:
         title: 'Offres d''emploi, thèses, post-doc'
+        emploi: Emploi
+        datepublication: Date de publication
+        duree: Durée
+        details: Détails
+        contact: Contact
+        plusinfo: Plus d'informations sur l'offre
+        titreModal: Information sur l'offre d'emploi
     TApercuDepartements:
         theme: Thématique
         informations: Informations
@@ -94,12 +107,33 @@ visiteur:
             erreur: Erreur lors de l'envoi du message
         ContactSite: Contact local
         telephone: Téléphone
+        commentVenir: Comment venir
+    departement:
+        title: Départements
+        titlemeta: Départements du CReSTIC
+        acces: Détails du département
     index:
         actualites:
             posteLe: Posté le
             lirePlus: Lire la suite ...
             par: Auteur
+            retour: Retour à la liste des actualités
+        agenda:
+            posteLe: Posté le
+            lirePlus: Lire la suite ...
+            par: Auteur
+            retour: Retour à la liste des événements
     MembresCrestic:
+        hal: Biblio. HAL
+        datenomination: Date Nomination CReSTIC
+        contact: Contact
+        email: Email
+        telephone: Téléphone
+        telportable: Téléphone Portable
+        siteweb: Site Web
+        localisation: Localisation
+        cnu: CNU
+        voirprofil: Voir le profil
         activites: Activités
         publications: Publications
         departement: Département
@@ -126,6 +160,7 @@ visiteur:
         contact: Contact
         url: Site web
         identification: Identification
+        detail: Détails du projet
     plateforme:
         title: Plateforme
         description: Description
@@ -145,18 +180,29 @@ visiteur:
         departement: Département
         equipe: Equipe
         administratif: Service administratif
-        responsable: Responsale
+        responsable: Responsable
         technicien: Service technique
     rechercher:
         publications: Rechercher des publications
-    departement:
-        acces: Détails de l'équipe
     offre:
         titre: Titre de l'offre
         date: Date souhaitée
         duree: Durée
         description: Description
         resume: Résumé
+    publication:
+        aucune: Aucune publication trouvée
+        publications: publications
+        plusancienne: Plus anciennes
+        resultatsphrase: Résultats de votre recherche de publications
+        resultatsphrase2: '%nbresult% publications correspondent à vos critères : %criteres%'
+        recherche:
+            touslesprojets: Tous les projets
+            touteslesequipes: Toutes les équipes
+            touslesdepartements: Tous les départements
+            touslesmembres: Tous les membres
+            sansprojet: Sans projet
+            nbresults: 'Il y a %nbpublis% publications sur le site. Précisez au moins un critère de recherche pour obtenir des résultats.'
 
 utilisateur:
     demandesOM:
@@ -193,6 +239,10 @@ publications:
             title: Internationale
             oui: Oui
             non: Non
+        nationale:
+            title: Nationale
+            oui: Oui
+            non: Non
         doi: DOI
         url: Site Web
     templates:
@@ -227,3 +277,16 @@ publications:
             projet: Projet
             departement: Département
             default: Initialiser
+fermer: Fermer
+tous: Tous
+nom: Nom
+prenom: Prénom
+grade: Grade
+departement: Département
+site: Site
+telephone: Téléphone
+actions: Actions
+bureau: Bureau
+corps: corps
+entre: Entre
+et: Et

@@ -1,7 +1,8 @@
 {% for financeur in financeurs %}
-    <div class="col-sm-3"  style="text-align: center">
-        <a href="{{ financeur.financeur.url }}" target="_blank"><img src="{{ asset('uploads/partenaires/'~financeur.financeur.image)|imagine_filter('partenaire')  }}" alt="logo" /><br>
-            {% if financeur.financeur.internationale == true %}<span class="fa fa-globe"></span> {% endif %}{{ financeur.financeur.nom }}
+    <div class="col-sm-3"  style="text-align: center; height:120px">
+        <a href="{{ financeur.financeur.url }}" target="_blank">
+            <img src="{{ asset('uploads/partenaires/'~financeur.financeur.image)|imagine_filter('partenaire')  }}" alt="logo" style="position: absolute; bottom: 0" />
         </a>
     </div>
 {% endfor %}
+<div style="clear: both;"></div>

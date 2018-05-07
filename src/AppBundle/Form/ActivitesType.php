@@ -16,10 +16,10 @@ class ActivitesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('titre', TextType::class, array('label' => 'Titre'))
-            ->add('texte', TextareaType::class, array('label' => 'Descriptif, commentaire', 'attr' => array('class' => 'tinyMCE')))
-            ;
+            ->add('texte', TextareaType::class,
+                array('label' => 'Descriptif, commentaire', 'attr' => array('class' => 'tinyMCE')));
     }
-    
+
     /**
      * {@inheritdoc}
      */

@@ -37,6 +37,9 @@ class RevuesController extends Controller
      *
      * @Route("/new", name="administration_revues_new")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
@@ -64,7 +67,9 @@ class RevuesController extends Controller
      *
      * @Route("/{id}", name="administration_revues_show")
      * @Method("GET")
-     */
+     * @param Revues $revue
+     * @return \Symfony\Component\HttpFoundation\Response
+*/
     public function showAction(Revues $revue)
     {
         $deleteForm = $this->createDeleteForm($revue);
@@ -80,7 +85,10 @@ class RevuesController extends Controller
      *
      * @Route("/{id}/edit", name="administration_revues_edit")
      * @Method({"GET", "POST"})
-     */
+     * @param Request $request
+     * @param Revues  $revue
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+*/
     public function editAction(Request $request, Revues $revue)
     {
         $editForm = $this->createForm('AppBundle\Form\RevuesType', $revue);
@@ -105,7 +113,10 @@ class RevuesController extends Controller
      *
      * @Route("/{id}", name="administration_revues_delete")
      * @Method("DELETE")
-     */
+     * @param Request $request
+     * @param Revues  $revue
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+*/
     public function deleteAction(Request $request, Revues $revue)
     {
         $form = $this->createDeleteForm($revue);

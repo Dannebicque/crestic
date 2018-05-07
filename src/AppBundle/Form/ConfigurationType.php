@@ -18,7 +18,8 @@ class ConfigurationType extends AbstractType
             'label'              => 'cle',
             'translation_domain' => 'messages',
             'required'           => true,
-            'attr'               => array('class' => 'form-control'), //todo: rendre , 'disabled' => true la clé pour éviter les erreurs
+            'attr'               => array('class' => 'form-control'),
+            //todo: rendre , 'disabled' => true la clé pour éviter les erreurs
         ))
             ->add('value', TextType::class, array(
                 'label'              => 'value',

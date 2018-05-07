@@ -45,23 +45,22 @@ class Equipes
      *
      * @ORM\Column(name="active", type="boolean",nullable=true)
      */
-    private $active=True;
+    private $active = true;
 
     /**
      * @var string
      *
      * @ORM\Column(name="themeRecherche", type="text",nullable=true)
-
      */
     private $themeRecherche;
 
     /**
-     * 
+     *
      * @ORM\ManyToOne(targetEntity="MembresCrestic", inversedBy="equipes",cascade={"persist"})
      * @ORM\JoinColumn(name="responsable_id",referencedColumnName="id")
      * @ORM\OrderBy({"nom" = "ASC"})
      */
-     private $responsable;
+    private $responsable;
 
     /**
      * @var \DateTime $created
@@ -139,32 +138,33 @@ class Equipes
      */
     private $video = '';
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->membres = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->projets = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->publications = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->departements = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->sliders = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
     public function __toString()
     {
         return $this->getNom();
     }
 
-
     /**
-     * Get id
+     * Get nom
      *
-     * @return integer
+     * @return string
      */
-    public function getId()
+    public function getNom()
     {
-        return $this->id;
+        return $this->nom;
     }
 
-    /**
-     * Set id
-     *
-     * @return integer
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
-    }
     /**
      * Set nom
      *
@@ -180,13 +180,37 @@ class Equipes
     }
 
     /**
-     * Get nom
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set id
+     *
+     * @param $id
+     *
+     * @return Equipes
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get themeRecherche
      *
      * @return string
      */
-    public function getNom()
+    public function getThemeRecherche()
     {
-        return $this->nom;
+        return $this->themeRecherche;
     }
 
     /**
@@ -204,13 +228,13 @@ class Equipes
     }
 
     /**
-     * Get themeRecherche
+     * Get responsable
      *
-     * @return string
+     * @return MembresCrestic
      */
-    public function getThemeRecherche()
+    public function getResponsable()
     {
-        return $this->themeRecherche;
+        return $this->responsable;
     }
 
     /**
@@ -228,25 +252,13 @@ class Equipes
     }
 
     /**
-     * Get responsable
+     * Get created
      *
-     * @return MembresCrestic
+     * @return \DateTime
      */
-    public function getResponsable()
+    public function getCreated()
     {
-        return $this->responsable;
-    }
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->membres      = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->projets      = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->publications = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->departements = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->sliders      = new \Doctrine\Common\Collections\ArrayCollection();
+        return $this->created;
     }
 
     /**
@@ -264,13 +276,13 @@ class Equipes
     }
 
     /**
-     * Get created
+     * Get updated
      *
      * @return \DateTime
      */
-    public function getCreated()
+    public function getUpdated()
     {
-        return $this->created;
+        return $this->updated;
     }
 
     /**
@@ -285,16 +297,6 @@ class Equipes
         $this->updated = $updated;
 
         return $this;
-    }
-
-    /**
-     * Get updated
-     *
-     * @return \DateTime
-     */
-    public function getUpdated()
-    {
-        return $this->updated;
     }
 
     /**
@@ -349,7 +351,7 @@ class Equipes
     /**
      * Remove departements
      *
-     * @param EquipesHasDepartements $departement
+     * @param EquipesHasMembres $departement
      */
     public function removeDepartement(EquipesHasMembres $departement)
     {
@@ -381,7 +383,7 @@ class Equipes
      */
     public function setSlug($slug)
     {
-        $this->slug = $this->generate_slug(''.$this->getNom());
+        $this->slug = $this->generate_slug('' . $this->getNom());
 
         return $this;
     }
@@ -465,12 +467,21 @@ class Equipes
     {
         $this->imageFile = $image;
 
-        if ($image)
-        {
+        if ($image) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
             $this->setUpdated(new \DateTime('now'));
         }
+    }
+
+    /**
+     * Get video
+     *
+     * @return string
+     */
+    public function getVideo()
+    {
+        return $this->video;
     }
 
     /**
@@ -488,13 +499,13 @@ class Equipes
     }
 
     /**
-     * Get video
+     * Get active
      *
-     * @return string
+     * @return boolean
      */
-    public function getVideo()
+    public function getActive()
     {
-        return $this->video;
+        return $this->active;
     }
 
     /**
@@ -509,16 +520,6 @@ class Equipes
         $this->active = $active;
 
         return $this;
-    }
-
-    /**
-     * Get active
-     *
-     * @return boolean
-     */
-    public function getActive()
-    {
-        return $this->active;
     }
 
     /**
@@ -560,7 +561,7 @@ class Equipes
      *
      * @param ProjetsHasEquipes $projet
      *
-     * @return Projets
+     * @return Equipes
      */
     public function addProjet(ProjetsHasEquipes $projet)
     {
@@ -590,6 +591,16 @@ class Equipes
     }
 
     /**
+     * Get nomlong
+     *
+     * @return string
+     */
+    public function getNomlong()
+    {
+        return $this->nomlong;
+    }
+
+    /**
      * Set nomlong
      *
      * @param string $nomlong
@@ -601,15 +612,5 @@ class Equipes
         $this->nomlong = $nomlong;
 
         return $this;
-    }
-
-    /**
-     * Get nomlong
-     *
-     * @return string
-     */
-    public function getNomlong()
-    {
-        return $this->nomlong;
     }
 }

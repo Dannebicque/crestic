@@ -13,29 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Activites
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="titre", type="string", length=150)
-     */
-    private $titre;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="texte", type="text")
-     */
-    private $texte;
-
-    /**
      * @var \DateTime $created
      * @ORM\Column(type="datetime")
      */
@@ -50,6 +27,26 @@ class Activites
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\MembresCrestic", inversedBy="activites", fetch="EAGER")
      */
     protected $membreCrestic;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="titre", type="string", length=150)
+     */
+    private $titre;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="texte", type="text")
+     */
+    private $texte;
 
     public function __construct(MembresCrestic $user)
     {
@@ -77,6 +74,16 @@ class Activites
     }
 
     /**
+     * Get titre
+     *
+     * @return string
+     */
+    public function getTitre()
+    {
+        return $this->titre;
+    }
+
+    /**
      * Set titre
      *
      * @param string $titre
@@ -91,13 +98,13 @@ class Activites
     }
 
     /**
-     * Get titre
+     * Get texte
      *
      * @return string
      */
-    public function getTitre()
+    public function getTexte()
     {
-        return $this->titre;
+        return $this->texte;
     }
 
     /**
@@ -115,13 +122,13 @@ class Activites
     }
 
     /**
-     * Get texte
+     * Get created
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getTexte()
+    public function getCreated()
     {
-        return $this->texte;
+        return $this->created;
     }
 
     /**
@@ -139,13 +146,13 @@ class Activites
     }
 
     /**
-     * Get created
+     * Get updated
      *
      * @return \DateTime
      */
-    public function getCreated()
+    public function getUpdated()
     {
-        return $this->created;
+        return $this->updated;
     }
 
     /**
@@ -163,13 +170,13 @@ class Activites
     }
 
     /**
-     * Get updated
+     * Get membreCrestic
      *
-     * @return \DateTime
+     * @return \AppBundle\Entity\MembresCrestic
      */
-    public function getUpdated()
+    public function getMembreCrestic()
     {
-        return $this->updated;
+        return $this->membreCrestic;
     }
 
     /**
@@ -184,15 +191,5 @@ class Activites
         $this->membreCrestic = $membreCrestic;
 
         return $this;
-    }
-
-    /**
-     * Get membreCrestic
-     *
-     * @return \AppBundle\Entity\MembresCrestic
-     */
-    public function getMembreCrestic()
-    {
-        return $this->membreCrestic;
     }
 }

@@ -22,17 +22,37 @@ class PublicationsOuvragesType extends AbstractType
         $builder
             ->add('typeOuvrage', TextareaType::class, array('label' => 'Type d\'ouvrage', 'required' => false))
             ->add('serie', TextType::class, array('label' => 'Série', 'required' => false))
-            ->add('vulgarisation', ChoiceType::class, array('choices' => array('Oui' => true, 'Non' => false), 'expanded' => true, 'label' => 'Ouvrage de vulgarisation', 'required' => false))
-            ->add('monographie', ChoiceType::class, array('choices' => array('Oui' => true, 'Non' => false), 'expanded' => true, 'label' => 'Monographie', 'required' => false))
-            ->add('collectif', ChoiceType::class, array('choices' => array('Oui' => true, 'Non' => false), 'expanded' => true, 'label' => 'Ouvrage Collectif', 'required' => false))
+            ->add('vulgarisation', ChoiceType::class, array(
+                'choices'  => array('Oui' => true, 'Non' => false),
+                'expanded' => true,
+                'label'    => 'Ouvrage de vulgarisation',
+                'required' => false
+            ))
+            ->add('monographie', ChoiceType::class, array(
+                'choices'  => array('Oui' => true, 'Non' => false),
+                'expanded' => true,
+                'label'    => 'Monographie',
+                'required' => false
+            ))
+            ->add('collectif', ChoiceType::class, array(
+                'choices'  => array('Oui' => true, 'Non' => false),
+                'expanded' => true,
+                'label'    => 'Ouvrage Collectif',
+                'required' => false
+            ))
             ->add('isbn', TextType::class, array('label' => 'ISBN', 'required' => false))
-            ->add('editeur', EntityType::class, array('class' => 'AppBundle\Entity\Editeurs', 'choice_label' => 'nom', 'label' => 'Editeur', 'required' => false));
+            ->add('editeur', EntityType::class, array(
+                'class'        => 'AppBundle\Entity\Editeurs',
+                'choice_label' => 'nom',
+                'label'        => 'Editeur',
+                'required'     => false
+            ));
 
         $builder->add('bar', PublicationsType::class, array(
             'data_class' => PublicationsOuvrages::class,
         ));
     }
-    
+
     /**
      * {@inheritdoc}
      */

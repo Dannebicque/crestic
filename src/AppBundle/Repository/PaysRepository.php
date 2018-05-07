@@ -11,7 +11,7 @@ namespace AppBundle\Repository;
 class PaysRepository extends \Doctrine\ORM\EntityRepository
 {
     /**
-     * @return array
+     * @return \Doctrine\ORM\QueryBuilder
      */
 
     public function findAllPaysBuilder()

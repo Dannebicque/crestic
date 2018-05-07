@@ -55,6 +55,13 @@ class BlocNewsletter
      */
     private $newletter;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->newletter = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -64,6 +71,16 @@ class BlocNewsletter
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get titre
+     *
+     * @return string
+     */
+    public function getTitre()
+    {
+        return $this->titre;
     }
 
     /**
@@ -81,13 +98,13 @@ class BlocNewsletter
     }
 
     /**
-     * Get titre
+     * Get text
      *
      * @return string
      */
-    public function getTitre()
+    public function getText()
     {
-        return $this->titre;
+        return $this->text;
     }
 
     /**
@@ -105,13 +122,13 @@ class BlocNewsletter
     }
 
     /**
-     * Get text
+     * Get ordre
      *
-     * @return string
+     * @return int
      */
-    public function getText()
+    public function getOrdre()
     {
-        return $this->text;
+        return $this->ordre;
     }
 
     /**
@@ -129,13 +146,13 @@ class BlocNewsletter
     }
 
     /**
-     * Get ordre
+     * Get image
      *
-     * @return int
+     * @return string
      */
-    public function getOrdre()
+    public function getImage()
     {
-        return $this->ordre;
+        return $this->image;
     }
 
     /**
@@ -150,23 +167,6 @@ class BlocNewsletter
         $this->image = $image;
 
         return $this;
-    }
-
-    /**
-     * Get image
-     *
-     * @return string
-     */
-    public function getImage()
-    {
-        return $this->image;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->newletter = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

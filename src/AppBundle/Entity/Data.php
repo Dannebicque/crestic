@@ -31,26 +31,37 @@ class Data
     );
 
     const TAB_STATUS_FORM = array(
-        '' => '',
-        'Professeurs' => 'PR',
-        'Maîtres de Conférences' => 'MCF',
-        'Prof. Praticien Hospitalier' => 'PUPH',
-        'MCF Praticien Hospitalier' => 'MCUP',
-        'Chercheurs Associés' => 'CAS',
-        'Ingénieurs et techniciens' => 'ING',
-        'PAST/MAST' => 'PAST',
+        ''                                               => '',
+        'Professeurs'                                    => 'PR',
+        'Maîtres de Conférences'                         => 'MCF',
+        'Prof. Praticien Hospitalier'                    => 'PUPH',
+        'MCF Praticien Hospitalier'                      => 'MCUP',
+        'Chercheurs Associés'                            => 'CAS',
+        'Ingénieurs et techniciens'                      => 'ING',
+        'PAST/MAST'                                      => 'PAST',
         'ATER, Post-Doctorants, Ingénieurs contractuels' => 'PDOC',
-        'Doctorants URCA' => 'DOC',
-        'Doctorants Hors URCA' => 'DOCH',
-        'Personnels administratifs' => 'ADM',
+        'Doctorants URCA'                                => 'DOC',
+        'Doctorants Hors URCA'                           => 'DOCH',
+        'Personnels administratifs'                      => 'ADM',
     );
 
     const TAB_ORGANIGRAMME = array(
-        "Directeur" => "Directeur",
-        "Directeur Adjoint" => "Directeur Adjoint",
-        "Secrétaire" => "Secrétaire",
-        "Technicien" => "Technicien"
+        'Directeur'         => 'Directeur',
+        'Directeur Adjoint' => 'Directeur Adjoint',
+        'Secrétaire'        => 'Secrétaire',
+        'Technicien'        => 'Technicien'
     );
 
-
+    const TAB_CATEGORIES_PROJETS = array(
+        'International'        => 'international',
+        'Européen'             => 'europeen',
+        'PIA'                  => 'pia',
+        'ANR'                  => 'anr',
+        'CNRS'                 => 'cnrs',
+        'CIFRE'                => 'cifre',
+        'Contrats industriels' => 'contratsindustriels',
+        'Region'               => 'region',
+        'Fonds privés'         => 'prives',
+        'Autres'               => 'autres',
+    );
 }

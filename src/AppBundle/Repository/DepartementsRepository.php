@@ -11,7 +11,9 @@ namespace AppBundle\Repository;
 class DepartementsRepository extends \Doctrine\ORM\EntityRepository
 {
     /**
-     * @return array
+     * @param null $array_options
+     *
+     * @return \Doctrine\ORM\QueryBuilder|null
      */
 
     public function findAllDepartementsBuilder($array_options = null)
@@ -55,6 +57,7 @@ class DepartementsRepository extends \Doctrine\ORM\EntityRepository
 
 
     /**
+     * @param null $array_options
      * @return array
      */
 

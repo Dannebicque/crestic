@@ -28,7 +28,7 @@ class PublicProjetsController extends Controller
             $partenaires  = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasPartenaires')->findAllPartenairesFromProjet($projet->getId());
             $financeurs  = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasFinanceurs')->findAllFinanceursFromProjet($projet->getId());
             $sliders      = $this->getDoctrine()->getRepository('AppBundle:ProjetsHasSliders')->findAllSliderFromProjet($projet->getId());
-            $publications = $this->getDoctrine()->getRepository('AppBundle:PublicationsHasProjets')->findAllPublicationsFromProjet($projet->getId());
+            $publications = $this->getDoctrine()->getRepository('AppBundle:PublicationsHasProjets')->findLastPublicationsFromProjet($projet->getId(), 3);
 
             return $this->render('AppBundle:PublicProjets:profil.html.twig', array(
                 'projet'       => $projet,

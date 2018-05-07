@@ -1,0 +1,5 @@
+<ul>
+{% for publication in publications %}
+<li>{{ biblio.formatIEEE(publication.publication)|raw }}</li>
+{% endfor %}
+</ul>

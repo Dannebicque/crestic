@@ -24,14 +24,14 @@ class Cms
 
     /**
      * @var string
-     *
+     * @Gedmo\Translatable
      * @ORM\Column(name="titre", type="string", length=255,nullable=true)
      */
     private $titre;
 
     /**
      * @var string
-     *
+     * @Gedmo\Translatable
      * @ORM\Column(name="texte", type="text",nullable=true)
      */
     private $texte;
@@ -58,27 +58,17 @@ class Cms
 
     public function __toString()
     {
-        return "".$this->getTitre();
-    }
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
+        return $this->getTitre();
     }
 
     /**
-     * Set id
+     * Get titre
      *
-     * @return integer
+     * @return string
      */
-    public function setId($id)
+    public function getTitre()
     {
-        $this->id = $id;
-        return $this;
+        return $this->titre;
     }
 
     /**
@@ -96,13 +86,37 @@ class Cms
     }
 
     /**
-     * Get titre
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set id
+     *
+     * @param $id
+     *
+     * @return Cms
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get texte
      *
      * @return string
      */
-    public function getTitre()
+    public function getTexte()
     {
-        return $this->titre;
+        return $this->texte;
     }
 
     /**
@@ -117,16 +131,6 @@ class Cms
         $this->texte = $texte;
 
         return $this;
-    }
-
-    /**
-     * Get texte
-     *
-     * @return string
-     */
-    public function getTexte()
-    {
-        return $this->texte;
     }
 
     /**

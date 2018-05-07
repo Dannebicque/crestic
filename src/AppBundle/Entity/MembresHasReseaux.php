@@ -61,7 +61,9 @@ class MembresHasReseaux
     /**
      * Set id
      *
-     * @return integer
+     * @param $id
+     *
+     * @return MembresHasReseaux
      */
     public function setId($id)
     {

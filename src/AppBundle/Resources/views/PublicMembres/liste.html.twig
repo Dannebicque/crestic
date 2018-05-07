@@ -5,13 +5,13 @@
 			<table class="table table-striped">
 				<thead>
 				<tr>
-					<th>Nom</th>
-					<th>Prénom</th>
-					<th>Grade</th>
-					<th>Département</th>
-					<th>Bureau</th>
-					<th>Téléphone</th>
-					<th>Actions</th>
+					<th>{{ 'nom'|trans }}</th>
+					<th>{{ 'prenom'|trans }}</th>
+					<th>{{ 'grade'|trans }}</th>
+					<th>{{ 'departement'|trans }}</th>
+					<th>{{ 'bureau'|trans }}</th>
+					<th>{{ 'telephone'|trans }}</th>
+					<th>{{ 'actions'|trans }}</th>
 				</tr>
 				</thead>
 				{% for membre in membres if membre.status == cat.code %}
@@ -24,12 +24,12 @@
 						<td>{% if membre.departementMembre != null %}{{ membre.departementMembre.sigle }}{% else %} - {%
 							endif %}</td>
 						<td>{{ membre.localisation }}</td>
-						<td>{% if membre.tel != '' %}{{ membre.tel }}{% elseif membre.telPortable !=
-							'' %}{{ membre.telPortable }}{% endif %}</td>
+						<td>{% if membre.tel != '' %}{{ membre.tel|tel_format }}{% elseif membre.telPortable !=
+							'' %}{{ membre.telPortable|tel_format }}{% endif %}</td>
 						<th>
 							<a href="mailto:{{ membre.email }}" target="_blank"><span class="fa fa-envelope"></span></a>
 							<a href="{{ path('public_membres_profil', {slug: membre.slug}) }}" target="_blank"
-							   title="Profil de {{ membre.display }}"><i class="fa fa-eye"></i></a>
+							   title="{{ 'visiteur.MembresCrestic.voirprofil'|trans }} {{ membre.display }}"><i class="fa fa-eye"></i></a>
 						</th>
 					</tr>
 				{% endfor %}

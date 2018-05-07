@@ -36,3 +36,10 @@
 </div>
 {{ form_end(form) }}
 {% endblock %}
+
+
+{% block javascripts %}
+    <script>
+	{{ include('AppBundle:Utilisateur/publications:script.js.twig') }}
+    </script>
+{% endblock %}

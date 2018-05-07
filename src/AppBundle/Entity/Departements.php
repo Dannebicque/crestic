@@ -44,11 +44,11 @@ class Departements
     private $theme;
 
     /**
-     * 
+     *
      * @ORM\ManyToOne(targetEntity="MembresCrestic",inversedBy="departements")
      * @ORM\JoinColumn(name="membreCrestic_id",referencedColumnName="id")
      */
-     private $membreCrestic;
+    private $membreCrestic;
 
     /**
      *
@@ -74,30 +74,27 @@ class Departements
      */
     private $membres;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->equipes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
     public function __toString()
     {
         return $this->getNom();
     }
 
     /**
-     * Get id
+     * Get nom
      *
-     * @return integer
+     * @return string
      */
-    public function getId()
+    public function getNom()
     {
-        return $this->id;
-    }
-
-    /**
-     * Set id
-     *
-     * @return integer
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
+        return $this->nom;
     }
 
     /**
@@ -115,13 +112,37 @@ class Departements
     }
 
     /**
-     * Get nom
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set id
+     *
+     * @param $id
+     *
+     * @return Departements
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get theme
      *
      * @return string
      */
-    public function getNom()
+    public function getTheme()
     {
-        return $this->nom;
+        return $this->theme;
     }
 
     /**
@@ -139,30 +160,6 @@ class Departements
     }
 
     /**
-     * Get theme
-     *
-     * @return string
-     */
-    public function getTheme()
-    {
-        return $this->theme;
-    }
-
-    /**
-     * Set membreCrestic
-     *
-     * @param MembresCrestic $membre
-     *
-     * @return Departements
-     */
-    public function setMembreCrestic(MembresCrestic $membreCrestic = null)
-    {
-        $this->membreCrestic = $membreCrestic;
-
-        return $this;
-    }
-
-    /**
      * Get membreCrestic
      *
      * @return MembresCrestic
@@ -171,12 +168,19 @@ class Departements
     {
         return $this->membreCrestic;
     }
+
     /**
-     * Constructor
+     * Set membreCrestic
+     *
+     * @param MembresCrestic|null $membreCrestic
+     *
+     * @return Departements
      */
-    public function __construct()
+    public function setMembreCrestic(MembresCrestic $membreCrestic = null)
     {
-        $this->equipes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->membreCrestic = $membreCrestic;
+
+        return $this;
     }
 
     /**
@@ -282,6 +286,16 @@ class Departements
     }
 
     /**
+     * Get sigle
+     *
+     * @return string
+     */
+    public function getSigle()
+    {
+        return $this->sigle;
+    }
+
+    /**
      * Set sigle
      *
      * @param string $sigle
@@ -296,13 +310,13 @@ class Departements
     }
 
     /**
-     * Get sigle
+     * Get slug
      *
      * @return string
      */
-    public function getSigle()
+    public function getSlug()
     {
-        return $this->sigle;
+        return $this->slug;
     }
 
     /**
@@ -317,15 +331,5 @@ class Departements
         $this->slug = $slug;
 
         return $this;
-    }
-
-    /**
-     * Get slug
-     *
-     * @return string
-     */
-    public function getSlug()
-    {
-        return $this->slug;
     }
 }

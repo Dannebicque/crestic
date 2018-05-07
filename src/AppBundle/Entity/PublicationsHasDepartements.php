@@ -57,7 +57,7 @@ class PublicationsHasDepartements
      *
      * @param Publications $publication
      *
-     * @return PublicationsHasEquipes
+     * @return PublicationsHasDepartements
      */
     public function setPublication(Publications $publication = null)
     {

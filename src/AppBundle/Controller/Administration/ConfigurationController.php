@@ -3,6 +3,7 @@
 namespace AppBundle\Controller\Administration;
 
 use AppBundle\Entity\Configuration;
+use AppBundle\Form\ConfigurationType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -37,11 +38,14 @@ class ConfigurationController extends Controller
      *
      * @Route("/new", name="administration_configuration_new")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
         $config = new Configuration();
-        $form   = $this->createForm('AppBundle\Form\ConfigurationType', $config);
+        $form   = $this->createForm(ConfigurationType::class, $config);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
@@ -64,7 +68,9 @@ class ConfigurationController extends Controller
      *
      * @Route("/{id}", name="administration_configuration_show")
      * @Method("GET")
-     */
+     * @param Configuration $config
+     * @return \Symfony\Component\HttpFoundation\Response
+*/
     public function showAction(Configuration $config)
     {
         $deleteForm = $this->createDeleteForm($config);
@@ -80,10 +86,13 @@ class ConfigurationController extends Controller
      *
      * @Route("/{id}/edit", name="administration_configuration_edit")
      * @Method({"GET", "POST"})
-     */
+     * @param Request       $request
+     * @param Configuration $config
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+*/
     public function editAction(Request $request, Configuration $config)
     {
-        $editForm = $this->createForm('AppBundle\Form\ConfigurationType', $config);
+        $editForm = $this->createForm(ConfigurationType::class, $config);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid())
@@ -105,7 +114,10 @@ class ConfigurationController extends Controller
      *
      * @Route("/{id}", name="administration_configuration_delete")
      * @Method("DELETE")
-     */
+     * @param Request       $request
+     * @param Configuration $configuration
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+*/
     public function deleteAction(Request $request, Configuration $configuration)
     {
         $form = $this->createDeleteForm($configuration);

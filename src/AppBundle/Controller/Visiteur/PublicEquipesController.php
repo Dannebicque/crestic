@@ -15,6 +15,9 @@ class PublicEquipesController extends Controller
 {
     /**
      * @Route("/{slug}", name="public_equipes_profil")
+     * @param $slug
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function profilAction($slug)
     {
@@ -23,11 +26,13 @@ class PublicEquipesController extends Controller
         {
             $membres = $this->getDoctrine()->getRepository('AppBundle:EquipesHasMembres')->findAllMembresFromEquipe($equipe->getId());
             $sliders = $this->getDoctrine()->getRepository('AppBundle:EquipesHasSliders')->findAllSlidersFromEquipe($equipe->getId());
+            $publications = $this->getDoctrine()->getRepository('AppBundle:PublicationsHasEquipes')->findLastPublicationsFromEquipe($equipe->getId(), 3);
 
             return $this->render('@App/PublicEquipes/profil.html.twig', array(
                 'equipe'  => $equipe,
                 'membres' => $membres,
-                'sliders' => $sliders
+                'sliders' => $sliders,
+                'publications' => $publications
             ));
         } else
         {

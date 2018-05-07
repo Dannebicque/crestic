@@ -26,9 +26,9 @@
                 <td>{{ partenaire.typePartenaireLong }}</td>
 
                 <td>
-                    <a href="{{ path('administration_partenaires_show', { 'id': partenaire.id }) }}" class="btn btn-info"
+                    <a href="{{ path('responsable_partenaires_show', { 'id': partenaire.id }) }}" class="btn btn-info"
                        title="Voir"><i class="fa fa-eye"></i> </a>
-                    <a href="{{ path('administration_partenaires_edit', { 'id': partenaire.id }) }}" class="btn
+                    <a href="{{ path('responsable_partenaires_edit', { 'id': partenaire.id }) }}" class="btn
                             btn-warning" title="Modifier"><i class="fa fa-pencil"></i></a>
                 </td>
             </tr>
@@ -36,5 +36,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('administration_partenaires_new') }}" class="btn btn-primary">Créer un nouveau partenaire</a>
+    <a href="{{ path('responsable_partenaires_new') }}" class="btn btn-primary">Créer un nouveau partenaire</a>
 {% endblock %}

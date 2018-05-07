@@ -18,15 +18,14 @@ class ActualitesType extends AbstractType
     {
         $builder
             ->add('titre', TextType::class, array(
-                'label'              => 'Titre',
-                'required'           => true,
+                'label'    => 'Titre',
+                'required' => true,
             ))
             ->add('titreen', TextType::class, array(
-                'label'              => 'Title',
-                'required'           => false,
-                'mapped'             => false,
+                'label'    => 'Title',
+                'required' => false,
+                'mapped'   => false,
             ))
-
 //            ->add('keywords', TextType::class, array(
 //                'label'              => 'Mots clés',
 //                'required'           => true,
@@ -38,25 +37,21 @@ class ActualitesType extends AbstractType
 //            ))
 
             ->add('message', TextareaType::class, array(
-                'label'              => 'Texte',
-                'required'           => true,
-                'attr'               => array('class' => 'tinyMCE')
+                'label'    => 'Texte',
+                'required' => true,
+                'attr'     => array('class' => 'tinyMCE')
             ))
             ->add('messageen', TextareaType::class, array(
-                'label'              => 'Text',
-                'required'           => false,
-                'attr'               => array('class' => 'tinyMCE'),
-                'mapped'             => false,
+                'label'    => 'Text',
+                'required' => false,
+                'attr'     => array('class' => 'tinyMCE'),
+                'mapped'   => false,
             ))
-
             ->add('imageFile', FileType::class, array(
-                'label'              => 'Illustration',
-                'required'           => false,
-            ))
-
-        ;
+                'label'    => 'Illustration',
+                'required' => false,
+            ));
     }
-
 
 
     /**

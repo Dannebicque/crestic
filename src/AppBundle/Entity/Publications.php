@@ -12,19 +12,14 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @Vich\Uploadable
  * @ORM\DiscriminatorColumn(name="publication_type", type="string")
- * @ORM\DiscriminatorMap({"conference" = "PublicationsConferences", "revue" = "PublicationsRevues", "rapport" = "PublicationsRapports", "brevet" = "PublicationsBrevets", "ouvrage" = "PublicationsOuvrages", "chapitre" = "PublicationsChapitres", "these" = "PublicationsTheses"})
+ * @ORM\DiscriminatorMap({"conference" = "PublicationsConferences", "revue" = "PublicationsRevues", "rapport" =
+ *                                     "PublicationsRapports", "brevet" = "PublicationsBrevets", "ouvrage" =
+ *                                     "PublicationsOuvrages", "chapitre" = "PublicationsChapitres", "these" =
+ *                                     "PublicationsTheses"})
  */
 abstract class Publications
 {
     protected $type = 'publication';
-
-    public function __toString()
-    {
-        $result = ''.$this->getTitre();
-
-        return $result;
-    }
-
     /**
      * @var integer
      *
@@ -33,28 +28,24 @@ abstract class Publications
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
     /**
      * @var string
      *
      * @ORM\Column(name="titre", type="string", length=255,nullable=true)
      */
     private $titre;
-
     /**
      * @var string
      *
      * @ORM\Column(name="resume", type="text", nullable=true)
      */
     private $resume;
-
     /**
      * @var string
      *
      * @ORM\Column(name="keywords", type="string", length=255, nullable=true)
      */
     private $keywords;
-
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
@@ -63,23 +54,18 @@ abstract class Publications
      * @var File
      */
     private $pdfFile = '';
-
     /**
      * @var string
      *
      * @ORM\Column(name="pdf", type="string", length=255, nullable=true)
      */
-    private $pdf='';
-
-
+    private $pdf = '';
     /**
      * @var string
      *
      * @ORM\Column(name="pdfVisible", type="boolean", length=255)
      */
     private $pdfVisible = false;
-
-
     /**
      *
      * @ORM\OneToMany(targetEntity="PublicationsHasMembres", mappedBy="publication",cascade={"persist"})
@@ -87,119 +73,109 @@ abstract class Publications
      * @ORM\OrderBy({"position" = "ASC"})
      */
     private $membres;
-
     /**
      *
      * @ORM\OneToMany(targetEntity="PublicationsHasEquipes",mappedBy="publication",cascade={"persist"})
      * @ORM\JoinColumn(name="equipe_id",referencedColumnName="id")
      */
     private $equipes;
-
     /**
      *
      * @ORM\OneToMany(targetEntity="PublicationsHasDepartements", mappedBy="publication",cascade={"persist"})
      * @ORM\JoinColumn(name="equipe_id",referencedColumnName="id")
      */
     private $departements;
-
     /**
      *
      * @ORM\OneToMany(targetEntity="PublicationsHasPlateformes",mappedBy="publication",cascade={"persist"})
      * @ORM\JoinColumn(name="plateforme_id",referencedColumnName="id")
      */
     private $plateformes;
-
     /**
      *
      * @ORM\OneToMany(targetEntity="PublicationsHasProjets",mappedBy="publication",cascade={"persist"})
      * @ORM\JoinColumn(name="projet_id",referencedColumnName="id")
      */
     private $projets;
-
     /**
      * @var string
      *
      * @ORM\Column(name="doi", type="string", length=255, nullable=true)
      */
     private $doi;
-
     /**
      * @var string
      *
      * @ORM\Column(name="url", type="string", length=255, nullable=true)
      */
     private $url;
-
     /**
      * @var string
      *
      * @ORM\Column(name="hal", type="string", length=255, nullable=true)
      */
     private $hal;
-
     /**
      * @var string
      *
      * @ORM\Column(name="commentaire", type="string", length=255, nullable=true)
      */
     private $commentaire;
-
     /**
      * @var \DateTime $created
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
      */
     private $created;
-
     /**
      * @var \DateTime $updated
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime")
      */
     private $updated;
-
     /**
      * @var integer
      *
      * @ORM\Column(name="pageDebut", type="integer", nullable=true)
      */
     private $pageDebut;
-
     /**
      * @var integer
      *
      * @ORM\Column(name="pageFin", type="integer", nullable=true)
      */
     private $pageFin;
-
     /**
      * @var integer
      *
      * @ORM\Column(name="nbPages", type="integer", nullable=true)
      */
     private $nbPages;
-
     /**
-    /**
+     * /**
      * @var integer
      *
      * @ORM\Column(name="moisPublication", type="integer", nullable=true)
      */
     private $moisPublication = 0;
-
     /**
      * @var integer
      *
      * @ORM\Column(name="anneePublication", type="integer", nullable=true)
      */
     private $anneePublication;
-
     /**
      * @var boolean
      *
      * @ORM\Column(name="publicationInternationale", type="boolean")
      */
     private $publicationInternationale = false;
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="publicationPourLeCrestic", type="boolean")
+     */
+    private $publicationPourLeCrestic = true;
 
     /**
      * Constructor
@@ -207,22 +183,36 @@ abstract class Publications
     public function __construct()
     {
         $this->anneePublication = date('Y');
-        $this->membres      = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->equipes      = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->plateformes  = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->projets      = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->membres = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->equipes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->plateformes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->projets = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public static function castToMe($obj)
     {
-        return $this->id;
+
+        $class = get_called_class();
+        $newObj = New $class();
+
+        foreach (get_class_vars(get_class($newObj)) as $property => $value) {
+            if (method_exists($obj, 'get' . ucfirst($property)) && method_exists($newObj, 'set' . ucfirst($property))) {
+                $set = 'set' . ucfirst($property);
+                if (!in_array($set, array('setPdfFile'))) {
+                    $newObj->{'set' . ucfirst($property)}($obj->{'get' . ucfirst($property)}());
+                }
+            }
+        }
+
+        return $newObj;
     }
 
+    public function __toString()
+    {
+        $result = '' . $this->getTitre();
+
+        return $result;
+    }
 
     /**
      * Get titre
@@ -246,6 +236,16 @@ abstract class Publications
         $this->titre = $titre;
 
         return $this;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
@@ -355,26 +355,6 @@ abstract class Publications
     }
 
     /**
-     * Get doi
-     *
-     * @return string
-     */
-    public function getDoiLink()
-    {
-        $prefix = 'http://dx.doi.org/';
-        if (substr($this->doi, 0, 4) == 'doi:')
-        {
-            $link = $prefix.substr($this->doi, 4, strlen($this->doi)-4);
-        } else{
-            $link = $prefix.$this->doi;
-        }
-
-        return $link;
-    }
-
-
-
-    /**
      * Set doi
      *
      * @param string $doi
@@ -386,6 +366,23 @@ abstract class Publications
         $this->doi = $doi;
 
         return $this;
+    }
+
+    /**
+     * Get doi
+     *
+     * @return string
+     */
+    public function getDoiLink()
+    {
+        $prefix = 'http://dx.doi.org/';
+        if (substr($this->doi, 0, 4) == 'doi:') {
+            $link = $prefix . substr($this->doi, 4, strlen($this->doi) - 4);
+        } else {
+            $link = $prefix . $this->doi;
+        }
+
+        return $link;
     }
 
     /**
@@ -651,7 +648,7 @@ abstract class Publications
      */
     public function getNbPages()
     {
-        $this->nbPages = $this->pageFin-$this->pageDebut;
+        $this->nbPages = $this->pageFin - $this->pageDebut;
 
         return $this->nbPages;
     }
@@ -665,33 +662,9 @@ abstract class Publications
      */
     public function setNbPages($nbPages)
     {
-        $this->nbPages = $this->pageFin-$this->pageDebut;
+        $this->nbPages = $this->pageFin - $this->pageDebut;
 
         //$this->nbPages = $nbPages;
-
-        return $this;
-    }
-
-    /**
-     * Get moisPublication
-     *
-     * @return integer
-     */
-    public function getMoisPublication()
-    {
-        return $this->moisPublication;
-    }
-
-    /**
-     * Set moisPublication
-     *
-     * @param integer $moisPublication
-     *
-     * @return Publications
-     */
-    public function setMoisPublication($moisPublication)
-    {
-        $this->moisPublication = $moisPublication;
 
         return $this;
     }
@@ -744,7 +717,6 @@ abstract class Publications
         return $this;
     }
 
-
     /**
      * @return File
      */
@@ -766,8 +738,7 @@ abstract class Publications
     {
         $this->pdfFile = $image;
 
-        if ($image)
-        {
+        if ($image) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
             $this->updated = new \DateTime('now');
@@ -781,26 +752,56 @@ abstract class Publications
         return $t[$this->getMoisPublication()];
     }
 
+    /**
+     * Get moisPublication
+     *
+     * @return integer
+     */
+    public function getMoisPublication()
+    {
+        return $this->moisPublication;
+    }
+
+    /**
+     * Set moisPublication
+     *
+     * @param integer $moisPublication
+     *
+     * @return Publications
+     */
+    public function setMoisPublication($moisPublication)
+    {
+        $this->moisPublication = $moisPublication;
+
+        return $this;
+    }
+
     public function getPagination()
     {
-        if ($this->pageDebut == 0 || $this->pageDebut == '')
-        {
+        if ($this->pageDebut == 0 || $this->pageDebut == '') {
             return '';
-        } else
-        {
-            return $this->pageDebut.'-'.$this->pageFin;
+        } else {
+            return $this->pageDebut . '-' . $this->pageFin;
         }
     }
 
     public function getPaginationBibtex()
     {
-        if ($this->pageDebut == 0 || $this->pageDebut == '')
-        {
+        if ($this->pageDebut == 0 || $this->pageDebut == '') {
             return '';
-        } else
-        {
-            return $this->pageDebut.'-'.$this->pageFin;
+        } else {
+            return $this->pageDebut . '-' . $this->pageFin;
         }
+    }
+
+    /**
+     * Get publicationInternationale
+     *
+     * @return boolean
+     */
+    public function getPublicationInternationale()
+    {
+        return $this->publicationInternationale;
     }
 
     /**
@@ -815,16 +816,6 @@ abstract class Publications
         $this->publicationInternationale = $publicationInternationale;
 
         return $this;
-    }
-
-    /**
-     * Get publicationInternationale
-     *
-     * @return boolean
-     */
-    public function getPublicationInternationale()
-    {
-        return $this->publicationInternationale;
     }
 
     /**
@@ -866,6 +857,21 @@ abstract class Publications
         return $this->type;
     }
 
+    public function setType($value)
+    {
+        $this->type = $value;
+    }
+
+    /**
+     * Get hal
+     *
+     * @return string
+     */
+    public function getHal()
+    {
+        return $this->hal;
+    }
+
     /**
      * Set hal
      *
@@ -881,29 +887,26 @@ abstract class Publications
     }
 
     /**
-     * Get hal
+     * Get publicationPourLeCrestic
      *
-     * @return string
+     * @return boolean
      */
-    public function getHal()
+    public function getPublicationPourLeCrestic()
     {
-        return $this->hal;
+        return $this->publicationPourLeCrestic;
     }
 
-    public static function castToMe($obj) {
+    /**
+     * Set publicationPourLeCrestic
+     *
+     * @param boolean $publicationPourLeCrestic
+     *
+     * @return Publications
+     */
+    public function setPublicationPourLeCrestic($publicationPourLeCrestic)
+    {
+        $this->publicationPourLeCrestic = $publicationPourLeCrestic;
 
-        $class = get_called_class();
-        $newObj = New $class();
-
-        foreach (get_class_vars(get_class($newObj)) as $property => $value) {
-            if (method_exists($obj, 'get' . ucfirst($property)) && method_exists($newObj, 'set' . ucfirst($property))) {
-                $set = 'set' . ucfirst($property);
-                if (!in_array($set, array('setPdfFile'))) {
-                    $newObj->{'set' . ucfirst($property)}($obj->{'get' . ucfirst($property)}());
-                }
-            }
-        }
-
-        return $newObj;
+        return $this;
     }
 }

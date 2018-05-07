@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class PublicationsRevues  extends Publications
 {
     protected $type = 'revue';
-    protected $couleur = "#D4AD6A";
+    protected $couleur = "#c32b72";
 
     public function getCouleur()
     {

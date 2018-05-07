@@ -37,6 +37,9 @@ class ActivitesController extends Controller
      *
      * @Route("/new", name="utilisateur_activites_new")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
@@ -64,7 +67,9 @@ class ActivitesController extends Controller
      *
      * @Route("/{id}", name="utilisateur_activites_show")
      * @Method("GET")
-     */
+     * @param Activites $activite
+     * @return \Symfony\Component\HttpFoundation\Response
+*/
     public function showAction(Activites $activite)
     {
         $deleteForm = $this->createDeleteForm($activite);
@@ -80,7 +85,10 @@ class ActivitesController extends Controller
      *
      * @Route("/{id}/edit", name="utilisateur_activites_edit")
      * @Method({"GET", "POST"})
-     */
+     * @param Request   $request
+     * @param Activites $activite
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+*/
     public function editAction(Request $request, Activites $activite)
     {
         $editForm = $this->createForm('AppBundle\Form\ActivitesType', $activite);
@@ -104,7 +112,10 @@ class ActivitesController extends Controller
      *
      * @Route("/{id}", name="utilisateur_activites_delete")
      * @Method("DELETE")
-     */
+     * @param Request   $request
+     * @param Activites $activite
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+*/
     public function deleteAction(Request $request, Activites $activite)
     {
         $form = $this->createDeleteForm($activite);

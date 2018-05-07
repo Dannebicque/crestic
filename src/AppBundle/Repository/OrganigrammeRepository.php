@@ -27,6 +27,8 @@ class OrganigrammeRepository extends \Doctrine\ORM\EntityRepository
     }
 
     /**
+     * @param $responsabiliteFonction
+     *
      * @return array
      */
 

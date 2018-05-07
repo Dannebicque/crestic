@@ -11,7 +11,6 @@ namespace AppBundle\Repository;
 class PublicationsRevuesRepository extends \Doctrine\ORM\EntityRepository
 {
     /**
-     * @param int $nb
      * @return array
      */
 //    public function findLast($nb = 10)

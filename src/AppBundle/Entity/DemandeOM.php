@@ -79,10 +79,10 @@ class DemandeOM
     private $commentaire;
 
     /**
- * @var string
- *
- * @ORM\Column(name="etat", type="text", nullable=true)
- */
+     * @var string
+     *
+     * @ORM\Column(name="etat", type="text", nullable=true)
+     */
     private $etat;
 
     /**
@@ -100,12 +100,12 @@ class DemandeOM
     private $ligneBudget;
 
     /**
-     * 
+     *
      * @ORM\ManyToOne(targetEntity="MembresCrestic",inversedBy="demandesOM")
      * @ORM\OrderBy({"nom" = "ASC", "prenom" = "ASC"})
      * @ORM\JoinColumn(name="membreCrestic_id",referencedColumnName="id")
      */
-     private $membreCrestic;
+    private $membreCrestic;
 
     /**
      * @var \DateTime $created
@@ -127,18 +127,41 @@ class DemandeOM
      */
     private $dateEtatDemande; //pour sauvegarder la réponse à la demande
 
-
-    public function __toString()
-    {
-        return ''.$this->getObjet();
-    }
-
     public function __construct()
     {
         $this->dateDepart = new \DateTime('now');
         $this->dateRetour = new \DateTime('now');
         $this->heureDepart = new \DateTime('08:00');
         $this->heureRetour = new \DateTime('18:00');
+    }
+
+    public function __toString()
+    {
+        return '' . $this->getObjet();
+    }
+
+    /**
+     * Get objet
+     *
+     * @return string
+     */
+    public function getObjet()
+    {
+        return $this->objet;
+    }
+
+    /**
+     * Set objet
+     *
+     * @param string $objet
+     *
+     * @return DemandeOM
+     */
+    public function setObjet($objet)
+    {
+        $this->objet = $objet;
+
+        return $this;
     }
 
     /**
@@ -154,11 +177,14 @@ class DemandeOM
     /**
      * Set id
      *
-     * @return integer
+     * @param $id
+     *
+     * @return DemandeOM
      */
     public function setId($id)
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -254,30 +280,6 @@ class DemandeOM
     public function setHeureRetour($heureRetour)
     {
         $this->heureRetour = $heureRetour;
-
-        return $this;
-    }
-
-    /**
-     * Get objet
-     *
-     * @return string
-     */
-    public function getObjet()
-    {
-        return $this->objet;
-    }
-
-    /**
-     * Set objet
-     *
-     * @param string $objet
-     *
-     * @return DemandeOM
-     */
-    public function setObjet($objet)
-    {
-        $this->objet = $objet;
 
         return $this;
     }
@@ -391,7 +393,7 @@ class DemandeOM
     /**
      * Set membre
      *
-     * @param MembresCrestic $membre
+     * @param MembresCrestic|null $membreCrestic
      *
      * @return DemandeOM
      */
@@ -475,6 +477,16 @@ class DemandeOM
     }
 
     /**
+     * Get omSansFrais
+     *
+     * @return boolean
+     */
+    public function getOmSansFrais()
+    {
+        return $this->omSansFrais;
+    }
+
+    /**
      * Set omSansFrais
      *
      * @param boolean $omSansFrais
@@ -489,19 +501,19 @@ class DemandeOM
     }
 
     /**
-     * Get omSansFrais
+     * Get ligneBduget
      *
-     * @return boolean
+     * @return string
      */
-    public function getOmSansFrais()
+    public function getLigneBudget()
     {
-        return $this->omSansFrais;
+        return $this->ligneBudget;
     }
 
     /**
      * Set ligneBduget
      *
-     * @param string $ligneBduget
+     * @param $ligneBudget
      *
      * @return DemandeOM
      */
@@ -510,15 +522,5 @@ class DemandeOM
         $this->ligneBudget = $ligneBudget;
 
         return $this;
-    }
-
-    /**
-     * Get ligneBduget
-     *
-     * @return string
-     */
-    public function getLigneBudget()
-    {
-        return $this->ligneBudget;
     }
 }

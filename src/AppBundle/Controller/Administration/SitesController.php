@@ -37,6 +37,9 @@ class SitesController extends Controller
      *
      * @Route("/new", name="administration_sites_new")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
@@ -64,7 +67,9 @@ class SitesController extends Controller
      *
      * @Route("/{id}", name="administration_sites_show")
      * @Method("GET")
-     */
+     * @param Sites $site
+     * @return \Symfony\Component\HttpFoundation\Response
+*/
     public function showAction(Sites $site)
     {
         $deleteForm = $this->createDeleteForm($site);
@@ -80,7 +85,10 @@ class SitesController extends Controller
      *
      * @Route("/{id}/edit", name="administration_sites_edit")
      * @Method({"GET", "POST"})
-     */
+     * @param Request $request
+     * @param Sites   $site
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+*/
     public function editAction(Request $request, Sites $site)
     {
         $editForm = $this->createForm('AppBundle\Form\SitesType', $site);
@@ -105,7 +113,10 @@ class SitesController extends Controller
      *
      * @Route("/{id}", name="administration_sites_delete")
      * @Method("DELETE")
-     */
+     * @param Request $request
+     * @param Sites   $site
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+*/
     public function deleteAction(Request $request, Sites $site)
     {
         $form = $this->createDeleteForm($site);

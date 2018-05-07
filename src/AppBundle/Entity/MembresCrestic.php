@@ -57,6 +57,13 @@ class MembresCrestic extends BaseUser
     /**
      * @var string
      *
+     * @ORM\Column(name="idhal", type="string", length=255, nullable=true)
+     */
+    private $idhal;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="nom", type="string", length=255, nullable=true)
      */
     private $nom;
@@ -155,7 +162,6 @@ class MembresCrestic extends BaseUser
      * @ORM\OneToMany(targetEntity="MembresHasReseaux", mappedBy="membreCrestic")
      */
     private $reseaux;
-
 
     /**
      * @ORM\OneToMany(targetEntity="ProjetsHasMembres", mappedBy="membreCrestic")
@@ -265,68 +271,111 @@ class MembresCrestic extends BaseUser
 
     /**
      * @var string
-     *
      * @ORM\Column(name="cv", type="text", nullable=true)
      */
     private $cv;
 
     /**
      * @var string
-     *
+     * @ORM\Column(name="cv_en", type="text", nullable=true)
+     */
+    private $cv_en;
+
+    /**
+     * @var string
      * @ORM\Column(name="themes", type="text", nullable=true)
      */
     private $themes;
 
+    /**
+     * @var string
+     * @ORM\Column(name="themes_en", type="text", nullable=true)
+     */
+    private $themes_en;
 
     /**
      * @var string
-     *
      * @ORM\Column(name="responsabilitesScientifiques", type="text", nullable=true)
      */
     private $responsabilitesScientifiques;
 
     /**
      * @var string
-     *
+     * @ORM\Column(name="responsabilitesScientifiques_en", type="text", nullable=true)
+     */
+    private $responsabilitesScientifiques_en;
+
+    /**
+     * @var string
      * @ORM\Column(name="responsabilitesAdministratives", type="text", nullable=true)
      */
     private $responsabilitesAdministratives;
 
     /**
      * @var string
-     *
+     * @ORM\Column(name="responsabilitesAdministratives_en", type="text", nullable=true)
+     */
+    private $responsabilitesAdministratives_en;
+
+    /**
+     * @var string
      * @ORM\Column(name="evaluation", type="text", nullable=true)
      */
     private $evaluation;
 
     /**
      * @var string
-     *
+     * @ORM\Column(name="evaluation_en", type="text", nullable=true)
+     */
+    private $evaluation_en;
+
+    /**
+     * @var string
      * @ORM\Column(name="editorial", type="text", nullable=true)
      */
     private $editorial;
 
+    /**
+     * @var string
+     * @ORM\Column(name="editorial_en", type="text", nullable=true)
+     */
+    private $editorial_en;
 
     /**
      * @var string
-     *
      * @ORM\Column(name="valorisation", type="text", nullable=true)
      */
     private $valorisation;
 
     /**
      * @var string
-     *
+     * @ORM\Column(name="valorisation_en", type="text", nullable=true)
+     */
+    private $valorisation_en;
+
+    /**
+     * @var string
      * @ORM\Column(name="vulgarisation", type="text", nullable=true)
      */
     private $vulgarisation;
 
     /**
      * @var string
-     *
+     * @ORM\Column(name="vulgarisation_en", type="text", nullable=true)
+     */
+    private $vulgarisation_en;
+
+    /**
+     * @var string
      * @ORM\Column(name="international", type="text", nullable=true)
      */
     private $international;
+
+    /**
+     * @var string
+     * @ORM\Column(name="international_en", type="text", nullable=true)
+     */
+    private $international_en;
 
     /**
      * @var boolean
@@ -344,17 +393,27 @@ class MembresCrestic extends BaseUser
 
     /**
      * @var string
-     *
      * @ORM\Column(name="enseignements", type="text", nullable=true)
      */
     private $enseignements;
 
     /**
      * @var string
-     *
+     * @ORM\Column(name="enseignements_en", type="text", nullable=true)
+     */
+    private $enseignements_en;
+
+    /**
+     * @var string
      * @ORM\Column(name="responsabiliteFonction", type="text", nullable=true)
      */
     private $responsabiliteFonction;
+
+    /**
+     * @var string
+     * @ORM\Column(name="responsabiliteFonction_en", type="text", nullable=true)
+     */
+    private $responsabiliteFonction_en;
 
     /**
      * @var boolean
@@ -363,6 +422,23 @@ class MembresCrestic extends BaseUser
      */
     private $ancienMembresCrestic = false;
 
+    /**
+     * Membres constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->actualites = new ArrayCollection();
+        $this->emplois = new ArrayCollection();
+        $this->reseaux = new ArrayCollection();
+        $this->plateformes = new ArrayCollection();
+        $this->publicationsHasMembres = new ArrayCollection();
+        $this->equipesHasMembres = new ArrayCollection();
+        $this->demandesOM = new ArrayCollection();
+        $this->equipes = new ArrayCollection();
+        $this->departements = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -710,7 +786,6 @@ class MembresCrestic extends BaseUser
         return $this;
     }
 
-
     /**
      * Get ancienMembresCrestic
      *
@@ -756,8 +831,7 @@ class MembresCrestic extends BaseUser
     {
         $this->imageFile = $image;
 
-        if ($image)
-        {
+        if ($image) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
             $this->setUpdated(new \DateTime('now'));
@@ -769,47 +843,9 @@ class MembresCrestic extends BaseUser
         return $this->getDisplay();
     }
 
-
-    /**
-     * Membres constructor.
-     */
-    public function __construct()
+    public function getDisplay()
     {
-        parent::__construct();
-
-        $this->actualites               = new ArrayCollection();
-        $this->emplois                  = new ArrayCollection();
-        $this->reseaux                  = new ArrayCollection();
-        $this->plateformes              = new ArrayCollection();
-        $this->publicationsHasMembres   = new ArrayCollection();
-        $this->equipesHasMembres        = new ArrayCollection();
-        $this->demandesOM               = new ArrayCollection();
-        $this->equipes                  = new ArrayCollection();
-        $this->departements             = new ArrayCollection();
-    }
-
-    /**
-     * Get nom
-     *
-     * @return string
-     */
-    public function getNom()
-    {
-        return ucwords($this->nom);
-    }
-
-    /**
-     * Set nom
-     *
-     * @param string $nom
-     *
-     * @return MembresCrestic
-     */
-    public function setNom($nom)
-    {
-        $this->nom = $nom;
-
-        return $this;
+        return ucfirst($this->prenom) . " " . mb_strtoupper($this->nom);
     }
 
     /**
@@ -923,7 +959,7 @@ class MembresCrestic extends BaseUser
      *
      * @param Emplois $emploi
      *
-     * @return Emplois
+     * @return MembresCrestic
      */
     public function addEmploi(Emplois $emploi)
     {
@@ -985,7 +1021,6 @@ class MembresCrestic extends BaseUser
     {
         return $this->reseaux;
     }
-
 
     /**
      * Add plateforme
@@ -1208,37 +1243,104 @@ class MembresCrestic extends BaseUser
      */
     public function setSlug()
     {
-        $this->slug = $this->generate_slug($this->prenom.'-'.$this->nom);
+        $this->slug = $this->generate_slug($this->prenom . '-' . $this->nom);
 
         return $this;
     }
 
-
     /**
-     * Get statut
+     * @param $str
      *
      * @return string
      */
-    public function getStatus()
+    public function generate_slug($str)
     {
-        return $this->status;
+
+        $table = array(
+            'Š' => 'S',
+            'š' => 's',
+            'Đ' => 'Dj',
+            'đ' => 'dj',
+            'Ž' => 'Z',
+            'ž' => 'z',
+            'Č' => 'C',
+            'č' => 'c',
+            'Ć' => 'C',
+            'ć' => 'c',
+            'À' => 'A',
+            'Á' => 'A',
+            'Â' => 'A',
+            'Ã' => 'A',
+            'Ä' => 'A',
+            'Å' => 'A',
+            'Æ' => 'A',
+            'Ç' => 'C',
+            'È' => 'E',
+            'É' => 'E',
+            'Ê' => 'E',
+            'Ë' => 'E',
+            'Ì' => 'I',
+            'Í' => 'I',
+            'Î' => 'I',
+            'Ï' => 'I',
+            'Ñ' => 'N',
+            'Ò' => 'O',
+            'Ó' => 'O',
+            'Ô' => 'O',
+            'Õ' => 'O',
+            'Ö' => 'O',
+            'Ø' => 'O',
+            'Ù' => 'U',
+            'Ú' => 'U',
+            'Û' => 'U',
+            'Ü' => 'U',
+            'Ý' => 'Y',
+            'Þ' => 'B',
+            'ß' => 'Ss',
+            'à' => 'a',
+            'á' => 'a',
+            'â' => 'a',
+            'ã' => 'a',
+            'ä' => 'a',
+            'å' => 'a',
+            'æ' => 'a',
+            'ç' => 'c',
+            'è' => 'e',
+            'é' => 'e',
+            'ê' => 'e',
+            'ë' => 'e',
+            'ì' => 'i',
+            'í' => 'i',
+            'î' => 'i',
+            'ï' => 'i',
+            'ð' => 'o',
+            'ñ' => 'n',
+            'ò' => 'o',
+            'ó' => 'o',
+            'ô' => 'o',
+            'õ' => 'o',
+            'ö' => 'o',
+            'ø' => 'o',
+            'ù' => 'u',
+            'ú' => 'u',
+            'û' => 'u',
+            'ý' => 'y',
+            'ý' => 'y',
+            'þ' => 'b',
+            'ÿ' => 'y',
+            'Ŕ' => 'R',
+            'ŕ' => 'r',
+            '/' => '-',
+            ' ' => '-'
+        );
+
+        // -- Remove duplicated spaces
+        $stripped = preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $str);
+
+        // -- Returns the slug
+        return strtolower(strtr($str, $table));
+
     }
-
-    /**
-     * Set status
-     *
-     * @param string $status
-     *
-     * @return MembresCrestic
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-
 
     /**
      * Get created
@@ -1289,51 +1391,13 @@ class MembresCrestic extends BaseUser
     }
 
     /**
-     * Set site
-     *
-     * @param string $site
-     *
-     * @return MembresCrestic
-     */
-    public function setSite($site)
-    {
-        $this->site = $site;
-
-        return $this;
-    }
-
-    /**
-     * Get site
+     * Get etage
      *
      * @return string
      */
-    public function getSite()
+    public function getEtage()
     {
-        return $this->site;
-    }
-
-    /**
-     * Set batiment
-     *
-     * @param string $batiment
-     *
-     * @return MembresCrestic
-     */
-    public function setBatiment($batiment)
-    {
-        $this->batiment = $batiment;
-
-        return $this;
-    }
-
-    /**
-     * Get batiment
-     *
-     * @return string
-     */
-    public function getBatiment()
-    {
-        return $this->batiment;
+        return $this->etage;
     }
 
     /**
@@ -1351,37 +1415,13 @@ class MembresCrestic extends BaseUser
     }
 
     /**
-     * Get etage
+     * Get responsabiliteFonction
      *
      * @return string
      */
-    public function getEtage()
+    public function getResponsabiliteFonction()
     {
-        return $this->etage;
-    }
-
-    /**
-     * Set bureau
-     *
-     * @param string $bureau
-     *
-     * @return MembresCrestic
-     */
-    public function setBureau($bureau)
-    {
-        $this->bureau = $bureau;
-
-        return $this;
-    }
-
-    /**
-     * Get bureau
-     *
-     * @return string
-     */
-    public function getBureau()
-    {
-        return $this->bureau;
+        return $this->responsabiliteFonction;
     }
 
     /**
@@ -1398,30 +1438,6 @@ class MembresCrestic extends BaseUser
         return $this;
     }
 
-    /**
-     * Get responsabiliteFonction
-     *
-     * @return string
-     */
-    public function getResponsabiliteFonction()
-    {
-        return $this->responsabiliteFonction;
-    }
-
-    public function getInitialePrenom()
-    {
-        $prenom = str_replace(' ','-', $this->prenom);
-
-        $tprenom = explode('-', $prenom);
-        $texte = '';
-        foreach ($tprenom as $item)
-        {
-            $texte .= strtoupper(substr($item,0,1)).'. ';
-        }
-
-        return $texte;
-    }
-
     public function getAuteurIEEE()
     {
 //        if ( ($this->getMembreCrestic() === null && $this->getMembreExterieur() === null) || ($this->getMembreCrestic() !== null && $this->getMembreExterieur() !== null))
@@ -1429,43 +1445,59 @@ class MembresCrestic extends BaseUser
 //            return 'Err!';
 //        } elseif ($this->membreCrestic !== null && $this->membreExterieur === null)
 //        {
-            //membre crestic
-        return $this->getInitialePrenom().' '.$this->getNom();
+        //membre crestic
+        return $this->getInitialePrenom() . ' ' . $this->getNom();
 //        } else
 //        {
 //            return $this->getMembreExterieur()->getInitialePrenom().' '.$this->getMembreExterieur()->getNom();
 //        }
     }
 
-    public function getDisplay()
+    public function getInitialePrenom()
     {
-        return ucfirst($this->prenom)." ".mb_strtoupper($this->nom);
+        $prenom = str_replace(' ', '-', $this->prenom);
+
+        $tprenom = explode('-', $prenom);
+        $texte = '';
+        foreach ($tprenom as $item) {
+            $texte .= strtoupper(substr($item, 0, 1)) . '. ';
+        }
+
+        return $texte;
     }
 
     /**
-     * @param $str
+     * Get nom
      *
      * @return string
      */
-    public function generate_slug($str) {
+    public function getNom()
+    {
+        return ucwords($this->nom);
+    }
 
-        $table = array(
-            'Š'=>'S', 'š'=>'s', 'Đ'=>'Dj', 'đ'=>'dj', 'Ž'=>'Z', 'ž'=>'z', 'Č'=>'C', 'č'=>'c', 'Ć'=>'C', 'ć'=>'c',
-            'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E',
-            'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O',
-            'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U', 'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss',
-            'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c', 'è'=>'e', 'é'=>'e',
-            'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i', 'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o',
-            'ô'=>'o', 'õ'=>'o', 'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'ý'=>'y', 'þ'=>'b',
-            'ÿ'=>'y', 'Ŕ'=>'R', 'ŕ'=>'r', '/' => '-', ' ' => '-'
-        );
+    /**
+     * Set nom
+     *
+     * @param string $nom
+     *
+     * @return MembresCrestic
+     */
+    public function setNom($nom)
+    {
+        $this->nom = $nom;
 
-        // -- Remove duplicated spaces
-        $stripped = preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $str);
+        return $this;
+    }
 
-        // -- Returns the slug
-        return strtolower(strtr($str, $table));
-
+    /**
+     * Get membreAssocie
+     *
+     * @return boolean
+     */
+    public function getMembreAssocie()
+    {
+        return $this->membreAssocie;
     }
 
     /**
@@ -1483,13 +1515,13 @@ class MembresCrestic extends BaseUser
     }
 
     /**
-     * Get membreAssocie
+     * Get membreConseilLabo
      *
      * @return boolean
      */
-    public function getMembreAssocie()
+    public function getMembreConseilLabo()
     {
-        return $this->membreAssocie;
+        return $this->membreConseilLabo;
     }
 
     /**
@@ -1506,27 +1538,15 @@ class MembresCrestic extends BaseUser
         return $this;
     }
 
-    /**
-     * Get membreConseilLabo
-     *
-     * @return boolean
-     */
-    public function getMembreConseilLabo()
-    {
-        return $this->membreConseilLabo;
-    }
-
     public function getLocalisation()
     {
         $loc = array();
-        if ($this->getSite() != '')
-        {
+        if ($this->getSite() != '') {
             $loc[] = $this->getSite();
         }
 
-        if ($this->getBatiment() != '')
-        {
-            $loc[] = 'bât. '.$this->getBatiment();
+        if ($this->getBatiment() != '') {
+            $loc[] = 'bât. ' . $this->getBatiment();
         }
 
 //        if ($this->getEtage() != '')
@@ -1534,18 +1554,97 @@ class MembresCrestic extends BaseUser
 //            $loc[] = ', étg. '.$this->getEtage();
 //        }
 
-        if ($this->getBureau() != '')
-        {
-            $loc[] = 'bur. '.$this->getBureau();
+        if ($this->getBureau() != '') {
+            $loc[] = 'bur. ' . $this->getBureau();
         }
 
-        if (count($loc) > 0)
-        {
+        if (count($loc) > 0) {
             return implode(', ', $loc);
-        } else
-        {
+        } else {
             return '';
         }
+    }
+
+    /**
+     * Get site
+     *
+     * @return string
+     */
+    public function getSite()
+    {
+        return $this->site;
+    }
+
+    /**
+     * Set site
+     *
+     * @param string $site
+     *
+     * @return MembresCrestic
+     */
+    public function setSite($site)
+    {
+        $this->site = $site;
+
+        return $this;
+    }
+
+    /**
+     * Get batiment
+     *
+     * @return string
+     */
+    public function getBatiment()
+    {
+        return $this->batiment;
+    }
+
+    /**
+     * Set batiment
+     *
+     * @param string $batiment
+     *
+     * @return MembresCrestic
+     */
+    public function setBatiment($batiment)
+    {
+        $this->batiment = $batiment;
+
+        return $this;
+    }
+
+    /**
+     * Get bureau
+     *
+     * @return string
+     */
+    public function getBureau()
+    {
+        return $this->bureau;
+    }
+
+    /**
+     * Set bureau
+     *
+     * @param string $bureau
+     *
+     * @return MembresCrestic
+     */
+    public function setBureau($bureau)
+    {
+        $this->bureau = $bureau;
+
+        return $this;
+    }
+
+    /**
+     * Get cnu
+     *
+     * @return string
+     */
+    public function getCnu()
+    {
+        return $this->cnu;
     }
 
     /**
@@ -1560,16 +1659,6 @@ class MembresCrestic extends BaseUser
         $this->cnu = $cnu;
 
         return $this;
-    }
-
-    /**
-     * Get cnu
-     *
-     * @return string
-     */
-    public function getCnu()
-    {
-        return $this->cnu;
     }
 
     /**
@@ -1655,6 +1744,16 @@ class MembresCrestic extends BaseUser
     }
 
     /**
+     * Get role
+     *
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
      * Set role
      *
      * @param string $role
@@ -1669,13 +1768,13 @@ class MembresCrestic extends BaseUser
     }
 
     /**
-     * Get role
+     * Get disciplinehceres
      *
      * @return string
      */
-    public function getRole()
+    public function getDisciplinehceres()
     {
-        return $this->role;
+        return $this->disciplinehceres;
     }
 
     /**
@@ -1693,37 +1792,13 @@ class MembresCrestic extends BaseUser
     }
 
     /**
-     * Get disciplinehceres
+     * Get datenomination
      *
-     * @return string
+     * @return DateTime
      */
-    public function getDisciplinehceres()
+    public function getDatenomination()
     {
-        return $this->disciplinehceres;
-    }
-
-    /**
-     * Set hdr
-     *
-     * @param boolean $hdr
-     *
-     * @return MembresCrestic
-     */
-    public function setHdr($hdr)
-    {
-        $this->hdr = $hdr;
-
-        return $this;
-    }
-
-    /**
-     * Get hdr
-     *
-     * @return boolean
-     */
-    public function getHdr()
-    {
-        return $this->hdr;
+        return $this->datenomination;
     }
 
     /**
@@ -1741,13 +1816,13 @@ class MembresCrestic extends BaseUser
     }
 
     /**
-     * Get datenomination
+     * Get corpsgrade
      *
-     * @return \DateTime
+     * @return string
      */
-    public function getDatenomination()
+    public function getCorpsgrade()
     {
-        return $this->datenomination;
+        return $this->corpsgrade;
     }
 
     /**
@@ -1765,13 +1840,13 @@ class MembresCrestic extends BaseUser
     }
 
     /**
-     * Get corpsgrade
+     * Get departementMembre
      *
-     * @return string
+     * @return Departements
      */
-    public function getCorpsgrade()
+    public function getDepartementMembre()
     {
-        return $this->corpsgrade;
+        return $this->departementMembre;
     }
 
     /**
@@ -1788,31 +1863,65 @@ class MembresCrestic extends BaseUser
         return $this;
     }
 
-    /**
-     * Get departementMembre
-     *
-     * @return Departements
-     */
-    public function getDepartementMembre()
-    {
-        return $this->departementMembre;
-    }
-
     public function getStatutLong()
     {
-        if ($this->getStatus() == 'MCF')
-        {
-            if ($this->getHdr() == true)
-            {
+        if ($this->getStatus() == 'MCF') {
+            if ($this->getHdr() == true) {
                 return 'MCF HDR';
-            } else
-            {
+            } else {
                 return $this->getStatus();
             }
-        } else
-        {
+        } else {
             return $this->getStatus();
         }
+    }
+
+    /**
+     * Get statut
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set status
+     *
+     * @param string $status
+     *
+     * @return MembresCrestic
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get hdr
+     *
+     * @return boolean
+     */
+    public function getHdr()
+    {
+        return $this->hdr;
+    }
+
+    /**
+     * Set hdr
+     *
+     * @param boolean $hdr
+     *
+     * @return MembresCrestic
+     */
+    public function setHdr($hdr)
+    {
+        $this->hdr = $hdr;
+
+        return $this;
     }
 
     /**
@@ -1850,6 +1959,16 @@ class MembresCrestic extends BaseUser
     }
 
     /**
+     * Get evaluation
+     *
+     * @return string
+     */
+    public function getEvaluation()
+    {
+        return $this->evaluation;
+    }
+
+    /**
      * Set evaluation
      *
      * @param string $evaluation
@@ -1864,13 +1983,13 @@ class MembresCrestic extends BaseUser
     }
 
     /**
-     * Get evaluation
+     * Get editorial
      *
      * @return string
      */
-    public function getEvaluation()
+    public function getEditorial()
     {
-        return $this->evaluation;
+        return $this->editorial;
     }
 
     /**
@@ -1888,12 +2007,196 @@ class MembresCrestic extends BaseUser
     }
 
     /**
-     * Get editorial
-     *
      * @return string
      */
-    public function getEditorial()
+    public function getIdhal()
     {
-        return $this->editorial;
+        return $this->idhal;
     }
+
+    /**
+     * @param string $idhal
+     */
+    public function setIdhal($idhal)
+    {
+        $this->idhal = $idhal;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCvEn()
+    {
+        return $this->cv_en;
+    }
+
+    /**
+     * @param string $cv_en
+     */
+    public function setCvEn($cv_en)
+    {
+        $this->cv_en = $cv_en;
+    }
+
+    /**
+     * @return string
+     */
+    public function getThemesEn()
+    {
+        return $this->themes_en;
+    }
+
+    /**
+     * @param string $themes_en
+     */
+    public function setThemesEn($themes_en)
+    {
+        $this->themes_en = $themes_en;
+    }
+
+    /**
+     * @return string
+     */
+    public function getResponsabilitesScientifiquesEn()
+    {
+        return $this->responsabilitesScientifiques_en;
+    }
+
+    /**
+     * @param string $responsabilitesScientifiques_en
+     */
+    public function setResponsabilitesScientifiquesEn($responsabilitesScientifiques_en)
+    {
+        $this->responsabilitesScientifiques_en = $responsabilitesScientifiques_en;
+    }
+
+    /**
+     * @return string
+     */
+    public function getResponsabilitesAdministrativesEn()
+    {
+        return $this->responsabilitesAdministratives_en;
+    }
+
+    /**
+     * @param string $responsabilitesAdministratives_en
+     */
+    public function setResponsabilitesAdministrativesEn($responsabilitesAdministratives_en)
+    {
+        $this->responsabilitesAdministratives_en = $responsabilitesAdministratives_en;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEvaluationEn()
+    {
+        return $this->evaluation_en;
+    }
+
+    /**
+     * @param string $evaluation_en
+     */
+    public function setEvaluationEn($evaluation_en)
+    {
+        $this->evaluation_en = $evaluation_en;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEditorialEn()
+    {
+        return $this->editorial_en;
+    }
+
+    /**
+     * @param string $editorial_en
+     */
+    public function setEditorialEn($editorial_en)
+    {
+        $this->editorial_en = $editorial_en;
+    }
+
+    /**
+     * @return string
+     */
+    public function getValorisationEn()
+    {
+        return $this->valorisation_en;
+    }
+
+    /**
+     * @param string $valorisation_en
+     */
+    public function setValorisationEn($valorisation_en)
+    {
+        $this->valorisation_en = $valorisation_en;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVulgarisationEn()
+    {
+        return $this->vulgarisation_en;
+    }
+
+    /**
+     * @param string $vulgarisation_en
+     */
+    public function setVulgarisationEn($vulgarisation_en)
+    {
+        $this->vulgarisation_en = $vulgarisation_en;
+    }
+
+    /**
+     * @return string
+     */
+    public function getInternationalEn()
+    {
+        return $this->international_en;
+    }
+
+    /**
+     * @param string $international_en
+     */
+    public function setInternationalEn($international_en)
+    {
+        $this->international_en = $international_en;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEnseignementsEn()
+    {
+        return $this->enseignements_en;
+    }
+
+    /**
+     * @param string $enseignements_en
+     */
+    public function setEnseignementsEn($enseignements_en)
+    {
+        $this->enseignements_en = $enseignements_en;
+    }
+
+    /**
+     * @return string
+     */
+    public function getResponsabiliteFonctionEn()
+    {
+        return $this->responsabiliteFonction_en;
+    }
+
+    /**
+     * @param string $responsabiliteFonction_en
+     */
+    public function setResponsabiliteFonctionEn($responsabiliteFonction_en)
+    {
+        $this->responsabiliteFonction_en = $responsabiliteFonction_en;
+    }
+
+
 }

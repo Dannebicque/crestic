@@ -97,8 +97,8 @@
                     </div>
                     <ul>
                         {% for plateforme in user.plateformes %}
-                            <li><a href="{{ path('public_equipes_profil', {slug:plateforme.plateforme.slug}) }}"
-                                   title="Voir la plateforme" target="_blank">{{ plateforme.plateforme.nom }}</a></li>
+                            <li><a href="{{ path('public_plateformes_profil', {slug:plateforme.slug}) }}"
+                                   title="Voir la plateforme" target="_blank">{{ plateforme.nom }}</a></li>
                         {% endfor %}
                     </ul>
                 </div>

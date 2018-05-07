@@ -40,7 +40,7 @@ class PaysType extends AbstractType
                 'required'           => true,
             ));
     }
-    
+
     /**
      * {@inheritdoc}
      */

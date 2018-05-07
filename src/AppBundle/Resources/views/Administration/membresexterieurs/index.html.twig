@@ -1,0 +1,53 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+    Membres Extérieurs /
+{% endblock %}
+
+{% block content %}
+    <h1>Co-Auteurs extérieurs au CReSTIC</h1>
+
+    <table class="table" id="data-membres">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Laboratoire</th>
+                <th>Labo URCA</th>
+                <th>International</th>
+                <th>Ancien du CReSTIC</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for membresExterieur in membresExterieurs %}
+            <tr>
+                <td>{{ membresExterieur.nom }}</td>
+                <td>{{ membresExterieur.prenom }}</td>
+                <td>{{ membresExterieur.nomLabo }}</td>
+                <td>{% if membresExterieur.laboUrca %}Yes{% else %}No{% endif %}</td>
+                <td>{% if membresExterieur.international %}Yes{% else %}No{% endif %}</td>
+                <td>{% if membresExterieur.ancienMembresCrestic %}Yes{% else %}No{% endif %}</td>
+                <td>{{ membresExterieur.email }}</td>
+                <td>
+
+                    <a href="{{ path('administration_membresexterieurs_show', { 'id': membresExterieur.id }) }}" target="_blank" class="btn
+	                btn-info" title="Voir"><i class="fa fa-eye"></i> </a>
+                    <a href="{{ path('administration_membresexterieurs_edit', { 'id': membresExterieur.id }) }}" class="btn
+                            btn-warning" title="Modifier"><i class="fa fa-pencil"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ path('administration_membresexterieurs_new') }}"  class="btn btn-primary">Ajouter un membre extérieur au CReSTIC</a>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+      $(document).ready(function (e) {
+        $('#data-membres').dataTable({});
+      });
+    </script>
+{% endblock %}

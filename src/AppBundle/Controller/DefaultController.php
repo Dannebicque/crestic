@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Data;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -11,7 +12,34 @@ use Symfony\Component\HttpFoundation\Response;
 class DefaultController extends Controller
 {
     /**
+     * @Route("/login", name="login")
+     */
+   public function loginAction() {
+        $target = urlencode($this->container->getParameter('cas_login_target'));
+        $url = 'https://'.$this->container->getParameter('cas_host') . '/login?service=';
+
+        return $this->redirect($url . $target . '/force');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function forceAction() {
+
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+
+        session_destroy();
+
+        return $this->redirect($this->generateUrl('homepage'));
+    }
+
+    /**
      * @Route("/", name="homepage")
+     * @param Request $request
+     *
+     * @return Response
      */
     public function indexAction(Request $request)
     {
@@ -28,13 +56,16 @@ class DefaultController extends Controller
         $departements = $this->getDoctrine()->getRepository('AppBundle:Departements')->findAll();
         $plateformes  = $this->getDoctrine()->getRepository('AppBundle:Plateformes')->findAll();
         $projets      = $this->getDoctrine()->getRepository('AppBundle:Projets')->findAll();
+        $categoriesprojets      = $this->getDoctrine()->getRepository('AppBundle:CategorieProjet')->findAll();
+        //Data::TAB_CATEGORIES_PROJETS;
 
 
         return $this->render('AppBundle:Default:menuAlternatif.html.twig', array(
             'equipes'      => $equipes,
             'departements' => $departements,
             'plateformes'  => $plateformes,
-            'projets'      => $projets
+            'projets'      => $projets,
+            'categoriesprojets' => $categoriesprojets
 
         ));
     }
@@ -91,10 +122,11 @@ class DefaultController extends Controller
     }
 
     /**
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @Route("/contact/commentVenir", name="public_contact_comment_venir")
-     */
+*/
     public function contactCommentVenirAction(Request $request)
     {
         $cms = $this->getDoctrine()->getRepository('AppBundle:Cms')->findOneBy(array('slug' => $request->request->get('slug')));
@@ -112,7 +144,9 @@ class DefaultController extends Controller
 
     /**
      * @Route("/tinyMce/upload", name="tinymce_upload")
-     */
+     * @param Request $request
+     * @return JsonResponse|Response
+*/
     public function uploadImageTinyMceAction(Request $request)
     {
         //gérer l'upload

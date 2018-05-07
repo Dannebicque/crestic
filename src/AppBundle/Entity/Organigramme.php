@@ -45,8 +45,9 @@ class Organigramme
 
     public function __toString()
     {
-        return $this->membreCrestic.' '.$this->responsabiliteFonction;
+        return $this->membreCrestic . ' ' . $this->responsabiliteFonction;
     }
+
     /**
      * Get id
      *
@@ -55,6 +56,16 @@ class Organigramme
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get responsabiliteFonction
+     *
+     * @return boolean
+     */
+    public function getResponsabiliteFonction()
+    {
+        return $this->responsabiliteFonction;
     }
 
     /**
@@ -72,15 +83,14 @@ class Organigramme
     }
 
     /**
-     * Get responsabiliteFonction
+     * Get membreCrestic
      *
-     * @return boolean
+     * @return MembresCrestic
      */
-    public function getResponsabiliteFonction()
+    public function getMembreCrestic()
     {
-        return $this->responsabiliteFonction;
+        return $this->membreCrestic;
     }
-
 
     /**
      * Set membreCrestic
@@ -97,13 +107,13 @@ class Organigramme
     }
 
     /**
-     * Get membreCrestic
+     * Get ordre
      *
-     * @return MembresCrestic
+     * @return integer
      */
-    public function getMembreCrestic()
+    public function getOrdre()
     {
-        return $this->membreCrestic;
+        return $this->ordre;
     }
 
     /**
@@ -118,15 +128,5 @@ class Organigramme
         $this->ordre = $ordre;
 
         return $this;
-    }
-
-    /**
-     * Get ordre
-     *
-     * @return integer
-     */
-    public function getOrdre()
-    {
-        return $this->ordre;
     }
 }

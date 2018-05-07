@@ -27,7 +27,7 @@ class Reseaux
 
     /**
      * @ORM\OneToMany(targetEntity="MembresHasReseaux", mappedBy="reseau")
-     */   
+     */
     private $reseaux;
 
     /**
@@ -49,7 +49,7 @@ class Reseaux
      *
      * @var string
      */
-    private $image='noimage.png';
+    private $image = 'noimage.png';
 
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
@@ -60,6 +60,13 @@ class Reseaux
      */
     private $imageFile;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->reseaux = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     public function __toString()
     {
@@ -67,24 +74,13 @@ class Reseaux
     }
 
     /**
-     * Get id
+     * Get nom
      *
-     * @return integer
+     * @return string
      */
-    public function getId()
+    public function getNom()
     {
-        return $this->id;
-    }
-
-    /**
-     * Set id
-     *
-     * @return integer
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
+        return $this->nom;
     }
 
     /**
@@ -102,25 +98,25 @@ class Reseaux
     }
 
     /**
-     * Get nom
+     * Get id
      *
-     * @return string
+     * @return integer
      */
-    public function getNom()
+    public function getId()
     {
-        return $this->nom;
+        return $this->id;
     }
 
     /**
-     * Set url
+     * Set id
      *
-     * @param string $url
+     * @param $id
      *
      * @return Reseaux
      */
-    public function setUrl($url)
+    public function setId($id)
     {
-        $this->url = $url;
+        $this->id = $id;
 
         return $this;
     }
@@ -136,11 +132,17 @@ class Reseaux
     }
 
     /**
-     * Constructor
+     * Set url
+     *
+     * @param string $url
+     *
+     * @return Reseaux
      */
-    public function __construct()
+    public function setUrl($url)
     {
-        $this->reseaux = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->url = $url;
+
+        return $this;
     }
 
     /**
@@ -198,8 +200,7 @@ class Reseaux
     {
         $this->imageFile = $image;
 
-        if ($image)
-        {
+        if ($image) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
             $this->updated = new \DateTime('now');

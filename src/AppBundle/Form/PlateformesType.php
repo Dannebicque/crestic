@@ -20,12 +20,15 @@ class PlateformesType extends AbstractType
             ->add('localisation', TextType::class, array('label' => 'Localisation de la plateforle'))
             ->add('imageFile', FileType::class, array('label' => 'Illustration de la plateforme', 'required' => false))
             ->add('url', TextType::class, array('label' => 'Site web de la plateforme', 'required' => false))
-            ->add('responsable', EntityType::class, array('label' => 'Responsable de la plateforme',
-                'class' =>'AppBundle\Entity\MembresCrestic',
-                'empty_data'=> 'Choisir un responsable',
-                'choice_label' => 'display', 'attr' => array('class'=> 'select2' )));
+            ->add('responsable', EntityType::class, array(
+                'label'        => 'Responsable de la plateforme',
+                'class'        => 'AppBundle\Entity\MembresCrestic',
+                'empty_data'   => 'Choisir un responsable',
+                'choice_label' => 'display',
+                'attr'         => array('class' => 'select2')
+            ));
     }
-    
+
     /**
      * {@inheritdoc}
      */

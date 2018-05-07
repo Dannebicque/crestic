@@ -3,5 +3,31 @@
 {% block title %}AppBundle:PublicationsController:edit{% endblock %}
 
 {% block body %}
-<h1>Welcome to the PublicationsController:edit page</h1>
-{% endblock %}
+    {{ form_start(form) }}
+
+    {{ include('@App/Utilisateur/publications/form-publication.html.twig') }}
+
+    {% if type == 'revue' %}
+        {{ include('@App/Utilisateur/publications/form-revue.html.twig') }}
+    {% elseif type =='conference' %}
+        {{ include('@App/Utilisateur/publications/form-conference.html.twig') }}
+    {% elseif type =='rapport' %}
+        {{ include('@App/Utilisateur/publications/form-rapport.html.twig') }}
+    {% elseif type =='these' %}
+        {{ include('@App/Utilisateur/publications/form-these.html.twig') }}
+    {% elseif type =='brevet' %}
+        {{ include('@App/Utilisateur/publications/form-brevet.html.twig') }}
+    {% elseif type =='ouvrage' %}
+        {{ include('@App/Utilisateur/publications/form-ouvrage.html.twig') }}
+    {% elseif type =='chapitre' %}
+        {{ include('@App/Utilisateur/publications/form-chapitre.html.twig') }}
+    {% endif %}
+
+    <div class="row">
+        <div class="col-sm-7">&nbsp;</div>
+        <div class="col-sm-5" style="text-align: right">
+            <a href="{{ path('utilisateur_publications_index') }}">Annuler/retour</a>&nbsp;&nbsp;
+            <input type="submit" class="btn btn-primary" value="Valider les modifications" />
+        </div>
+    </div>
+    {{ form_end(form) }}{% endblock %}

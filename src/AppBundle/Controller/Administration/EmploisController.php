@@ -3,6 +3,7 @@
 namespace AppBundle\Controller\Administration;
 
 use AppBundle\Entity\Emplois;
+use AppBundle\Form\EmploisType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -37,11 +38,14 @@ class EmploisController extends Controller
      *
      * @Route("/new", name="administration_emplois_new")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
         $emplois = new Emplois();
-        $form    = $this->createForm('AppBundle\Form\EmploisType', $emplois);
+        $form    = $this->createForm(EmploisType::class, $emplois);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
@@ -64,7 +68,9 @@ class EmploisController extends Controller
      *
      * @Route("/{id}", name="administration_emplois_show")
      * @Method("GET")
-     */
+     * @param Emplois $emplois
+     * @return \Symfony\Component\HttpFoundation\Response
+*/
     public function showAction(Emplois $emplois)
     {
         $deleteForm = $this->createDeleteForm($emplois);
@@ -80,10 +86,13 @@ class EmploisController extends Controller
      *
      * @Route("/{id}/edit", name="administration_emplois_edit")
      * @Method({"GET", "POST"})
-     */
+     * @param Request $request
+     * @param Emplois $emplois
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+*/
     public function editAction(Request $request, Emplois $emplois)
     {
-        $editForm = $this->createForm('AppBundle\Form\EmploisType', $emplois);
+        $editForm = $this->createForm(EmploisType::class, $emplois);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid())
@@ -105,7 +114,10 @@ class EmploisController extends Controller
      *
      * @Route("/{id}", name="administration_emplois_delete")
      * @Method("DELETE")
-     */
+     * @param Request $request
+     * @param Emplois $emplois
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+*/
     public function deleteAction(Request $request, Emplois $emplois)
     {
         $form = $this->createDeleteForm($emplois);

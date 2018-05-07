@@ -4,7 +4,7 @@
 			<div class="btn-group">
 				<a href="#" data-lettre="tous"
 				   class="btn btn-rw {% if 'tous' == affichage %} btn-primary {% else %}btn-info{% endif %}
-				chgtlettre">Tous</a>
+				chgtlettre">{{ 'tous'|trans }}</a>
 				{% for lettre in 'A'..'Z' %}
 					<a href="#" data-lettre="{{ lettre }}"
 					   class="btn btn-rw {% if lettre == affichage %} btn-primary {% else %}btn-info{% endif %}

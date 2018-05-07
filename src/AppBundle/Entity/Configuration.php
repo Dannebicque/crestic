@@ -37,27 +37,7 @@ class Configuration
 
     public function __toString()
     {
-        return "".$this->getCle();
-    }
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set id
-     *
-     * @return integer
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
+        return "" . $this->getCle();
     }
 
     /**
@@ -80,6 +60,30 @@ class Configuration
     public function setCle($cle)
     {
         $this->cle = $cle;
+
+        return $this;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set id
+     *
+     * @param $id
+     *
+     * @return Configuration
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
 
         return $this;
     }

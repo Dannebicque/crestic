@@ -56,6 +56,8 @@ class ReseauxRepository extends \Doctrine\ORM\EntityRepository
     }
 
     /**
+     * @param null $array_options
+     *
      * @return array
      */
 

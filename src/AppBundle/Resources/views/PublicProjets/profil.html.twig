@@ -1,6 +1,6 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}CReSTIC | Projet | {{ projet.titre }}{% endblock %}
+{% block title %}{{ 'visiteur.projet.title'|trans }} | {{ projet.titre }}{% endblock %}
 
 {% block content %}
     <div class="container">
@@ -102,8 +102,7 @@
                         {{ 'visiteur.projet.dernierespublications'|trans }}
                     </h4>
                 </div>
-                Publications
-                {#{{ biblio.getListPublications(projet.publications, false)|raw }}#}
+                {{ include('@App/PublicPublications/publiProfil.html.twig', {publications: publications}) }}
             </div>
         </div>
 
@@ -132,7 +131,7 @@
                                     </div>
                                     <div class="membreCresticMosaiqueMosaiqueNom col-sm-12">
                                         <a href="{{ path('public_membres_profil', {slug: membre.membreCrestic.slug}) }}"
-                                           title="Profil de {{ membre.membreCrestic.display }}"
+                                           title="{{ 'visiteur.MembresCrestic.voirprofil'|trans }} {{ membre.membreCrestic.display }}"
                                            target="_blank">{{ membre.membreCrestic.display }}</a>
                                     </div>
                                     <div class="col-sm-12">

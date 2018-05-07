@@ -48,12 +48,12 @@ class Plateformes
     private $localisation;
 
     /**
-     * 
+     *
      * @ORM\ManyToOne(targetEntity="MembresCrestic",inversedBy="plateformes")
      * @ORM\JoinColumn(name="responsable_id",referencedColumnName="id")
      * @ORM\OrderBy({"nom" = "ASC"})
      */
-     private $responsable;
+    private $responsable;
 
     /**
      * @var \DateTime $created
@@ -96,7 +96,7 @@ class Plateformes
      *
      * @ORM\Column(name="url", type="string", length=255, nullable=true)
      */
-    private $url='';
+    private $url = '';
 
     /**
      *
@@ -118,31 +118,29 @@ class Plateformes
      */
     private $sliders;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->projets = new ArrayCollection();
+        $this->publications = new ArrayCollection();
+        $this->sliders = new ArrayCollection();
+    }
+
     public function __toString()
     {
         return $this->getNom();
     }
 
-
     /**
-     * Get id
+     * Get nom
      *
-     * @return integer
+     * @return string
      */
-    public function getId()
+    public function getNom()
     {
-        return $this->id;
-    }
-
-    /**
-     * Set id
-     *
-     * @return integer
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
+        return $this->nom;
     }
 
     /**
@@ -160,13 +158,37 @@ class Plateformes
     }
 
     /**
-     * Get nom
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set id
+     *
+     * @param $id
+     *
+     * @return Plateformes
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get localisation
      *
      * @return string
      */
-    public function getNom()
+    public function getLocalisation()
     {
-        return $this->nom;
+        return $this->localisation;
     }
 
     /**
@@ -184,13 +206,13 @@ class Plateformes
     }
 
     /**
-     * Get localisation
+     * Get responsable
      *
-     * @return string
+     * @return MembresCrestic
      */
-    public function getLocalisation()
+    public function getResponsable()
     {
-        return $this->localisation;
+        return $this->responsable;
     }
 
     /**
@@ -208,13 +230,13 @@ class Plateformes
     }
 
     /**
-     * Get responsable
+     * Get created
      *
-     * @return MembresCrestic
+     * @return \DateTime
      */
-    public function getResponsable()
+    public function getCreated()
     {
-        return $this->responsable;
+        return $this->created;
     }
 
     /**
@@ -232,13 +254,13 @@ class Plateformes
     }
 
     /**
-     * Get created
+     * Get updated
      *
      * @return \DateTime
      */
-    public function getCreated()
+    public function getUpdated()
     {
-        return $this->created;
+        return $this->updated;
     }
 
     /**
@@ -256,13 +278,13 @@ class Plateformes
     }
 
     /**
-     * Get updated
+     * Get slug
      *
-     * @return \DateTime
+     * @return string
      */
-    public function getUpdated()
+    public function getSlug()
     {
-        return $this->updated;
+        return $this->slug;
     }
 
     /**
@@ -280,13 +302,13 @@ class Plateformes
     }
 
     /**
-     * Get slug
+     * Get description
      *
      * @return string
      */
-    public function getSlug()
+    public function getDescription()
     {
-        return $this->slug;
+        return $this->description;
     }
 
     /**
@@ -301,16 +323,6 @@ class Plateformes
         $this->description = $description;
 
         return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
     }
 
     /**
@@ -358,12 +370,21 @@ class Plateformes
     {
         $this->imageFile = $image;
 
-        if ($image)
-        {
+        if ($image) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
             $this->setUpdated(new \DateTime('now'));
         }
+    }
+
+    /**
+     * Get url
+     *
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
     }
 
     /**
@@ -378,25 +399,6 @@ class Plateformes
         $this->url = $url;
 
         return $this;
-    }
-
-    /**
-     * Get url
-     *
-     * @return string
-     */
-    public function getUrl()
-    {
-        return $this->url;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->projets      = new ArrayCollection();
-        $this->publications = new ArrayCollection();
-        $this->sliders      = new ArrayCollection();
     }
 
     /**
@@ -472,7 +474,7 @@ class Plateformes
      *
      * @param Slider $slider
      *
-     * @return Slider
+     * @return Plateformes
      */
     public function addSlider(Slider $slider)
     {

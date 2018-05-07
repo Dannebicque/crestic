@@ -1,0 +1,38 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block title %}Nettoyage des membres extérieurs{% endblock %}
+
+{% block content %}
+    <h1>Nettoyage des membres extérieurs</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+        </tr>
+        </thead>
+        {% for membre in membres %}
+            <tr>
+                <td>
+                    <a href="#" class="updateMembre" data-type="text" data-pk="{{ membre.id }}" data-name="nom">{{ membre.nom }}</a>
+                </td>
+                <td>
+                    <a href="#" class="updateMembre" data-type="text" data-pk="{{ membre.id }}" data-name="prenom">{{ membre.prenom }}</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+      $(document).ready(function() {
+        $('.updateMembre').editable(
+          {
+            type: 'text',
+            url: "{{ path('nettoyage_update_membre_ext') }}"
+          }
+        );
+      });
+    </script>
+{% endblock %}

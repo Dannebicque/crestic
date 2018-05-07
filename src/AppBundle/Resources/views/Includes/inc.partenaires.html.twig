@@ -1,7 +1,7 @@
 {% for partenaire in partenaires %}
-    <div class="col-sm-3"  style="text-align: center">
-        <a href="{{ partenaire.partenaire.url }}" target="_blank"><img src="{{ asset('uploads/partenaires/'~partenaire.partenaire.image)|imagine_filter('partenaire')  }}" alt="logo" /><br>
-            {% if partenaire.partenaire.internationale == true %}<span class="fa fa-globe"></span> {% endif %}{{ partenaire.partenaire.nom }}
+    <div class="col-sm-3"  style="text-align: center; height:120px">
+        <a href="{{ partenaire.partenaire.url }}" target="_blank"><img src="{{ asset('uploads/partenaires/'~partenaire.partenaire.image)|imagine_filter('partenaire')  }}" alt="logo" style="position: absolute; bottom: 0" />
         </a>
     </div>
 {% endfor %}
+<div style="clear: both;"></div>

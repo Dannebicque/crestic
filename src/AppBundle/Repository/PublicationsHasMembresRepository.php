@@ -64,6 +64,8 @@ class PublicationsHasMembresRepository extends \Doctrine\ORM\EntityRepository
     }
 
     /**
+     * @param $auteur
+     *
      * @return array
      */
 
@@ -73,7 +75,8 @@ class PublicationsHasMembresRepository extends \Doctrine\ORM\EntityRepository
     }
 
     /**
-     * @return array
+     * @param $auteur
+     * @return \Doctrine\ORM\QueryBuilder
      */
 
     public function findAuteurMembreCresticBuilder($auteur)
@@ -86,6 +89,7 @@ class PublicationsHasMembresRepository extends \Doctrine\ORM\EntityRepository
     }
 
     /**
+     * @param $auteur
      * @return array
      */
 
@@ -95,7 +99,8 @@ class PublicationsHasMembresRepository extends \Doctrine\ORM\EntityRepository
     }
 
     /**
-     * @return array
+     * @param $auteur
+     * @return \Doctrine\ORM\QueryBuilder
      */
 
     public function findAuteurMembreExterieurBuilder($auteur)

@@ -45,6 +45,9 @@ class ProjetsController extends Controller
      *
      * @Route("/new", name="responsable_projets_new")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function newAction(Request $request)
     {
@@ -88,7 +91,10 @@ class ProjetsController extends Controller
      *
      * @Route("/{id}/edit", name="responsable_projets_edit")
      * @Method({"GET", "POST"})
-     */
+     * @param Request $request
+     * @param Projets $projet
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+*/
     public function editAction(Request $request, Projets $projet)
     {
         $editForm = $this->createForm('AppBundle\Form\ProjetsResponsableType', $projet);

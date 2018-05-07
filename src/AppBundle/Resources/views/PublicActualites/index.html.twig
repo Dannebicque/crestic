@@ -1,6 +1,6 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}AppBundle:PublicActualites:index{% endblock %}
+{% block title %}{{ 'visiteur.actualite.title'|trans }}{% endblock %}
 
 {% block stylesheets %}
     <style>
@@ -16,7 +16,7 @@
         <div class="col-sm-12">
             <div class="heading mb20">
                 <h2>
-                    {{ 'actualites.crestic'|trans }}
+                    {{ 'visiteur.actualite.title'|trans }}
                 </h2>
                 <br /><br />
                 {% for actualite in actualites %}

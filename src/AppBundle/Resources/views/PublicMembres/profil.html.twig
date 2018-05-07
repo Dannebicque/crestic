@@ -2,345 +2,373 @@
 
 {% block title %}CReSTIC | {{ user.display }}{% endblock %}
 {% block content %}
-	<div class="heading mb20">
-		<h1>
-			{{ user.display }}</h1>
+    <div class="heading mb20">
+        <h1>{{ user.display }}</h1>
+    </div>
+    <div class="row">
+        <div class="col-sm-4 text-center">
+            <div class="content-box-profile content-box-bordered no-margin">
+                <img src="{{ asset('uploads/membresCrestic/'~user.image)|imagine_filter('profil') }}" height="200px"
+                     alt="Photo de {{ user.display }}"/>
+                {% if user.membreAssocie == true %}
+                    <p>{{ 'visiteur.membreAssocie'|trans }}</p>
+                {% endif %}
 
-	</div>
-			<div class="row">
-				<div class="col-sm-4 text-center">
-					<div class="content-box-profile content-box-bordered no-margin">
-						<img src="{{ asset('uploads/membresCrestic/'~user.image)|imagine_filter('profil') }}" height="200px" alt="Photo de {{
-						user.display }}" />
-						{% if user.membreAssocie == true %}
-							<p>{{ 'visiteur.membreAssocie'|trans }}</p>
-						{% endif %}
+                {% if is_granted('ROLE_UTILISATEUR') %}
+                    <dl>
+                        {% if user.corpsgrade  != '' and user.corpsgrade != null %}
+                        <dt>
+                            {{ 'corps'|trans }}/{{ 'grade'|trans }}
+                        </dt>
+                        <dd>
+                            {{ user.corpsgrade }}
+                        </dd>
+                        {% endif %}
 
-						{#{% if user.membreConseilLabo == true %}#}
-							{#<p>{{ 'visiteur.membreConseilLabo'|trans }}</p>#}
-						{#{% endif %}#}
+                        {% if user.datenomination  != '' and user.datenomination != null %}
+                        <dt>
+                            {{ 'visiteur.MembresCrestic.datenomination'|trans }}
+                        </dt>
+                        <dd>
+                            {{ user.datenomination|date('d/m/Y') }}
+                        </dd>
+                        {% endif %}
+                    </dl>
+                {% endif %}
 
-						{#<h4 class="team-member-name-imgtop">#}
-							{#Infos#}
-						{#</h4>#}
-						{% if is_granted('ROLE_UTILISATEUR') %}
-							<dl >
-								<dt>
-									Corps/Grade
-								</dt>
-								<dd>
-									{{ user.corpsgrade }}
-								</dd>
-								{#<dt>#}
-									{#Discipline HCERES#}
-								{#</dt>#}
-								{#<dd>#}
-									{#{{ user.disciplinehceres }}#}
-								{#</dd>#}
-								<dt>
-									Date Nomination CReSTIC
-								</dt>
-								<dd>
-									{{ user.datenomination|date('d/m/Y') }}
-								</dd>
-								{#<dt>#}
-									{#HDR#}
-								{#</dt>#}
-								{#<dd>#}
-									{#{% if user.hdr == true %} HDR {% else %} - {% endif %}#}
-								{#</dd>#}
-							</dl>
-						{% endif %}
+                <h4 class="team-member-name-imgtop">
+                    {{ 'visiteur.MembresCrestic.contact'|trans }}
+                </h4>
+                <dl>
+                    <dt>
+                        {{ 'visiteur.MembresCrestic.email'|trans }}
+                    </dt>
+                    <dd>
+                        <a href="mailto:{{ user.email }}" target="_blank">{{ user.email }}</a>
+                    </dd>
+                    {% if user.tel  != '' and user.tel != null %}
+                    <dt>
+                        {{ 'visiteur.MembresCrestic.telephone'|trans }}
+                    </dt>
+                    <dd>
+                        {{ user.tel|tel_format }}
+                    </dd>
+                    {% endif %}
 
-						<h4 class="team-member-name-imgtop">
-							Contacts
-						</h4>
-						<dl>
-							<dt>
-								Email
-							</dt>
-							<dd>
-								<a href="mailto:{{ user.email }}" target="_blank">{{ user.email }}</a>
-							</dd>
-							<dt>
-								Téléphone
-							</dt>
-							<dd>
-								{{ user.tel }}
-							</dd>
-							<dt>
-								Téléphone portable
-							</dt>
-							<dd>
-								{{ user.telPortable }}
-							</dd>
-							{% if user.url != '' %}
-								<dt>
-									Site Web
-								</dt>
-								<dd>
-									<a href="{{ user.url }}" target="_blank">{{ user.url }}</a>
-								</dd>
-							{% endif %}
-						</dl>
-						<div class="team-description">
-							{#todo: réseaux sociaux#}
-							{#{{ html.getEntity1HasEntity2 (user.reseaux , 'getReseau') | raw }}#}
-							<!-- Social -->
-							<a href="#"><span class="ion-social-twitter team-ico mr15"></span></a>
-							<a href="#"><span class="ion-social-facebook team-ico mr15"></span></a>
-							<a href="#"><span class="ion-social-googleplus-outline team-ico"></span></a>
-						</div>
-					</div>
+                    {% if user.telPortable  != '' and user.telPortable != null %}
+                    <dt>
+                        {{ 'visiteur.MembresCrestic.telportable'|trans }}
+                    </dt>
+                    <dd>
+                        {{ user.telPortable|tel_format }}
+                    </dd>
+                    {% endif %}
 
-				</div>
+                    {% if user.url != '' %}
+                        <dt>
+                            {{ 'visiteur.MembresCrestic.siteweb'|trans }}
+                        </dt>
+                        <dd>
+                            <a href="{{ user.url }}" target="_blank">{{ user.url }}</a>
+                        </dd>
+                    {% endif %}
+                </dl>
+                <div class="team-description">
+                    {#todo: réseaux sociaux
+                    <!-- Social -->
+                    <a href="#"><span class="ion-social-twitter team-ico mr15"></span></a>
+                    <a href="#"><span class="ion-social-facebook team-ico mr15"></span></a>
+                    <a href="#"><span class="ion-social-googleplus-outline team-ico"></span></a>#}
+                </div>
+            </div>
 
-				<div class="col-sm-8">
+        </div>
 
-					<h4>{% if user.departementMembre != null %} {{ 'visiteur.MembresCrestic.departement'|trans
-						}} :	{{ user
-						.departementMembre }}{%	endif %} <br>
-						{% if user.cnu != '' and user.cnu != null %} CNU : {{ user.cnu }}{% endif %}</h4>
-					<br/>
-					<h4>Localisation</h4>
+        <div class="col-sm-8">
 
-					{{ user.adresse }} <br/>
-					{{ user.localisation }}
-					<br/><br/>
-					<h4>CV</h4>
-					{{ user.cv|raw }}
-					<br>
-					{#<div class="row">#}
-						{#<div class="col-sm-6">#}
-							{#Responsable de Plateformes :#}
-						{#</div>#}
-						{#<div class="col-sm-6">#}
+            <h4>{% if user.departementMembre != null %} {{ 'visiteur.MembresCrestic.departement'|trans }} :    {{ user
+                .departementMembre }}{% endif %} <br>
+                {% if user.cnu != '' and user.cnu != null %} {{ 'visiteur.MembresCrestic.cnu'|trans }} : {{ user.cnu }}{% endif %}
+            </h4>
+            <br/>
+            <h4>{{ 'visiteur.MembresCrestic.localisation'|trans }}</h4>
 
-							{#{{ html.getList (user.plateformes) | raw }}#}
-						{#</div>#}
-					{#</div>#}
+            {{ user.adresse }} <br/>
+            {{ user.localisation }}
+            <br/><br/>
+            <h4>CV</h4>
+            {% if app.request.locale == 'en' and user.cvEn != '' and user.cvEn != null %}
+                {{ user.cvEn|raw }}
+            {% else %}
+                {{ user.cv|raw }}
+            {% endif %}
+            <br>
+        </div>
+    </div>
 
-					{#<div class="row">#}
-						{#<div class="col-sm-6">#}
-							{#Appartient aux équipes :#}
-						{#</div>#}
-						{#<div class="col-sm-6">#}
-							{#{{ html.getEntity1HasEntity2 (user.equipesHasMembres , 'getEquipe') | raw }}#}
-						{#</div>#}
-					{#</div>#}
+    <div class="heading mt30">
+        <h4>
+            {{ 'visiteur.MembresCrestic.activites'| trans }}
+        </h4>
+    </div>
 
-					{#<div class="row">#}
-						{#<div class="col-sm-6">#}
-							{#Responsable d'equipe#}
-						{#</div>#}
-						{#<div class="col-sm-6">#}
-							{#{{ html.getList (user.equipes) | raw }}#}
-						{#</div>#}
-					{#</div>#}
+    <!-- Begin Tabs Justified -->
+    <ul id="membresTabActivites" class="nav nav-tabs nav-justified mt15" role="tablist">
+        {% if attribute (user,'responsabilitesAdministratives') is not empty %}
+            <li>
+                <a href="#responsabilitesAdministratives" role="tab" data-toggle="tab">
+                    {{ 'visiteur.MembresCrestic.responsabilitesAdministratives'| trans }}
+                </a>
+            </li>
+        {% endif %}
 
-					{#<div class="row">#}
-						{#<div class="col-sm-6">#}
-							{#Responsable de departements :#}
-						{#</div>#}
-						{#<div class="col-sm-6">#}
-							{#{{ html.getList (user.departements , 'reseaux') | raw }}#}
-						{#</div>#}
-					{#</div>#}
-				</div>
-			</div>
+        {% if attribute (user,'themes') is not empty %}
+            <li>
+                <a href="#themes" role="tab" data-toggle="tab">
+                    {{ 'visiteur.MembresCrestic.themes'| trans }}
+                </a>
+            </li>
+        {% endif %}
 
-			<div class="heading mt30">
-				<h4>
-					{{ 'visiteur.MembresCrestic.activites'| trans }}
-				</h4>
-			</div>
+        {% if attribute (user,'responsabilitesScientifiques') is not empty %}
+            <li>
+                <a href="#responsabilitesScientifiques" role="tab" data-toggle="tab">
+                    {{ 'visiteur.MembresCrestic.responsabilitesScientifiques'| trans }}
+                </a>
+            </li>
+        {% endif %}
 
-			<!-- Begin Tabs Justified -->
-			<ul id="membresTabActivites" class="nav nav-tabs nav-justified mt15" role="tablist">
-				{% if attribute (user,'responsabilitesAdministratives') is not empty %}
-					<li>
-						<a href="#responsabilitesAdministratives" role="tab" data-toggle="tab">
-							{{ 'visiteur.MembresCrestic.responsabilitesAdministratives'| trans }}
-						</a>
-					</li>
-				{% endif %}
+        <li>
+            <a href="#publications" role="tab" data-toggle="tab">
+                {{ 'visiteur.MembresCrestic.publications'| trans }}
+            </a>
+        </li>
 
-				{% if attribute (user,'themes') is not empty %}
-					<li>
-						<a href="#themes" role="tab" data-toggle="tab">
-							{{ 'visiteur.MembresCrestic.themes'| trans }}
-						</a>
-					</li>
-				{% endif %}
+        <li>
+            <a href="#hal" role="tab" data-toggle="tab">
+                {{ 'visiteur.MembresCrestic.hal'| trans }}
+            </a>
+        </li>
 
-				{% if attribute (user,'responsabilitesScientifiques') is not empty %}
-					<li>
-						<a href="#responsabilitesScientifiques" role="tab" data-toggle="tab">
-							{{ 'visiteur.MembresCrestic.responsabilitesScientifiques'| trans }}
-						</a>
-					</li>
-				{% endif %}
+        {% if attribute (user,'international') is not empty %}
+            <li>
+                <a href="#international" role="tab" data-toggle="tab">
+                    {{ 'visiteur.MembresCrestic.international'| trans }}
+                </a>
+            </li>
+        {% endif %}
 
-					<li>
-						<a href="#publications" role="tab" data-toggle="tab">
-                            {{ 'visiteur.MembresCrestic.publications'| trans }}
-						</a>
-					</li>
+        {% if attribute (user,'editorial') is not empty %}
+            <li>
+                <a href="#editorial" role="tab" data-toggle="tab">
+                    {{ 'visiteur.MembresCrestic.editoriale'| trans }}
+                </a>
+            </li>
+        {% endif %}
 
-				{% if attribute (user,'international') is not empty %}
-					<li>
-						<a href="#international" role="tab" data-toggle="tab">
-							{{ 'visiteur.MembresCrestic.international'| trans }}
-						</a>
-					</li>
-				{% endif %}
+        {% if attribute (user,'valorisation') is not empty %}
+            <li>
+                <a href="#valorisation" role="tab" data-toggle="tab">
+                    {{ 'visiteur.MembresCrestic.valorisation'| trans }}
+                </a>
+            </li>
+        {% endif %}
 
-				{% if attribute (user,'editorial') is not empty %}
-					<li>
-						<a href="#editorial" role="tab" data-toggle="tab">
-							{{ 'visiteur.MembresCrestic.editoriale'| trans }}
-						</a>
-					</li>
-				{% endif %}
+        {% if attribute (user,'evaluation') is not empty %}
+            <li>
+                <a href="#evaluation" role="tab" data-toggle="tab">
+                    {{ 'visiteur.MembresCrestic.evaluation'| trans }}
+                </a>
+            </li>
+        {% endif %}
 
-				{% if attribute (user,'valorisation') is not empty %}
-					<li>
-						<a href="#valorisation" role="tab" data-toggle="tab">
-							{{ 'visiteur.MembresCrestic.valorisation'| trans }}
-						</a>
-					</li>
-				{% endif %}
+        {% if attribute (user,'vulgarisation') is not empty %}
+            <li>
+                <a href="#vulgarisation" role="tab" data-toggle="tab">
+                    {{ 'visiteur.MembresCrestic.vulgarisation'| trans }}
+                </a>
+            </li>
+        {% endif %}
 
-				{% if attribute (user,'evaluation') is not empty %}
-					<li>
-						<a href="#evaluation" role="tab" data-toggle="tab">
-							{{ 'visiteur.MembresCrestic.evaluation'| trans }}
-						</a>
-					</li>
-				{% endif %}
+        {% if attribute (user,'enseignements') is not empty %}
+            <li>
+                <a href="#enseignements" role="tab" data-toggle="tab">
+                    {{ 'visiteur.MembresCrestic.enseignements'| trans }}
+                </a>
+            </li>
+        {% endif %}
 
-				{% if attribute (user,'vulgarisation') is not empty %}
-					<li>
-						<a href="#vulgarisation" role="tab" data-toggle="tab">
-							{{ 'visiteur.MembresCrestic.vulgarisation'| trans }}
-						</a>
-					</li>
-				{% endif %}
+    </ul>
 
-				{% if attribute (user,'enseignements') is not empty %}
-					<li>
-						<a href="#enseignements" role="tab" data-toggle="tab">
-							{{ 'visiteur.MembresCrestic.enseignements'| trans }}
-						</a>
-					</li>
-				{% endif %}
-			</ul>
+    <div id="membresTabDivActivites" class="tab-content tab-default mb15">
 
-			<div id="membresTabDivActivites" class="tab-content tab-default mb15">
+        {% if attribute (user,'responsabilitesAdministratives') is not empty %}
+            <div class="tab-pane tab-profil" id="responsabilitesAdministratives">
+                {% if app.request.locale == 'en' and user.responsabilitesAdministrativesEn != '' and user.responsabilitesAdministrativesEn != null %}
+                    {{ user.responsabilitesAdministrativesEn|raw }}
+                {% else %}
+                    {{ user.responsabilitesAdministratives|raw }}
+                {% endif %}
+            </div>
+        {% endif %}
 
-				{% if attribute (user,'responsabilitesAdministratives') is not empty %}
-					<div class="tab-pane" id="responsabilitesAdministratives">
-						{{ user.responsabilitesAdministratives|raw }}
+        {% if attribute (user,'valorisation') is not empty %}
+            <div class="tab-pane tab-profil" id="valorisation">
+                {% if app.request.locale == 'en' and user.valorisationEn != '' and user.valorisationEn != null %}
+                    {{ user.valorisationEn|raw }}
+                {% else %}
+                    {{ user.valorisation|raw }}
+                {% endif %}
+            </div>
+        {% endif %}
 
-					</div>
-				{% endif %}
+        {% if attribute (user,'vulgarisation') is not empty %}
+            <div class="tab-pane tab-profil" id="vulgarisation">
+                {% if app.request.locale == 'en' and user.vulgarisationEn != '' and user.vulgarisationEn != null %}
+                    {{ user.vulgarisationEn|raw }}
+                {% else %}
+                    {{ user.vulgarisation|raw }}
+                {% endif %}
+            </div>
+        {% endif %}
 
-				{% if attribute (user,'valorisation') is not empty %}
-					<div class="tab-pane" id="valorisation">
-						{{ user.valorisation|raw }}
+        {% if attribute (user,'international') is not empty %}
+            <div class="tab-pane tab-profil" id="international">
+                {% if app.request.locale == 'en' and user.internationalEn != '' and user.internationalEn != null %}
+                    {{ user.internationalEn|raw }}
+                {% else %}
+                    {{ user.international|raw }}
+                {% endif %}
+            </div>
+        {% endif %}
 
-					</div>
-				{% endif %}
+        {% if attribute (user,'enseignements') is not empty %}
+            <div class="tab-pane tab-profil" id="enseignements">
+                {% if app.request.locale == 'en' and user.enseignementsEn != '' and user.enseignementsEn != null %}
+                    {{ user.enseignementsEn|raw }}
+                {% else %}
+                    {{ user.enseignements|raw }}
+                {% endif %}
+            </div>
+        {% endif %}
 
-				{% if attribute (user,'vulgarisation') is not empty %}
-					<div class="tab-pane" id="vulgarisation">
-						{{ user.vulgarisation|raw }}
+        {% if attribute (user,'responsabilitesScientifiques') is not empty %}
+            <div class="tab-pane tab-profil" id="responsabilitesScientifiques">
+                {% if app.request.locale == 'en' and user.responsabilitesScientifiquesEn != '' and user.responsabilitesScientifiquesEn != null %}
+                    {{ user.responsabilitesScientifiquesEn|raw }}
+                {% else %}
+                    {{ user.responsabilitesScientifiques|raw }}
+                {% endif %}
+            </div>
+        {% endif %}
 
-					</div>
-				{% endif %}
+        {% if attribute (user,'themes') is not empty %}
+            <div class="tab-pane tab-profil" id="themes">
+                {% if app.request.locale == 'en' and user.themesEn != '' and user.themesEn != null %}
+                    {{ user.themesEn|raw }}
+                {% else %}
+                    {{ user.themes|raw }}
+                {% endif %}
+            </div>
+        {% endif %}
 
-				{% if attribute (user,'international') is not empty %}
-					<div class="tab-pane" id="international">
-						{{ user.international|raw }}
+        {% if attribute (user,'evaluation') is not empty %}
+            <div class="tab-pane tab-profil" id="evaluation">
+                {% if app.request.locale == 'en' and user.evaluationEn != '' and user.evaluationEn != null %}
+                    {{ user.evaluationEn|raw }}
+                {% else %}
+                    {{ user.evaluation|raw }}
+                {% endif %}
+            </div>
+        {% endif %}
 
-					</div>
-				{% endif %}
+        {% if attribute (user,'editorial') is not empty %}
+            <div class="tab-pane tab-profil" id="editorial">
+                {% if app.request.locale == 'en' and user.editorialEn != '' and user.editorialEn != null %}
+                    {{ user.editorialEn|raw }}
+                {% else %}
+                    {{ user.editorial|raw }}
+                {% endif %}
+            </div>
+        {% endif %}
 
-				{% if attribute (user,'enseignements') is not empty %}
-					<div class="tab-pane" id="enseignements">
-						{{ user.enseignements|raw }}
+        <div class="tab-pane tab-profil" id="publications">
+            {{ include('@App/PublicPublications/listepublications.html.twig') }}
 
-					</div>
-				{% endif %}
+        </div>
 
-				{% if attribute (user,'responsabilitesScientifiques') is not empty %}
-					<div class="tab-pane" id="responsabilitesScientifiques">
-						{{ user.responsabilitesScientifiques|raw }}
+        <div class="tab-pane tab-profil" id="hal">
+            <div id="result_hal">
 
-					</div>
-				{% endif %}
+            </div>
+        </div>
+    </div>
 
-				{% if attribute (user,'themes') is not empty %}
-					<div class="tab-pane" id="themes">
-						{{ user.themes|raw }}
+    <!-- test HAL -->
+    <a href="#" id="affiche_result">Afficher les résultats</a>
 
-					</div>
-				{% endif %}
-
-				{% if attribute (user,'evaluation') is not empty %}
-					<div class="tab-pane" id="evaluation">
-						{{ user.evaluation|raw }}
-
-					</div>
-				{% endif %}
-
-				{% if attribute (user,'editorial') is not empty %}
-					<div class="tab-pane" id="editorial">
-						{{ user.editorial|raw }}
-
-					</div>
-				{% endif %}
-
-				<div class="tab-pane" id="publications">
-                    {{ include('@App/PublicPublications/listepublications.html.twig') }}
-
-				</div>
-			</div>
-
-			{#<div class="row col-sm-12">
-
-				<div class="row">
-					<div class="col-sm-12">
-						<h4 class="team-member-name-imgtop">
-							{{ 'visiteur.MembresCrestic.publications'|trans }}
-						</h4>
-					</div>
-				</div>
-
-
-			</div>
-		#}{#</div>#}
-	{#</div>#}
 {% endblock %}
 
 {% block javascripts %}
-	<script>
-		$(document).ready(function () {
-			var max_height = 0;
-			$('#membresTabActivites a:first').tab('show');
+    <script>
+      $(document).ready(function () {
+        recupereHal();
+        var max_height = 0;
+        $('#membresTabActivites a:first').tab('show');
 
 
-			$('#membresTabActivites a').each(function () {
-				var id_tab = $(this).attr('href');
-				if (max_height < $(id_tab).height()) {
-					max_height = $(id_tab).height();
-				}
-			});
+        $('#membresTabActivites a').each(function () {
+          var id_tab = $(this).attr('href');
+          if (max_height < $(id_tab).height()) {
+            max_height = $(id_tab).height();
+          }
+        });
 
-			$("#membresTabDivActivites").height(max_height);
+        $("#membresTabDivActivites").height(max_height);
 
-			$('.link-share').attr('data-link', '/fiche/membre/{{ user.slug }}');
+        $('.link-share').attr('data-link', '/fiche/membre/{{ user.slug }}');
 
-		});
-	</script>
+
+
+      });
+
+      function recupereHal() {
+        //e.preventDefault();
+        var $resultat = $('#result_hal');
+        $.ajax({
+          url: "https://api.archives-ouvertes.fr/search/?q={{ user.nom }}&wt=xml&indent=true",
+          dataType: 'xml',
+          success: function (data) {
+            var $html = '<ul>';
+            console.log(data);
+            //var xmlDoc = $.parseXML( data );
+
+            var $xml = $( data );
+            console.log($xml);
+            var $doc = $xml.find("doc");
+
+            $doc.each(function(){
+              var $url='';
+              var $text='';
+
+              $(this).find('str').each(function(){
+                if ($(this).attr('name') === 'uri_s') {
+                  $url = $(this).text();
+                }
+                if ($(this).attr('name') === 'label_s') {
+                  $text = $(this).text();
+                }
+              });
+              //https://hal.inria.fr/
+              $html = $html + '<li>' + $text + '<a href="'+$url+'" target="_blank">Voir sur Hal</a></li>';
+              //console.log($(this).childNodes('str'))
+            });
+
+            console.log('--------');
+            $html = $html + '</ul>';
+            $resultat.empty().append($html);
+          }
+        });
+      }
+    </script>
 {% endblock %}

@@ -3,6 +3,7 @@
 namespace AppBundle\Controller\Administration;
 
 use AppBundle\Entity\Agenda;
+use AppBundle\Form\AgendaType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -37,6 +38,9 @@ class AgendaController extends Controller
      *
      * @Route("/new", name="administration_agenda_new")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
@@ -64,6 +68,9 @@ class AgendaController extends Controller
      *
      * @Route("/{id}", name="administration_agenda_show")
      * @Method("GET")
+     * @param Agenda $agenda
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAction(Agenda $agenda)
     {
@@ -80,10 +87,14 @@ class AgendaController extends Controller
      *
      * @Route("/{id}/edit", name="administration_agenda_edit")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     * @param Agenda  $agenda
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, Agenda $agenda)
     {
-        $editForm = $this->createForm('AppBundle\Form\AgendaType', $agenda);
+        $editForm = $this->createForm(AgendaType::class, $agenda);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid())
@@ -105,6 +116,10 @@ class AgendaController extends Controller
      *
      * @Route("/{id}", name="administration_agenda_delete")
      * @Method("DELETE")
+     * @param Request $request
+     * @param Agenda  $agenda
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request, Agenda $agenda)
     {

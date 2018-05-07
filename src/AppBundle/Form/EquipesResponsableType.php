@@ -19,12 +19,14 @@ class EquipesResponsableType extends AbstractType
     {
         $builder
             ->add('nomlong', TextType::class, array('label' => 'Nom long de l\'équipe'))
-            ->add('themeRecherche', TextareaType::class, array('label' => 'Thématiques de recherche',
-            'attr' => array('class' => 'tinyMCE')))
+            ->add('themeRecherche', TextareaType::class, array(
+                'label' => 'Thématiques de recherche',
+                'attr'  => array('class' => 'tinyMCE')
+            ))
             ->add('imageFile', FileType::class, array('label' => 'Illustration de l\'équipe', 'required' => false))
             ->add('video');
     }
-    
+
     /**
      * {@inheritdoc}
      */

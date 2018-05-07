@@ -36,6 +36,9 @@ class OrganigrammeController extends Controller
      *
      * @Route("/new", name="administration_organigramme_new")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
@@ -62,7 +65,10 @@ class OrganigrammeController extends Controller
      *
      * @Route("/{id}/edit", name="administration_organigramme_edit")
      * @Method({"GET", "POST"})
-     */
+     * @param Request      $request
+     * @param Organigramme $organigramme
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+*/
     public function editAction(Request $request, Organigramme $organigramme)
     {
         $deleteForm = $this->createDeleteForm($organigramme);
@@ -87,7 +93,10 @@ class OrganigrammeController extends Controller
      *
      * @Route("/{id}", name="administration_organigramme_delete")
      * @Method("DELETE")
-     */
+     * @param Request      $request
+     * @param Organigramme $organigramme
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+*/
     public function deleteAction(Request $request, Organigramme $organigramme)
     {
         $form = $this->createDeleteForm($organigramme);

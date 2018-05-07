@@ -70,6 +70,10 @@ class PublicationsController extends Controller
      *
      * @Route("/new/{type}", name="utilisateur_publications_new")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     * @param         $type
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function newAction(Request $request, $type)
     {
@@ -129,7 +133,9 @@ class PublicationsController extends Controller
 
     /**
      * @Route("/ajax/auteur/modal", name="utilisateur_auteur_ajax_modal")
-     */
+     * @param Request $request
+     * @return JsonResponse|Response
+*/
     public function auteurAjaxModalAction(Request $request)
     {
         $auteur = new MembresExterieurs();
@@ -165,7 +171,9 @@ class PublicationsController extends Controller
 
     /**
      * @Route("/ajax/revue/modal", name="utilisateur_revue_ajax_modal")
-     */
+     * @param Request $request
+     * @return JsonResponse|Response
+*/
     public function revueAjaxModalAction(Request $request)
     {
         $revue = new Revues();
@@ -200,26 +208,18 @@ class PublicationsController extends Controller
 
     /**
      * @Route("/ajax/conference/modal", name="utilisateur_conference_ajax_modal")
-     */
+     * @param Request $request
+     * @return JsonResponse|Response
+*/
     public function conferenceAjaxModalAction(Request $request)
     {
         $conference = new Conferences();
         $form = $this->createForm('AppBundle\Form\ConferencesType', $conference);
 
         if ($request->isMethod('POST')) {
-            $conference->setUrl($request->request->get('url'));
             $conference->setInternationale($request->request->get('internationale'));
             $conference->setNomConference($request->request->get('nom'));
             $conference->setSigleConference($request->request->get('sigle'));
-
-            $editeur = $this->getDoctrine()->getRepository('AppBundle:Editeurs')->find($request->request->get('editeur'));
-            $conference->setEditeur($editeur);
-
-            $pays = $this->getDoctrine()->getRepository('AppBundle:Pays')->find($request->request->get('pays'));
-            $conference->setPays($pays);
-            $conference->setVille($request->request->get('ville'));
-            $conference->setTauxSelection($request->request->get('taux'));
-
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($conference);
@@ -267,11 +267,10 @@ class PublicationsController extends Controller
     }
 
     /**
-     * @param $lettre
-     *
+     * @param Request $request
      * @return JsonResponse
      * @Route("ajax/search/auteurs", name="ajax_search_auteur")
-     */
+*/
     public function ajaxAuteurAction(Request $request)
     {
         $lettres = $request->request->get('lettres');
@@ -302,11 +301,10 @@ class PublicationsController extends Controller
     }
 
     /**
-     * @param $lettre
-     *
+     * @param Request $request
      * @return JsonResponse
      * @Route("ajax/add/auteur", name="ajax_add_auteur")
-     */
+*/
     public function ajaxAddAuteurAction(Request $request)
     {
         $idauteur = $request->request->get('auteur');
@@ -479,6 +477,7 @@ class PublicationsController extends Controller
      *
      * @Route("/edit/{type}/{id}/", name="utilisateur_publication_edit")
      * @Method({"GET", "POST"})
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function editAction(Request $request, $id, $type)
     {
@@ -583,10 +582,10 @@ class PublicationsController extends Controller
     }
 
     /**
-     * @param $auteur
-     * @param $publication
+     * @param Request $request
+     * @return JsonResponse
      * @Route("ajax/up-down/auteur/", name="ajax_publication_up_down")
-     */
+*/
     public function upDownAuteur(Request $request)
     {
         $idauteur = $request->request->get('auteur');
@@ -601,11 +600,10 @@ class PublicationsController extends Controller
         /** @var PublicationsHasMembres $a */
         foreach ($auteurs as $a) {
             $t[$a->getPosition()] = $a;
-            if (($a->getMembreExterieur() !== null && $a->getMembreExterieur()->getId() === $idauteur) || ($a->getMembreCrestic() !== null && $a->getMembreCrestic()->getId() === $idauteur)) {
+            if (($a->getMembreExterieur() !== null && $a->getMembreExterieur()->getId() === (int)$idauteur) || ($a->getMembreCrestic() !== null && $a->getMembreCrestic()->getId() === (int)$idauteur)) {
                 $auteur = $a;
             }
         }
-
         if ($sens === 'down') {
             $temp = $t[$auteur->getPosition()];
             $t[$auteur->getPosition()] = $t[$auteur->getPosition() + 1];
@@ -636,6 +634,8 @@ class PublicationsController extends Controller
     /**
      * @param Request $request
      * @Route("/ajax/suppression/getdata", methods={"POST"}, name="getDataPublicationSuppression")
+     *
+     * @return Response
      */
     public function getDataPublicationSuppressionAction(Request $request)
     {
@@ -688,6 +688,8 @@ class PublicationsController extends Controller
     /**
      * @param Request $request
      * @Route("/ajax/suppression/supprime", methods={"DELETE"}, name="deletePublication")
+     *
+     * @return Response
      */
     public function deletePublicationAction(Request $request)
     {
@@ -768,6 +770,8 @@ class PublicationsController extends Controller
      * @param         $id
      * @param         $type
      * @Route("/switchtype/{id}/{type}", name="utilisateur_publication_switch")
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function switchTypeAction(Request $request, $id, $type)
     {

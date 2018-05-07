@@ -11,7 +11,9 @@ namespace AppBundle\Repository;
 class ProjetsRepository extends \Doctrine\ORM\EntityRepository
 {
     /**
-     * @return array
+     * @param null $array_options
+     *
+     * @return \Doctrine\ORM\QueryBuilder|null
      */
 
     public function findAllProjetsBuilder($array_options = null)
@@ -68,6 +70,7 @@ class ProjetsRepository extends \Doctrine\ORM\EntityRepository
     }
 
     /**
+     * @param null $array_options
      * @return array
      */
 

@@ -26,6 +26,9 @@ class PublicEmploisController extends Controller
 
     /**
      * @Route("/ajax", name="public_emploi_details")
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function detailAction(Request $request)
     {

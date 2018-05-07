@@ -1,0 +1,139 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+	<a href="{{ path('administration_departements_index') }}">Départements</a> / Options /
+{% endblock %}
+
+{% block content %}
+    <h1>Options du département : {{ departement.nom }}</h1>
+    <br />
+
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="active"><a href="#membres" role="tab" data-toggle="tab">Membres</a></li>
+        <li><a href="#equipes" role="tab" data-toggle="tab">Equipes</a></li>
+    </ul>
+
+<div class="tab-content tab-default tab-default">
+    <div class="tab-pane active" id="membres">
+        <table class="table" id="listemembre">
+            <thead>
+            <tr>
+                <th>Nom Prénom</th>
+                <th>Statut</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for membre in membres %}
+                <tr>
+                    <td>{{ membre|linkMembre|raw }}</td>
+                    <td>{{ membre.statutlong }}</td>
+                    {% if t.membres[membre.id] is defined %}
+                        <td><a href="#" class="btn btn-warning remove" data-idoption="{{ membre.id }}" data-type="membre"><span class="fa fa-minus"></span></a></td>
+                    {% else %}
+                        <td><a href="#" class="btn btn-success add" data-idoption="{{ membre.id }}" data-type="membre"><span class="fa fa-plus"></span></a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="tab-pane" id="equipes">
+        <table class="table" id="listeequipe">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for equipe in equipes %}
+                <tr>
+                    <td>{{ equipe.nom }}</td>
+                    {% if t.equipes[equipe.id] is defined %}
+                        <td><a href="#" class="btn btn-warning remove" data-idoption="{{ equipe.id }}" data-type="equipe"><span class="fa fa-minus"></span></a></td>
+                    {% else %}
+                        <td><a href="#" class="btn btn-success add" data-idoption="{{ equipe.id }}" data-type="equipe"><span class="fa fa-plus"></span></a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+    <br />
+    <div class="row">
+        <div class="col-sm-9" style="text-align: right" >
+            <a href="{{ path('administration_departements_index') }}">Retour à la liste</a>
+        </div>
+        <div class="col-sm-3" style="text-align: right" >
+            <a href="{{ path('administration_departements_edit', { 'id': departement.id }) }}" class="btn
+            btn-warning btn-block">Modifier le département</a>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    $( document ).ready(function(){
+        $('#listemembre').DataTable(
+            {
+                "bSort": false
+            }
+        );
+
+        $('#listeequipe').DataTable(
+            {
+                "bSort": false
+            }
+        );
+    });
+
+    $(document).on('click', '.add', function(e) {
+        e.preventDefault();
+        $obj = $(this);
+        $.ajax({
+            url: "{{ path('administration_departements_ajax_option_add') }}",
+            data: {
+              departement: {{ departement.id }},
+                idoption: $obj.data('idoption'),
+                type: $obj.data('type')
+            },
+            method: 'post',
+            success: function(data){
+                $.notify(data, "success");
+                $obj.removeClass('btn-success add').addClass('btn-warning remove').children('span').removeClass('fa-plus').addClass('fa-minus');
+            },
+            error: function(data){
+                $.notify(data, "error");
+            }
+        });
+    });
+
+    $(document).on('click', '.remove', function(e) {
+        e.preventDefault();
+        $obj = $(this);
+        $.ajax({
+            url: "{{ path('administration_departements_ajax_option_remove') }}",
+            data: {
+              departement: {{ departement.id }},
+                idoption: $obj.data('idoption'),
+                type: $obj.data('type')
+            },
+            method: 'post',
+            success: function(data){
+                $.notify(data, "success");
+                $obj.removeClass('btn-warning remove').addClass('btn-success add').children('span').removeClass('fa-minus').addClass('fa-plus');
+
+            },
+            error: function(data){
+                $.notify(data, "error");
+            }
+        });
+    });
+</script>
+{% endblock %}

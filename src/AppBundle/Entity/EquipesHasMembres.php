@@ -77,7 +77,7 @@ class EquipesHasMembres
     /**
      * Set membre
      *
-     * @param MembresCrestic $membre
+     * @param MembresCrestic|null $membreCrestic
      *
      * @return EquipesHasMembres
      */

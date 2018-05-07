@@ -1,7 +1,7 @@
 {% extends '::base-admin.html.twig' %}
 
 {% block breadcrumbs %}
-	<a href="{{ path('administration_membres_index') }}">Membres</a> / Détails /
+	<a href="{{ path('administration_membres_index_actuels') }}">Membres Actuels</a> / Détails /
 {% endblock %}
 
 {% block content %}
@@ -32,6 +32,21 @@
 	<div class="alert alert-info">
 		Les informations de connexion ont été envoyées au membre.
 	</div>
-	{{ include('@App/Administration/footer-show.html.twig', {var: 'membres', obj:membresCrestic.id}) }}
-
+	<div class="row">
+		<div class="col-sm-3" style="text-align: right" >
+			<a href="{{ path('administration_membres_index_actuels') }}">Retour à la liste</a>
+		</div>
+		<div class="col-sm-3" style="text-align: right" >
+			<a href="{{ path('administration_membres_update_ancien', { 'id': membresCrestic.id }) }}" class="btn btn-danger">Marquer comme ancien</a>
+		</div>
+		<div class="col-sm-3" style="text-align: right" >
+            {{ form_start(delete_form) }}
+			<input type="submit" value="Supprimer" class="btn btn-danger btn-block">
+            {{ form_end(delete_form) }}
+		</div>
+		<div class="col-sm-3" style="text-align: right" >
+			<a href="{{ path('administration_membres_edit', { 'id': membresCrestic.id }) }}" class="btn
+            btn-warning btn-block"><i class="fa fa-pencil"></i> Modifier</a>
+		</div>
+	</div>
 {% endblock %}

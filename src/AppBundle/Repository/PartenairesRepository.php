@@ -12,7 +12,9 @@ class PartenairesRepository extends \Doctrine\ORM\EntityRepository
 {
 
     /**
-     * @return array
+     * @param null $array_options
+     *
+     * @return \Doctrine\ORM\QueryBuilder|null
      */
 
     public function findAllPartenairesBuilder($array_options = null)
@@ -55,6 +57,7 @@ class PartenairesRepository extends \Doctrine\ORM\EntityRepository
     }
 
     /**
+     * @param null $array_options
      * @return array
      */
 

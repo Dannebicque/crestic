@@ -191,8 +191,7 @@ class Actualites
     {
         $this->imageFile = $image;
 
-        if ($image)
-        {
+        if ($image) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
             $this->updated = new \DateTime('now');
@@ -216,6 +215,16 @@ class Actualites
     }
 
     /**
+     * Get created
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
      * Set created
      *
      * @param \DateTime $created
@@ -230,13 +239,13 @@ class Actualites
     }
 
     /**
-     * Get created
+     * Get updated
      *
      * @return \DateTime
      */
-    public function getCreated()
+    public function getUpdated()
     {
-        return $this->created;
+        return $this->updated;
     }
 
     /**
@@ -254,13 +263,13 @@ class Actualites
     }
 
     /**
-     * Get updated
+     * Get membreCrestic
      *
-     * @return \DateTime
+     * @return \AppBundle\Entity\MembresCrestic
      */
-    public function getUpdated()
+    public function getMembreCrestic()
     {
-        return $this->updated;
+        return $this->membreCrestic;
     }
 
     /**
@@ -275,15 +284,5 @@ class Actualites
         $this->membreCrestic = $membreCrestic;
 
         return $this;
-    }
-
-    /**
-     * Get membreCrestic
-     *
-     * @return \AppBundle\Entity\MembresCrestic
-     */
-    public function getMembreCrestic()
-    {
-        return $this->membreCrestic;
     }
 }

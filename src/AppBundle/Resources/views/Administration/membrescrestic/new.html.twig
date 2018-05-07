@@ -1,7 +1,7 @@
 {% extends '::base-admin.html.twig' %}
 
 {% block breadcrumbs %}
-	<a href="{{ path('administration_membres_index') }}">Membres</a> / Création /
+	<a href="{{ path('administration_membres_index_actuels') }}">Membres Actuels</a> / Création /
 {% endblock %}
 
 {% block content %}
@@ -10,7 +10,13 @@
 	{{ form_start(form) }}
 	{{ form_widget(form) }}
 
-	{{ include('@App/Administration/footer-new.html.twig', {var: 'membres'}) }}
+	<div class="row">
+		<div class="col-sm-7">&nbsp;</div>
+		<div class="col-sm-5" style="text-align: right">
+			<a href="{{ path('administration_membres_index_actuels') }}">Annuler/retour</a>&nbsp;&nbsp;
+			<input type="submit" class="btn btn-primary" value="Enregistrer"/>
+		</div>
+	</div>
 	{{ form_end(form) }}
 
 {% endblock %}

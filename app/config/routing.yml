@@ -1,3 +1,14 @@
+
+#force:
+#    path:     /force
+#    defaults: { _controller: AppBundle:Default:force }
+#
+#l3_logout:
+#    path:     /logout
+#    defaults: { _controller: L3CasBundle:Logout:logout }
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
@@ -6,9 +17,10 @@ app:
     requirements:
         _locale:  '|fr|en'
 
-fos_user:
-    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+
 
 # app/config/routing.yml
 _liip_imagine:
     resource: "@LiipImagineBundle/Resources/config/routing.xml"
+

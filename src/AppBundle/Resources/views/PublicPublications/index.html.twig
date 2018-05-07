@@ -17,8 +17,8 @@
                     </label>
                     <div class="col-sm-10">
                         <select class="form-control" id="equipe" name="equipe">
-                            <option value="-2" selected>Tous les membres (sans équipes)</option>
-                            <option value="-1">Toutes les équipes</option>
+                            <option value="-2" selected>{{ 'visiteur.publication.recherche.touslesmembres'|trans }}</option>
+                            <option value="-1">{{ 'visiteur.publication.recherche.touteslesequipes'|trans }}</option>
                             {% for equipe in equipes %}
                                 <option value="{{ equipe.id }}">{{ equipe.nom }}</option>
                             {% endfor %}
@@ -32,8 +32,8 @@
                     </label>
                     <div class="col-sm-10">
                         <select class="form-control" id="projet" name="projet">
-                            <option value="-2" selected>Sans les projets</option>
-                            <option value="-1">Tous les projets</option>
+                            <option value="-2" selected>{{ 'visiteur.publication.recherche.sansprojet'|trans }}</option>
+                            <option value="-1">{{ 'visiteur.publication.recherche.touslesprojets'|trans }}</option>
                             {% for projet in projets %}
                                 <option value="{{ projet.id }}">{{ projet.titre }}</option>
                             {% endfor %}
@@ -47,7 +47,7 @@
                     </label>
                     <div class="col-sm-10">
                         <select class="form-control" id="departement" name="departement">
-                            <option value="-1" selected>Tous les départements</option>
+                            <option value="-1" selected>{{ 'visiteur.publication.recherche.touslesdepartements'|trans }}Tous les départements</option>
                             {% for departement in departements %}
                                 <option value="{{ departement.id }}">{{ departement.nom }}</option>
                             {% endfor %}
@@ -117,7 +117,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="datePlage" class="col-sm-2">
-                                        {{ 'Entre'|trans }}
+                                        {{ 'entre'|trans }}
                                     </label>
                                     <div class="col-sm-10">
                                         <select class="form-control" id="dateDebut" name="dateDebut">
@@ -167,8 +167,7 @@
         </div>
         <div class="col-sm-12" id="resultats_recherches">
             <div class="alert alert-info-rw">
-                Il y a {{ nbpublis }} publications sur le site. Précisez au moins un critère de recherche pour
-                obtenir des résultats
+                {{ 'visiteur.publication.recherche.nbresults'|trans({'%nbpublis%': nbpublis}, 'messages') }}
             </div>
         </div>
     </div>
@@ -180,7 +179,7 @@
             $('#onRecherchePublicationsInit').click(function () {
                 //initialisation des champs et de la recherche
                 $html = '<div class="alert alert-info-rw">';
-                $html = $html + 'Il y a {{ nbpublis }} publications sur le site. Précisez au moins un critère de recherche pour obtenir des résultats';
+                $html = $html + "{{ 'visiteur.publication.recherche.nbresults'|trans({'%nbpublis%': nbpublis}, 'messages') }}";
                 $html = $html + '</div>';
 
                 $('#resultats_recherches').empty().append($html);

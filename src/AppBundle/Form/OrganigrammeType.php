@@ -16,14 +16,22 @@ class OrganigrammeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('responsabiliteFonction', ChoiceType::class, array('label' => 'Responsabilité', 'choices' => Data::TAB_ORGANIGRAMME))
-            ->add('ordre',ChoiceType::class, array('label' => 'Ordre dans l\'organigramme', 'choices' => array('1' => 1,'2' => 2,'3' => 3, '4' => 4), 'empty_data' => 1))
-            ->add('membreCrestic', EntityType::class, array('label' => 'Membre du CReSTIC',
-                                                                               'class' =>'AppBundle\Entity\MembresCrestic',
-                                                                               'empty_data'=> 'Choisir le membre',
-                                                                               'choice_label' => 'display', 'attr' => array('class'=> 'select2' )));
+        $builder->add('responsabiliteFonction', ChoiceType::class,
+            array('label' => 'Responsabilité', 'choices' => Data::TAB_ORGANIGRAMME))
+            ->add('ordre', ChoiceType::class, array(
+                'label'      => 'Ordre dans l\'organigramme',
+                'choices'    => array('1' => 1, '2' => 2, '3' => 3, '4' => 4),
+                'empty_data' => 1
+            ))
+            ->add('membreCrestic', EntityType::class, array(
+                'label'        => 'Membre du CReSTIC',
+                'class'        => 'AppBundle\Entity\MembresCrestic',
+                'empty_data'   => 'Choisir le membre',
+                'choice_label' => 'display',
+                'attr'         => array('class' => 'select2')
+            ));
     }
-    
+
     /**
      * {@inheritdoc}
      */

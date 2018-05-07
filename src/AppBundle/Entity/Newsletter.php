@@ -52,6 +52,16 @@ class Newsletter
     }
 
     /**
+     * Get date
+     *
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
      * Set date
      *
      * @param \DateTime $date
@@ -66,13 +76,13 @@ class Newsletter
     }
 
     /**
-     * Get date
+     * Get envoye
      *
-     * @return \DateTime
+     * @return bool
      */
-    public function getDate()
+    public function getEnvoye()
     {
-        return $this->date;
+        return $this->envoye;
     }
 
     /**
@@ -90,13 +100,13 @@ class Newsletter
     }
 
     /**
-     * Get envoye
+     * Get blocs
      *
-     * @return bool
+     * @return \AppBundle\Entity\BlocNewsletter
      */
-    public function getEnvoye()
+    public function getBlocs()
     {
-        return $this->envoye;
+        return $this->blocs;
     }
 
     /**
@@ -111,15 +121,5 @@ class Newsletter
         $this->blocs = $blocs;
 
         return $this;
-    }
-
-    /**
-     * Get blocs
-     *
-     * @return \AppBundle\Entity\BlocNewsletter
-     */
-    public function getBlocs()
-    {
-        return $this->blocs;
     }
 }

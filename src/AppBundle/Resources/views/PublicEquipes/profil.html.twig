@@ -1,6 +1,6 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}CReSTIC | Equipe | {{ equipe.nom }} {% endblock %}
+{% block title %}{{ 'visiteur.equipe.title'|trans }} | {{ equipe.nom }} {% endblock %}
 
 {% block content %}
     <!-- Begin Content Section -->
@@ -66,8 +66,7 @@
                                 <dd>
                                     {% for dept in equipe.departements %}
                                         <a href="{{ path('public_departement', {slug: dept.departement.slug}) }}"
-                                           title="Détails du
-							département {{ dept.departement.nom }}">{{ dept.departement.nom }}</a>
+                                           title="{{ 'visiteur.departement.acces'|trans }} {{ dept.departement.nom }}">{{ dept.departement.nom }}</a>
                                         {% if not loop.last %} | {% endif %}
                                     {% endfor %}
                                 </dd>
@@ -93,7 +92,7 @@
                                     <div class="col-sm-12 col-lg-4">
                                         <div class="bloc-info">
                                             <a href="{{ path('public_projet_profil', {slug:projet.projet.slug}) }}"
-                                                title="Détails du projet {{ projet.projet.titre }}"
+                                                title="{{ 'visiteur.projet.detail'|trans }} {{ projet.projet.titre }}"
                                                 target="_blank">{{ projet.projet.titre }}</a>
                                         </div>
                                     </div>
@@ -114,8 +113,7 @@
                             {{ 'visiteur.equipe.publications'|trans }}
                         </h4>
                     </div>
-                    {#todo: liste des dernières publications#}
-                    {#{{ biblio.getListPublications(equipe.publications, false)|raw }}#}
+                    {{ include('@App/PublicPublications/publiProfil.html.twig', {publications: publications}) }}
                 </div>
             </div>
             <br/>
@@ -142,7 +140,7 @@
                                         <div class="membreCresticMosaiqueMosaiqueNom col-sm-12">
                                             <a href="{{ path('public_membres_profil', {slug:membre.membreCrestic.slug}) }}"
                                                target="_blank"
-                                               title="Profil de {{ membre.membreCrestic.display }}">{{ membre.membreCrestic.display }}</a>
+                                               title="{{ 'visiteur.MembresCrestic.voirprofil'|trans }} {{ membre.membreCrestic.display }}">{{ membre.membreCrestic.display }}</a>
                                         </div>
                                     </div>
                                 </div>

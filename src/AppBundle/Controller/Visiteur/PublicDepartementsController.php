@@ -24,6 +24,9 @@ class PublicDepartementsController extends Controller
 
     /**
      * @Route("/{slug}", name="public_departement")
+     * @param $slug
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function voirAction($slug)
     {

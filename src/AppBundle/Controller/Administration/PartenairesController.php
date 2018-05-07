@@ -37,6 +37,9 @@ class PartenairesController extends Controller
      *
      * @Route("/new", name="administration_partenaires_new")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
@@ -64,7 +67,9 @@ class PartenairesController extends Controller
      *
      * @Route("/{id}", name="administration_partenaires_show")
      * @Method("GET")
-     */
+     * @param Partenaires $partenaire
+     * @return \Symfony\Component\HttpFoundation\Response
+*/
     public function showAction(Partenaires $partenaire)
     {
         $deleteForm = $this->createDeleteForm($partenaire);
@@ -80,7 +85,10 @@ class PartenairesController extends Controller
      *
      * @Route("/{id}/edit", name="administration_partenaires_edit")
      * @Method({"GET", "POST"})
-     */
+     * @param Request     $request
+     * @param Partenaires $partenaire
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+*/
     public function editAction(Request $request, Partenaires $partenaire)
     {
         $deleteForm = $this->createDeleteForm($partenaire);
@@ -106,7 +114,10 @@ class PartenairesController extends Controller
      *
      * @Route("/{id}", name="administration_partenaires_delete")
      * @Method("DELETE")
-     */
+     * @param Request     $request
+     * @param Partenaires $partenaire
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+*/
     public function deleteAction(Request $request, Partenaires $partenaire)
     {
         $form = $this->createDeleteForm($partenaire);

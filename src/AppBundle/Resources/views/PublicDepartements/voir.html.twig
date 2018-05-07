@@ -1,6 +1,6 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}CReSTIC | Département | {{ departement.nom }} {% endblock %}
+{% block title %}{{ visiteur.departement.titlemeta }} | {{ departement.nom }} {% endblock %}
 
 {% block content %}
     <!-- Begin Content Section -->
@@ -67,7 +67,7 @@
                                         <div class="col-sm-12 col-lg-6">
                                             <div class="bloc-info">
                                                 <a href="{{ path('public_equipes_profil', {slug: equipe.equipe.slug}) }}"
-                                                   title="Détails de l'équipe {{ equipe.equipe.nom }}">{{ equipe.equipe.nom }}
+                                                   title="{{ 'visiteur.equipe.detail'|trans }} {{ equipe.equipe.nom }}">{{ equipe.equipe.nom }}
                                                     - {{ equipe.equipe.nomlong }}</a>
                                             </div>
                                         </div>

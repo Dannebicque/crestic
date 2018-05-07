@@ -37,6 +37,9 @@ class PaysController extends Controller
      *
      * @Route("/new", name="administration_pays_new")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
@@ -64,7 +67,9 @@ class PaysController extends Controller
      *
      * @Route("/{id}", name="administration_pays_show")
      * @Method("GET")
-     */
+     * @param Pays $pay
+     * @return \Symfony\Component\HttpFoundation\Response
+*/
     public function showAction(Pays $pay)
     {
         $deleteForm = $this->createDeleteForm($pay);
@@ -80,7 +85,10 @@ class PaysController extends Controller
      *
      * @Route("/{id}/edit", name="administration_pays_edit")
      * @Method({"GET", "POST"})
-     */
+     * @param Request $request
+     * @param Pays    $pay
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+*/
     public function editAction(Request $request, Pays $pay)
     {
         $editForm = $this->createForm('AppBundle\Form\PaysType', $pay);
@@ -105,7 +113,10 @@ class PaysController extends Controller
      *
      * @Route("/{id}", name="administration_pays_delete")
      * @Method("DELETE")
-     */
+     * @param Request $request
+     * @param Pays    $pay
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+*/
     public function deleteAction(Request $request, Pays $pay)
     {
         $form = $this->createDeleteForm($pay);

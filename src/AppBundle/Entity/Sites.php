@@ -99,10 +99,33 @@ class Sites
     private $cms;
 
 
-
     public function __toString()
     {
-        return "".$this->getMembreCrestic();
+        return "" . $this->getMembreCrestic();
+    }
+
+    /**
+     * Get membre
+     *
+     * @return MembresCrestic
+     */
+    public function getMembreCrestic()
+    {
+        return $this->membreCrestic;
+    }
+
+    /**
+     * Set membre
+     *
+     * @param MembresCrestic|null $membreCrestic
+     *
+     * @return Sites
+     */
+    public function setMembreCrestic(MembresCrestic $membreCrestic = null)
+    {
+        $this->membreCrestic = $membreCrestic;
+
+        return $this;
     }
 
     /**
@@ -118,36 +141,25 @@ class Sites
     /**
      * Set id
      *
-     * @return integer
+     * @param $id
+     *
+     * @return Sites
      */
     public function setId($id)
     {
         $this->id = $id;
-        return $this;
-    }
-
-    /**
-     * Set membre
-     *
-     * @param MembresCrestic $membre
-     *
-     * @return Sites
-     */
-    public function setMembreCrestic(MembresCrestic $membreCrestic = null)
-    {
-        $this->membreCrestic = $membreCrestic;
 
         return $this;
     }
 
     /**
-     * Get membre
+     * Get adresse
      *
-     * @return MembresCrestic
+     * @return string
      */
-    public function getMembreCrestic()
+    public function getAdresse()
     {
-        return $this->membreCrestic;
+        return $this->adresse;
     }
 
     /**
@@ -165,13 +177,13 @@ class Sites
     }
 
     /**
-     * Get adresse
+     * Get cp
      *
      * @return string
      */
-    public function getAdresse()
+    public function getCp()
     {
-        return $this->adresse;
+        return $this->cp;
     }
 
     /**
@@ -189,13 +201,13 @@ class Sites
     }
 
     /**
-     * Get cp
+     * Get ville
      *
      * @return string
      */
-    public function getCp()
+    public function getVille()
     {
-        return $this->cp;
+        return $this->ville;
     }
 
     /**
@@ -213,13 +225,13 @@ class Sites
     }
 
     /**
-     * Get ville
+     * Get tel
      *
      * @return string
      */
-    public function getVille()
+    public function getTel()
     {
-        return $this->ville;
+        return $this->tel;
     }
 
     /**
@@ -237,13 +249,13 @@ class Sites
     }
 
     /**
-     * Get tel
+     * Get fax
      *
      * @return string
      */
-    public function getTel()
+    public function getFax()
     {
-        return $this->tel;
+        return $this->fax;
     }
 
     /**
@@ -261,13 +273,13 @@ class Sites
     }
 
     /**
-     * Get fax
+     * Get titre
      *
      * @return string
      */
-    public function getFax()
+    public function getTitre()
     {
-        return $this->fax;
+        return $this->titre;
     }
 
     /**
@@ -285,13 +297,13 @@ class Sites
     }
 
     /**
-     * Get titre
+     * Get map
      *
      * @return string
      */
-    public function getTitre()
+    public function getMap()
     {
-        return $this->titre;
+        return $this->map;
     }
 
     /**
@@ -309,13 +321,13 @@ class Sites
     }
 
     /**
-     * Get map
+     * Get principale
      *
-     * @return string
+     * @return boolean
      */
-    public function getMap()
+    public function getPrincipale()
     {
-        return $this->map;
+        return $this->principale;
     }
 
     /**
@@ -333,13 +345,13 @@ class Sites
     }
 
     /**
-     * Get principale
+     * Get mail
      *
-     * @return boolean
+     * @return string
      */
-    public function getPrincipale()
+    public function getMail()
     {
-        return $this->principale;
+        return $this->mail;
     }
 
     /**
@@ -357,13 +369,13 @@ class Sites
     }
 
     /**
-     * Get mail
+     * Get cms
      *
-     * @return string
+     * @return Cms
      */
-    public function getMail()
+    public function getCms()
     {
-        return $this->mail;
+        return $this->cms;
     }
 
     /**
@@ -378,15 +390,5 @@ class Sites
         $this->cms = $cms;
 
         return $this;
-    }
-
-    /**
-     * Get cms
-     *
-     * @return Cms
-     */
-    public function getCms()
-    {
-        return $this->cms;
     }
 }

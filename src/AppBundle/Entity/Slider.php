@@ -32,7 +32,7 @@ class Slider
      *
      * @ORM\Column(name="image", type="string", length=100)
      */
-    private $image='noimage.png';
+    private $image = 'noimage.png';
 
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
@@ -104,14 +104,38 @@ class Slider
 
     public function __construct()
     {
-        $this->equipes      = new ArrayCollection();
-        $this->projets      = new ArrayCollection();
-        $this->plateformes  = new ArrayCollection();
+        $this->equipes = new ArrayCollection();
+        $this->projets = new ArrayCollection();
+        $this->plateformes = new ArrayCollection();
     }
 
     public function __toString()
     {
-        return ''.$this->getTitre();
+        return '' . $this->getTitre();
+    }
+
+    /**
+     * Get titre
+     *
+     * @return string
+     */
+    public function getTitre()
+    {
+        return $this->titre;
+    }
+
+    /**
+     * Set titre
+     *
+     * @param string $titre
+     *
+     * @return Slider
+     */
+    public function setTitre($titre)
+    {
+        $this->titre = $titre;
+
+        return $this;
     }
 
     /**
@@ -122,6 +146,16 @@ class Slider
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 
     /**
@@ -139,13 +173,13 @@ class Slider
     }
 
     /**
-     * Get image
+     * Get url
      *
      * @return string
      */
-    public function getImage()
+    public function getUrl()
     {
-        return $this->image;
+        return $this->url;
     }
 
     /**
@@ -163,13 +197,13 @@ class Slider
     }
 
     /**
-     * Get url
+     * Get texte
      *
      * @return string
      */
-    public function getUrl()
+    public function getTexte()
     {
-        return $this->url;
+        return $this->texte;
     }
 
     /**
@@ -184,16 +218,6 @@ class Slider
         $this->texte = $texte;
 
         return $this;
-    }
-
-    /**
-     * Get texte
-     *
-     * @return string
-     */
-    public function getTexte()
-    {
-        return $this->texte;
     }
 
     /**
@@ -217,12 +241,21 @@ class Slider
     {
         $this->imageFile = $image;
 
-        if ($image)
-        {
+        if ($image) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
             $this->setUpdated(new \DateTime('now'));
         }
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
     }
 
     /**
@@ -240,13 +273,13 @@ class Slider
     }
 
     /**
-     * Get created
+     * Get updated
      *
      * @return \DateTime
      */
-    public function getCreated()
+    public function getUpdated()
     {
-        return $this->created;
+        return $this->updated;
     }
 
     /**
@@ -264,45 +297,11 @@ class Slider
     }
 
     /**
-     * Get updated
-     *
-     * @return \DateTime
-     */
-    public function getUpdated()
-    {
-        return $this->updated;
-    }
-
-    /**
-     * Set titre
-     *
-     * @param string $titre
-     *
-     * @return Slider
-     */
-    public function setTitre($titre)
-    {
-        $this->titre = $titre;
-
-        return $this;
-    }
-
-    /**
-     * Get titre
-     *
-     * @return string
-     */
-    public function getTitre()
-    {
-        return $this->titre;
-    }
-
-    /**
      * Add equipe
      *
      * @param EquipesHasSliders $equipe
      *
-     * @return Equipes
+     * @return Slider
      */
     public function addEquipe(EquipesHasSliders $equipe)
     {
@@ -336,7 +335,7 @@ class Slider
      *
      * @param ProjetsHasSliders $projet
      *
-     * @return Projets
+     * @return Slider
      */
     public function addProjet(ProjetsHasSliders $projet)
     {
@@ -370,7 +369,7 @@ class Slider
      *
      * @param PlateformesHasSliders $plateforme
      *
-     * @return Plateformes
+     * @return Slider
      */
     public function addPlateforme(PlateformesHasSliders $plateforme)
     {
@@ -400,6 +399,16 @@ class Slider
     }
 
     /**
+     * Get auteur
+     *
+     * @return \AppBundle\Entity\MembresCrestic
+     */
+    public function getAuteur()
+    {
+        return $this->auteur;
+    }
+
+    /**
      * Set auteur
      *
      * @param \AppBundle\Entity\MembresCrestic $auteur
@@ -411,15 +420,5 @@ class Slider
         $this->auteur = $auteur;
 
         return $this;
-    }
-
-    /**
-     * Get auteur
-     *
-     * @return \AppBundle\Entity\MembresCrestic
-     */
-    public function getAuteur()
-    {
-        return $this->auteur;
     }
 }

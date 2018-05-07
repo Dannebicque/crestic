@@ -3,6 +3,7 @@
 namespace AppBundle\Controller\Administration;
 
 use AppBundle\Entity\Editeurs;
+use AppBundle\Form\EditeursType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -37,11 +38,14 @@ class EditeursController extends Controller
      *
      * @Route("/new", name="administration_editeur_new")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
         $editeur = new Editeurs();
-        $form    = $this->createForm('AppBundle\Form\EditeursType', $editeur);
+        $form    = $this->createForm(EditeursType::class, $editeur);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
@@ -64,7 +68,9 @@ class EditeursController extends Controller
      *
      * @Route("/{id}", name="administration_editeur_show")
      * @Method("GET")
-     */
+     * @param Editeurs $editeur
+     * @return \Symfony\Component\HttpFoundation\Response
+*/
     public function showAction(Editeurs $editeur)
     {
         $deleteForm = $this->createDeleteForm($editeur);
@@ -80,10 +86,13 @@ class EditeursController extends Controller
      *
      * @Route("/{id}/edit", name="administration_editeur_edit")
      * @Method({"GET", "POST"})
-     */
+     * @param Request  $request
+     * @param Editeurs $editeur
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+*/
     public function editAction(Request $request, Editeurs $editeur)
     {
-        $editForm = $this->createForm('AppBundle\Form\EditeursType', $editeur);
+        $editForm = $this->createForm(EditeursType::class, $editeur);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid())
@@ -105,7 +114,10 @@ class EditeursController extends Controller
      *
      * @Route("/{id}", name="administration_editeur_delete")
      * @Method("DELETE")
-     */
+     * @param Request  $request
+     * @param Editeurs $editeur
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+*/
     public function deleteAction(Request $request, Editeurs $editeur)
     {
         $form = $this->createDeleteForm($editeur);

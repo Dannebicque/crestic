@@ -111,30 +111,27 @@ class Conferences
      */
     private $updated;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->publications = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
     public function __toString()
     {
         return $this->getNomConference();
     }
 
     /**
-     * Get id
+     * Get nomConference
      *
-     * @return integer
+     * @return string
      */
-    public function getId()
+    public function getNomConference()
     {
-        return $this->id;
-    }
-
-    /**
-     * Set id
-     *
-     * @return integer
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
+        return $this->nomConference;
     }
 
     /**
@@ -152,13 +149,23 @@ class Conferences
     }
 
     /**
-     * Get nomConference
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Get sigleConference
      *
      * @return string
      */
-    public function getNomConference()
+    public function getSigleConference()
     {
-        return $this->nomConference;
+        return $this->sigleConference;
     }
 
     /**
@@ -176,13 +183,13 @@ class Conferences
     }
 
     /**
-     * Get sigleConference
+     * Get pays
      *
      * @return string
      */
-    public function getSigleConference()
+    public function getPays()
     {
-        return $this->sigleConference;
+        return $this->pays;
     }
 
     /**
@@ -200,13 +207,13 @@ class Conferences
     }
 
     /**
-     * Get pays
+     * Get ville
      *
      * @return string
      */
-    public function getPays()
+    public function getVille()
     {
-        return $this->pays;
+        return $this->ville;
     }
 
     /**
@@ -224,13 +231,13 @@ class Conferences
     }
 
     /**
-     * Get ville
+     * Get dateDebut
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getVille()
+    public function getDateDebut()
     {
-        return $this->ville;
+        return $this->dateDebut;
     }
 
     /**
@@ -248,13 +255,13 @@ class Conferences
     }
 
     /**
-     * Get dateDebut
+     * Get dateFin
      *
      * @return \DateTime
      */
-    public function getDateDebut()
+    public function getDateFin()
     {
-        return $this->dateDebut;
+        return $this->dateFin;
     }
 
     /**
@@ -272,13 +279,13 @@ class Conferences
     }
 
     /**
-     * Get dateFin
+     * Get tauxSelection
      *
-     * @return \DateTime
+     * @return string
      */
-    public function getDateFin()
+    public function getTauxSelection()
     {
-        return $this->dateFin;
+        return $this->tauxSelection;
     }
 
     /**
@@ -296,20 +303,13 @@ class Conferences
     }
 
     /**
-     * Get tauxSelection
+     * Get internationale
      *
-     * @return string
+     * @return boolean
      */
-    public function getTauxSelection()
+    public function getInternationale()
     {
-        return $this->tauxSelection;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->publications = new \Doctrine\Common\Collections\ArrayCollection();
+        return $this->internationale;
     }
 
     /**
@@ -324,16 +324,6 @@ class Conferences
         $this->internationale = $internationale;
 
         return $this;
-    }
-
-    /**
-     * Get internationale
-     *
-     * @return boolean
-     */
-    public function getInternationale()
-    {
-        return $this->internationale;
     }
 
     /**
@@ -372,13 +362,21 @@ class Conferences
 
     public function display()
     {
-        if ($this->sigleConference != '')
-        {
-            return $this->sigleConference.', '.$this->nomConference;
-        } else
-        {
+        if ($this->sigleConference != '') {
+            return $this->sigleConference . ', ' . $this->nomConference;
+        } else {
             return $this->nomConference;
         }
+    }
+
+    /**
+     * Get url
+     *
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
     }
 
     /**
@@ -396,13 +394,13 @@ class Conferences
     }
 
     /**
-     * Get url
+     * Get created
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getUrl()
+    public function getCreated()
     {
-        return $this->url;
+        return $this->created;
     }
 
     /**
@@ -420,13 +418,13 @@ class Conferences
     }
 
     /**
-     * Get created
+     * Get updated
      *
      * @return \DateTime
      */
-    public function getCreated()
+    public function getUpdated()
     {
-        return $this->created;
+        return $this->updated;
     }
 
     /**
@@ -444,13 +442,13 @@ class Conferences
     }
 
     /**
-     * Get updated
+     * Get editeur
      *
-     * @return \DateTime
+     * @return Editeurs
      */
-    public function getUpdated()
+    public function getEditeur()
     {
-        return $this->updated;
+        return $this->editeur;
     }
 
     /**
@@ -468,16 +466,6 @@ class Conferences
     }
 
     /**
-     * Get editeur
-     *
-     * @return Editeurs
-     */
-    public function getEditeur()
-    {
-        return $this->editeur;
-    }
-
-    /**
      * @return string
      */
     public function getBibtex()
@@ -489,8 +477,15 @@ class Conferences
 
     public function getjson()
     {
-        return array('id' => $this->id,
-                     'nom' => $this->nomConference,
-                     'sigle' => $this->sigleConference);
+        return array(
+            'id'    => $this->id,
+            'nom'   => $this->nomConference,
+            'sigle' => $this->sigleConference
+        );
+    }
+
+    public function getConferenceForm()
+    {
+        return $this->nomConference . ' (' . $this->sigleConference . ' - ' . $this->ville . ')';
     }
 }

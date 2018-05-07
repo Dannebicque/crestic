@@ -121,3 +121,8 @@
     font-weight: bold;
 }
 
+.tab-profil {
+    height: 400px;
+    overflow-x: auto;
+}
+

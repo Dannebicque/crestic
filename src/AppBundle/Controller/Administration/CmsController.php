@@ -37,6 +37,9 @@ class CmsController extends Controller
      *
      * @Route("/new", name="administration_cms_new")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
@@ -47,6 +50,12 @@ class CmsController extends Controller
         if ($form->isSubmitted() && $form->isValid())
         {
             $em = $this->getDoctrine()->getManager();
+
+            $repository = $em->getRepository('Gedmo\\Translatable\\Entity\\Translation');
+
+            $repository->translate($cm, 'titre', 'en', $form->get('titreen')->getData())
+                ->translate($cm, 'texte', 'en', $form->get('texteen')->getData());
+
             $em->persist($cm);
             $em->flush();
 
@@ -64,6 +73,9 @@ class CmsController extends Controller
      *
      * @Route("/{id}", name="administration_cms_show")
      * @Method("GET")
+     * @param Cms $cm
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAction(Cms $cm)
     {
@@ -80,15 +92,25 @@ class CmsController extends Controller
      *
      * @Route("/{id}/edit", name="administration_cms_edit")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     * @param Cms     $cm
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, Cms $cm)
     {
-        $editForm = $this->createForm('AppBundle\Form\CmsType', $cm);
+        $editForm = $this->createForm('AppBundle\Form\CmsType');
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid())
         {
-            $this->getDoctrine()->getManager()->flush();
+            $em = $this->getDoctrine()->getManager();
+            $repository = $em->getRepository('Gedmo\\Translatable\\Entity\\Translation');
+
+            $repository->translate($cm, 'titre', 'en', $editForm->get('titreen')->getData())
+                ->translate($cm, 'texte', 'en', $editForm->get('texteen')->getData());
+
+            $em->flush();
             $this->get('session')->getFlashBag()->add('alert-success', 'Modifications enregistrées');
 
             return $this->redirectToRoute('administration_cms_edit', array('id' => $cm->getId()));
@@ -105,7 +127,10 @@ class CmsController extends Controller
      *
      * @Route("/{id}", name="administration_cms_delete")
      * @Method("DELETE")
-     */
+     * @param Request $request
+     * @param Cms     $cm
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+*/
     public function deleteAction(Request $request, Cms $cm)
     {
         $form = $this->createDeleteForm($cm);

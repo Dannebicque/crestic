@@ -37,6 +37,9 @@ class FinanceursController extends Controller
      *
      * @Route("/new", name="administration_financeurs_new")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
@@ -64,7 +67,9 @@ class FinanceursController extends Controller
      *
      * @Route("/{id}", name="administration_financeurs_show")
      * @Method("GET")
-     */
+     * @param Financeurs $financeur
+     * @return \Symfony\Component\HttpFoundation\Response
+*/
     public function showAction(Financeurs $financeur)
     {
         $deleteForm = $this->createDeleteForm($financeur);
@@ -80,7 +85,10 @@ class FinanceursController extends Controller
      *
      * @Route("/{id}/edit", name="administration_financeurs_edit")
      * @Method({"GET", "POST"})
-     */
+     * @param Request    $request
+     * @param Financeurs $financeur
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+*/
     public function editAction(Request $request, Financeurs $financeur)
     {
         $deleteForm = $this->createDeleteForm($financeur);
@@ -106,7 +114,10 @@ class FinanceursController extends Controller
      *
      * @Route("/{id}", name="administration_financeurs_delete")
      * @Method("DELETE")
-     */
+     * @param Request    $request
+     * @param Financeurs $financeur
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+*/
     public function deleteAction(Request $request, Financeurs $financeur)
     {
         $form = $this->createDeleteForm($financeur);

@@ -40,6 +40,9 @@ class PlateformesController extends Controller
      *
      * @Route("/new", name="administration_plateformes_new")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function newAction(Request $request)
     {
@@ -67,7 +70,9 @@ class PlateformesController extends Controller
      *
      * @Route("/{id}", name="administration_plateformes_show")
      * @Method("GET")
-     */
+     * @param Plateformes $plateforme
+     * @return Response
+*/
     public function showAction(Plateformes $plateforme)
     {
         $deleteForm = $this->createDeleteForm($plateforme);
@@ -83,7 +88,10 @@ class PlateformesController extends Controller
      *
      * @Route("/{id}/edit", name="administration_plateformes_edit")
      * @Method({"GET", "POST"})
-     */
+     * @param Request     $request
+     * @param Plateformes $plateforme
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+*/
     public function editAction(Request $request, Plateformes $plateforme)
     {
         $editForm = $this->createForm('AppBundle\Form\PlateformesType', $plateforme);
@@ -108,7 +116,10 @@ class PlateformesController extends Controller
      *
      * @Route("/{id}", name="administration_plateformes_delete")
      * @Method("DELETE")
-     */
+     * @param Request     $request
+     * @param Plateformes $plateforme
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+*/
     public function deleteAction(Request $request, Plateformes $plateforme)
     {
         $form = $this->createDeleteForm($plateforme);

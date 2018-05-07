@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Financeurs controller.
  *
- * @Route("responsable/financeurs")
+ * @Route("/espace-responsable/financeurs")
  */
 class FinanceursController extends Controller
 {
@@ -37,6 +37,9 @@ class FinanceursController extends Controller
      *
      * @Route("/new", name="responsable_financeurs_new")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
@@ -64,7 +67,9 @@ class FinanceursController extends Controller
      *
      * @Route("/{id}", name="responsable_financeurs_show")
      * @Method("GET")
-     */
+     * @param Financeurs $financeur
+     * @return \Symfony\Component\HttpFoundation\Response
+*/
     public function showAction(Financeurs $financeur)
     {
 
@@ -78,7 +83,10 @@ class FinanceursController extends Controller
      *
      * @Route("/{id}/edit", name="responsable_financeurs_edit")
      * @Method({"GET", "POST"})
-     */
+     * @param Request    $request
+     * @param Financeurs $financeur
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+*/
     public function editAction(Request $request, Financeurs $financeur)
     {
         $editForm   = $this->createForm('AppBundle\Form\FinanceursType', $financeur);

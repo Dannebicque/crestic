@@ -1,7 +1,12 @@
 {% extends '::base-admin.html.twig' %}
 
 {% block breadcrumbs %}
-	<a href="{{ path('administration_membres_index') }}">Membres</a> / Modification /
+    {% if membresCrestic.ancienMembresCrestic == true %}
+		<a href="{{ path('administration_membres_index_anciens') }}">Anciens Membres du CReSTIC</a>
+    {% else %}
+		<a href="{{ path('administration_membres_index_actuels') }}">Membres actuels du CReSTIC</a>
+    {% endif %}
+/ Modification /
 {% endblock %}
 
 {% block content %}
@@ -9,8 +14,20 @@
 
 	{{ form_start(edit_form) }}
 	{{ form_widget(edit_form) }}
-    {{ include('@App/Administration/footer-edit.html.twig', {var: 'membres'}) }}
+	<div class="row">
+		<div class="col-sm-10" style="text-align: right" >
+			{% if membresCrestic.ancienMembresCrestic == true %}
+				<a href="{{ path('administration_membres_index_anciens') }}">Retour à la liste</a>
+			{% else %}
+				<a href="{{ path('administration_membres_index_actuels') }}">Retour à la liste</a>
 
+            {% endif %}
+		</div>
+		<div class="col-sm-2" style="text-align: right" >
+			<input type="submit" value="Enregistrer" class="btn btn-primary btn-block"/>
+
+		</div>
+	</div>
     {{ form_end(edit_form) }}
 
 

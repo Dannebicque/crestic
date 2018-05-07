@@ -18,12 +18,13 @@ class PartenairesType extends AbstractType
     {
         $builder->add('nom', TextType::class, array())
             ->add('url', TextType::class, array())
-            ->add('internationale', ChoiceType::class, array('choices' => array('Oui' => true, 'Non' => false), 'expanded' => true))
-            ->add('typePartenaire', ChoiceType::class, array('choices' => array('Académique' => 'A', 'Industriel' => 'I'), 'expanded' => true))
-            ->add('imageFile', FileType::class, array('label' => 'Logo'))
-            ;
+            ->add('internationale', ChoiceType::class,
+                array('choices' => array('Oui' => true, 'Non' => false), 'expanded' => true))
+            ->add('typePartenaire', ChoiceType::class,
+                array('choices' => array('Académique' => 'A', 'Industriel' => 'I'), 'expanded' => true))
+            ->add('imageFile', FileType::class, array('label' => 'Logo'));
     }
-    
+
     /**
      * {@inheritdoc}
      */

@@ -15,12 +15,30 @@ security:
     providers:
         main:
             id: fos_user.user_provider.username_email
+#        chain_provider:
+#            chain:
+#                providers: [in_memory, fos_userbundle]
+#        in_memory:
+#            memory:
+#                users:
+#                    __NO_USER__:
+#                        password:
+#                        roles: ROLE_ANO
+#        fos_userbundle:
+#            id: fos_user.user_provider.username_email
+
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+#        l3_firewall:
+#            pattern: ^/
+#            security: true
+#            cas: true # Activation du CAS
+#        default:
+#            anonymous: ~
 
         main:
             pattern: ^/
@@ -36,15 +54,10 @@ security:
             logout:
                 path: fos_user_security_logout
                 target: /
-#            remember_me:
-#                key:      "%secret%"
-#                lifetime: 20592000 #31536000 # 365 jours en secondes
-#                path:     /
-#                domain:   ~ # Prend la valeur par défaut du domaine courant depuis $_SERVER
 
     access_control:
-        - { path: ^/[a-z][a-z]/espace-utilisateur/, role: [ROLE_UTILISATEUR, ROLE_ADMINISTRATEUR] }
-        - { path: ^/[a-z][a-z]/responsable/, role: ROLE_RESPONSABLE }
+        - { path: ^/[a-z][a-z]/espace-utilisateur/, role: ROLE_UTILISATEUR }
+        - { path: ^/[a-z][a-z]/responsable/, role: [ROLE_RESPONSABLE, ROLE_UTILISATEUR] }
         - { path: ^/[a-z][a-z]/administration/, role: ROLE_ADMINISTRATEUR }
         - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }

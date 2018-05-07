@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AgendaRepository")
-
  **/
 class Agenda
 {
@@ -78,19 +77,25 @@ class Agenda
      */
     private $type; //Séminaires du laboratoire, Conférences, Soutenances Thèses/HDR, Réunions, Autres évenements
 
+    public function __construct()
+    {
+        $this->datedebut = new \DateTime('now');
+        $this->datefin = new \DateTime('now');
+    }
 
     public function __toString()
     {
-        return ''.$this->getTitre();
+        return '' . $this->getTitre();
     }
+
     /**
-     * Get id
+     * Get titre
      *
-     * @return integer
+     * @return string
      */
-    public function getId()
+    public function getTitre()
     {
-        return $this->id;
+        return $this->titre;
     }
 
     /**
@@ -108,13 +113,23 @@ class Agenda
     }
 
     /**
-     * Get titre
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Get description
      *
      * @return string
      */
-    public function getTitre()
+    public function getDescription()
     {
-        return $this->titre;
+        return $this->description;
     }
 
     /**
@@ -132,13 +147,13 @@ class Agenda
     }
 
     /**
-     * Get description
+     * Get datedebut
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getDescription()
+    public function getDatedebut()
     {
-        return $this->description;
+        return $this->datedebut;
     }
 
     /**
@@ -156,13 +171,13 @@ class Agenda
     }
 
     /**
-     * Get datedebut
+     * Get datefin
      *
      * @return \DateTime
      */
-    public function getDatedebut()
+    public function getDatefin()
     {
-        return $this->datedebut;
+        return $this->datefin;
     }
 
     /**
@@ -180,13 +195,13 @@ class Agenda
     }
 
     /**
-     * Get datefin
+     * Get lieu
      *
-     * @return \DateTime
+     * @return string
      */
-    public function getDatefin()
+    public function getLieu()
     {
-        return $this->datefin;
+        return $this->lieu;
     }
 
     /**
@@ -204,13 +219,13 @@ class Agenda
     }
 
     /**
-     * Get lieu
+     * Get type
      *
      * @return string
      */
-    public function getLieu()
+    public function getType()
     {
-        return $this->lieu;
+        return $this->type;
     }
 
     /**
@@ -228,13 +243,13 @@ class Agenda
     }
 
     /**
-     * Get type
+     * Get heuredebut
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getType()
+    public function getHeuredebut()
     {
-        return $this->type;
+        return $this->heuredebut;
     }
 
     /**
@@ -252,13 +267,13 @@ class Agenda
     }
 
     /**
-     * Get heuredebut
+     * Get heurefin
      *
      * @return \DateTime
      */
-    public function getHeuredebut()
+    public function getHeurefin()
     {
-        return $this->heuredebut;
+        return $this->heurefin;
     }
 
     /**
@@ -273,21 +288,5 @@ class Agenda
         $this->heurefin = $heurefin;
 
         return $this;
-    }
-
-    /**
-     * Get heurefin
-     *
-     * @return \DateTime
-     */
-    public function getHeurefin()
-    {
-        return $this->heurefin;
-    }
-
-    public function __construct()
-    {
-        $this->datedebut = new \DateTime('now');
-        $this->datefin = new \DateTime('now');
     }
 }

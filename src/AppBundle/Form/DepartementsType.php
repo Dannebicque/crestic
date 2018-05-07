@@ -17,15 +17,20 @@ class DepartementsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('nom', TextType::class, array('label' => 'Nom du département'))
-            ->add('sigle',TextType::class, array('label' => 'Sigle du département'))
-            ->add('theme',TextareaType::class, array('label' => 'Thématiques du départemen t',
-                                                     'attr' => array('class' => 'tinyMCE')))
-            ->add('membreCrestic',EntityType::class, array('label' => 'Responsable du département',
-                                                          'class' =>'AppBundle\Entity\MembresCrestic',
-                                                          'empty_data'=> 'Choisir un responsable',
-                                                          'choice_label' => 'display', 'attr' => array('class'=> 'select2' )));
+            ->add('sigle', TextType::class, array('label' => 'Sigle du département'))
+            ->add('theme', TextareaType::class, array(
+                'label' => 'Thématiques du départemen t',
+                'attr'  => array('class' => 'tinyMCE')
+            ))
+            ->add('membreCrestic', EntityType::class, array(
+                'label'        => 'Responsable du département',
+                'class'        => 'AppBundle\Entity\MembresCrestic',
+                'empty_data'   => 'Choisir un responsable',
+                'choice_label' => 'display',
+                'attr'         => array('class' => 'select2')
+            ));
     }
-    
+
     /**
      * {@inheritdoc}
      */

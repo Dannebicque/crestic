@@ -100,6 +100,8 @@ class MembresCresticRepository extends \Doctrine\ORM\EntityRepository
     }
 
     /**
+     * @param null $array_options
+     *
      * @return array
      */
 
@@ -121,6 +123,7 @@ class MembresCresticRepository extends \Doctrine\ORM\EntityRepository
     }
 
     /**
+     * @param $responsable
      * @return array
      */
 
@@ -130,7 +133,7 @@ class MembresCresticRepository extends \Doctrine\ORM\EntityRepository
     }
 
     /**
-     * @return array
+     * @return \Doctrine\ORM\QueryBuilder
      */
 
     public function findAllConseilLaboratoireBuilder()
@@ -150,7 +153,7 @@ class MembresCresticRepository extends \Doctrine\ORM\EntityRepository
     }
 
     /**
-     * @return array
+     * @return \Doctrine\ORM\QueryBuilder
      */
 
     public function findAllMembresBuilder()
@@ -186,6 +189,7 @@ class MembresCresticRepository extends \Doctrine\ORM\EntityRepository
     }
 
     /**
+     * @param $status
      * @return array
      */
 
@@ -204,6 +208,7 @@ class MembresCresticRepository extends \Doctrine\ORM\EntityRepository
     }
 
     /**
+     * @param $status
      * @return array
      */
 

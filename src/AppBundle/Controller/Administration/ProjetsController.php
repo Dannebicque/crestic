@@ -46,6 +46,9 @@ class ProjetsController extends Controller
      *
      * @Route("/new", name="administration_projets_new")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function newAction(Request $request)
     {
@@ -73,7 +76,9 @@ class ProjetsController extends Controller
      *
      * @Route("/{id}", name="administration_projets_show")
      * @Method("GET")
-     */
+     * @param Projets $projet
+     * @return Response
+*/
     public function showAction(Projets $projet)
     {
         $deleteForm = $this->createDeleteForm($projet);
@@ -89,7 +94,10 @@ class ProjetsController extends Controller
      *
      * @Route("/{id}/edit", name="administration_projets_edit")
      * @Method({"GET", "POST"})
-     */
+     * @param Request $request
+     * @param Projets $projet
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+*/
     public function editAction(Request $request, Projets $projet)
     {
         $editForm = $this->createForm('AppBundle\Form\ProjetsType', $projet);
@@ -114,7 +122,10 @@ class ProjetsController extends Controller
      *
      * @Route("/{id}", name="administration_projets_delete")
      * @Method("DELETE")
-     */
+     * @param Request $request
+     * @param Projets $projet
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+*/
     public function deleteAction(Request $request, Projets $projet)
     {
         $form = $this->createDeleteForm($projet);

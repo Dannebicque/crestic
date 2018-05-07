@@ -4,7 +4,7 @@
 			<div class="btn-group">
 				<a href="#" data-lettre="tous"
 				   class="btn btn-rw {% if 'tous' == affichage %} btn-primary {% else %}btn-info{% endif %}
-				chgtlettreannuaire">Tous</a>
+				chgtlettreannuaire">{{ 'tous'|trans }}</a>
 				{% for lettre in 'A'..'Z' %}
 					<a href="#" data-lettre="{{ lettre }}"
 					   class="btn btn-rw {% if lettre == affichage %} btn-primary {% else %}btn-info{% endif %}
@@ -20,13 +20,13 @@
 		<table class="table table-striped">
 			<thead>
 			<tr>
-				<th>Nom</th>
-				<th>Prénom</th>
-				<th>Grade</th>
-				<th>Département</th>
-				<th>Site</th>
-				<th>Téléphone</th>
-				<th>Actions</th>
+				<th>{{ 'nom'|trans }}</th>
+				<th>{{ 'prenom'|trans }}</th>
+				<th>{{ 'grade'|trans }}</th>
+				<th>{{ 'departement'|trans }}</th>
+				<th>{{ 'site'|trans }}</th>
+				<th>{{ 'telephone'|trans }}</th>
+				<th>{{ 'actions'|trans }}</th>
 			</tr>
 			</thead>
 			{% for membre in membres %}
@@ -39,12 +39,12 @@
 					<td>{% if membre.departementMembre != null %}{{ membre.departementMembre.sigle }}{% else %} - {%
 						endif %}</td>
 					<td>{{ membre.localisation }}</td>
-					<td>{% if membre.tel != '' %}{{ membre.tel }}{% elseif membre.telPortable != '' %}{{ membre.telPortable }}{%
+					<td>{% if membre.tel != '' %}{{ membre.tel|tel_format }}{% elseif membre.telPortable != '' %}{{ membre.telPortable|tel_format }}{%
 						endif %}</td>
 					<th>
 						<a href="mailto:{{ membre.email }}" target="_blank"><span class="fa fa-envelope"></span></a>
 						<a href="{{ path('public_membres_profil', {slug: membre.slug}) }}" target="_blank"
-						   title="Profil de {{ membre.display }}"><i
+						   title="{{ 'visiteur.MembresCrestic.voirprofil'|trans }} {{ membre.display }}"><i
 									class="fa fa-eye"></i></a>
 					</th>
 				</tr>

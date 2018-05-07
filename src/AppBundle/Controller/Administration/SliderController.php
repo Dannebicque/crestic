@@ -37,6 +37,9 @@ class SliderController extends Controller
      *
      * @Route("/new", name="administration_slider_new")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
@@ -64,7 +67,9 @@ class SliderController extends Controller
      *
      * @Route("/{id}", name="administration_slider_show")
      * @Method("GET")
-     */
+     * @param Slider $slider
+     * @return \Symfony\Component\HttpFoundation\Response
+*/
     public function showAction(Slider $slider)
     {
         $deleteForm = $this->createDeleteForm($slider);
@@ -80,7 +85,10 @@ class SliderController extends Controller
      *
      * @Route("/{id}/edit", name="administration_slider_edit")
      * @Method({"GET", "POST"})
-     */
+     * @param Request $request
+     * @param Slider  $slider
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+*/
     public function editAction(Request $request, Slider $slider)
     {
         $deleteForm = $this->createDeleteForm($slider);
@@ -106,7 +114,10 @@ class SliderController extends Controller
      *
      * @Route("/{id}", name="administration_slider_delete")
      * @Method("DELETE")
-     */
+     * @param Request $request
+     * @param Slider  $slider
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+*/
     public function deleteAction(Request $request, Slider $slider)
     {
         $form = $this->createDeleteForm($slider);

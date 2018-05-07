@@ -3,6 +3,7 @@
 namespace AppBundle\Controller\Administration;
 
 use AppBundle\Entity\Conferences;
+use AppBundle\Form\ConferencesType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -37,11 +38,14 @@ class ConferencesController extends Controller
      *
      * @Route("/new", name="administration_conferences_new")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
         $conference = new Conferences();
-        $form       = $this->createForm('AppBundle\Form\ConferencesType', $conference);
+        $form       = $this->createForm(ConferencesType::class, $conference);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
@@ -64,7 +68,9 @@ class ConferencesController extends Controller
      *
      * @Route("/{id}", name="administration_conferences_show")
      * @Method("GET")
-     */
+     * @param Conferences $conference
+     * @return \Symfony\Component\HttpFoundation\Response
+*/
     public function showAction(Conferences $conference)
     {
         $deleteForm = $this->createDeleteForm($conference);
@@ -80,10 +86,13 @@ class ConferencesController extends Controller
      *
      * @Route("/{id}/edit", name="administration_conferences_edit")
      * @Method({"GET", "POST"})
-     */
+     * @param Request     $request
+     * @param Conferences $conference
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+*/
     public function editAction(Request $request, Conferences $conference)
     {
-        $editForm = $this->createForm('AppBundle\Form\ConferencesType', $conference);
+        $editForm = $this->createForm(ConferencesType::class, $conference);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid())
@@ -105,7 +114,10 @@ class ConferencesController extends Controller
      *
      * @Route("/{id}", name="administration_conferences_delete")
      * @Method("DELETE")
-     */
+     * @param Request     $request
+     * @param Conferences $conference
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+*/
     public function deleteAction(Request $request, Conferences $conference)
     {
         $form = $this->createDeleteForm($conference);

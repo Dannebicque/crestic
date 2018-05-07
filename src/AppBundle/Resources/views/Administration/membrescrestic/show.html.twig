@@ -167,6 +167,9 @@
         <li>
             <a href="{{ path('administration_membres_edit', { 'id': membresCrestic.id }) }}">Edit</a>
         </li>
+        <div class="col-sm-3" style="text-align: right" >
+            <a href="{{ path('administration_membres_update_ancien') }}" class="btn btn-danger">Marquer comme ancien</a>
+        </div>
         <li>
             {{ form_start(delete_form) }}
                 <input type="submit" value="Delete">
