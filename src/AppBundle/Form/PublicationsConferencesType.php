@@ -52,8 +52,8 @@ class PublicationsConferencesType extends AbstractType
                 'translation_domain' => 'messages',
                 'required'           => false,
             ))
-            ->add('dateDebut', DateType::class)
-            ->add('dateFin', DateType::class)
+            ->add('dateDebut', DateType::class, array('years' => range(1980, date('Y')+3)))
+            ->add('dateFin', DateType::class, array('years' => range(1980, date('Y')+3)))
             ->add('tauxSelection', TextType::class, array(
                 'label'              => 'tauxSelection',
                 'translation_domain' => 'messages',

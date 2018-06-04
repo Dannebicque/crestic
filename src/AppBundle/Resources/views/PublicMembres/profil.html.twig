@@ -336,7 +336,11 @@
         //e.preventDefault();
         var $resultat = $('#result_hal');
         $.ajax({
-          url: "https://api.archives-ouvertes.fr/search/?q={{ user.nom }}&wt=xml&indent=true",
+        {% if user.idhal == '' or user.idhal == null %}
+          url: "https://api.archives-ouvertes.fr/search/?q=(authLastName_s:{{ user.nom }} AND authFirstName_s:{{ user.prenom }})&wt=xml&indent=true&sort=producedDate_s desc",
+        {% else %}
+          url: "https://api.archives-ouvertes.fr/search/?q=authIdHal_s:{{ user.idhal }}&wt=xml&indent=true&sort=producedDate_s desc",
+        {% endif %}
           dataType: 'xml',
           success: function (data) {
             var $html = '<ul>';
