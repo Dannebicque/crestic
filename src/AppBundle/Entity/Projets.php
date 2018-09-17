@@ -224,7 +224,7 @@ class Projets
 
     /**
      * @var CategorieProjet
-     * @ORM\ManyToOne(targetEntity="CategorieProjet")
+     * @ORM\ManyToOne(targetEntity="CategorieProjet", inversedBy="projets")
      */
     private $categorie;
 

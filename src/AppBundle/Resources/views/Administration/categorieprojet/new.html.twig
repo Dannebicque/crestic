@@ -1,0 +1,16 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+    <a href="{{ path('administration_categorieprojet_index') }}">Catégorie de projet</a> / Création /
+{% endblock %}
+
+{% block content %}
+    <h1>Ajout d'une nouvelle Catégorie de projet</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    {{ include('@App/Administration/footer-new.html.twig', {var: 'categorieprojet'}) }}
+
+    {{ form_end(form) }}
+{% endblock %}

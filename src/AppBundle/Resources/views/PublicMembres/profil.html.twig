@@ -17,21 +17,21 @@
                 {% if is_granted('ROLE_UTILISATEUR') %}
                     <dl>
                         {% if user.corpsgrade  != '' and user.corpsgrade != null %}
-                        <dt>
-                            {{ 'corps'|trans }}/{{ 'grade'|trans }}
-                        </dt>
-                        <dd>
-                            {{ user.corpsgrade }}
-                        </dd>
+                            <dt>
+                                {{ 'corps'|trans }}/{{ 'grade'|trans }}
+                            </dt>
+                            <dd>
+                                {{ user.corpsgrade }}
+                            </dd>
                         {% endif %}
 
                         {% if user.datenomination  != '' and user.datenomination != null %}
-                        <dt>
-                            {{ 'visiteur.MembresCrestic.datenomination'|trans }}
-                        </dt>
-                        <dd>
-                            {{ user.datenomination|date('d/m/Y') }}
-                        </dd>
+                            <dt>
+                                {{ 'visiteur.MembresCrestic.datenomination'|trans }}
+                            </dt>
+                            <dd>
+                                {{ user.datenomination|date('d/m/Y') }}
+                            </dd>
                         {% endif %}
                     </dl>
                 {% endif %}
@@ -47,21 +47,21 @@
                         <a href="mailto:{{ user.email }}" target="_blank">{{ user.email }}</a>
                     </dd>
                     {% if user.tel  != '' and user.tel != null %}
-                    <dt>
-                        {{ 'visiteur.MembresCrestic.telephone'|trans }}
-                    </dt>
-                    <dd>
-                        {{ user.tel|tel_format }}
-                    </dd>
+                        <dt>
+                            {{ 'visiteur.MembresCrestic.telephone'|trans }}
+                        </dt>
+                        <dd>
+                            {{ user.tel|tel_format }}
+                        </dd>
                     {% endif %}
 
                     {% if user.telPortable  != '' and user.telPortable != null %}
-                    <dt>
-                        {{ 'visiteur.MembresCrestic.telportable'|trans }}
-                    </dt>
-                    <dd>
-                        {{ user.telPortable|tel_format }}
-                    </dd>
+                        <dt>
+                            {{ 'visiteur.MembresCrestic.telportable'|trans }}
+                        </dt>
+                        <dd>
+                            {{ user.telPortable|tel_format }}
+                        </dd>
                     {% endif %}
 
                     {% if user.url != '' %}
@@ -298,81 +298,286 @@
         </div>
 
         <div class="tab-pane tab-profil" id="hal">
+            <div class="alert alert-info">Cette liste bibliographique est récupérée automatiquement depuis <a href="https://hal.archives-ouvertes.fr/" target="_blank">HAL</a> </div>
             <div id="result_hal">
 
             </div>
         </div>
     </div>
 
-    <!-- test HAL -->
-    <a href="#" id="affiche_result">Afficher les résultats</a>
+{% endblock %}
 
+{% block stylesheets %}
+    <style>
+        .hal_picto {
+            width: 15px;
+            height: 15px;
+            display: inline-block
+        }
+
+        .hal_entry {
+
+        }
+
+        .hal_reference {
+
+        }
+
+        .disabled {
+            pointer-events: none;
+            cursor: default;
+            text-decoration: none;
+            color: lightgrey;
+        }
+    </style>
 {% endblock %}
 
 {% block javascripts %}
+    <script src="{{ asset('assets/js/bibtexParse.js') }}"></script>
     <script>
+      var arrayType = {
+        'article': '<span style="background-color: #c32b72; " class="hal_picto">&nbsp;</span>',
+        'inproceedings': '<span style="background-color: #196ca3; " class="hal_picto">&nbsp;</span>',
+        'COUV': '<span style="background-color: darkgray; " class="hal_picto">&nbsp;</span>',
+        'phdthesis': '<span style="background-color: #817FB2; " class="hal_picto">&nbsp;</span>',
+        'UNDEFINED': '<span style="background-color: darkgray; " class="hal_picto">&nbsp;</span>',
+        'unpublished': '<span style="background-color: darkgray; " class="hal_picto">&nbsp;</span>',
+        'IMG': '<span style="background-color: darkgray; " class="hal_picto">&nbsp;</span>',
+        'OTHER': '<span style="background-color: darkgray; " class="hal_picto">&nbsp;</span>',
+        'incollection': '<span style="background-color: #FA7100"; " class="hal_picto">&nbsp;</span>',
+        'misc': '<span style="background-color: #7788AA; " class="hal_picto">&nbsp;</span>',
+        'MEM': '<span style="background-color: #7788AA; " class="hal_picto">&nbsp;</span>',
+        'DOUV': '<span style="background-color: #FA7100; " class="hal_picto">&nbsp;</span>',
+        'POSTER': '<span style="background-color: darkgray; " class="hal_picto">&nbsp;</span>',
+        'HDR': '<span style="background-color: #817FB2; " class="hal_picto">&nbsp;</span>',
+        'PATENT': '<span style="background-color: #F2FAA7; " class="hal_picto">&nbsp;</span>',
+        'VIDEO': '<span style="background-color: darkgray; " class="hal_picto">&nbsp;</span>',
+       // 'inproceedings': '<span style="background-color: #c32b72; " class="hal_picto">&nbsp;</span>',
+        'PRESCONF': '<span style="background-color: #196ca3; " class="hal_picto">&nbsp;</span>',
+        'MAP': '<span style="background-color: darkgray; " class="hal_picto">&nbsp;</span>',
+        'NOTE': '<span style="background-color: darkgray; " class="hal_picto">&nbsp;</span>',
+        'OTHERREPORT': '<span style="background-color: #7788AA; " class="hal_picto">&nbsp;</span>',
+        'SON': '<span style="background-color: darkgray; " class="hal_picto">&nbsp;</span>',
+        'SYNTHESE': '<span style="background-color: darkgray; " class="hal_picto">&nbsp;</span>',
+        'REPACT': '<span style="background-color: darkgray; " class="hal_picto">&nbsp;</span>',
+        'SOFTWARE': '<span style="background-color: darkgray; " class="hal_picto">&nbsp;</span>',
+        'REPORT_ETAB': '<span style="background-color: #7788AA; " class="hal_picto">&nbsp;</span>',
+        'REPORT_LABO': '<span style="background-color: #7788AA; " class="hal_picto">&nbsp;</span>',
+        'REPORT_LICE': '<span style="background-color: #7788AA; " class="hal_picto">&nbsp;</span>',
+        'REPORT_DOCT': '<span style="background-color: #817FB2; " class="hal_picto">&nbsp;</span>',
+        'REPORT_FORM': '<span style="background-color: darkgray; " class="hal_picto">&nbsp;</span>',
+        'MINUTES': '<span style="background-color: darkgray; " class="hal_picto">&nbsp;</span>',
+        'REPORT_COOR': '<span style="background-color: #7788AA; " class="hal_picto">&nbsp;</span>',
+        'REPORT_LPRO': '<span style="background-color: darkgray; " class="hal_picto">&nbsp;</span>',
+        'REPORT_MAST': '<span style="background-color: darkgray; " class="hal_picto">&nbsp;</span>'
+      }
+
+      $(document).on('click', '.changePage', function(e){
+        e.preventDefault();
+        recupereHal($(this).data('start'));
+      })
+
       $(document).ready(function () {
-        recupereHal();
-        var max_height = 0;
-        $('#membresTabActivites a:first').tab('show');
+        recupereHal(0)
+        var max_height = 0
+        $('#membresTabActivites a:first').tab('show')
 
 
         $('#membresTabActivites a').each(function () {
-          var id_tab = $(this).attr('href');
+          var id_tab = $(this).attr('href')
           if (max_height < $(id_tab).height()) {
-            max_height = $(id_tab).height();
+            max_height = $(id_tab).height()
           }
-        });
+        })
 
-        $("#membresTabDivActivites").height(max_height);
+        $('#membresTabDivActivites').height(max_height)
 
-        $('.link-share').attr('data-link', '/fiche/membre/{{ user.slug }}');
+        $('.link-share').attr('data-link', '/fiche/membre/{{ user.slug }}')
+
+
+      })
+
+      function convertCarBibTexToHtml($str) {
+
+        if ($str[0] == '{')
+        {
+          $str = $str.substring(1, $str.length)
+        }
+
+        if ($str[$str.length-1] == '}')
+        {
+          $str = $str.substring(0, $str.length-1)
+        }
+
+        return $str.replace(/{\\\'e}/g, 'é').replace(/{\\`e}/g,'è').replace(/{\\`a}/g,'à').replace(/{\\\^i}/g, 'î').replace(/{\\\'i}/g,'ì').replace(/{\\c c}/g,'ç').replace(/{\\"i}/g,'ï');
+      }
 
 
 
-      });
 
-      function recupereHal() {
-        //e.preventDefault();
+      function convertToHtml ($ref) {
+        console.log($ref);
+        var ref = '';
+
+        //auteurs
+        var $auteurs = convertCarBibTexToHtml($ref.entryTags.AUTHOR).split(' and ');
+        var $nbAuteurs = $auteurs.length;
+        for (var i = 0; i < $nbAuteurs; i++) {
+          var $aut = $auteurs[i].split(',');
+          ref = ref + $aut[1].trim() + ' ' + $aut[0].trim();
+          if (i < $nbAuteurs - 1) {
+            ref = ref + ', ';
+          }
+        }
+
+        ref = ref + '. ';
+
+        //titre
+        var $title = convertCarBibTexToHtml($ref.entryTags.TITLE);
+        ref = ref + '<a href="' + $ref.entryTags.URL + '" target="_blank" title="Accéder à la référence sur HAL">' + $title + '</a>.';
+
+        if ($ref.entryType == 'inproceedings')  {
+            //conférence
+            ref = convertCarBibTexToHtml($ref.entryTags.BOOKTITLE) + ', pp.'+$ref.entryTags.PAGES+',';
+        }
+        if ($ref.entryType == 'article')  {
+          //revue
+          ref = ref + convertCarBibTexToHtml($ref.entryTags.JOURNAL) + ', ' + $ref.entryTags.VOLUME;
+          if ($ref.entryTags.NUMBER) {
+            ref = ref + '('+$ref.entryTags.NUMBER+')';
+          }
+          ref = ref + ':'+$ref.entryTags.PAGES+',';
+        }
+
+        ref = ref + ' ' + $ref.entryTags.YEAR + '. ';
+        if ($ref.entryTags.DOI) {
+          ref = ref + ' <a href="https://www.doi.org/' + $ref.entryTags.DOI.replace(/\\_/g,'_') + '" target="_blank">' + $ref.entryTags.DOI.replace(/\\_/g,'_') + '</a>';
+        }
+        return ref;
+      }
+
+      function recupereHal ($debut) {
         var $resultat = $('#result_hal');
+        var $nbResults = 0;
+        $resultat.empty();
+        //var $paginationHtml = '<br /><br /><nav class="text-center">\n' +
+        //  '          <ul class="pagination no-margin">\n' ;
+
+
+        //compte le nombre de résultats
         $.ajax({
-        {% if user.idhal == '' or user.idhal == null %}
-          url: "https://api.archives-ouvertes.fr/search/?q=(authLastName_s:{{ user.nom }} AND authFirstName_s:{{ user.prenom }})&wt=xml&indent=true&sort=producedDate_s desc",
-        {% else %}
-          url: "https://api.archives-ouvertes.fr/search/?q=authIdHal_s:{{ user.idhal }}&wt=xml&indent=true&sort=producedDate_s desc",
-        {% endif %}
+            {% if user.idhal == '' or user.idhal == null %}
+                url: "https://api.archives-ouvertes.fr/search/?q=(authLastName_s:{{ user.nom }} AND authFirstName_s:{{ user.prenom }})&wt=xml&rows=0",
+            {% else %}
+                url: "https://api.archives-ouvertes.fr/search/?q=authIdHal_s:{{ user.idhal }}&wt=xml&rows=0",
+            {% endif %}
           dataType: 'xml',
+          async: false,
           success: function (data) {
-            var $html = '<ul>';
-            console.log(data);
-            //var xmlDoc = $.parseXML( data );
+            //var $nbParPage = 30
+            var $xml = $(data)
+            var $xResult = $xml.find('result')
+            $nbResults = $xResult.attr('numFound');
+            //console.log($nbResults);
+            //creation pagination
 
-            var $xml = $( data );
-            console.log($xml);
-            var $doc = $xml.find("doc");
+            //var $nbPage = Math.ceil(parseInt($nbResults) / $nbParPage)
 
-            $doc.each(function(){
-              var $url='';
-              var $text='';
+            /* Page précédente */
+            /*var prev = $debut - $nbParPage;
+            if (prev >= 0) {
+              $paginationHtml = $paginationHtml + '          <li>\n' +
+                '          <a href="#" aria-label="Previous" class="changePage" data-start="' + prev + '">\n' +
+                '          <span aria-hidden="true">«</span>\n' +
+                '        </a>\n' +
+                '        </li>';
+            } else {
+              $paginationHtml = $paginationHtml + '          <li>\n' +
+                '          <a href="#" aria-label="Previous" style="pointer-events: none; cursor: default;text-decoration: none;color: lightgrey;">\n' +
+                '          <span aria-hidden="true">«</span>\n' +
+                '        </a>\n' +
+                '        </li>';
+            }
 
-              $(this).find('str').each(function(){
-                if ($(this).attr('name') === 'uri_s') {
-                  $url = $(this).text();
-                }
-                if ($(this).attr('name') === 'label_s') {
-                  $text = $(this).text();
-                }
-              });
-              //https://hal.inria.fr/
-              $html = $html + '<li>' + $text + '<a href="'+$url+'" target="_blank">Voir sur Hal</a></li>';
-              //console.log($(this).childNodes('str'))
-            });
+            for (var i = 0; i < $nbPage; i++) {
+              var $page = i + 1
+              var $start = i * $nbParPage
+              var $active = '';
+              if ($debut == $start) {
+                 $active = 'active';
+              } else {
+                 $active = '';
+              }
 
-            console.log('--------');
-            $html = $html + '</ul>';
-            $resultat.empty().append($html);
+              $paginationHtml = $paginationHtml + '<li class="'+$active+'"><a href="#" class="changePage" data-start="' + $start + '">'+$page+'</a></li>';
+            }
+
+            //page suivante
+            var $suiv = $debut + $nbParPage;
+            if ($suiv < $nbResults) {
+              $paginationHtml = $paginationHtml + '          <li>\n' +
+                '          <a href="#" aria-label="Next" class="changePage" data-start="' + $suiv + '">\n' +
+                '          <span aria-hidden="true">»</span>\n' +
+                '        </a>\n' +
+                '        </li>';
+            } else {
+              $paginationHtml = $paginationHtml + '          <li>\n' +
+                '          <a href="#" aria-label="Next" style="pointer-events: none;cursor: default;text-decoration: none;color: lightgrey;">\n' +
+                '          <span aria-hidden="true">»</span>\n' +
+                '        </a>\n' +
+                '        </li>';
+            }*/
+
+
+            //console.log($paginationHtml);
           }
         });
+
+
+        //récupère les data
+        $.ajax({
+            {% if user.idhal == '' or user.idhal == null %}
+          url: "https://api.archives-ouvertes.fr/search/?q=(authLastName_s:{{ user.nom }} AND authFirstName_s:{{ user.prenom }})&wt=bibtex&indent=true&sort=producedDate_s desc,docType_s ASC&fl=producedDateY_i,label_s,docType_s,uri_s&rows="+$nbResults,
+            {% else %}
+          url: "https://api.archives-ouvertes.fr/search/?q=authIdHal_s:{{ user.idhal }}&wt=bibtex&indent=true&sort=producedDate_s desc,docType_s ASC&fl=producedDateY_i,label_s,docType_s,uri_s&rows="+$nbResults,
+            {% endif %}
+          success: function (data) {
+
+            var $references = bibtexParse.toJSON(data);
+            var $html = '';
+            var $htmlPrec = '';
+            var $annee = 0;
+
+            for(var i = 0; i < $references.length; i++){
+              var $text = convertToHtml($references[i]);
+
+              if ($references[i].entryType == 'unpublished')
+              {
+                $htmlPrec = $htmlPrec + '<div class="row hal_entry"><div class="col-sm-1">' + arrayType[$references[i].entryType] + '</div> <div class="col-sm-11 hal_reference">' + $text + '</div></div>'
+              } else {
+                if ($annee == 0) {
+                  $annee = $references[i].entryTags.YEAR;
+                  $html = $html + '<br><br><div class="heading"><h4>' + $annee + '</h4></div>'
+                }
+                if ($annee != $references[i].entryTags.YEAR) {
+                  $annee = $references[i].entryTags.YEAR;
+                  $html = $html + '<br><br><div class="heading"><h4>' + $annee + '</h4></div>'
+                }
+
+                $html = $html + '<div class="row hal_entry"><div class="col-sm-1">' + arrayType[$references[i].entryType] + '</div> <div class="col-sm-11 hal_reference">' + $text + '</div></div>'
+              }
+            }
+
+            $resultat.empty();
+            if ($htmlPrec != '') {
+              $resultat.append('<div class="heading"><h4>Sous presse</h4></div>')
+              $resultat.append($htmlPrec)
+            }
+
+            $resultat.append($html)
+            //$resultat.append($paginationHtml)
+          }
+        })
       }
     </script>
 {% endblock %}

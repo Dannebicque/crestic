@@ -1,0 +1,29 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+    <a href="{{ path('administration_categorieprojet_index') }}">Catégorie de projet</a> / Détails /
+{% endblock %}
+
+{% block content %}
+    <h1>Aperçu de la Catégorie de projet</h1>
+    {{ include('@App/Administration/footer-show.html.twig', {var: 'categorieprojet', obj:categorieProjet.id}) }}
+    <br>
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ categorieProjet.id }}</td>
+        </tr>
+        <tr>
+            <th>Libelle</th>
+            <td>{{ categorieProjet.libelle }}</td>
+        </tr>
+        <tr>
+            <th>Parent</th>
+            <td>{{ categorieProjet.parent ? categorieProjet.parent.libelle : 'Catégorie principale' }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    {{ include('@App/Administration/footer-show.html.twig', {var: 'categorieprojet', obj:categorieProjet.id}) }}
+{% endblock %}

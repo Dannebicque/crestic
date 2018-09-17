@@ -1,0 +1,38 @@
+{% extends '::base-admin.html.twig' %}
+
+{% block breadcrumbs %}
+    Actualités /
+{% endblock %}
+
+{% block content %}
+    <h1>Categorieprojets list</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Libelle</th>
+                <th>Libelle Anglais</th>
+                <th>Parent</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for categorieProjet in categorieProjets %}
+            <tr>
+                <td><a href="{{ path('administration_categorieprojet_show', { 'id': categorieProjet.id }) }}">{{ categorieProjet.id }}</a></td>
+                <td>{{ categorieProjet.libelle }}</td>
+                <td>{{ categorieProjet.libelleEn }}</td>
+                <td>{{ categorieProjet.parent ? categorieProjet.parent.libelle : 'Catégorie principale' }}</td>
+                <td>
+                    <a href="{{ path('administration_categorieprojet_show', { 'id': categorieProjet.id }) }}" class="btn btn-info"
+                       title="Voir"><i class="fa fa-eye"></i> </a>
+                    <a href="{{ path('administration_categorieprojet_edit', { 'id': categorieProjet.id }) }}" class="btn
+                            btn-warning" title="Modifier"><i class="fa fa-pencil"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ path('administration_categorieprojet_new') }}" class="btn btn-primary">Ajouter une nouvelle catégorie de projet</a>
+{% endblock %}

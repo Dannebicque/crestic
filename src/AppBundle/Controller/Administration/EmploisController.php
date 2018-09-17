@@ -73,11 +73,10 @@ class EmploisController extends Controller
 */
     public function showAction(Emplois $emplois)
     {
-        $deleteForm = $this->createDeleteForm($emplois);
+
 
         return $this->render('@App/Administration/emplois/show.html.twig', array(
             'emplois'     => $emplois,
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -112,39 +111,20 @@ class EmploisController extends Controller
     /**
      * Deletes a emplois entity.
      *
-     * @Route("/{id}", name="administration_emplois_delete")
-     * @Method("DELETE")
-     * @param Request $request
+     * @Route("/delete/{id}", name="administration_emplois_delete")
+     * @Method("GET")
      * @param Emplois $emplois
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
 */
-    public function deleteAction(Request $request, Emplois $emplois)
+    public function deleteAction(Emplois $emplois)
     {
-        $form = $this->createDeleteForm($emplois);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($emplois);
-            $em->flush();
-        }
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($emplois);
+        $em->flush();
+        $this->get('session')->getFlashBag()->add('alert-success', 'Offre supprimée');
 
         return $this->redirectToRoute('administration_emplois_index');
     }
 
-    /**
-     * Creates a form to delete a emplois entity.
-     *
-     * @param Emplois $emplois The emplois entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Emplois $emplois)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('administration_emplois_delete', array('id' => $emplois->getId())))
-            ->setMethod('DELETE')
-            ->getForm();
-    }
+
 }

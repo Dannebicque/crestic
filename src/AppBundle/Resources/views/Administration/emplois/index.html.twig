@@ -34,6 +34,8 @@ Offres d'emplois
 					   title="Voir"><i class="fa fa-eye"></i> </a>
 					<a href="{{ path('administration_emplois_edit', { 'id': emploi.id }) }}" class="btn
                             btn-warning" title="Modifier"><i class="fa fa-pencil"></i></a>
+					<a href="{{ path('administration_emplois_delete', { 'id': emploi.id }) }}" class="btn
+                            btn-danger" title="Supprimer"><i class="fa fa-times"></i></a>
 				</td>
 			</tr>
 		{% endfor %}

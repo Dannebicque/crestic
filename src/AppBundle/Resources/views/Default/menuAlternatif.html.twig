@@ -105,7 +105,7 @@
                                 {% endif %}
                             </a>
                             <ul class="dropdown-menu animated fadeInRight dropdown-animation">
-                                {% for projet in projets if projet.categorie == cat.id %}
+                                {% for projet in cat.projets %}
                                     <li>
                                         <a href="{{ path('public_projet_profil', {slug: projet
                                             .slug}) }}">{{ projet.titre }}</a>
@@ -120,7 +120,7 @@
                     {% endfor %}
                 {% endif %}
 
-                {% for projet in projets if projet.categorie == categorie.id %}
+                {% for projet in categorie.projets %}
                     <li>
                         <a href="{{ path('public_projet_profil', {slug: projet
                             .slug}) }}">{{ projet.titre }}</a>
